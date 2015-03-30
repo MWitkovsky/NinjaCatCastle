@@ -39,6 +39,7 @@ static const wstring	W_GO_TO_MM_COMMAND		= L"Go To Main Menu";
 static const wstring	W_START_COMMAND			= L"Start";
 // Ryota Shimamura 2015/03/30 ->
 static const wstring	W_HELP_COMMAND			= L"Help";
+static const wstring    W_ABOUT_COMMAND			= L"About";
 // Ryota Shimamura 2015 / 03 / 30 <-
 static const wstring	W_EXIT_COMMAND			= L"Exit";
 static const wstring	W_QUIT_COMMAND			= L"Quit";
@@ -47,8 +48,11 @@ static const wstring	W_CURSOR_PATH			= L"data/gui/cursor/kunai_cursor.png";
 static const wstring	W_SPLASH_SCREEN_PATH	= L"data/gui/overlays/ninja_cat_castle_screen_overlay.png";
 static const wstring	W_MAIN_MENU_PATH		= L"data/gui/overlays/ninja_cat_castle_main_menu_overlay.png";
 static const wstring	W_HELP_SCREEN_PATH		= L"data/gui/overlays/ninja_cat_castle_help_screen.png";
+static const wstring	W_ABOUT_SCREEN_PATH		= L"data/gui/overlays/ninja_cat_castle_about_screen.png";
 static const wstring	W_HELP_IMAGE_PATH		= L"data/gui/buttons/help_game.png";
 static const wstring	W_HELP_IMAGE_MO_PATH	= L"data/gui/buttons/help_game_mo.png";
+static const wstring	W_ABOUT_IMAGE_PATH		= L"data/gui/buttons/about_game.png";
+static const wstring	W_ABOUT_IMAGE_MO_PATH	= L"data/gui/buttons/about_game_mo.png";
 // Ryota Shimamura 2015/03/30 <-
 static const wstring	W_START_IMAGE_PATH		= L"data/gui/buttons/start_game.png";
 static const wstring	W_START_IMAGE_MO_PATH	= L"data/gui/buttons/start_game_mo.png";

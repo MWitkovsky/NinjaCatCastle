@@ -320,6 +320,7 @@ void BugginOutDataLoader::hardCodedLoadGUIExample(Game *game)
 	initSplashScreen(game, gui, guiTextureManager);
 	initMainMenu(gui, guiTextureManager);
 	initHelpScreen(game, gui, guiTextureManager);
+	initAboutScreen(game, gui, guiTextureManager);
 	initInGameGUI(gui, guiTextureManager);
 }
 
@@ -420,7 +421,7 @@ void BugginOutDataLoader::initMainMenu(GameGUI *gui,	DirectXTextureManager *guiT
 	// AND NOW LOAD IT INTO A ScreenGUI
 	mainMenuGUI->addButton(buttonToAdd);
 
-	// AND LET'S ADD A START BUTTON
+	// AND LET'S ADD A HELP BUTTON
 	buttonToAdd = new Button();
 
 	// - GET THE BUTTON COMMAND AND IMAGE IDs
@@ -439,6 +440,29 @@ void BugginOutDataLoader::initMainMenu(GameGUI *gui,	DirectXTextureManager *guiT
 		49,
 		false,
 		W_HELP_COMMAND);
+
+	// AND NOW LOAD IT INTO A ScreenGUI
+	mainMenuGUI->addButton(buttonToAdd);
+
+	// AND LET'S ADD AN ABOUT BUTTON
+	buttonToAdd = new Button();
+
+	// - GET THE BUTTON COMMAND AND IMAGE IDs
+
+	normalTextureID = guiTextureManager->loadTexture(W_ABOUT_IMAGE_PATH);
+	mouseOverTextureID = guiTextureManager->loadTexture(W_ABOUT_IMAGE_MO_PATH);
+
+	// - INIT THE HELP BUTTON
+	buttonToAdd->initButton(normalTextureID,
+		mouseOverTextureID,
+		START_BUTTON_X + 300,
+		START_BUTTON_Y + 100,
+		0,
+		255,
+		219,
+		49,
+		false,
+		W_ABOUT_COMMAND);
 
 	// AND NOW LOAD IT INTO A ScreenGUI
 	mainMenuGUI->addButton(buttonToAdd);
@@ -496,6 +520,35 @@ void BugginOutDataLoader::initHelpScreen(Game *game, GameGUI *gui, DirectXTextur
 
 	// AND REGISTER IT WITH THE GUI
 	gui->addScreenGUI(GS_HELP_SCREEN, helpScreenGUI);
+}
+
+/*
+initAboutScreen - initializes the game's help screen gui.
+*/
+void BugginOutDataLoader::initAboutScreen(Game *game, GameGUI *gui, DirectXTextureManager *guiTextureManager){
+	// NOW, FIRST LET'S ADD A HELP SCREEN GUI
+	ScreenGUI *aboutScreenGUI = new ScreenGUI();
+
+	// WE'LL ONLY HAVE ONE IMAGE FOR OUR GIANT BUTTON
+	unsigned int normalTextureID = guiTextureManager->loadTexture(W_ABOUT_SCREEN_PATH);
+	unsigned int mouseOverTextureID = normalTextureID;
+
+	// INIT THE RETURN BUTTON
+	Button *buttonToAdd = new Button();
+	buttonToAdd->initButton(normalTextureID,
+		mouseOverTextureID,
+		0,
+		0,
+		0,
+		255,
+		game->getGraphics()->getScreenWidth(),
+		game->getGraphics()->getScreenHeight(),
+		false,
+		W_GO_TO_MM_COMMAND);
+	aboutScreenGUI->addButton(buttonToAdd);
+
+	// AND REGISTER IT WITH THE GUI
+	gui->addScreenGUI(GS_ABOUT_SCREEN, aboutScreenGUI);
 }
 
 /*

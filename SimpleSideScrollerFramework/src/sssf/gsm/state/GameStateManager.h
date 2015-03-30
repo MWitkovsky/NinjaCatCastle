@@ -84,6 +84,7 @@ public:
 	void			goToLoadLevel();
 	void			goToMainMenu();
 	void			goToHelpScreen();
+	void			goToAboutScreen();
 
 	// METHODS DEFINED in GameStateManager.cpp
 	GameStateManager();
