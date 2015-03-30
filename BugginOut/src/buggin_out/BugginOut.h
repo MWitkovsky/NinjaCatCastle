@@ -42,8 +42,7 @@ static const wstring	W_HELP_COMMAND			= L"Help";
 // Ryota Shimamura 2015 / 03 / 30 <-
 static const wstring	W_EXIT_COMMAND			= L"Exit";
 static const wstring	W_QUIT_COMMAND			= L"Quit";
-static const wstring	W_GREEN_CURSOR_PATH		= L"data/gui/cursor/green_cursor.png";
-static const wstring	W_RED_CURSOR_PATH		= L"data/gui/cursor/red_cursor.png";
+static const wstring	W_CURSOR_PATH			= L"data/gui/cursor/kunai_cursor.png";
 // Ryota Shimamura 2015/03/30 ->
 static const wstring	W_SPLASH_SCREEN_PATH	= L"data/gui/overlays/ninja_cat_castle_screen_overlay.png";
 static const wstring	W_MAIN_MENU_PATH		= L"data/gui/overlays/ninja_cat_castle_main_menu_overlay.png";
@@ -62,6 +61,10 @@ static const wstring	W_LIVES_HEAD_PATH		= L"data/gui/HUD/lives_head.png";
 static const wstring	SPRITE_TYPES_DIR = L"data/sprite_types/";
 static const wstring	SPRITE_TYPES_LIST = SPRITE_TYPES_DIR + L"sprite_type_list.xml";
 static const wstring	JUMPING = L"JUMPING";
+static const wstring	ATTACKING_RIGHT = L"ATTACKING_RIGHT";
+static const wstring	ATTACKING_LEFT = L"ATTACKING_LEFT";
+static const wstring	IDLE = L"IDLE";
+static const wstring    DIE = L"DIE";
 
 // FOR THE GAME WORLD
 static const float		MAX_VIEWPORT_AXIS_VELOCITY = 20.0f;
@@ -76,10 +79,8 @@ static const float		PLAYER_SPEED = 6.0f;
 static const int		MIN_FPS = 5;
 static const int		MAX_FPS = 100;
 static const int		FPS_INC = 1;
-static const wstring	ATTACKING_RIGHT(L"ATTACKING_RIGHT");
-static const wstring	ATTACKING_LEFT(L"ATTACKING_LEFT");
-static const wstring	IDLE(L"IDLE");
-static const wstring    DIE(L"DIE");
+static const int		START_BUTTON_X = 375;
+static const int		START_BUTTON_Y = 50;
 
 // USED FOR MOVEMENT
 const unsigned int W_KEY = (unsigned int)'W';

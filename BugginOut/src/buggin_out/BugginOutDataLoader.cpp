@@ -331,12 +331,8 @@ void BugginOutDataLoader::initCursor(GameGUI *gui, DirectXTextureManager *guiTex
 	vector<unsigned int> *imageIDs = new vector<unsigned int>();
 	int imageID;
 
-	// - FIRST LOAD THE GREEN CURSOR IMAGE
-	imageID = guiTextureManager->loadTexture(W_GREEN_CURSOR_PATH);
-	imageIDs->push_back(imageID);
-
-	// - AND NOW THE RED ONE
-	imageID = guiTextureManager->loadTexture(W_RED_CURSOR_PATH);
+	// - FIRST LOAD THE KUNAI CURSOR IMAGE
+	imageID = guiTextureManager->loadTexture(W_CURSOR_PATH);
 	imageIDs->push_back(imageID);
 
 	// - NOW BUILD AND LOAD THE CURSOR
@@ -391,8 +387,8 @@ void BugginOutDataLoader::initMainMenu(GameGUI *gui,	DirectXTextureManager *guiT
 	ScreenGUI *mainMenuGUI = new ScreenGUI();
 	unsigned int imageID = guiTextureManager->loadTexture(W_MAIN_MENU_PATH);
 	OverlayImage *imageToAdd = new OverlayImage();
-	imageToAdd->x = 256;
-	imageToAdd->y = 100;
+	imageToAdd->x = 0;
+	imageToAdd->y = 0;
 	imageToAdd->z = 0;
 	imageToAdd->alpha = 200;
 	imageToAdd->width = 512;
@@ -400,45 +396,23 @@ void BugginOutDataLoader::initMainMenu(GameGUI *gui,	DirectXTextureManager *guiT
 	imageToAdd->imageID = imageID;
 	mainMenuGUI->addOverlayImage(imageToAdd);
 
-	// AND LET'S ADD AN EXIT BUTTON
+	// AND LET'S ADD A START BUTTON
 	Button *buttonToAdd = new Button();
 
 	// - GET THE BUTTON COMMAND AND IMAGE IDs
-	int normalTextureID = guiTextureManager->loadTexture(W_EXIT_IMAGE_PATH);
-	int mouseOverTextureID = guiTextureManager->loadTexture(W_EXIT_IMAGE_MO_PATH);
 
-	// - INIT THE EXIT BUTTON
-	buttonToAdd->initButton(normalTextureID, 
-							mouseOverTextureID,
-							330,
-							350,
-							0,
-							255,
-							200,
-							100,
-							false,
-							W_EXIT_COMMAND);
-
-	// AND NOW LOAD IT INTO A ScreenGUI
-	mainMenuGUI->addButton(buttonToAdd);
-
-	// AND LET'S ADD A START BUTTON
-	buttonToAdd = new Button();
-
-	// - GET THE BUTTON COMMAND AND IMAGE IDs
-
-	normalTextureID = guiTextureManager->loadTexture(W_START_IMAGE_PATH);
-	mouseOverTextureID = guiTextureManager->loadTexture(W_START_IMAGE_MO_PATH);
+	int normalTextureID = guiTextureManager->loadTexture(W_START_IMAGE_PATH);
+	int mouseOverTextureID = guiTextureManager->loadTexture(W_START_IMAGE_MO_PATH);
 
 	// - INIT THE START BUTTON
 	buttonToAdd->initButton(normalTextureID, 
 							mouseOverTextureID,
-							330,
-							150,
+							START_BUTTON_X,
+							START_BUTTON_Y,
 							0,
 							255,
-							200,
-							100,
+							219,
+							49,
 							false,
 							W_START_COMMAND);
 
@@ -453,17 +427,39 @@ void BugginOutDataLoader::initMainMenu(GameGUI *gui,	DirectXTextureManager *guiT
 	normalTextureID = guiTextureManager->loadTexture(W_HELP_IMAGE_PATH);
 	mouseOverTextureID = guiTextureManager->loadTexture(W_HELP_IMAGE_MO_PATH);
 
-	// - INIT THE START BUTTON
+	// - INIT THE HELP BUTTON
 	buttonToAdd->initButton(normalTextureID,
 		mouseOverTextureID,
-		330,
-		250,
+		START_BUTTON_X,
+		START_BUTTON_Y + 100,
 		0,
 		255,
-		200,
-		100,
+		219,
+		49,
 		false,
 		W_HELP_COMMAND);
+
+	// AND NOW LOAD IT INTO A ScreenGUI
+	mainMenuGUI->addButton(buttonToAdd);
+
+	// AND LET'S ADD AN EXIT BUTTON
+	buttonToAdd = new Button();
+
+	// - GET THE BUTTON COMMAND AND IMAGE IDs
+	normalTextureID = guiTextureManager->loadTexture(W_EXIT_IMAGE_PATH);
+	mouseOverTextureID = guiTextureManager->loadTexture(W_EXIT_IMAGE_MO_PATH);
+
+	// - INIT THE EXIT BUTTON
+	buttonToAdd->initButton(normalTextureID,
+		mouseOverTextureID,
+		START_BUTTON_X,
+		START_BUTTON_Y + 200,
+		0,
+		255,
+		219,
+		49,
+		false,
+		W_EXIT_COMMAND);
 
 	// AND NOW LOAD IT INTO A ScreenGUI
 	mainMenuGUI->addButton(buttonToAdd);
@@ -491,8 +487,8 @@ void BugginOutDataLoader::initInGameGUI(GameGUI *gui, DirectXTextureManager *gui
 							0,
 							0,
 							255,
-							200,
-							100,
+							127,
+							62,
 							false,
 							W_QUIT_COMMAND);
 	inGameGUI->addButton(buttonToAdd);
