@@ -46,6 +46,7 @@ static const wstring	W_CURSOR_PATH			= L"data/gui/cursor/kunai_cursor.png";
 // Ryota Shimamura 2015/03/30 ->
 static const wstring	W_SPLASH_SCREEN_PATH	= L"data/gui/overlays/ninja_cat_castle_screen_overlay.png";
 static const wstring	W_MAIN_MENU_PATH		= L"data/gui/overlays/ninja_cat_castle_main_menu_overlay.png";
+static const wstring	W_HELP_SCREEN_PATH		= L"data/gui/overlays/ninja_cat_castle_help_screen.png";
 static const wstring	W_HELP_IMAGE_PATH		= L"data/gui/buttons/help_game.png";
 static const wstring	W_HELP_IMAGE_MO_PATH	= L"data/gui/buttons/help_game_mo.png";
 // Ryota Shimamura 2015/03/30 <-

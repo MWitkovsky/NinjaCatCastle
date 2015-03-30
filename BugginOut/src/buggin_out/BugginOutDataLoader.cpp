@@ -319,6 +319,7 @@ void BugginOutDataLoader::hardCodedLoadGUIExample(Game *game)
 	initCursor(gui, guiTextureManager);
 	initSplashScreen(game, gui, guiTextureManager);
 	initMainMenu(gui, guiTextureManager);
+	initHelpScreen(game, gui, guiTextureManager);
 	initInGameGUI(gui, guiTextureManager);
 }
 
@@ -466,6 +467,35 @@ void BugginOutDataLoader::initMainMenu(GameGUI *gui,	DirectXTextureManager *guiT
 
 	// AND LET'S ADD OUR SCREENS
 	gui->addScreenGUI(GS_MAIN_MENU,		mainMenuGUI);
+}
+
+/*
+	initHelpScreen - initializes the game's help screen gui.
+*/
+void BugginOutDataLoader::initHelpScreen(Game *game, GameGUI *gui, DirectXTextureManager *guiTextureManager){
+	// NOW, FIRST LET'S ADD A HELP SCREEN GUI
+	ScreenGUI *helpScreenGUI = new ScreenGUI();
+
+	// WE'LL ONLY HAVE ONE IMAGE FOR OUR GIANT BUTTON
+	unsigned int normalTextureID = guiTextureManager->loadTexture(W_HELP_SCREEN_PATH);
+	unsigned int mouseOverTextureID = normalTextureID;
+
+	// INIT THE RETURN BUTTON
+	Button *buttonToAdd = new Button();
+	buttonToAdd->initButton(normalTextureID,
+		mouseOverTextureID,
+		0,
+		0,
+		0,
+		255,
+		game->getGraphics()->getScreenWidth(),
+		game->getGraphics()->getScreenHeight(),
+		false,
+		W_GO_TO_MM_COMMAND);
+	helpScreenGUI->addButton(buttonToAdd);
+
+	// AND REGISTER IT WITH THE GUI
+	gui->addScreenGUI(GS_HELP_SCREEN, helpScreenGUI);
 }
 
 /*

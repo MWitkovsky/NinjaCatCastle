@@ -53,5 +53,6 @@ public:
 	void initCursor(GameGUI *gui, DirectXTextureManager *guiTextureManager);
 	void initSplashScreen(Game *game, GameGUI *gui,	DirectXTextureManager *guiTextureManager);
 	void initMainMenu(GameGUI *gui,	DirectXTextureManager *guiTextureManager);
+	void initHelpScreen(Game *game, GameGUI *gui, DirectXTextureManager *guiTextureManager);
 	void initInGameGUI(GameGUI *gui, DirectXTextureManager *guiTextureManager);
 };

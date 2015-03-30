@@ -79,6 +79,11 @@ void GameStateManager::goToMainMenu()
 	currentGameState = GS_MAIN_MENU;
 }
 
+void GameStateManager::goToHelpScreen()
+{
+	currentGameState = GS_HELP_SCREEN;
+}
+
 /*
 	isAtSplashScreen - Used to test if this application is currently
 	at the splash screen. This will dictate what to render, but also

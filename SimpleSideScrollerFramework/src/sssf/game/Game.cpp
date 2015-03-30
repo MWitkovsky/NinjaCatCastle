@@ -219,5 +219,10 @@ void Game::startGame()
 	gsm->goToLoadLevel();	// NOTE THAT CURRENTLY THERE IS NO LEVEL FILE,
 	
 	// THAT'S ONE THING YOU'LL BE DOING
-	dataLoader->loadWorld(this, L"data/levels/SideScrollerMetal/", L"SideScrollerMetalLevel.tmx");
+	if (currentLevelFileName == L"SideScrollerMetalLevel.tmx"){
+		dataLoader->loadWorld(this, L"data/levels/SideScrollerMetal/", L"SideScrollerMetalLevel.tmx");
+	}
+	else if (currentLevelFileName == L"SideScrollerDesertLevel.tmx"){
+		dataLoader->loadWorld(this, L"data/levels/SideScrollerDesert/", L"SideScrollerDesertLevel.tmx");
+	}
 }

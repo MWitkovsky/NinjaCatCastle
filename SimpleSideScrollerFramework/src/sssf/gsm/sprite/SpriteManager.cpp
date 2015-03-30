@@ -334,14 +334,10 @@ void SpriteManager::update(Game *game)
 			if (player.getVisibleFrames() == 0){
 				player.setVisibleFrames(10);
 				if (player.getLives() > 1){
-					game->getGSM()->unloadCurrentLevel(game);
-					if (game->getCurrentLevelFileName() == L"SideScrollerDesertLevel.tmx"){
-						game->getDataLoader()->loadWorld(game, L"data/levels/SideScrollerDesert/", L"SideScrollerDesertLevel.tmx");
-					}
-					else{
-						game->getDataLoader()->loadWorld(game, L"data/levels/SideScrollerMetal/", L"SideScrollerMetalLevel.tmx");
-					}
 					player.decrementLives();
+					game->quitGame();
+					game->getGSM()->goToLoadLevel();
+					game->startGame();
 				}
 				else{
 					player.setLives(3);
