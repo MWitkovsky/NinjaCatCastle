@@ -410,8 +410,8 @@ void BugginOutDataLoader::initMainMenu(GameGUI *gui,	DirectXTextureManager *guiT
 	// - INIT THE EXIT BUTTON
 	buttonToAdd->initButton(normalTextureID, 
 							mouseOverTextureID,
-							412,
-							500,
+							330,
+							350,
 							0,
 							255,
 							200,
@@ -433,14 +433,37 @@ void BugginOutDataLoader::initMainMenu(GameGUI *gui,	DirectXTextureManager *guiT
 	// - INIT THE START BUTTON
 	buttonToAdd->initButton(normalTextureID, 
 							mouseOverTextureID,
-							412,
-							350,
+							330,
+							150,
 							0,
 							255,
 							200,
 							100,
 							false,
 							W_START_COMMAND);
+
+	// AND NOW LOAD IT INTO A ScreenGUI
+	mainMenuGUI->addButton(buttonToAdd);
+
+	// AND LET'S ADD A START BUTTON
+	buttonToAdd = new Button();
+
+	// - GET THE BUTTON COMMAND AND IMAGE IDs
+
+	normalTextureID = guiTextureManager->loadTexture(W_HELP_IMAGE_PATH);
+	mouseOverTextureID = guiTextureManager->loadTexture(W_HELP_IMAGE_MO_PATH);
+
+	// - INIT THE START BUTTON
+	buttonToAdd->initButton(normalTextureID,
+		mouseOverTextureID,
+		330,
+		250,
+		0,
+		255,
+		200,
+		100,
+		false,
+		W_HELP_COMMAND);
 
 	// AND NOW LOAD IT INTO A ScreenGUI
 	mainMenuGUI->addButton(buttonToAdd);

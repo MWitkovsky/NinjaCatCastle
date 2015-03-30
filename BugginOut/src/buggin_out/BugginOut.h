@@ -37,12 +37,19 @@ static const wstring	W_COLOR_KEY_BLUE		= L"COLOR_KEY_BLUE";
 // CONSTANTS FOR ARTWORK - NOTE, THIS SHOULD REALLY BE LOADED FROM A FILE
 static const wstring	W_GO_TO_MM_COMMAND		= L"Go To Main Menu";
 static const wstring	W_START_COMMAND			= L"Start";
+// Ryota Shimamura 2015/03/30 ->
+static const wstring	W_HELP_COMMAND			= L"Help";
+// Ryota Shimamura 2015 / 03 / 30 <-
 static const wstring	W_EXIT_COMMAND			= L"Exit";
 static const wstring	W_QUIT_COMMAND			= L"Quit";
 static const wstring	W_GREEN_CURSOR_PATH		= L"data/gui/cursor/green_cursor.png";
 static const wstring	W_RED_CURSOR_PATH		= L"data/gui/cursor/red_cursor.png";
-static const wstring	W_SPLASH_SCREEN_PATH	= L"data/gui/overlays/spiked_acid_splash_screen_overlay.png";
-static const wstring	W_MAIN_MENU_PATH		= L"data/gui/overlays/spiked_acid_main_menu_overlay.png";
+// Ryota Shimamura 2015/03/30 ->
+static const wstring	W_SPLASH_SCREEN_PATH	= L"data/gui/overlays/ninja_cat_castle_screen_overlay.png";
+static const wstring	W_MAIN_MENU_PATH		= L"data/gui/overlays/ninja_cat_castle_main_menu_overlay.png";
+static const wstring	W_HELP_IMAGE_PATH		= L"data/gui/buttons/help_game.png";
+static const wstring	W_HELP_IMAGE_MO_PATH	= L"data/gui/buttons/help_game_mo.png";
+// Ryota Shimamura 2015/03/30 <-
 static const wstring	W_START_IMAGE_PATH		= L"data/gui/buttons/start_game.png";
 static const wstring	W_START_IMAGE_MO_PATH	= L"data/gui/buttons/start_game_mo.png";
 static const wstring	W_EXIT_IMAGE_PATH		= L"data/gui/buttons/exit_game.png";
