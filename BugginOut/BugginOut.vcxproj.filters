@@ -5,11 +5,11 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="src\buggin_out">
-      <UniqueIdentifier>{5bb326e0-4321-4d0e-9cee-6f98c21671d2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\buggin_out_VS">
       <UniqueIdentifier>{c33742fb-cb3d-4d8d-a88b-09ba1684fcdb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\buggin_out">
+      <UniqueIdentifier>{5bb326e0-4321-4d0e-9cee-6f98c21671d2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
