@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{da3cd594-5785-4d48-95e6-7457ecb1aa0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\ninja_cat_castle">
+      <UniqueIdentifier>{bdd47473-0d64-4fc2-8a70-f1b24db14c9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\ninja_cat_castle_VS">
+      <UniqueIdentifier>{885eaf52-2864-4a3e-a364-2f7b0214306e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\ninja_cat_castle_VS\Resource.h">
+      <Filter>src\ninja_cat_castle_VS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ninja_cat_castle_VS\stdafx.h">
+      <Filter>src\ninja_cat_castle_VS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ninja_cat_castle_VS\targetver.h">
+      <Filter>src\ninja_cat_castle_VS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ninja_cat_castle\NinjaCatCastle.h">
+      <Filter>src\ninja_cat_castle</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ninja_cat_castle\NinjaCatCastleButtonEventHandler.h">
+      <Filter>src\ninja_cat_castle</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ninja_cat_castle\NinjaCatCastleCollisionListener.h">
+      <Filter>src\ninja_cat_castle</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ninja_cat_castle\NinjaCatCastleDataLoader.h">
+      <Filter>src\ninja_cat_castle</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ninja_cat_castle\NinjaCatCastleKeyEventHandler.h">
+      <Filter>src\ninja_cat_castle</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ninja_cat_castle\NinjaCatCastleTextGenerator.h">
+      <Filter>src\ninja_cat_castle</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\ninja_cat_castle_VS\stdafx.cpp">
+      <Filter>src\ninja_cat_castle_VS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ninja_cat_castle\NinjaCatCastle.cpp">
+      <Filter>src\ninja_cat_castle</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ninja_cat_castle\NinjaCatCastleButtonEventHandler.cpp">
+      <Filter>src\ninja_cat_castle</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ninja_cat_castle\NinjaCatCastleCollisionListener.cpp">
+      <Filter>src\ninja_cat_castle</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ninja_cat_castle\NinjaCatCastleDataLoader.cpp">
+      <Filter>src\ninja_cat_castle</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ninja_cat_castle\NinjaCatCastleKeyEventHandler.cpp">
+      <Filter>src\ninja_cat_castle</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ninja_cat_castle\NinjaCatCastleTextGenerator.cpp">
+      <Filter>src\ninja_cat_castle</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
