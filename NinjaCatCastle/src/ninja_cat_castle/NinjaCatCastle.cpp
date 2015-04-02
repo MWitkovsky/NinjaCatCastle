@@ -3,7 +3,7 @@
 			Stony Brook University
 			Computer Science Department
 
-	BugginOutGame.cpp
+	NinjaCatCastleGame.cpp
 
 	This is a test game application, a game that demonstrates use of the 
 	SideScrollerFramework to make a little scrolling, interactive demo. It
@@ -15,7 +15,7 @@
 
 #include "ninja_cat_castle_VS\stdafx.h"
 
-// BugginOut GAME INCLUDES
+// NinjaCatCastle GAME INCLUDES
 #include "ninja_cat_castle\NinjaCatCastleButtonEventHandler.h"
 #include "ninja_cat_castle\NinjaCatCastleCollisionListener.h"
 #include "ninja_cat_castle\NinjaCatCastleDataLoader.h"

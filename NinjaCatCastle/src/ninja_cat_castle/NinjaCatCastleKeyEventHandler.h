@@ -3,7 +3,7 @@
 			Stony Brook University
 			Computer Science Department
 
-	BugginOutKeyEventHandler.h
+	NinjaCatCastleKeyEventHandler.h
 
 	This is a custom key event handler. Each game can choose
 	to use different keyboard keys and respond differently to when

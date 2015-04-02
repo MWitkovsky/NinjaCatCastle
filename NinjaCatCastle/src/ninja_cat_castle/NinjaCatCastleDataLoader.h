@@ -3,9 +3,9 @@
 			Stony Brook University
 			Computer Science Department
 
-	BugginOutDataLoader.h
+	NinjaCatCastleDataLoader.h
 
-	This class provides a custom importer for the BugginOutGame to import
+	This class provides a custom importer for the NinjaCatCastleGame to import
 	game data, gui data, and world (i.e. level) data.
 */
 #pragma once
@@ -35,7 +35,7 @@ public:
 
 
 	// THESE SHOULD BE LOADING DATA FROM FILES. THEY
-	// ARE ALL DEFINED IN BugginOutDataLoader.cpp
+	// ARE ALL DEFINED IN NinjaCatCastleDataLoader.cpp
 	void loadGame(Game *game, wstring gameInitFile);
 	void loadGUI(Game *game, wstring guiInitFile);
 	void loadWorld(Game *game, wstring dir, wstring name);

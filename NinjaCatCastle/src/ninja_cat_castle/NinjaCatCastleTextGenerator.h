@@ -3,7 +3,7 @@
 			Stony Brook University
 			Computer Science Department
 
-	BugginOutTextGenerator.h
+	NinjaCatCastleTextGenerator.h
 
 	This class is a custom text generator for the EmptyGame
 	application. Basically, by defining the initText and updateText
@@ -26,7 +26,7 @@ public:
 	NinjaCatCastleTextGenerator()	{}
 	~NinjaCatCastleTextGenerator()	{}
 
-	// DEFINED IN BugginOutTextGenerator.cpp
+	// DEFINED IN NinjaCatCastleTextGenerator.cpp
 	void appendMouseCoords(Game *game);
 	void appendLivesCounter(Game *game);
 	void initText(Game *game);

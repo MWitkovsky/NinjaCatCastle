@@ -2,13 +2,13 @@
 #include "ninja_cat_castle_VS\stdafx.h"
 
 /*
-	BugginOutGame.h
+	NinjaCatCastleGame.h
 
-	This file contains setup data for making the BugginOut game. Note that nearly
+	This file contains setup data for making the NinjaCatCastle game. Note that nearly
 	all of this data would better serve us if loaded from files.
 */
 
-// HERE IS THE BugginOut GAME SETUP/INIT FILE. EVERYTHING WOULD START FROM HERE
+// HERE IS THE NinjaCatCastle GAME SETUP/INIT FILE. EVERYTHING WOULD START FROM HERE
 static const wstring	W_LEVEL_1_DIR			= L"data/levels/SideScrollerMetal/";
 static const wstring	W_LEVEL_1_NAME			= L"SideScrollerMetalLevel.tmx";
 static const wstring	W_LEVEL_2_DIR			= L"data/levels/SideScrollerDesert/";

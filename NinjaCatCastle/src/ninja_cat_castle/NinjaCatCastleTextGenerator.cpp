@@ -3,9 +3,9 @@
 			Stony Brook University
 			Computer Science Department
 
-	BugginOutTextGenerator.cpp
+	NinjaCatCastleTextGenerator.cpp
 
-	See BugginOutTextGenerator.h for a class description.
+	See NinjaCatCastleTextGenerator.h for a class description.
 */
 
 #include "ninja_cat_castle_VS\stdafx.h"

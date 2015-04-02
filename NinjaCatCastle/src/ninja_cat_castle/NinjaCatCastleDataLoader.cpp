@@ -1,6 +1,6 @@
 #include "ninja_cat_castle_VS\stdafx.h"
 
-// BugginOut GAME INCLUDES
+// NinjaCatCastle GAME INCLUDES
 #include "ninja_cat_castle\NinjaCatCastleButtonEventHandler.h"
 #include "ninja_cat_castle\NinjaCatCastleDataLoader.h"
 #include "ninja_cat_castle\NinjaCatCastle.h"
@@ -305,7 +305,7 @@ void NinjaCatCastleDataLoader::makeRandomFloatingBot(Game *game, AnimatedSpriteT
 }
 
 /*
-	initBugginOutGUI - This method builds a GUI for the BugginOut Game application.
+	initNinjaCatCastleGUI - This method builds a GUI for the NinjaCatCastle Game application.
 	Note that we load all the GUI components from this method, including
 	the ScreenGUI with Buttons and Overlays and the Cursor.
 */

@@ -3,9 +3,9 @@
 			Stony Brook University
 			Computer Science Department
 
-	BugginOutKeyEventHandler.cpp
+	NinjaCatCastleKeyEventHandler.cpp
 
-	See BugginOutKeyEventHandler.h for a class description.
+	See NinjaCatCastleKeyEventHandler.h for a class description.
 */
 
 #include "ninja_cat_castle_VS\stdafx.h"

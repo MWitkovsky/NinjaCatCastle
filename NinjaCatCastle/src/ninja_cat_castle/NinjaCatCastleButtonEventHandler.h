@@ -3,12 +3,12 @@
 			Stony Brook University
 			Computer Science Department
 
-	BugginOutButtonEventHandler.h
+	NinjaCatCastleButtonEventHandler.h
 
 	This is a custom button event handler. Each game can choose
 	to use different buttons and respond differently to when
 	buttons are pressed. This class will handle button presses for
-	the BugginOutGame following the ButtonEventHandler pattern.
+	the NinjaCatCastleGame following the ButtonEventHandler pattern.
 */
 
 #pragma once
@@ -25,7 +25,7 @@ public:
 	NinjaCatCastleButtonEventHandler()	{}
 	~NinjaCatCastleButtonEventHandler()	{}
 
-	// DEFINED INSIDE BugginOutButtonEventHandler.cpp
+	// DEFINED INSIDE NinjaCatCastleButtonEventHandler.cpp
 	void handleButtonEvents(Game *game, 
 							wstring command);
 };
