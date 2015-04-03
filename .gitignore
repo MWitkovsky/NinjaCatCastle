@@ -1,4 +1,6 @@
 Temp/
+Common/
 *.sdf
 *.tlog
 *.idb
+*.pdb
