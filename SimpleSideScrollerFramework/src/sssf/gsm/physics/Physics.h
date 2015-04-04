@@ -64,7 +64,8 @@ public:
 	bool activated;
 	bool activatedForSingleUpdate;
 
-	b2World world;
+	b2World *world;
+	b2Vec2 *b2Gravity;
 
 	// CONSTRUCDT/DESTRUCTOR
 	Physics();
