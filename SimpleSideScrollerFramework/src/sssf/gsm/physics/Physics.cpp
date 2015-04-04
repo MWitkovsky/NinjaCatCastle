@@ -28,7 +28,7 @@
 	The constructor initializes the data structures and loads
 	the necessary ones with recyclable objects for collision tests.
 */
-Physics::Physics()
+Physics::Physics() : world(b2Vec2(0.0f, -9.8f))
 {
 	// DEFAULT GRAVITY IS 1.0f
 	gravity = DEFAULT_GRAVITY;

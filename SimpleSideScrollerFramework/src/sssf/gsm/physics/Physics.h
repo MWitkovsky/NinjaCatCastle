@@ -18,24 +18,19 @@
 #include "sssf\gsm\world\World.h"
 #include "sssf\gsm\world\TiledLayer.h"
 #include "sssf\gsm\world\Tile.h"
-//BOX2D INCLUDES WORK, THIS IS THE FORMAT! SEE LINE 37 FOR SAMPLE DECLARATION
-//SEE LINE 31 FOR SAMPLE GRAVITY VECTOR DECLARATION
-#include "Box2D\Dynamics\b2World.h"
-#include "Box2D\Common\b2Math.h"
+//BOX2D INCLUDES WORK, THIS IS THE FORMAT!
+#include "Box2D\Box2D.h"
 
 const float EPSILON = 0.00001f;
 const float DEFAULT_GRAVITY = 0.3f;
 const float BUFFER_BETWEEN_OBJECTS = 0.2f;
 const float NUDGE_VELOCITY = 0.3f;
 const float ENERGY_LOSS = 0.95f;
-const b2Vec2 *b2Gravity = new b2Vec2(0, -9.8);
 
 class Physics
 {
 //private:
 public:
-	//HERE IS THE PROPER CREATION OF A b2World OBJECT
-	b2World *world = new b2World(*b2Gravity);
 
 	// THIS IS APPLIED TO EVERY SPRITE EVERY FRAME
 	float gravity;
@@ -68,6 +63,8 @@ public:
 	// USED FOR TESTING PHYSICS BY TURNING IT ON AND OFF IN VARIOUS WAYS
 	bool activated;
 	bool activatedForSingleUpdate;
+
+	b2World world;
 
 	// CONSTRUCDT/DESTRUCTOR
 	Physics();
