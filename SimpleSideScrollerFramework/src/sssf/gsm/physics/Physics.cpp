@@ -33,8 +33,8 @@ Physics::Physics()
 	// DEFAULT GRAVITY IS 1.0f
 	gravity = DEFAULT_GRAVITY;
 	//SAMPLE USE OF BOX2D STUFF
-	b2Gravity->Set(0.0f, 9.8f);
-	world = &b2World(*b2Gravity);
+	b2Gravity.Set(0.0f, 9.8f);
+	world = new b2World(b2Gravity);
 
 	// POPULATE THEM WITH 1000 OBJECTS TO SHARE
 	// WHY 1000? BECAUSE I HAD TO PICK SOME NUMBER BIG ENOUGH

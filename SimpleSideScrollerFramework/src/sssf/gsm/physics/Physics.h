@@ -64,8 +64,9 @@ public:
 	bool activated;
 	bool activatedForSingleUpdate;
 
+	//BOX2D DECLARATIONS
 	b2World *world;
-	b2Vec2 *b2Gravity;
+	b2Vec2 b2Gravity;
 
 	// CONSTRUCDT/DESTRUCTOR
 	Physics();
