@@ -42,7 +42,7 @@ protected:
 
 	// Player Specific values
 	boolean controllable = true;
-	boolean doubleJump = false;
+	boolean jump = false;
 	boolean facingRight = false;
 
 	int HP = 10;
@@ -58,7 +58,7 @@ public:
 	wstring				getCurrentState()	{ return currentState;		}
 	unsigned int		getFrameIndex()		{ return frameIndex;		}
 	AnimatedSpriteType*	getSpriteType()		{ return spriteType;		}
-	boolean				canDoubleJump()		{ return doubleJump; }
+	boolean				wasJump()			{ return jump; }
 	int					getHP()				{ return HP; }
 	int					getVisibleFrames()  { return visibleFrames; }
 	int					getInvincibilityFrames()  { return invincibilityFrames; }
@@ -72,9 +72,9 @@ public:
 	{	alpha = initAlpha;						}
 	void setSpriteType(AnimatedSpriteType *initSpriteType)
 	{	spriteType = initSpriteType;			}
-	void setCanDoubleJump(boolean doubleJump)
+	void setWasJump(boolean Jump)
 	{
-		this->doubleJump = doubleJump;
+		this->jump = Jump;
 	}
 	void setHP(int HP)
 	{

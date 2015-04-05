@@ -163,10 +163,10 @@ list<Bot*> SpriteManager::getVisibleBots(Game *game){
 
 	Viewport *viewport = game->getGUI()->getViewport();
 
-	viewportDimensions.setCenterX((viewport->getViewportWidth() / 2) + viewport->getViewportX());
-	viewportDimensions.setCenterY((viewport->getViewportHeight() / 2) + viewport->getViewportY());
-	viewportDimensions.setHeight(viewport->getViewportHeight());
-	viewportDimensions.setWidth(viewport->getViewportWidth());
+	viewportDimensions.setCenterX((viewport->getViewportWidth() / 2.0f) + viewport->getViewportX());
+	viewportDimensions.setCenterY((viewport->getViewportHeight() / 2.0f) + viewport->getViewportY());
+	viewportDimensions.setHeight((float)viewport->getViewportHeight());
+	viewportDimensions.setWidth((float)viewport->getViewportWidth());
 
 	list<int> nodes = botsTree->insertAABB(&viewportDimensions);
 	list<int>::iterator nodeIterator = nodes.begin();
@@ -320,7 +320,7 @@ void SpriteManager::checkForCollisions(Game *game, AnimatedSprite *player){
 void SpriteManager::update(Game *game)
 {
 	// UPDATE THE PLAYER SPRITE
-	int velocityY = player.getPhysicalProperties()->getVelocityY();
+	float velocityY = player.getPhysicalProperties()->getVelocityY();
 	wstring state = player.getCurrentState();
 	if (velocityY < 0){
 		if (state == L"WALK_RIGHT" || state == L"IDLE_RIGHT" || state == L"JUMPING_ASCEND_RIGHT"){
@@ -330,19 +330,19 @@ void SpriteManager::update(Game *game)
 			player.setCurrentState(L"JUMPING_ASCEND_LEFT");
 		}
 	}
-	else if (velocityY > 0 && state == L"JUMPING_ASCEND_LEFT"){
+	else if (velocityY > 0.0f && state == L"JUMPING_ASCEND_LEFT"){
 		player.setCurrentState(L"JUMPING_ARC_LEFT");
 	}
-	else if (velocityY > 0 && state == L"JUMPING_ASCEND_RIGHT"){
+	else if (velocityY > 0.0f && state == L"JUMPING_ASCEND_RIGHT"){
 		player.setCurrentState(L"JUMPING_ARC_RIGHT");
 	}
-	else if (velocityY > 0 && (state == L"WALK_LEFT" || state == L"IDLE_LEFT")){
+	else if (velocityY > 0.0f && (state == L"WALK_LEFT" || state == L"IDLE_LEFT")){
 		player.setCurrentState(L"JUMPING_DESCEND_LEFT");
 	}
-	else if (velocityY > 0 && (state == L"WALK_RIGHT" || state == L"IDLE_RIGHT")){
+	else if (velocityY > 0.0f && (state == L"WALK_RIGHT" || state == L"IDLE_RIGHT")){
 		player.setCurrentState(L"JUMPING_DESCEND_RIGHT");
 	}
-	else if (velocityY == 0 && state != L"JUMPING_ASCEND_LEFT" && state != L"JUMPING_ASCEND_RIGHT"
+	else if (velocityY == 0.0f && state != L"JUMPING_ASCEND_LEFT" && state != L"JUMPING_ASCEND_RIGHT"
 		&& state != L"JUMPING_ARC_LEFT" && state != L"JUMPING_ARC_RIGHT"){
 		if (player.getCurrentState() == L"JUMPING_DESCEND_LEFT"){
 			player.setCurrentState(L"IDLE_LEFT");
@@ -361,7 +361,7 @@ void SpriteManager::update(Game *game)
 		player.decrementInvincibilityFrames();
 	}
 	if (player.isOnTileThisFrame()){
-		player.setCanDoubleJump(false);
+		player.setWasJump(false);
 	}
 	if (player.getHP() != 10){
 		if (player.getHP() == 0){

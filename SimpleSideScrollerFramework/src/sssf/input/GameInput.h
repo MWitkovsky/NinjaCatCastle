@@ -37,6 +37,7 @@ protected:
 		bool isPressed;
 		bool isFirstPress;
 		bool wasHeldDown;
+		bool released;
 	} inputState[256]; // stores the state for all keys
 
 	// THE KEY HANDLER RESPONDS TO KEY PRESSES
@@ -52,6 +53,10 @@ public:
 	// CHECKS TO SEE IF A KEY WAS RECENTLY PRESSED (FIRED ONCE PER PRESS)
 	bool	isKeyDownForFirstTime(int key)		
 	{	return inputState[key].isFirstPress;			}
+
+	// CHECKS IF KEY WAS RELEASED THIS FRAME
+	bool	wasKeyReleased(int key)
+	{	return inputState[key].released;				}
 
 	// REGISTERS A KeyHandler 
 	void	registerKeyHandler(KeyEventHandler *initKeyHandler)

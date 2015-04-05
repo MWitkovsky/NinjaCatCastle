@@ -142,6 +142,12 @@ void WindowsInput::updateInputState()
 		}
 		else 
 		{
+			if (inputState[k].wasHeldDown){
+				inputState[k].released = true;
+			}
+			else{
+				inputState[k].released = false;
+			}
 			inputState[k].wasHeldDown = false;
 			inputState[k].isFirstPress = false;
 		}

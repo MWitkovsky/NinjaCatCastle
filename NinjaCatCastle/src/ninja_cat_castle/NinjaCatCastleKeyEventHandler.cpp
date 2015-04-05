@@ -89,16 +89,20 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 
 			if (input->isKeyDownForFirstTime(SPACE_KEY))
 			{
-				if (player->wasOnTileLastFrame())
-				{
+				if (player->wasOnTileLastFrame()){
 					vY = JUMP_SPEED;
-					player->setCanDoubleJump(true);
-				}
-				else if (player->canDoubleJump()){
-					vY = JUMP_SPEED;
-					player->setCanDoubleJump(false);
+					player->setWasJump(true);
 				}
 			}
+
+			//FOR PRECISION JUMPING
+			if (input->wasKeyReleased(SPACE_KEY)){
+				if (vY < 0){
+					vY = vY / 2.0f;
+				}
+				player->setWasJump(false);
+			}
+
 			//for testing HP and death
 			if (input->isKeyDownForFirstTime(K_KEY)){
 				AnimatedSprite* player = gsm->getSpriteManager()->getPlayer();
@@ -133,8 +137,8 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 		bool viewportMoved = false;
 		float viewportVx = 0.0f;
 		float viewportVy = 0.0f;
-		float viewportX = viewport->getViewportX() - viewport->getViewportOffsetX() + viewport->getViewportWidth() / 2;
-		float viewportY = viewport->getViewportY() - viewport->getViewportOffsetY() + viewport->getViewportHeight() / 2;
+		float viewportX = viewport->getViewportX() - viewport->getViewportOffsetX() + viewport->getViewportWidth() / 2.0f;
+		float viewportY = viewport->getViewportY() - viewport->getViewportOffsetY() + viewport->getViewportHeight() / 2.0f;
 		if (input->isKeyDown(UP_KEY))
 		{
 			viewportVy -= MAX_VIEWPORT_AXIS_VELOCITY;

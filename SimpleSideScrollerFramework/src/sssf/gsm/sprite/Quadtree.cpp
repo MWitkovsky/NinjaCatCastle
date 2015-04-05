@@ -2,10 +2,10 @@
 
 Quadtree::Quadtree(Game* game){
 	depth = 1;
-	dimensions[0].setHeight(game->getGSM()->getWorld()->getWorldHeight());
-	dimensions[0].setWidth(game->getGSM()->getWorld()->getWorldWidth());
-	dimensions[0].setCenterX(game->getGSM()->getWorld()->getWorldWidth() / 2);
-	dimensions[0].setCenterY(game->getGSM()->getWorld()->getWorldHeight() / 2);
+	dimensions[0].setHeight((float)game->getGSM()->getWorld()->getWorldHeight());
+	dimensions[0].setWidth((float)game->getGSM()->getWorld()->getWorldWidth());
+	dimensions[0].setCenterX(game->getGSM()->getWorld()->getWorldWidth() / 2.0f);
+	dimensions[0].setCenterY(game->getGSM()->getWorld()->getWorldHeight() / 2.0f);
 	if (depth <= MAX_DEPTH){
 		split(&dimensions[0], 0, depth + 1);
 	}
