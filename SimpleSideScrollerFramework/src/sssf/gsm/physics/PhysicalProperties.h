@@ -17,6 +17,7 @@ protected:
 	float velocityY;
 	float accelerationX;
 	float accelerationY;
+	const float MAX_SPEED = 20.0f;
 	boolean affectedByGravity;
 
 public:
@@ -87,7 +88,18 @@ public:
 
 	void applyAcceleration()
 	{
-		velocityX += accelerationX;
+		if (velocityX + accelerationX <= MAX_SPEED
+			&& velocityX + accelerationX >= -MAX_SPEED){
+			velocityX += accelerationX;
+		}
+		else{
+			if (velocityX > 0){
+				velocityX = MAX_SPEED;
+			}
+			else{
+				velocityX = -MAX_SPEED;
+			}
+		}
 		velocityY += accelerationY;
 	}
 };

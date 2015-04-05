@@ -43,6 +43,7 @@ protected:
 	// Player Specific values
 	boolean controllable = true;
 	boolean doubleJump = false;
+	boolean facingRight = false;
 
 	int HP = 10;
 	int visibleFrames = HP;
@@ -64,6 +65,7 @@ public:
 	boolean				isControllable()	{ return controllable; }
 	wstring				getOriginalState()  { return originalState; }
 	int					getLives()			{ return lives; }
+	boolean				isFacingRight()		{ return facingRight; }
 
 	// INLINED MUTATOR METHODS
 	void setAlpha(int initAlpha)
@@ -112,6 +114,9 @@ public:
 	}
 	void setLives(int lives){
 		this->lives = lives;
+	}
+	void setFacingRight(boolean facingRight){
+		this->facingRight = facingRight;
 	}
 
 	// METHODS DEFINED IN AnimatedSprite.cpp

@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<sprite_type>
+ <width>128</width>
+ <height>128</height>
+ <images_list>
+  <image_file id="1" file_name="IDLE_RIGHT/maincharacter_IDLE0001.png"/>
+  <image_file id="2" file_name="IDLE_RIGHT/maincharacter_IDLE0002.png"/>
+  <image_file id="3" file_name="IDLE_RIGHT/maincharacter_IDLE0003.png"/>
+  <image_file id="4" file_name="IDLE_LEFT/maincharacter_IDLE0001.png"/>
+  <image_file id="5" file_name="IDLE_LEFT/maincharacter_IDLE0002.png"/>
+  <image_file id="6" file_name="IDLE_LEFT/maincharacter_IDLE0003.png"/>
+  <image_file id="7" file_name="HIT/maincharacter_HIT0001.png"/>
+  <image_file id="8" file_name="HIT/maincharacter_HIT0002.png"/>
+  <image_file id="9" file_name="HIT/maincharacter_HIT0003.png"/>
+  <image_file id="10" file_name="HIT/maincharacter_HIT0004.png"/>
+  <image_file id="11" file_name="HIT/maincharacter_HIT0005.png"/>
+  <image_file id="12" file_name="HIT/maincharacter_HIT0006.png"/>
+  <image_file id="13" file_name="JUMPING_DOWN_RIGHT/maincharacter_JUMPING_DOWN0001.png"/>
+  <image_file id="14" file_name="WALK_LEFT/maincharacter_WALK_LEFT0001.png"/>
+  <image_file id="15" file_name="WALK_LEFT/maincharacter_WALK_LEFT0002.png"/>
+  <image_file id="16" file_name="WALK_LEFT/maincharacter_WALK_LEFT0003.png"/>
+  <image_file id="17" file_name="WALK_LEFT/maincharacter_WALK_LEFT0004.png"/>
+  <image_file id="18" file_name="WALK_LEFT/maincharacter_WALK_LEFT0005.png"/>
+  <image_file id="19" file_name="WALK_LEFT/maincharacter_WALK_LEFT0006.png"/>
+  <image_file id="20" file_name="WALK_LEFT/maincharacter_WALK_LEFT0007.png"/>
+  <image_file id="21" file_name="WALK_LEFT/maincharacter_WALK_LEFT0008.png"/>
+  <image_file id="22" file_name="WALK_RIGHT/maincharacter_WALK_RIGHT0001.png"/>
+  <image_file id="23" file_name="WALK_RIGHT/maincharacter_WALK_RIGHT0002.png"/>
+  <image_file id="24" file_name="WALK_RIGHT/maincharacter_WALK_RIGHT0003.png"/>
+  <image_file id="25" file_name="WALK_RIGHT/maincharacter_WALK_RIGHT0004.png"/>
+  <image_file id="26" file_name="WALK_RIGHT/maincharacter_WALK_RIGHT0005.png"/>
+  <image_file id="27" file_name="WALK_RIGHT/maincharacter_WALK_RIGHT0006.png"/>
+  <image_file id="28" file_name="WALK_RIGHT/maincharacter_WALK_RIGHT0007.png"/>
+  <image_file id="29" file_name="WALK_RIGHT/maincharacter_WALK_RIGHT0008.png"/>
+  <image_file id="30" file_name="JUMPING_UP_RIGHT/maincharacter_JUMPING_UP0001.png"/>
+  <image_file id="31" file_name="DEAD/maincharacter_DEAD0001.png"/>
+  <image_file id="32" file_name="DEAD/maincharacter_DEAD0002.png"/>
+  <image_file id="33" file_name="DEAD/maincharacter_DEAD0003.png"/>
+  <image_file id="34" file_name="DEAD/maincharacter_DEAD0004.png"/>
+  <image_file id="35" file_name="DEAD/maincharacter_DEAD0005.png"/>
+  <image_file id="36" file_name="DEAD/maincharacter_DEAD0006.png"/>
+  <image_file id="37" file_name="DEAD/maincharacter_DEAD0007.png"/>
+  <image_file id="38" file_name="DEAD/maincharacter_DEAD0008.png"/>
+  <image_file id="39" file_name="DEAD/maincharacter_DEAD0009.png"/>
+  <image_file id="40" file_name="DEAD/maincharacter_DEAD0010.png"/>
+  <image_file id="41" file_name="DEAD/maincharacter_DEAD0011.png"/>
+  <image_file id="42" file_name="DEAD/maincharacter_DEAD0012.png"/>
+  <image_file id="43" file_name="DEAD/maincharacter_DEAD0013.png"/>
+  <image_file id="44" file_name="DEAD/maincharacter_DEAD0014.png"/>
+  <image_file id="45" file_name="DEAD/maincharacter_DEAD0015.png"/>
+  <image_file id="46" file_name="DEAD/maincharacter_DEAD0016.png"/>
+  <image_file id="47" file_name="DEAD/maincharacter_DEAD0017.png"/>
+  <image_file id="48" file_name="DEAD/maincharacter_DEAD0018.png"/>
+  <image_file id="49" file_name="DEAD/maincharacter_DEAD0019.png"/>
+  <image_file id="50" file_name="DEAD/maincharacter_DEAD0020.png"/>
+  <image_file id="51" file_name="DEAD/maincharacter_DEAD0021.png"/>
+  <image_file id="52" file_name="DEAD/maincharacter_DEAD0022.png"/>
+  <image_file id="53" file_name="DEAD/maincharacter_DEAD0023.png"/>
+  <image_file id="54" file_name="DEAD/maincharacter_DEAD0024.png"/>
+  <image_file id="55" file_name="DEAD/maincharacter_DEAD0025.png"/>
+  <image_file id="56" file_name="DEAD/maincharacter_DEAD0026.png"/>
+  <image_file id="57" file_name="DEAD/maincharacter_DEAD0027.png"/>
+  <image_file id="58" file_name="DEAD/maincharacter_DEAD0028.png"/>
+  <image_file id="59" file_name="DEAD/maincharacter_DEAD0029.png"/>
+  <image_file id="60" file_name="JUMP_START/maincharacter_JUMP_START0004.png"/>
+  <image_file id="61" file_name="JUMPING_ARC_RIGHT/maincharacter_JUMPING_ARC0001.png"/>
+  <image_file id="62" file_name="JUMPING_ARC_RIGHT/maincharacter_JUMPING_ARC0002.png"/>
+  <image_file id="63" file_name="JUMPING_ARC_RIGHT/maincharacter_JUMPING_ARC0003.png"/>
+  <image_file id="64" file_name="JUMPING_UP_LEFT/maincharacter_JUMPING_UP0001.png"/>
+  <image_file id="65" file_name="JUMPING_DOWN_LEFT/maincharacter_JUMPING_DOWN0001.png"/>
+  <image_file id="66" file_name="JUMPING_ARC_LEFT/maincharacter_JUMPING_ARC0001.png"/>
+  <image_file id="67" file_name="JUMPING_ARC_LEFT/maincharacter_JUMPING_ARC0002.png"/>
+  <image_file id="68" file_name="JUMPING_ARC_LEFT/maincharacter_JUMPING_ARC0003.png"/>
+  <image_file id="69" file_name="HIT/maincharacter_HIT0001.png"/>
+  <image_file id="70" file_name="HIT/maincharacter_HIT0002.png"/>
+  <image_file id="71" file_name="HIT/maincharacter_HIT0003.png"/>
+  <image_file id="72" file_name="HIT/maincharacter_HIT0004.png"/>
+  <image_file id="73" file_name="HIT/maincharacter_HIT0005.png"/>
+  <image_file id="74" file_name="HIT/maincharacter_HIT0006.png"/>
+ </images_list>
+ <animations_list>
+  <animation_state>
+   <state>IDLE_RIGHT</state>
+   <animation_sequence>
+    <pose image_id="1" duration="2"/>
+    <pose image_id="2" duration="2"/>
+    <pose image_id="3" duration="2"/>
+    <pose image_id="3" duration="2"/>
+    <pose image_id="2" duration="2"/>
+    <pose image_id="1" duration="2"/>
+   </animation_sequence>
+  </animation_state>
+  <animation_state>
+   <state>IDLE_LEFT</state>
+   <animation_sequence>
+    <pose image_id="4" duration="2"/>
+    <pose image_id="5" duration="2"/>
+    <pose image_id="6" duration="2"/>
+    <pose image_id="6" duration="2"/>
+    <pose image_id="5" duration="2"/>
+    <pose image_id="4" duration="2"/>
+   </animation_sequence>
+  </animation_state>
+  <animation_state>
+   <state>HIT</state>
+   <animation_sequence>
+    <pose image_id="1" duration="2"/>
+    <pose image_id="2" duration="2"/>
+    <pose image_id="3" duration="2"/>
+    <pose image_id="4" duration="2"/>
+    <pose image_id="5" duration="2"/>
+    <pose image_id="6" duration="2"/>
+   </animation_sequence>
+  </animation_state>
+  <animation_state>
+   <state>JUMP_START</state>
+   <animation_sequence>
+    <pose image_id="60" duration="1"/>
+   </animation_sequence>
+  </animation_state>
+  <animation_state>
+   <state>JUMPING_ASCEND_RIGHT</state>
+   <animation_sequence>
+    <pose image_id="30" duration="1"/>
+   </animation_sequence>
+  </animation_state>
+  <animation_state>
+   <state>JUMPING_ARC_RIGHT</state>
+   <animation_sequence>
+    <pose image_id="61" duration="3"/>
+	<pose image_id="62" duration="3"/>
+	<pose image_id="63" duration="3"/>
+   </animation_sequence>
+  </animation_state>
+  <animation_state>
+   <state>JUMPING_DESCEND_RIGHT</state>
+   <animation_sequence>
+    <pose image_id="13" duration="1"/>
+   </animation_sequence>
+  </animation_state>
+  <animation_state>
+   <state>JUMPING_ASCEND_LEFT</state>
+   <animation_sequence>
+    <pose image_id="64" duration="1"/>
+   </animation_sequence>
+  </animation_state>
+  <animation_state>
+   <state>JUMPING_ARC_LEFT</state>
+   <animation_sequence>
+    <pose image_id="66" duration="3"/>
+	<pose image_id="67" duration="3"/>
+	<pose image_id="68" duration="3"/>
+   </animation_sequence>
+  </animation_state>
+  <animation_state>
+   <state>JUMPING_DESCEND_LEFT</state>
+   <animation_sequence>
+    <pose image_id="65" duration="1"/>
+   </animation_sequence>
+  </animation_state>
+  <animation_state>
+   <state>WALK_LEFT</state>
+   <animation_sequence>
+    <pose image_id="14" duration="1"/>
+    <pose image_id="15" duration="1"/>
+    <pose image_id="16" duration="1"/>
+	<pose image_id="17" duration="1"/>
+	<pose image_id="18" duration="1"/>
+	<pose image_id="19" duration="1"/>
+	<pose image_id="20" duration="1"/>
+	<pose image_id="21" duration="1"/>
+   </animation_sequence>
+  </animation_state>
+  <animation_state>
+   <state>WALK_RIGHT</state>
+   <animation_sequence>
+    <pose image_id="22" duration="1"/>
+    <pose image_id="23" duration="1"/>
+    <pose image_id="24" duration="1"/>
+	<pose image_id="25" duration="1"/>
+	<pose image_id="26" duration="1"/>
+	<pose image_id="27" duration="1"/>
+	<pose image_id="28" duration="1"/>
+	<pose image_id="29" duration="1"/>
+   </animation_sequence>
+  </animation_state>
+  <animation_state>
+   <state>HIT</state>
+   <animation_sequence>
+    <pose image_id="69" duration="2"/>
+    <pose image_id="70" duration="2"/>
+    <pose image_id="71" duration="2"/>
+	<pose image_id="72" duration="2"/>
+	<pose image_id="73" duration="2"/>
+	<pose image_id="74" duration="2"/>
+   </animation_sequence>
+  </animation_state>
+  <animation_state>
+   <state>DIE</state>
+   <animation_sequence>
+	<pose image_id="31" duration="2"/>
+    <pose image_id="32" duration="2"/>
+	<pose image_id="33" duration="2"/>
+    <pose image_id="34" duration="2"/>
+	<pose image_id="35" duration="2"/>
+    <pose image_id="36" duration="2"/>
+	<pose image_id="37" duration="2"/>
+    <pose image_id="38" duration="2"/>
+	<pose image_id="39" duration="2"/>
+    <pose image_id="40" duration="2"/>
+	<pose image_id="41" duration="2"/>
+    <pose image_id="42" duration="2"/>
+	<pose image_id="43" duration="2"/>
+    <pose image_id="44" duration="2"/>
+    <pose image_id="45" duration="2"/>
+    <pose image_id="46" duration="2"/>
+    <pose image_id="47" duration="2"/>
+	<pose image_id="48" duration="2"/>
+    <pose image_id="49" duration="2"/>
+	<pose image_id="50" duration="2"/>
+    <pose image_id="51" duration="2"/>
+	<pose image_id="52" duration="2"/>
+    <pose image_id="53" duration="2"/>
+	<pose image_id="54" duration="2"/>
+    <pose image_id="55" duration="2"/>
+	<pose image_id="56" duration="2"/>
+    <pose image_id="57" duration="2"/>
+	<pose image_id="58" duration="2"/>
+    <pose image_id="59" duration="2"/>
+   </animation_sequence>
+  </animation_state>
+ </animations_list>  
+</sprite_type>

@@ -50,8 +50,16 @@ void AnimatedSprite::changeFrame()
 
 	// GO BACK TO FIRST INDEX IF NECESSARY
 	if (frameIndex == spriteType->getSequenceSize(currentState)){
-		if (currentState != L"DIE"){
-			frameIndex = 0;
+		if (currentState != L"DIE" && currentState != L"HIT"){
+			if (currentState == L"JUMPING_ARC_RIGHT"){
+				setCurrentState(L"JUMPING_DESCEND_RIGHT");
+			}
+			else if (currentState == L"JUMPING_ARC_LEFT"){
+				setCurrentState(L"JUMPING_DESCEND_LEFT");
+			}
+			else{
+				frameIndex = 0;
+			}
 		}
 		else{
 			frameIndex = frameIndex -= 2;

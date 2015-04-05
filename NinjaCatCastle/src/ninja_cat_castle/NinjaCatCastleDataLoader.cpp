@@ -170,6 +170,9 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 	PoseurSpriteTypesImporter psti;
 	psti.loadSpriteTypes(game, SPRITE_TYPES_LIST);
 
+
+	game->getGUI()->getViewport()->setViewportY(900);
+
 	// LET'S MAKE A PLAYER SPRITE
 	// @TODO - IT WOULD BE BETTER TO LOAD THIS STUFF FROM A FILE
 	GameStateManager *gsm = game->getGSM();
@@ -184,7 +187,7 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 		AnimatedSpriteType *playerSpriteType = spriteManager->getSpriteType(2);
 		player->setSpriteType(playerSpriteType);
 		player->setAlpha(255);
-		player->setCurrentState(IDLE);
+		player->setCurrentState(L"JUMPING_DESCEND_RIGHT");
 		PhysicalProperties *playerProps = player->getPhysicalProperties();
 		playerProps->setX(PLAYER_INIT_X);
 		playerProps->setY(PLAYER_INIT_Y);
@@ -221,7 +224,7 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 	}
 	else{
 		player->setAlpha(255);
-		player->setCurrentState(IDLE);
+		player->setCurrentState(L"JUMPING_DESCEND_RIGHT");
 		PhysicalProperties *playerProps = player->getPhysicalProperties();
 		playerProps->setX(playerProps->getOriginalX());
 		playerProps->setY(playerProps->getOriginalY());

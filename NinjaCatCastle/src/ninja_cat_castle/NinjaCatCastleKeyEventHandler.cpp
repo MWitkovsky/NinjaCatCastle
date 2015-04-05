@@ -50,24 +50,41 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 		// PRESSED, THAT WAY PHYSICS CAN CORRECT AS NEEDED
 		float vX = pp->getVelocityX();
 		float vY = pp->getVelocityY();
+		wstring state = player->getCurrentState();
 
 		// YOU MIGHT WANT TO UNCOMMENT THIS FOR SOME TESTING,
 		// BUT IN THIS ASSIGNMENT, THE USER MOVES VIA MOUSE BUTTON PRESSES
 		if (player->isControllable()){
 			if (input->isKeyDown(A_KEY))
 			{
-				vX = -PLAYER_SPEED;
-				player->setCurrentState(ATTACKING_LEFT);
+				if (state != L"JUMPING_DESCEND_LEFT" && state != L"JUMPING_DESCEND_RIGHT"
+					&& state != L"JUMPING_ASCEND_LEFT" && state != L"JUMPING_ASCEND_RIGHT"
+					&& state != L"JUMPING_ARC_LEFT" && state != L"JUMPING_ARC_RIGHT"){
+					player->setFacingRight(false);
+					player->setCurrentState(L"WALK_LEFT");
+					vX = -PLAYER_SPEED;
+				}
 			}
 			else if (input->isKeyDown(D_KEY))
 			{
-				vX = PLAYER_SPEED;
-				player->setCurrentState(ATTACKING_RIGHT);
+				if (state != L"JUMPING_DESCEND_LEFT" && state != L"JUMPING_DESCEND_RIGHT"
+					&& state != L"JUMPING_ASCEND_LEFT" && state != L"JUMPING_ASCEND_RIGHT"
+					&& state != L"JUMPING_ARC_LEFT" && state != L"JUMPING_ARC_RIGHT"){
+					player->setFacingRight(true);
+					player->setCurrentState(L"WALK_RIGHT");
+					vX = PLAYER_SPEED;
+				}
 			}
 			else
 			{
-				vX = 0.0f;
-				player->setCurrentState(IDLE);
+				if (state == L"WALK_LEFT" || state == L"IDLE_LEFT"){
+					vX = 0.0f;
+					player->setCurrentState(L"IDLE_LEFT");
+				}
+				else if (state == L"WALK_RIGHT" || state == L"IDLE_RIGHT"){
+					vX = 0.0f;
+					player->setCurrentState(L"IDLE_RIGHT");
+				}
 			}
 
 			if (input->isKeyDownForFirstTime(SPACE_KEY))
@@ -111,7 +128,7 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 			gsm->getPhysics()->activateForSingleUpdate();
 		}
 		// NOW SET THE ACTUAL PLAYER VELOCITY
- 		pp->setVelocity(vX, vY);
+		pp->setVelocity(vX, vY);
 
 		bool viewportMoved = false;
 		float viewportVx = 0.0f;
