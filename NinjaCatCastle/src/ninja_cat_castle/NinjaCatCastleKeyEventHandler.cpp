@@ -98,7 +98,7 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 			//FOR PRECISION JUMPING
 			if (input->wasKeyReleased(SPACE_KEY)){
 				if (vY < 0){
-					vY = vY / 2.0f;
+					vY = vY / 3.0f;
 				}
 				player->setWasJump(false);
 			}

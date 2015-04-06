@@ -73,13 +73,13 @@ static const wstring    DIE = L"DIE";
 
 // FOR THE GAME WORLD
 static const float		MAX_VIEWPORT_AXIS_VELOCITY = 20.0f;
-static const float		W_GRAVITY = 0.8f;
+static const float		W_GRAVITY = 3.2f;
 static const float		JUMPING_BOT_MIN_CYCLES = 30;
 static const float		JUMPING_BOT_MAX_CYCLES = 120;
 static const float		JUMPING_BOT_MAX_VELOCITY = 40;
 static const float		PLAYER_INIT_X = 80.0f;
 static const float		PLAYER_INIT_Y = 1000.0f;
-static const float		JUMP_SPEED = -24.0f;
+static const float		JUMP_SPEED = -48.0f;
 static const float		PLAYER_SPEED = 20.0f;
 static const int		MIN_FPS = 5;
 static const int		MAX_FPS = 100;

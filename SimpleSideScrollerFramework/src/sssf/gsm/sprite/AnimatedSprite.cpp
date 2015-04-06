@@ -115,8 +115,14 @@ void AnimatedSprite::updateSprite()
 
 void AnimatedSprite::affixTightAABBBoundingVolume()
 {
-	boundingVolume.setCenterX(pp.getX() + (spriteType->getTextureWidth()/2));
-	boundingVolume.setCenterY(pp.getY() + (spriteType->getTextureHeight()/2));
+	if (spriteType->getSpriteTypeID() == 2){
+		boundingVolume.setCenterX(pp.getX() + (128.0f / 2.0f));
+		boundingVolume.setCenterY(pp.getY() + (128.0f / 2.0f));
+	}
+	else{
+		boundingVolume.setCenterX(pp.getX() + (spriteType->getTextureWidth() / 2));
+		boundingVolume.setCenterY(pp.getY() + (spriteType->getTextureHeight() / 2));
+	}
 	boundingVolume.setWidth((float)spriteType->getTextureWidth());
 	boundingVolume.setHeight((float)spriteType->getTextureHeight());
 }
