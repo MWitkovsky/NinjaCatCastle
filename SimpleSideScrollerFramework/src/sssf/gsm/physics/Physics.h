@@ -1,4 +1,4 @@
-/*	
+﻿/*	
 	Author: Richard McKenna
 
 	Physics.h
@@ -65,6 +65,7 @@ public:
 	bool activatedForSingleUpdate;
 
 	//BOX2D DECLARATIONS
+	//ザ・ワールド！！！！！
 	b2World *world;
 	b2Vec2 b2Gravity;
 
