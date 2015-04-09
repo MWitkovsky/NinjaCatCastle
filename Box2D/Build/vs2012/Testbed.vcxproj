@@ -210,7 +210,12 @@
     <ClInclude Include="..\..\Testbed\Framework\Render.h" />
     <ClInclude Include="..\..\Testbed\Framework\Test.h" />
     <ClInclude Include="..\..\Testbed\Tests\AddPair.h" />
+    <ClInclude Include="..\..\Testbed\Tests\AnatomyCollision.h" />
     <ClInclude Include="..\..\Testbed\Tests\ApplyForce.h" />
+    <ClInclude Include="..\..\Testbed\Tests\b2dJson.h" />
+    <ClInclude Include="..\..\Testbed\Tests\b2dJsonImage.h" />
+    <ClInclude Include="..\..\Testbed\Tests\bitmap.h" />
+    <ClInclude Include="..\..\Testbed\Tests\Bodies.h" />
     <ClInclude Include="..\..\Testbed\Tests\BodyTypes.h" />
     <ClInclude Include="..\..\Testbed\Tests\Breakable.h" />
     <ClInclude Include="..\..\Testbed\Tests\Bridge.h" />
@@ -219,10 +224,13 @@
     <ClInclude Include="..\..\Testbed\Tests\Car.h" />
     <ClInclude Include="..\..\Testbed\Tests\Chain.h" />
     <ClInclude Include="..\..\Testbed\Tests\CharacterCollision.h" />
+    <ClInclude Include="..\..\Testbed\Tests\CollisionCallback.h" />
+    <ClInclude Include="..\..\Testbed\Tests\CollisionFilter.h" />
     <ClInclude Include="..\..\Testbed\Tests\CollisionFiltering.h" />
     <ClInclude Include="..\..\Testbed\Tests\CollisionProcessing.h" />
     <ClInclude Include="..\..\Testbed\Tests\CompoundShapes.h" />
     <ClInclude Include="..\..\Testbed\Tests\Confined.h" />
+    <ClInclude Include="..\..\Testbed\Tests\ConstSpeedTest.h" />
     <ClInclude Include="..\..\Testbed\Tests\ContinuousTest.h" />
     <ClInclude Include="..\..\Testbed\Tests\ConvexHull.h" />
     <ClInclude Include="..\..\Testbed\Tests\ConveyorBelt.h" />
@@ -233,11 +241,16 @@
     <ClInclude Include="..\..\Testbed\Tests\DynamicTreeTest.h" />
     <ClInclude Include="..\..\Testbed\Tests\EdgeShapes.h" />
     <ClInclude Include="..\..\Testbed\Tests\EdgeTest.h" />
+    <ClInclude Include="..\..\Testbed\Tests\FooTest.h" />
+    <ClInclude Include="..\..\Testbed\Tests\Forces.h" />
+    <ClInclude Include="..\..\Testbed\Tests\Forces2.h" />
     <ClInclude Include="..\..\Testbed\Tests\Gears.h" />
+    <ClInclude Include="..\..\Testbed\Tests\MapLoadTest.h" />
     <ClInclude Include="..\..\Testbed\Tests\Mobile.h" />
     <ClInclude Include="..\..\Testbed\Tests\MobileBalanced.h" />
     <ClInclude Include="..\..\Testbed\Tests\MotorJoint.h" />
     <ClInclude Include="..\..\Testbed\Tests\OneSidedPlatform.h" />
+    <ClInclude Include="..\..\Testbed\Tests\OwnObject.h" />
     <ClInclude Include="..\..\Testbed\Tests\Pinball.h" />
     <ClInclude Include="..\..\Testbed\Tests\PolyCollision.h" />
     <ClInclude Include="..\..\Testbed\Tests\PolyShapes.h" />
@@ -247,10 +260,12 @@
     <ClInclude Include="..\..\Testbed\Tests\RayCast.h" />
     <ClInclude Include="..\..\Testbed\Tests\Revolute.h" />
     <ClInclude Include="..\..\Testbed\Tests\RopeJoint.h" />
+    <ClInclude Include="..\..\Testbed\Tests\Sensors.h" />
     <ClInclude Include="..\..\Testbed\Tests\SensorTest.h" />
     <ClInclude Include="..\..\Testbed\Tests\ShapeEditing.h" />
     <ClInclude Include="..\..\Testbed\Tests\SliderCrank.h" />
     <ClInclude Include="..\..\Testbed\Tests\SphereStack.h" />
+    <ClInclude Include="..\..\Testbed\Tests\TestWorld.h" />
     <ClInclude Include="..\..\Testbed\Tests\TheoJansen.h" />
     <ClInclude Include="..\..\Testbed\Tests\Tiles.h" />
     <ClInclude Include="..\..\Testbed\Tests\TimeOfImpact.h" />
@@ -267,6 +282,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Testbed\Framework\Test.cpp">
     </ClCompile>
+    <ClCompile Include="..\..\Testbed\Tests\b2dJson.cpp" />
+    <ClCompile Include="..\..\Testbed\Tests\b2dJsonImage.cpp" />
+    <ClCompile Include="..\..\Testbed\Tests\jsoncpp.cpp" />
     <ClCompile Include="..\..\Testbed\Tests\TestEntries.cpp">
     </ClCompile>
   </ItemGroup>

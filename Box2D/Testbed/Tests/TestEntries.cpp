@@ -74,10 +74,35 @@
 #include "VaryingRestitution.h"
 #include "VerticalStack.h"
 #include "Web.h"
+#include "FooTest.h"
+#include "Forces.h"
+#include "Forces2.h"
+#include "Bodies.h"
+#include "TestWorld.h"
+#include "ConstSpeedTest.h"
+#include "OwnObject.h"
+#include "CollisionCallback.h"
+#include "CollisionFilter.h"
+#include "MapLoadTest.h"
+#include "AnatomyCollision.h"
+#include "Sensors.h"
+
 
 TestEntry g_testEntries[] =
 {
 	{"Ray-Cast", RayCast::Create},
+	{ "Sensors", Sensors::Create },
+	{ "AnatomyCollision", AnatomyCollision::Create },
+	{ "MapLoadTest", MapLoadTest::Create },
+	{ "CollisionFilter", CollisionFilter::Create },
+	{ "CollisionCallback", CollisionCallback::Create },
+	{ "ConstSpeedTest", ConstSpeedTest::Create },
+	{ "OwnObject", OwnObject::Create },
+	{ "TestWorld", TestWorld::Create },
+	{ "Bodies", Bodies::Create },
+	{ "FooTest", FooTest::Create },
+	{ "Forces", Forces::Create },
+	{ "Forces2", Forces2::Create },
 	{"Dump Shell", DumpShell::Create},
 	{"Convex Hull", ConvexHull::Create},
 	{"Apply Force", ApplyForce::Create},
