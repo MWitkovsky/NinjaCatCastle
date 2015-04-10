@@ -43,23 +43,6 @@ public:
 	// EVENTS TO COLLISIONS BETWEEN GAME OBJECTS
 	CollisionListener *collisionListener;
 
-	// WE USE LISTS BECAUSE WE ONLY REMOVE AND ADD FROM THE END FOR THESE 
-	list<Collision*> recycledCollisions;
-	list<CollidableObject*> recycledCollidableObjectsList;
-
-	// WE USE A LIST BECAUSE WE'LL NEED TO PERIODICALLY REMOVE
-	// FROM THE CENTER, AND WHILE WE DO SORT IT, WE DON'T SEARCH
-	// IT FOR SINGLE ELEMENTS
-	list<Collision*> activeCollisions;
-
-	// SWEEP AND PRUNE STUFF
-	map<unsigned int, vector<CollidableObject*>*> sortedSweptShapes;
-
-	// THIS MAKES SURE WE AREN'T CHECKING A SLIGHLY PENETRATING COLLISION
-	// PAIR OVER AND OVER AGAIN. THAT SCENARIO IS VERY HARD TO AVOID
-	// IN A CONTINUOUS SYSTEM
-	map<CollidableObject*, set<Tile*>> spriteToTileCollisionsThisFrame;
-
 	// USED FOR TESTING PHYSICS BY TURNING IT ON AND OFF IN VARIOUS WAYS
 	bool activated;
 	bool activatedForSingleUpdate;
@@ -67,6 +50,7 @@ public:
 	//BOX2D DECLARATIONS
 	//ザ・ワールド！！！！！
 	b2World *world;
+	//Could in-line the vector in the world creation but that ain't cool, man
 	b2Vec2 b2Gravity;
 
 	// CONSTRUCDT/DESTRUCTOR
@@ -74,6 +58,7 @@ public:
 	~Physics();
 
 	// INLINED GET/SET METHODS
+	b2World*			getWorld()						{ return world; }
 	float				getGravity()					{ return gravity;					}
 	CollisionListener*	getCollisionListener()			{ return collisionListener;			}
 	bool				isActivated()					{ return activated;					}
@@ -121,32 +106,4 @@ private:
 	void reorderCollidableObject(CollidableObject *co);
 	void updateSweptShapeIndices();
 	void updateSweptShapeIndices(vector<CollidableObject*> *sweptShapes, unsigned int ordering);
-};
-
-/*
-	Provides a custom criteria for sorting for our swepts shapes when
-	we want the sorted by left edge.
-*/
-struct SweptShapesComparitorByLeft
-{
-	inline bool operator()(CollidableObject *a, CollidableObject *b)
-	{
-		AABB *aSH = a->getSweptShape();
-		AABB *bSH = b->getSweptShape();
-		return aSH->getLeft() < bSH->getLeft();
-	}
-};
-
-/*
-	Provides a custom criteria for sorting for our swepts shapes when
-	we want the sorted by right edge.
-*/
-struct SweptShapesComparitorByRight
-{
-	inline bool operator()(CollidableObject *a, CollidableObject *b)
-	{
-		AABB *aSH = a->getSweptShape();
-		AABB *bSH = b->getSweptShape();
-		return aSH->getRight() < bSH->getRight();
-	}
 };

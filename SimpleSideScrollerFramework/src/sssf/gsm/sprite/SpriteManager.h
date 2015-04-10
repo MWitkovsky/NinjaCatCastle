@@ -52,10 +52,7 @@ public:
 	// METHODS DEFINED IN SpriteManager.cpp
 	void				addBot(Bot *botToAdd);
 	void				addSpriteItemsToRenderList(Game *game);
-	void				addSpriteItemsToRenderListQuadtree(Game *game);
 	void				renderVisibleSprite(AnimatedSprite *sprite, RenderList *renderList, Viewport *viewport);
-	void				placeBotsInTree();
-	list<Bot*>			getVisibleBots(Game *game);
 	unsigned int		addSpriteType(AnimatedSpriteType *spriteTypeToAdd);
 	void				addSpriteToRenderList(AnimatedSprite *sprite, RenderList *renderList, Viewport *viewport);
 	void				clearSprites();
@@ -64,6 +61,6 @@ public:
 	void				unloadSprites(Game *game);
 	unsigned int		getNumberOfBots();
 	unsigned int		getNumberOfBotsInNode(int node);
-	void				checkForCollisions(Game *game, AnimatedSprite *sprite);
+	//void				checkForCollisions(Game *game, AnimatedSprite *sprite);
 	void				update(Game *game);
 };

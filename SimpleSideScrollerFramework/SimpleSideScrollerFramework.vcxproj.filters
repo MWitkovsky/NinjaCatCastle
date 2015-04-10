@@ -174,9 +174,6 @@
     <ClCompile Include="src\sssf\platforms\Windows\WindowsTimer.cpp">
       <Filter>src\sssf\platforms\Windows</Filter>
     </ClCompile>
-    <ClCompile Include="src\sssf\gsm\sprite\Quadtree.cpp">
-      <Filter>src\sssf\gsm\sprite</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\sssf_VS\stdafx.h">
@@ -328,9 +325,6 @@
     </ClInclude>
     <ClInclude Include="src\sssf\os\GameOS.h">
       <Filter>src\sssf\os</Filter>
-    </ClInclude>
-    <ClInclude Include="src\sssf\gsm\sprite\Quadtree.h">
-      <Filter>src\sssf\gsm\sprite</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

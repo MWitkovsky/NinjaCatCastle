@@ -2,6 +2,7 @@
 #include "sssf_VS\stdafx.h"
 #include "sssf\gsm\physics\AABB.h"
 #include "sssf\gsm\physics\PhysicalProperties.h"
+#include "Box2D\Box2D.h"
 
 // THESE ARE THE SWEEP AND PRUNE ORDERINGS
 const unsigned int LEFT_EDGE = 0;
@@ -12,11 +13,9 @@ const unsigned int BOTTOM_EDGE = 3;
 class CollidableObject
 {
 protected:
-	AABB boundingVolume;
-	bool currentlyCollidable;
-	AABB sweptShape;
-	unsigned int sweepAndPruneIndices[4];
-	PhysicalProperties pp;
+	//These are replacements for the AABB and physical properties
+	b2BodyDef bodyDef;
+	b2PolygonShape shape;
 	bool onTileThisFrame;
 	bool onTileLastFrame;
 	unsigned int collisionEdge;
@@ -26,27 +25,15 @@ public:
 	~CollidableObject()	{}
 	virtual void Something() {}
 
-	// CollidableObject.cpp METHODS
-	void updateSweptShape(float percentageOfFrameTimeRemaining);
-
 	// INLINED METHODS
-	bool				isCurrentlyCollidable()		{ return currentlyCollidable;	}
+	b2BodyDef			getBodyDef()				{ return bodyDef; }
+	b2PolygonShape		getShape()					{ return shape; }
 	bool				isOnTileThisFrame()			{ return onTileThisFrame;		}
 	bool				wasOnTileLastFrame()		{ return onTileLastFrame;		}
-	AABB*				getBoundingVolume()			{ return &boundingVolume;		}
-	AABB*				getSweptShape()				{ return &sweptShape;			}
-	PhysicalProperties* getPhysicalProperties()		{ return &pp;					}
 	unsigned int		getCollisionEdge()			{ return collisionEdge;			}
 
 	void				setCollisionEdge(unsigned int initCollisionEdge)
 	{	collisionEdge = initCollisionEdge; }
-	unsigned int		getSweepAndPruneIndex(unsigned int sweepAndPruneOrdering)		
-	{ return sweepAndPruneIndices[sweepAndPruneOrdering];	}
-	void				setSweepAndPruneIndex(unsigned int sweepAndPruneOrdering, unsigned int index)
-	{ sweepAndPruneIndices[sweepAndPruneOrdering] = index;  }
-
-	void setCurrentlyCollidable(bool initCurrentlyCollidable)
-	{	currentlyCollidable = initCurrentlyCollidable; }
 	void setOnTileThisFrame(bool initOnTileThisFrame)
 	{	onTileThisFrame = initOnTileThisFrame; }
 	void setOnTileLastFrame(bool initOnTileLastFrame)

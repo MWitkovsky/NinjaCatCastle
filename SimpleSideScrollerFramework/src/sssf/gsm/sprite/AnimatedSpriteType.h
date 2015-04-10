@@ -14,6 +14,7 @@
 #pragma once
 #include "sssf_VS\stdafx.h"
 
+//ALL THIS STUFF IS ACTUALLY IMPORTANT! NOT RELATED TO BOX2D!
 class AnimatedSpriteType
 {
 private:

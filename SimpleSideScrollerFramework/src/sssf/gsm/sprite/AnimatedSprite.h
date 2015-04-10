@@ -126,6 +126,4 @@ public:
 	unsigned int getCurrentImageID();
 	void setCurrentState(wstring newState);
 	void updateSprite();
-	void affixTightAABBBoundingVolume();
-	void correctToTightBoundingVolume();
 };

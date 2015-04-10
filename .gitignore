@@ -1,6 +1,7 @@
 Temp/
 Common/
-*.png
+Apps/NinjaCatCastle/data/levels/SideScrollerDesert
+Apps/NinjaCatCastle/data/levels/SideScrollerMetal
 *.sdf
 *.tlog
 *.idb

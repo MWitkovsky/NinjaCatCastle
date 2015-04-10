@@ -19,17 +19,8 @@
 #include "sssf\gsm\state\GameStateManager.h"
 #include "sssf\gsm\physics\Collision.h"
 #include "sssf\gsm\sprite\Quadtree.h"
-
-Quadtree* botsTree;
+#include "Box2D\Box2D.h"
 AABB viewportDimensions;
-
-float SpriteManager::getQuadtreeNodeX(unsigned int index){
-	return botsTree->getDimension(index).getCenterX();
-}
-
-float SpriteManager::getQuadtreeNodeY(unsigned int index){
-	return botsTree->getDimension(index).getCenterY();
-}
 
 /*
 	addSpriteToRenderList - This method checks to see if the sprite
@@ -42,12 +33,13 @@ void SpriteManager::addSpriteToRenderList(AnimatedSprite *sprite,
 {
 	// GET THE SPRITE TYPE INFO FOR THIS SPRITE
 	AnimatedSpriteType *spriteType = sprite->getSpriteType();
-	PhysicalProperties *pp = sprite->getPhysicalProperties();
+	//Everything using PP now is using the body def I guess?
+	b2BodyDef *pp = &sprite->getBodyDef();
 
 	// IS THE SPRITE VIEWABLE?
 	if (viewport->areWorldCoordinatesInViewport(	
-									pp->getX(),
-									pp->getY(),
+									pp->position.x,
+									pp->position.y,
 									spriteType->getTextureWidth(),
 									spriteType->getTextureHeight()))
 	{
@@ -55,9 +47,9 @@ void SpriteManager::addSpriteToRenderList(AnimatedSprite *sprite,
 		RenderItem itemToAdd;
 		itemToAdd.id = sprite->getFrameIndex();
 		renderList->addRenderItem(	sprite->getCurrentImageID(),
-									pp->round(pp->getX()-viewport->getViewportX()),
-									pp->round(pp->getY()-viewport->getViewportY()),
-									pp->round(pp->getZ()),
+			(int)pp->position.x - viewport->getViewportX(),
+			(int)pp->position.y - viewport->getViewportY(),
+									0,
 									sprite->getAlpha(),
 									spriteType->getTextureWidth(),
 									spriteType->getTextureHeight());
@@ -97,7 +89,7 @@ void SpriteManager::addSpriteItemsToRenderList(	Game *game)
 /*
 Uses quad tree for rendering instead of list
 */
-void SpriteManager::addSpriteItemsToRenderListQuadtree(Game *game){
+/*void SpriteManager::addSpriteItemsToRenderListQuadtree(Game *game){
 	GameStateManager *gsm = game->getGSM();
 	GameGUI *gui = game->getGUI();
 	if (gsm->isWorldRenderable())
@@ -108,11 +100,11 @@ void SpriteManager::addSpriteItemsToRenderListQuadtree(Game *game){
 
 		// ADD THE PLAYER SPRITE
 		// Since player isn't in Quadtree, use old method
-		PhysicalProperties *pp = player.getPhysicalProperties();
+		b2BodyDef *pp = &player.getBodyDef();
 		AnimatedSpriteType *spriteType = player.getSpriteType();
 		if (viewport->areWorldCoordinatesInViewport(
-			pp->getX(),
-			pp->getY(),
+			pp->position.x,
+			pp->position.y,
 			spriteType->getTextureWidth(),
 			spriteType->getTextureHeight()))
 			renderVisibleSprite(&player, renderList, viewport);
@@ -132,23 +124,23 @@ void SpriteManager::addSpriteItemsToRenderListQuadtree(Game *game){
 		}
 	}
 
-}
+}*/
 
 void SpriteManager::renderVisibleSprite(AnimatedSprite *sprite, RenderList *renderList, Viewport *viewport){
 	AnimatedSpriteType *spriteType = sprite->getSpriteType();
-	PhysicalProperties *pp = sprite->getPhysicalProperties();
+	b2BodyDef *pp = &sprite->getBodyDef();
 	RenderItem itemToAdd;
 	itemToAdd.id = sprite->getFrameIndex();
 	renderList->addRenderItem(sprite->getCurrentImageID(),
-		pp->round(pp->getX() - viewport->getViewportX()),
-		pp->round(pp->getY() - viewport->getViewportY()),
-		pp->round(pp->getZ()),
+		(int)pp->position.x - viewport->getViewportX(),
+		(int)pp->position.y - viewport->getViewportY(),
+		0,
 		sprite->getAlpha(),
 		spriteType->getTextureWidth(),
 		spriteType->getTextureHeight());
 }
 
-void SpriteManager::placeBotsInTree(){
+/*void SpriteManager::placeBotsInTree(){
 	botsTree->clear();
 
 	list<Bot*>::iterator botIterator = bots.begin();
@@ -156,9 +148,9 @@ void SpriteManager::placeBotsInTree(){
 		botsTree->insert(*botIterator, 0, 1);
 		botIterator++;
 	}
-}
+}*/
 
-list<Bot*> SpriteManager::getVisibleBots(Game *game){
+/*list<Bot*> SpriteManager::getVisibleBots(Game *game){
 	list<Bot*> visibleBots;
 
 	Viewport *viewport = game->getGUI()->getViewport();
@@ -171,18 +163,18 @@ list<Bot*> SpriteManager::getVisibleBots(Game *game){
 	list<int> nodes = botsTree->insertAABB(&viewportDimensions);
 	list<int>::iterator nodeIterator = nodes.begin();
 
-	PhysicalProperties* pp;
+	b2BodyDef* pp;
 	AnimatedSpriteType* spriteType;
 
 	list<Bot*> temp;
 	while (nodeIterator != nodes.end()){
 		temp = botsTree->getBots(*nodeIterator);
 		while (!temp.empty()){
-			pp = temp.front()->getPhysicalProperties();
+			pp = &temp.front()->getBodyDef();
 			spriteType = temp.front()->getSpriteType();
 			if (viewport->areWorldCoordinatesInViewport(
-				pp->getX(),
-				pp->getY(),
+				pp->position.x,
+				pp->position.y,
 				spriteType->getTextureWidth(),
 				spriteType->getTextureHeight())){
 				visibleBots.push_back(temp.front());
@@ -193,7 +185,7 @@ list<Bot*> SpriteManager::getVisibleBots(Game *game){
 	}
 
 	return visibleBots;
-}
+}*/
 
 /*
 	addSprite - This method is for adding a new sprite to 
@@ -276,41 +268,9 @@ unsigned int SpriteManager::getNumberOfBots(){
 	return bots.size();
 }
 
-unsigned int SpriteManager::getNumberOfBotsInNode(int node){
+/*unsigned int SpriteManager::getNumberOfBotsInNode(int node){
 	return botsTree->getBots(node).size();
-}
-
-void SpriteManager::checkForCollisions(Game *game, AnimatedSprite *player){
-	list<int> nodesToCheck = botsTree->insertAABB(player->getSweptShape());
-	list<int>::iterator nodeIterator = nodesToCheck.begin();
-
-	if (!(*player).getBoundingVolume()->overlaps(&botsTree->getDimension(0))){
-		game->getGSM()->unloadCurrentLevel(game);
-		game->setCurrentLevelFileName(L"SideScrollerDesertLevel.tmx");
-		list<Bot*>::iterator botsIt = bots.begin();
-		while (botsIt != bots.end()){
-			(*botsIt)->getPhysicalProperties()->setOriginalY(100);
-			botsIt++;
-		}
-		game->getDataLoader()->loadWorld(game, L"data/levels/SideScrollerDesert/", L"SideScrollerDesertLevel.tmx");
-	}
-
-	list<Bot*> temp;
-	Collision collision;
-	collision.setCollisionWithTile(false);
-	collision.setCO1(player);
-	while (nodeIterator != nodesToCheck.end()){
-		temp = botsTree->getBots(*nodeIterator);
-		while (!temp.empty()){
-			if (temp.front()->getSweptShape()->overlaps(player->getSweptShape())){
-				collision.setCO2(temp.front());
-				game->getGSM()->getPhysics()->getCollisionListener()->respondToCollision(&collision);
-			}
-			temp.pop_front();
-		}
-		nodeIterator++;
-	}
-}
+}*/
 
 /*
 	update - This method should be called once per frame. It
@@ -320,7 +280,7 @@ void SpriteManager::checkForCollisions(Game *game, AnimatedSprite *player){
 void SpriteManager::update(Game *game)
 {
 	// UPDATE THE PLAYER SPRITE
-	float velocityY = player.getPhysicalProperties()->getVelocityY();
+	float velocityY = -player.getBodyDef().linearVelocity.y;
 	wstring state = player.getCurrentState();
 	if (velocityY < 0){
 		if (state == L"WALK_RIGHT" || state == L"IDLE_RIGHT" || state == L"JUMPING_ASCEND_RIGHT"){
@@ -409,5 +369,5 @@ void SpriteManager::update(Game *game)
 		botIterator++;
 	}
 
-	checkForCollisions(game, &player);
+	//checkForCollisions(game, &player);
 }

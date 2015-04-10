@@ -77,9 +77,5 @@ public:
 					bool collidableTiles, 
 					int worldWidth, int worldHeight);
 	void	setTile(Tile *initTile, int row, int column);
-	void	findTileCollisionsForSprite(	Physics *physics,
-											CollidableObject *dynamicObject);
-	bool	willSpriteCollideOnTile(	Physics *physics,
-										CollidableObject *dynamicObject);
 
 };

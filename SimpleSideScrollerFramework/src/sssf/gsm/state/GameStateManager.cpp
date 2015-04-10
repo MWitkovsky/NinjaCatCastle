@@ -48,7 +48,7 @@ void GameStateManager::addGameRenderItemsToRenderList(Game *game)
 	world.addWorldRenderItemsToRenderList(game);
 
 	// THEN THE SPRITE MANAGER
-	spriteManager->addSpriteItemsToRenderListQuadtree(game);
+	spriteManager->addSpriteItemsToRenderList(game);
 }
 
 
