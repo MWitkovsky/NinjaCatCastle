@@ -12,7 +12,7 @@ void NinjaCatCastleCollisionListener::respondToCollision(Collision *collision)
 	// WE CAN CHECK AND SEE ON WHICH SIDE THE COLLISION HAPPENED AND
 	// CHANGE SOME APPROPRIATE STATE ACCORDINGLY
 
-	if (!collision->isCollisionWithTile())
+	/*if (!collision->isCollisionWithTile())
 	{
 		CollidableObject *sprite = collision->getCO1();
 		AnimatedSprite* player = dynamic_cast<AnimatedSprite*>(sprite);
@@ -84,5 +84,5 @@ void NinjaCatCastleCollisionListener::respondToCollision(Collision *collision)
 				}
 			}
 		}
-	}
+	}*/
 }

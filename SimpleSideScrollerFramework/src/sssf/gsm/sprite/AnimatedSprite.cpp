@@ -21,10 +21,6 @@ AnimatedSprite::AnimatedSprite()
 	spriteType = 0;
 	frameIndex = 0;
 	animationCounter = 0;
-	pp.setVelocity(0.0f, 0.0f);
-	pp.setAccelerationX(0.0f);
-	pp.setAccelerationY(0.0f);
-	pp.setPosition(0.0f, 0.0f);
 }
 
 /*
@@ -111,25 +107,4 @@ void AnimatedSprite::updateSprite()
 	// ANIMATION COUNTER HAS REACHED THE DURATION
 	if (animationCounter >= duration)
 		changeFrame();
-}
-
-void AnimatedSprite::affixTightAABBBoundingVolume()
-{
-	if (spriteType->getSpriteTypeID() == 2){
-		boundingVolume.setCenterX(pp.getX() + (128.0f / 2.0f));
-		boundingVolume.setCenterY(pp.getY() + (128.0f / 2.0f));
-	}
-	else{
-		boundingVolume.setCenterX(pp.getX() + (spriteType->getTextureWidth() / 2));
-		boundingVolume.setCenterY(pp.getY() + (spriteType->getTextureHeight() / 2));
-	}
-	boundingVolume.setWidth((float)spriteType->getTextureWidth());
-	boundingVolume.setHeight((float)spriteType->getTextureHeight());
-}
-	
-
-void AnimatedSprite::correctToTightBoundingVolume()
-{
-	pp.setX(boundingVolume.getLeft());
-	pp.setY(boundingVolume.getTop());
 }

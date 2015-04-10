@@ -99,7 +99,7 @@ void RandomFloatingBot::pickRandomVelocity(Physics *physics)
 	randomAngleInRadians *= PI;
 
 	// NOW WE CAN SCALE OUR X AND Y VELOCITIES
-	this->pp.setVelocity(maxVelocity * sin(randomAngleInRadians), maxVelocity * cos(randomAngleInRadians));
+	//this->pp.setVelocity(maxVelocity * sin(randomAngleInRadians), maxVelocity * cos(randomAngleInRadians));
 }
 
 /*

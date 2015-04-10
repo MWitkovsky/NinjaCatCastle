@@ -288,59 +288,6 @@ void TiledLayer::setTile(Tile *initTile, int row, int column)
 	tileLayout->at(cellIndex) = initTile;
 }
 
-/*
-	sweptSpaceTiles
-*/
-void TiledLayer::findTileCollisionsForSprite(	Physics *physics,
-												CollidableObject *dynamicObject)
-{
-	int startColumn, endColumn, startRow, endRow;
-	AABB *aabb = dynamicObject->getSweptShape();
-	initOverlappingCellRange(aabb, startColumn, endColumn, startRow, endRow);
-	if (aabb->getCenterX() >= 288)
-		cout << "ERROR";
-	for (int i = startColumn; i <= endColumn; i++)
-	{
-		for (int j = startRow; j <= endRow; j++)
-		{
-			Tile *testTile = getTile(j,i);
-			if (testTile->collidable)
-			{
-				float tileX = (float)(i * tileWidth);
-				float tileY = (float)(j * tileHeight);
-				physics->addTileCollision(dynamicObject, testTile, tileX, tileY, (float)tileWidth, (float)tileHeight);
-			}
-		}
-	}
-}
-
-bool TiledLayer::willSpriteCollideOnTile(	Physics *physics,
-											CollidableObject *dynamicObject)
-{
-	int startCol, endCol, startRow, endRow;
-	AABB *ss = dynamicObject->getSweptShape();
-	initOverlappingCellRange(ss, startCol, endCol, startRow, endRow);
-	AABB tileAABB;
-	for (int i = startCol; i <= endCol; i++)
-	{
-		int j = endRow;
-		Tile *testTile = getTile(j,i);
-		if (testTile->collidable)
-		{
-			float tileX = (float)(i * tileWidth);
-			float tileY = (float)(j * tileHeight);
-			tileAABB.setCenterX(tileX + (tileWidth/2));
-			tileAABB.setCenterY(tileY + (tileHeight/2));
-			tileAABB.setWidth((float)tileWidth);
-			tileAABB.setHeight((float)tileHeight);
-			bool willCollide = physics->willSpriteCollideOnTile(dynamicObject, &tileAABB);
-			if (willCollide)
-				return true;
-		}
-	}
-	return false;
-}
-
 void TiledLayer::initOverlappingCellRange(	AABB *aabb,
 											int &startCol, int &endCol, int &startRow, int &endRow)
 {

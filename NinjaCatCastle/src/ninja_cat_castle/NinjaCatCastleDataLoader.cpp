@@ -36,6 +36,8 @@
 // ANIMATED SPRITE TYPE LOADING
 #include "psti\PoseurSpriteTypesImporter.h"
 
+#include "Box2D\Box2D.h"
+
 /*
 	loadGame - This method loads the setup game data into the game and
 	constructs all the needed objects for the game to work.
@@ -188,18 +190,17 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 		player->setSpriteType(playerSpriteType);
 		player->setAlpha(255);
 		player->setCurrentState(L"JUMPING_DESCEND_RIGHT");
-		PhysicalProperties *playerProps = player->getPhysicalProperties();
-		playerProps->setX(PLAYER_INIT_X);
-		playerProps->setY(PLAYER_INIT_Y);
-		playerProps->setOriginalX(PLAYER_INIT_X);
-		playerProps->setOriginalY(PLAYER_INIT_Y);
-		playerProps->setVelocity(0.0f, 0.0f);
-		playerProps->setAccelerationX(0);
-		playerProps->setAccelerationY(0);
-		playerProps->setAffectedByGravity(true);
+		//Right here is what I think making the character's box should look like
+		//Then I started wonderning how the hell we're going to do rendering
+		//when we handle it by pixel and now everything's done in METERS
+		//WHY DOES IT HAVE TO BE METERS? I stopped here.
+		b2BodyDef playerProps = player->getBodyDef();
+		playerProps.position.Set(5.0f, 5.0f);
 		player->setOnTileThisFrame(false);
 		player->setOnTileLastFrame(false);
-		player->affixTightAABBBoundingVolume();
+		playerProps.type = b2_dynamicBody;
+		playerProps.fixedRotation = true;
+		b2Body *body = game->getGSM()->getPhysics()->getWorld()->CreateBody(&playerProps);
 
 		AnimatedSpriteType *botSpriteType = spriteManager->getSpriteType(1);
 		// AND LET'S ADD A BUNCH OF RANDOM JUMPING BOTS, FIRST ALONG
@@ -225,7 +226,7 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 	else{
 		player->setAlpha(255);
 		player->setCurrentState(L"JUMPING_DESCEND_RIGHT");
-		PhysicalProperties *playerProps = player->getPhysicalProperties();
+		/*PhysicalProperties *playerProps = player->getPhysicalProperties();
 		playerProps->setX(playerProps->getOriginalX());
 		playerProps->setY(playerProps->getOriginalY());
 		playerProps->setVelocity(0.0f, 0.0f);
@@ -233,7 +234,7 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 		playerProps->setAccelerationY(0);
 		player->setOnTileThisFrame(false);
 		player->setOnTileLastFrame(false);
-		player->affixTightAABBBoundingVolume();
+		player->affixTightAABBBoundingVolume();*/
 		if (!player->isControllable()){
 			player->toggleControllable();
 		}
@@ -241,12 +242,12 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 		player->setHP(10);
 
 		list<Bot*>::iterator botsIterator = spriteManager->getBotsIterator();
-		while (botsIterator != spriteManager->getEndOfBotsIterator()){
+		/*while (botsIterator != spriteManager->getEndOfBotsIterator()){
 			(*botsIterator)->getPhysicalProperties()->setPosition((*botsIterator)->getPhysicalProperties()->getOriginalX(), (*botsIterator)->getPhysicalProperties()->getOriginalY());
 			(*botsIterator)->setCurrentState((*botsIterator)->getOriginalState());
 			(*botsIterator)->affixTightAABBBoundingVolume();
 			botsIterator++;
-		}
+		}*/
 	}
 
 	// AND THEN STRATEGICALLY PLACED AROUND THE LEVEL
@@ -275,8 +276,8 @@ void NinjaCatCastleDataLoader::makeRandomJumpingBot(Game *game, AnimatedSpriteTy
 	Physics *physics = game->getGSM()->getPhysics();
 	RandomJumpingBot *bot = new RandomJumpingBot(physics, 30, 120, 40);
 	physics->addCollidableObject(bot);
-	PhysicalProperties *pp = bot->getPhysicalProperties();
-	pp->setPosition(initX, initY);
+	b2BodyDef *pp = &bot->getBodyDef();
+	/*pp->setPosition(initX, initY);
 	pp->setOriginalX(initX);
 	pp->setOriginalY(initY);
 	bot->setOriginalState(L"JUMPING");
@@ -285,7 +286,7 @@ void NinjaCatCastleDataLoader::makeRandomJumpingBot(Game *game, AnimatedSpriteTy
 	bot->setCurrentState(JUMPING);
 	bot->setAlpha(255);
 	spriteManager->addBot(bot);
-	bot->affixTightAABBBoundingVolume();
+	bot->affixTightAABBBoundingVolume();*/
 }
 
 void NinjaCatCastleDataLoader::makeRandomFloatingBot(Game *game, AnimatedSpriteType *randomJumpingBotType, float initX, float initY)
@@ -294,8 +295,8 @@ void NinjaCatCastleDataLoader::makeRandomFloatingBot(Game *game, AnimatedSpriteT
 	Physics *physics = game->getGSM()->getPhysics();
 	RandomFloatingBot *bot = new RandomFloatingBot(physics, 30, 120, 5);
 	physics->addCollidableObject(bot);
-	PhysicalProperties *pp = bot->getPhysicalProperties();
-	pp->setPosition(initX, initY);
+	b2BodyDef *pp = &bot->getBodyDef();
+	/*pp->setPosition(initX, initY);
 	pp->setOriginalX(initX);
 	pp->setOriginalY(initY);
 	pp->setAffectedByGravity(false);
@@ -304,7 +305,7 @@ void NinjaCatCastleDataLoader::makeRandomFloatingBot(Game *game, AnimatedSpriteT
 	bot->setOriginalState(L"ATTACKING_DOWN");
 	bot->setAlpha(255);
 	spriteManager->addBot(bot);
-	bot->affixTightAABBBoundingVolume();
+	bot->affixTightAABBBoundingVolume();*/
 }
 
 /*

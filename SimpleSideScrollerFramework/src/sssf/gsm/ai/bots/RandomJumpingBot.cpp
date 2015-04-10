@@ -16,7 +16,7 @@ RandomJumpingBot::RandomJumpingBot(	unsigned int initMin,
 	initBot(initMin, initMax, initMaxVelocity);
 
 	cyclesRemainingBeforeThinking = 30;
-	pp.setVelocity(0.0f, 0.0f);
+	//pp.setVelocity(0.0f, 0.0f);
 
 	pickRandomCyclesInRange();
 }
@@ -35,7 +35,7 @@ RandomJumpingBot::RandomJumpingBot(	Physics *physics,
 
 	// AND START THE BOT OFF IN A RANDOM DIRECTION AND VELOCITY
 	// AND WITH RANDOM INTERVAL UNTIL IT THINKS AGAIN
-	this->pp.setVelocity(0, 0);
+	//this->pp.setVelocity(0, 0);
 	
 	//pickRandomJump(physics);
 	pickRandomCyclesInRange();
@@ -115,8 +115,8 @@ void RandomJumpingBot::pickRandomJump(Physics *physics)
 	float jumpVelocity = (float)maxVelocity;
 	float jumpVelocityX = jumpVelocity * cos(randomAngleInRadians);
 	float jumpVelocityY = -jumpVelocity * sin(randomAngleInRadians);
-	pp.setVelocity(jumpVelocityX, jumpVelocityY);
-//	pp.setVelocity(0.0f, jumpVelocity);
+	//pp.setVelocity(jumpVelocityX, jumpVelocityY);
+	//pp.setVelocity(0.0f, jumpVelocity);
 }
 
 /*
