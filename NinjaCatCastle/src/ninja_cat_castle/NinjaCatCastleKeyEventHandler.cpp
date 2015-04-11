@@ -40,7 +40,7 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 	// LET'S GET THE PLAYER'S PHYSICAL PROPERTIES, IN CASE WE WANT TO CHANGE THEM
 	GameStateManager *gsm = game->getGSM();
 	AnimatedSprite *player = gsm->getSpriteManager()->getPlayer();
-	b2BodyDef *pp = &player->getBodyDef();
+	b2Body *pp = player->getBody();
 	Viewport *viewport = game->getGUI()->getViewport();
 	
 	// IF THE GAME IS IN PROGRESS
@@ -49,8 +49,8 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 		// WASD KEY PRESSES WILL CONTROL THE PLAYER
 		// SO WE'LL UPDATE THE PLAYER VELOCITY WHEN THESE KEYS ARE
 		// PRESSED, THAT WAY PHYSICS CAN CORRECT AS NEEDED
-		float vX = pp->linearVelocity.x;
-		float vY = -pp->linearVelocity.y;
+		float vX = pp->GetLinearVelocity().x;
+		float vY = -pp->GetLinearVelocity().y;
 		wstring state = player->getCurrentState();
 
 		// YOU MIGHT WANT TO UNCOMMENT THIS FOR SOME TESTING,
@@ -133,8 +133,7 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 			gsm->getPhysics()->activateForSingleUpdate();
 		}
 		// NOW SET THE ACTUAL PLAYER VELOCITY
-		pp->linearVelocity.x = vX;
-		pp->linearVelocity.y = vY;
+		pp->SetLinearVelocity(b2Vec2(vX, vY));
 
 		bool viewportMoved = false;
 		float viewportVx = 0.0f;
@@ -168,8 +167,9 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 		//Recenters viewport back on player if no camera keys are being pressed
 		else{
 			float diff;
-			if (pp->position.x > viewportX - 60){
-				diff = (pp->position.x - viewportX + 60) / 7;
+			float height = gsm->getWorld()->getWorldHeight();
+			if (pp->GetPosition().x*METER_TO_PIXEL_SCALE > viewportX - 60){
+				diff = (pp->GetPosition().x*METER_TO_PIXEL_SCALE - viewportX + 60) / 7;
 				if (diff > MAX_VIEWPORT_AXIS_VELOCITY){
 					viewportVx += MAX_VIEWPORT_AXIS_VELOCITY;
 				}
@@ -177,8 +177,8 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 					viewportVx += diff;
 				}
 			}
-			else if (pp->position.x < viewportX - 60){
-				diff = (viewportX - pp->position.x - 60) / 7;
+			else if (pp->GetPosition().x*METER_TO_PIXEL_SCALE < viewportX - 60){
+				diff = (viewportX - pp->GetPosition().x*METER_TO_PIXEL_SCALE - 60) / 7;
 				if (diff > MAX_VIEWPORT_AXIS_VELOCITY){
 					viewportVx -= MAX_VIEWPORT_AXIS_VELOCITY;
 				}
@@ -186,8 +186,8 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 					viewportVx -= diff;
 				}
 			}
-			if (pp->position.y < viewportY){
-				diff = (viewportY - pp->position.y) / 7;
+			if ((height - (pp->GetPosition().y*METER_TO_PIXEL_SCALE)) < viewportY){
+				diff = (viewportY - (height - (pp->GetPosition().y*METER_TO_PIXEL_SCALE))) / 7;
 				if (diff > MAX_VIEWPORT_AXIS_VELOCITY){
 					viewportVy -= MAX_VIEWPORT_AXIS_VELOCITY;
 				}
@@ -195,8 +195,8 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 					viewportVy -= diff;
 				}
 			}
-			else if (pp->position.y > viewportY){
-				diff = (pp->position.y - viewportY) / 7;
+			else if ((height - (pp->GetPosition().y*METER_TO_PIXEL_SCALE)) > viewportY){
+				diff = ((height - (pp->GetPosition().y*METER_TO_PIXEL_SCALE)) - viewportY) / 7;
 				if (diff > MAX_VIEWPORT_AXIS_VELOCITY){
 					viewportVy += MAX_VIEWPORT_AXIS_VELOCITY;
 				}

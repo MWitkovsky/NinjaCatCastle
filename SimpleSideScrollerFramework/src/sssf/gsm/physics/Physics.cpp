@@ -77,7 +77,7 @@ void Physics::removeCollidableObject(CollidableObject *collidableObjectToRemove)
 void Physics::update(Game *game)
 {
 	//No more original physics. I have no idea what to do here for now.
-	world->GetBodyList();
+	world->Step(0.1f, 6, 2);
 }
 
 void Physics::removeCollidableObject(unsigned int ordering, CollidableObject *co)

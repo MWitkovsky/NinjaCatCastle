@@ -7,6 +7,7 @@
 #include "sssf\gsm\world\Tile.h"
 #include "sssf\gsm\state\GameStateManager.h"
 #include "xmlfi\XMLFileImporter.h"
+#include "Box2D\Box2D.h"
 
 bool TMXMapImporter::loadWorld(Game *game, wstring initDir, wstring mapLevelFileName)
 {
@@ -309,13 +310,38 @@ bool TMXMapImporter::buildWorldFromInfo(Game *game)
 			for (unsigned int i = 0; i < tli.gids.size(); i++)
 			{
 				Tile *tileToAdd = new Tile();
+				
 				tileToAdd->textureID = tli.gids[i] + idOffset - 1;
-				if (tli.gids[i] == uncollidableIndex)
+				if (tli.gids[i] == uncollidableIndex){
 					tileToAdd->collidable = false;
-				else
+				}
+				else{
 					tileToAdd->collidable = tli.collidable;
+				}
 				tiledLayerToAdd->addTile(tileToAdd);
 			}
+
+			//NOW ADD ALL COLLIDABLE TILES TO THE BOX2D SIMULATION
+			b2Body* tile;
+			b2BodyDef tileDef;
+			b2FixtureDef tileFixDef;
+			b2PolygonShape tileShape;
+			b2Vec2 tilePos;
+			tileShape.SetAsBox(0.5f, 0.5f);
+			tileFixDef.shape = &tileShape;
+			while (tiledLayerToAdd->getTile(row, 0)){
+				while (tiledLayerToAdd->getTile(row, col)){
+					if (tiledLayerToAdd->getTile(row, col)->collidable){
+						tilePos.Set(row, col);
+						tileDef.position = tilePos;
+						tile = game->getGSM()->getPhysics()->getWorld()->CreateBody(&tileDef);
+						tile->CreateFixture(&tileFixDef);
+					}
+					col++;
+				}
+				row++;
+			}
+
 			tliIt++;
 		}
 

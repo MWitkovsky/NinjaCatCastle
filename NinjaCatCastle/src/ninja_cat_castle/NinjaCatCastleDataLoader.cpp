@@ -194,13 +194,18 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 		//Then I started wonderning how the hell we're going to do rendering
 		//when we handle it by pixel and now everything's done in METERS
 		//WHY DOES IT HAVE TO BE METERS? I stopped here.
-		b2BodyDef playerProps = player->getBodyDef();
+		b2BodyDef playerProps;
 		playerProps.position.Set(5.0f, 5.0f);
 		player->setOnTileThisFrame(false);
 		player->setOnTileLastFrame(false);
 		playerProps.type = b2_dynamicBody;
 		playerProps.fixedRotation = true;
-		b2Body *body = game->getGSM()->getPhysics()->getWorld()->CreateBody(&playerProps);
+		player->setBody(game->getGSM()->getPhysics()->getWorld()->CreateBody(&playerProps));
+		b2FixtureDef fixtureDef;
+		b2PolygonShape shape;
+		shape.SetAsBox(0.7, 1);
+		fixtureDef.shape = &shape;
+		player->getBody()->CreateFixture(&fixtureDef);
 
 		AnimatedSpriteType *botSpriteType = spriteManager->getSpriteType(1);
 		// AND LET'S ADD A BUNCH OF RANDOM JUMPING BOTS, FIRST ALONG
@@ -276,7 +281,7 @@ void NinjaCatCastleDataLoader::makeRandomJumpingBot(Game *game, AnimatedSpriteTy
 	Physics *physics = game->getGSM()->getPhysics();
 	RandomJumpingBot *bot = new RandomJumpingBot(physics, 30, 120, 40);
 	physics->addCollidableObject(bot);
-	b2BodyDef *pp = &bot->getBodyDef();
+	b2Body *pp = bot->getBody();
 	/*pp->setPosition(initX, initY);
 	pp->setOriginalX(initX);
 	pp->setOriginalY(initY);
@@ -295,7 +300,7 @@ void NinjaCatCastleDataLoader::makeRandomFloatingBot(Game *game, AnimatedSpriteT
 	Physics *physics = game->getGSM()->getPhysics();
 	RandomFloatingBot *bot = new RandomFloatingBot(physics, 30, 120, 5);
 	physics->addCollidableObject(bot);
-	b2BodyDef *pp = &bot->getBodyDef();
+	b2Body *pp = bot->getBody();
 	/*pp->setPosition(initX, initY);
 	pp->setOriginalX(initX);
 	pp->setOriginalY(initY);

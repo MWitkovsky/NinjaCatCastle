@@ -27,19 +27,20 @@ AABB viewportDimensions;
 	parameter is inside the viewport. If it is, a RenderItem is generated
 	for that sprite and it is added to the render list.
 */
-void SpriteManager::addSpriteToRenderList(AnimatedSprite *sprite,
+void SpriteManager::addSpriteToRenderList(Game *game, AnimatedSprite *sprite,
 										  RenderList *renderList,
 										  Viewport *viewport)
 {
 	// GET THE SPRITE TYPE INFO FOR THIS SPRITE
 	AnimatedSpriteType *spriteType = sprite->getSpriteType();
 	//Everything using PP now is using the body def I guess?
-	b2BodyDef *pp = &sprite->getBodyDef();
-
+	b2Body *pp = sprite->getBody();
+	float32 x = (pp->GetPosition().x)*meterToPixelScale;
+	float32 y = (game->getGSM()->getWorld()->getWorldHeight()) - (pp->GetPosition().y*meterToPixelScale);
 	// IS THE SPRITE VIEWABLE?
 	if (viewport->areWorldCoordinatesInViewport(	
-									pp->position.x,
-									pp->position.y,
+									x,
+									y,
 									spriteType->getTextureWidth(),
 									spriteType->getTextureHeight()))
 	{
@@ -47,8 +48,8 @@ void SpriteManager::addSpriteToRenderList(AnimatedSprite *sprite,
 		RenderItem itemToAdd;
 		itemToAdd.id = sprite->getFrameIndex();
 		renderList->addRenderItem(	sprite->getCurrentImageID(),
-			(int)pp->position.x - viewport->getViewportX(),
-			(int)pp->position.y - viewport->getViewportY(),
+			x - viewport->getViewportX(),
+			y - viewport->getViewportY(),
 									0,
 									sprite->getAlpha(),
 									spriteType->getTextureWidth(),
@@ -72,7 +73,7 @@ void SpriteManager::addSpriteItemsToRenderList(	Game *game)
 		Viewport *viewport = gui->getViewport();
 
 		// ADD THE PLAYER SPRITE
-		addSpriteToRenderList(&player, renderList, viewport);
+		addSpriteToRenderList(game, &player, renderList, viewport);
 
 		// NOW ADD THE REST OF THE SPRITES
 		list<Bot*>::iterator botIterator;
@@ -80,7 +81,7 @@ void SpriteManager::addSpriteItemsToRenderList(	Game *game)
 		while (botIterator != bots.end())
 		{			
 			Bot *bot = (*botIterator);
-			addSpriteToRenderList(bot, renderList, viewport);
+			addSpriteToRenderList(game, bot, renderList, viewport);
 			botIterator++;
 		}
 	}
@@ -126,14 +127,14 @@ Uses quad tree for rendering instead of list
 
 }*/
 
-void SpriteManager::renderVisibleSprite(AnimatedSprite *sprite, RenderList *renderList, Viewport *viewport){
+void SpriteManager::renderVisibleSprite(Game *game, AnimatedSprite *sprite, RenderList *renderList, Viewport *viewport){
 	AnimatedSpriteType *spriteType = sprite->getSpriteType();
-	b2BodyDef *pp = &sprite->getBodyDef();
+	b2Body *pp = sprite->getBody();
 	RenderItem itemToAdd;
 	itemToAdd.id = sprite->getFrameIndex();
 	renderList->addRenderItem(sprite->getCurrentImageID(),
-		(int)pp->position.x - viewport->getViewportX(),
-		(int)pp->position.y - viewport->getViewportY(),
+		(int)(pp->GetPosition().x*meterToPixelScale) - viewport->getViewportX(),
+		(int)(game->getGSM()->getWorld()->getWorldHeight())-(pp->GetPosition().y*meterToPixelScale) - viewport->getViewportY(),
 		0,
 		sprite->getAlpha(),
 		spriteType->getTextureWidth(),
@@ -280,7 +281,7 @@ unsigned int SpriteManager::getNumberOfBots(){
 void SpriteManager::update(Game *game)
 {
 	// UPDATE THE PLAYER SPRITE
-	float velocityY = -player.getBodyDef().linearVelocity.y;
+	float velocityY = -player.getBody()->GetLinearVelocity().y;
 	wstring state = player.getCurrentState();
 	if (velocityY < 0){
 		if (state == L"WALK_RIGHT" || state == L"IDLE_RIGHT" || state == L"JUMPING_ASCEND_RIGHT"){

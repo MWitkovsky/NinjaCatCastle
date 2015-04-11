@@ -35,6 +35,8 @@ private:
 	// WE NEED TO SPAWN THEM, INSTEAD IT WILL RECYCLE THEM FOR US
 	BotRecycler recyclableBots;
 
+	float meterToPixelScale = 64;
+
 public:
 	// NOTHING TO INIT OR DESTROY
 	SpriteManager()		{}
@@ -52,9 +54,9 @@ public:
 	// METHODS DEFINED IN SpriteManager.cpp
 	void				addBot(Bot *botToAdd);
 	void				addSpriteItemsToRenderList(Game *game);
-	void				renderVisibleSprite(AnimatedSprite *sprite, RenderList *renderList, Viewport *viewport);
+	void				renderVisibleSprite(Game *game, AnimatedSprite *sprite, RenderList *renderList, Viewport *viewport);
 	unsigned int		addSpriteType(AnimatedSpriteType *spriteTypeToAdd);
-	void				addSpriteToRenderList(AnimatedSprite *sprite, RenderList *renderList, Viewport *viewport);
+	void				addSpriteToRenderList(Game *game, AnimatedSprite *sprite, RenderList *renderList, Viewport *viewport);
 	void				clearSprites();
 	AnimatedSpriteType* getSpriteType(unsigned int typeIndex);
 	Bot*				removeBot(Bot *botToRemove);

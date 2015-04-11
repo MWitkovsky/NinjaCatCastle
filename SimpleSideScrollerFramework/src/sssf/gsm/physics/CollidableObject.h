@@ -14,8 +14,7 @@ class CollidableObject
 {
 protected:
 	//These are replacements for the AABB and physical properties
-	b2BodyDef bodyDef;
-	b2PolygonShape shape;
+	b2Body *body;
 	bool onTileThisFrame;
 	bool onTileLastFrame;
 	unsigned int collisionEdge;
@@ -26,12 +25,14 @@ public:
 	virtual void Something() {}
 
 	// INLINED METHODS
-	b2BodyDef			getBodyDef()				{ return bodyDef; }
-	b2PolygonShape		getShape()					{ return shape; }
+	b2Body*				getBody()					{ return body; }
 	bool				isOnTileThisFrame()			{ return onTileThisFrame;		}
 	bool				wasOnTileLastFrame()		{ return onTileLastFrame;		}
 	unsigned int		getCollisionEdge()			{ return collisionEdge;			}
 
+	void setBody(b2Body* body){
+		this->body = body;
+	}
 	void				setCollisionEdge(unsigned int initCollisionEdge)
 	{	collisionEdge = initCollisionEdge; }
 	void setOnTileThisFrame(bool initOnTileThisFrame)

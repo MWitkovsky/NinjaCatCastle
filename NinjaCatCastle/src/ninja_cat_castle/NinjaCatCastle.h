@@ -86,6 +86,7 @@ static const int		MAX_FPS = 100;
 static const int		FPS_INC = 1;
 static const int		START_BUTTON_X = 375;
 static const int		START_BUTTON_Y = 50;
+static const int		METER_TO_PIXEL_SCALE = 64;
 
 // USED FOR MOVEMENT
 const unsigned int W_KEY = (unsigned int)'W';

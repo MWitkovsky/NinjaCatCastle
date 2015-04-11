@@ -243,7 +243,12 @@ int TiledLayer::calculateViewportStartRow(int viewportY, int viewportHeight)
 Tile* TiledLayer::getTile(int row, int column) 
 {
 	int cellIndex = (row * columns) + column;
-	return tileLayout->at(cellIndex);
+	try{
+		return tileLayout->at(cellIndex);
+	}
+	catch(...){
+		return 0;
+	}
 }	
 
 /*
