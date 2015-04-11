@@ -281,9 +281,9 @@ unsigned int SpriteManager::getNumberOfBots(){
 void SpriteManager::update(Game *game)
 {
 	// UPDATE THE PLAYER SPRITE
-	float velocityY = -player.getBody()->GetLinearVelocity().y;
+	float velocityY = player.getBody()->GetLinearVelocity().y;
 	wstring state = player.getCurrentState();
-	if (velocityY < 0){
+	if (velocityY > 0){
 		if (state == L"WALK_RIGHT" || state == L"IDLE_RIGHT" || state == L"JUMPING_ASCEND_RIGHT"){
 			player.setCurrentState(L"JUMPING_ASCEND_RIGHT");
 		}
@@ -291,16 +291,16 @@ void SpriteManager::update(Game *game)
 			player.setCurrentState(L"JUMPING_ASCEND_LEFT");
 		}
 	}
-	else if (velocityY > 0.0f && state == L"JUMPING_ASCEND_LEFT"){
+	else if (velocityY < 0.0f && state == L"JUMPING_ASCEND_LEFT"){
 		player.setCurrentState(L"JUMPING_ARC_LEFT");
 	}
-	else if (velocityY > 0.0f && state == L"JUMPING_ASCEND_RIGHT"){
+	else if (velocityY < 0.0f && state == L"JUMPING_ASCEND_RIGHT"){
 		player.setCurrentState(L"JUMPING_ARC_RIGHT");
 	}
-	else if (velocityY > 0.0f && (state == L"WALK_LEFT" || state == L"IDLE_LEFT")){
+	else if (velocityY < 0.0f && (state == L"WALK_LEFT" || state == L"IDLE_LEFT")){
 		player.setCurrentState(L"JUMPING_DESCEND_LEFT");
 	}
-	else if (velocityY > 0.0f && (state == L"WALK_RIGHT" || state == L"IDLE_RIGHT")){
+	else if (velocityY < 0.0f && (state == L"WALK_RIGHT" || state == L"IDLE_RIGHT")){
 		player.setCurrentState(L"JUMPING_DESCEND_RIGHT");
 	}
 	else if (velocityY == 0.0f && state != L"JUMPING_ASCEND_LEFT" && state != L"JUMPING_ASCEND_RIGHT"

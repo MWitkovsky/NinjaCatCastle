@@ -195,7 +195,7 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 		//when we handle it by pixel and now everything's done in METERS
 		//WHY DOES IT HAVE TO BE METERS? I stopped here.
 		b2BodyDef playerProps;
-		playerProps.position.Set(5.0f, 5.0f);
+		playerProps.position.Set(5.0f, 10.0f);
 		player->setOnTileThisFrame(false);
 		player->setOnTileLastFrame(false);
 		playerProps.type = b2_dynamicBody;
@@ -206,6 +206,11 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 		shape.SetAsBox(0.7, 1);
 		fixtureDef.shape = &shape;
 		player->getBody()->CreateFixture(&fixtureDef);
+		//TEST PLATFORM
+		playerProps.position.Set(5.0f, 2.0f);
+		playerProps.type = b2_staticBody;
+		b2Body* temp = gsm->getPhysics()->getWorld()->CreateBody(&playerProps);
+		temp->CreateFixture(&fixtureDef);
 
 		AnimatedSpriteType *botSpriteType = spriteManager->getSpriteType(1);
 		// AND LET'S ADD A BUNCH OF RANDOM JUMPING BOTS, FIRST ALONG

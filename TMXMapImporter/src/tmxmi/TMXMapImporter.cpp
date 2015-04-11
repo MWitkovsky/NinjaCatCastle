@@ -329,10 +329,11 @@ bool TMXMapImporter::buildWorldFromInfo(Game *game)
 			b2Vec2 tilePos;
 			tileShape.SetAsBox(0.5f, 0.5f);
 			tileFixDef.shape = &tileShape;
+			tileDef.type = b2_staticBody;
 			while (tiledLayerToAdd->getTile(row, 0)){
 				while (tiledLayerToAdd->getTile(row, col)){
 					if (tiledLayerToAdd->getTile(row, col)->collidable){
-						tilePos.Set(row, col);
+						tilePos.Set(largestLayerHeight-row, col);
 						tileDef.position = tilePos;
 						tile = game->getGSM()->getPhysics()->getWorld()->CreateBody(&tileDef);
 						tile->CreateFixture(&tileFixDef);

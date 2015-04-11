@@ -50,7 +50,7 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 		// SO WE'LL UPDATE THE PLAYER VELOCITY WHEN THESE KEYS ARE
 		// PRESSED, THAT WAY PHYSICS CAN CORRECT AS NEEDED
 		float vX = pp->GetLinearVelocity().x;
-		float vY = -pp->GetLinearVelocity().y;
+		float vY = pp->GetLinearVelocity().y;
 		wstring state = player->getCurrentState();
 
 		// YOU MIGHT WANT TO UNCOMMENT THIS FOR SOME TESTING,
@@ -90,17 +90,17 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 
 			if (input->isKeyDownForFirstTime(SPACE_KEY))
 			{
-				if (player->wasOnTileLastFrame()){
+				//if (player->wasOnTileLastFrame()){
 					vY = JUMP_SPEED;
 					player->setWasJump(true);
-				}
+				//}
 			}
 
 			//FOR PRECISION JUMPING
 			if (input->wasKeyReleased(SPACE_KEY)){
-				if (vY < 0){
+				//if (vY < 0){
 					vY = vY / 3.0f;
-				}
+				//}
 				player->setWasJump(false);
 			}
 
