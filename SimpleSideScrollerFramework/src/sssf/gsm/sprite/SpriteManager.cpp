@@ -33,7 +33,7 @@ void SpriteManager::addSpriteToRenderList(Game *game, AnimatedSprite *sprite,
 {
 	// GET THE SPRITE TYPE INFO FOR THIS SPRITE
 	AnimatedSpriteType *spriteType = sprite->getSpriteType();
-	//Everything using PP now is using the body def I guess?
+	//Everything using PP now is using the body
 	b2Body *pp = sprite->getBody();
 	float32 x = (pp->GetPosition().x)*meterToPixelScale;
 	float32 y = (game->getGSM()->getWorld()->getWorldHeight()) - (pp->GetPosition().y*meterToPixelScale);
@@ -54,6 +54,27 @@ void SpriteManager::addSpriteToRenderList(Game *game, AnimatedSprite *sprite,
 									sprite->getAlpha(),
 									spriteType->getTextureWidth(),
 									spriteType->getTextureHeight());
+	}
+}
+
+void SpriteManager::box2DDebugRender(Game *game, b2Body *body, RenderList *renderList, Viewport *viewport, AnimatedSprite *sprite){
+	float32 x = (body->GetPosition().x)*meterToPixelScale;
+	float32 y = (game->getGSM()->getWorld()->getWorldHeight()) - (body->GetPosition().y*meterToPixelScale);
+	AnimatedSpriteType *spriteType = sprite->getSpriteType();
+	if (viewport->areWorldCoordinatesInViewport(
+		x,
+		y,
+		spriteType->getTextureWidth(),
+		spriteType->getTextureHeight())){
+		RenderItem itemToAdd;
+		itemToAdd.id = sprite->getFrameIndex();
+		renderList->addRenderItem(sprite->getCurrentImageID(),
+			x - viewport->getViewportX(),
+			y - viewport->getViewportY(),
+			0,
+			sprite->getAlpha(),
+			spriteType->getTextureWidth(),
+			spriteType->getTextureHeight());
 	}
 }
 
@@ -83,6 +104,13 @@ void SpriteManager::addSpriteItemsToRenderList(	Game *game)
 			Bot *bot = (*botIterator);
 			addSpriteToRenderList(game, bot, renderList, viewport);
 			botIterator++;
+		}
+
+		//Debugging Box2D
+		b2Body* list = game->getGSM()->getPhysics()->getWorld()->GetBodyList();
+		while(list){
+			box2DDebugRender(game, list, renderList, viewport, &player);
+			list = list->GetNext();
 		}
 	}
 }

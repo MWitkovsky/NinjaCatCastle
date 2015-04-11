@@ -175,6 +175,34 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 
 	game->getGUI()->getViewport()->setViewportY(900);
 
+	//NOW ADD ALL COLLIDABLE TILES TO THE BOX2D SIMULATION
+	b2Body* tile;
+	b2BodyDef tileDef;
+	b2FixtureDef tileFixDef;
+	b2PolygonShape tileShape;
+	tileShape.SetAsBox(0.5f, 0.5f);
+	tileFixDef.shape = &tileShape;
+	tileDef.type = b2_staticBody;
+	int row = 0;
+	int col = 0;
+	vector<WorldLayer*>* layers = game->getGSM()->getWorld()->getLayers();
+	/*
+	while (layers != layers->end()){
+		while (row < (game->getGSM()->getWorld()->getWorldHeight() / 64)){
+			while (col < (game->getGSM()->getWorld()->getWorldWidth() / 64)){
+				if (->->getTile(row, col)->collidable){
+					b2Vec2 tilePos(row, col);
+					tileDef.position = tilePos;
+					tile = game->getGSM()->getPhysics()->getWorld()->CreateBody(&tileDef);
+					tile->CreateFixture(&tileFixDef);
+				}
+				col++;
+			}
+			row++;
+		}
+	}*/
+	
+
 	// LET'S MAKE A PLAYER SPRITE
 	// @TODO - IT WOULD BE BETTER TO LOAD THIS STUFF FROM A FILE
 	GameStateManager *gsm = game->getGSM();
@@ -206,11 +234,6 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 		shape.SetAsBox(0.7, 1);
 		fixtureDef.shape = &shape;
 		player->getBody()->CreateFixture(&fixtureDef);
-		//TEST PLATFORM
-		playerProps.position.Set(5.0f, 2.0f);
-		playerProps.type = b2_staticBody;
-		b2Body* temp = gsm->getPhysics()->getWorld()->CreateBody(&playerProps);
-		temp->CreateFixture(&fixtureDef);
 
 		AnimatedSpriteType *botSpriteType = spriteManager->getSpriteType(1);
 		// AND LET'S ADD A BUNCH OF RANDOM JUMPING BOTS, FIRST ALONG

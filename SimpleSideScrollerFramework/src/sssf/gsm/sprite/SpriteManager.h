@@ -54,6 +54,7 @@ public:
 	// METHODS DEFINED IN SpriteManager.cpp
 	void				addBot(Bot *botToAdd);
 	void				addSpriteItemsToRenderList(Game *game);
+	void				box2DDebugRender(Game *game, b2Body *body, RenderList *renderList, Viewport *viewport, AnimatedSprite *sprite);
 	void				renderVisibleSprite(Game *game, AnimatedSprite *sprite, RenderList *renderList, Viewport *viewport);
 	unsigned int		addSpriteType(AnimatedSpriteType *spriteTypeToAdd);
 	void				addSpriteToRenderList(Game *game, AnimatedSprite *sprite, RenderList *renderList, Viewport *viewport);

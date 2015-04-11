@@ -210,6 +210,14 @@ bool TMXMapImporter::loadIsometricMap(const TiXmlElement *pElem)
 bool TMXMapImporter::buildWorldFromInfo(Game *game)
 {
 	TextureManager *worldTextureManager = game->getGraphics()->getWorldTextureManager();
+	b2Body* tile;
+	b2BodyDef tileDef;
+	b2FixtureDef tileFixDef;
+	b2PolygonShape tileShape;
+	b2Vec2 tilePos;
+	tileShape.SetAsBox(0.5f, 0.5f);
+	tileFixDef.shape = &tileShape;
+	tileDef.type = b2_staticBody;
 	if (mapType == MapType::ORTHOGONAL_MAP)
 	{
 		World *world = game->getGSM()->getWorld();
@@ -330,10 +338,14 @@ bool TMXMapImporter::buildWorldFromInfo(Game *game)
 			tileShape.SetAsBox(0.5f, 0.5f);
 			tileFixDef.shape = &tileShape;
 			tileDef.type = b2_staticBody;
-			while (tiledLayerToAdd->getTile(row, 0)){
-				while (tiledLayerToAdd->getTile(row, col)){
+			tileDef.fixedRotation = true;
+			row = 0;
+			col = 0;
+
+			while (row < tiledLayerToAdd->getRows()){
+				while (col < tiledLayerToAdd->getColumns()){
 					if (tiledLayerToAdd->getTile(row, col)->collidable){
-						tilePos.Set(largestLayerHeight-row, col);
+						tilePos.Set(col-0.5f, tiledLayerToAdd->getRows()-row+0.5f);
 						tileDef.position = tilePos;
 						tile = game->getGSM()->getPhysics()->getWorld()->CreateBody(&tileDef);
 						tile->CreateFixture(&tileFixDef);
@@ -341,8 +353,8 @@ bool TMXMapImporter::buildWorldFromInfo(Game *game)
 					col++;
 				}
 				row++;
+				col = 0;
 			}
-
 			tliIt++;
 		}
 
