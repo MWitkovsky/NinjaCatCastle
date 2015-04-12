@@ -210,6 +210,9 @@
     <ClInclude Include="..\..\Testbed\Tests\Sensors.h">
       <Filter>Tests</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Testbed\Tests\GhostVertices.h">
+      <Filter>Tests</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Testbed\Framework\Main.cpp">
