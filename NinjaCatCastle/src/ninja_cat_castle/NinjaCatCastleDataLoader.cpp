@@ -226,7 +226,7 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 		//just a projection of the simulation, the actual simulation isn't tied to
 		//rendering like I thought it was.
 		b2BodyDef playerProps;
-		playerProps.position.Set(5.0f, 10.0f);
+		playerProps.position.Set(2.0f, 15.0f);
 		player->setOnTileThisFrame(false);
 		player->setOnTileLastFrame(false);
 		playerProps.type = b2_dynamicBody;
@@ -236,7 +236,10 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 		b2PolygonShape shape;
 		/*This solution made the main character an octagon, he didn't get snagged anymore,
 		but he also ramped off of random pieces of ground... no fun*/
-		/*float32 width = 0.7;
+		//Actually, this octagon shape is better for jumping up on higher platforms.
+		//The octagonal shape gives a more natural curve to the hitbox, leading to less frustration.
+		//Also gives a nice little push forward if you fall of a ledge.
+		float32 width = 0.7;
 		float32 height = 1;
 		float32 edgeWidth = 0.1;
 		float32 edgeHeight = 0.2;
@@ -249,10 +252,10 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 		vertices[5].Set(-width + edgeWidth, height);		// top-left edge start
 		vertices[6].Set(-width, height - edgeHeight);		// top-left edge end
 		vertices[7].Set(-width, -height + edgeHeight);		// bottom-left edge
-		shape.Set(vertices, 8);*/
+		shape.Set(vertices, 8);
 
 		//I like rectangles anyway
-		shape.SetAsBox(0.7, 1);
+		//shape.SetAsBox(0.7, 1);
 		fixtureDef.shape = &shape;
 		player->getBody()->CreateFixture(&fixtureDef);
 

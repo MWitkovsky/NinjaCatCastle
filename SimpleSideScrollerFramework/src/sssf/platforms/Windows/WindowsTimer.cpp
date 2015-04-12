@@ -27,7 +27,8 @@ WindowsTimer::WindowsTimer()
 {
 	// LET'S START WITH A TARGET FPS OF 33 FRAMES PER SECOND,
 	// THAT'S 30 ms PER FRAME
-	targetFPS = 33;
+	// This is a PC game, of course we're shooting for 60 FPS!
+	targetFPS = 60;
 
 	// GET INFORMATION ABOUT HOW GOOD 
 	// THE SYSTEM'S TIMER IS

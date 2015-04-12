@@ -14,6 +14,7 @@
 #include "sssf\gsm\physics\Collision.h"
 #include "sssf\gsm\physics\CollidableObject.h"
 #include "sssf\game\Game.h"
+#include "sssf\timer\GameTimer.h"
 #include "sssf\gsm\physics\Physics.h"
 #include "sssf\gsm\world\SparseLayer.h"
 #include "sssf\gsm\sprite\SpriteManager.h"
@@ -31,7 +32,7 @@
 Physics::Physics()
 {
 	//Down is finally negative Y!
-	b2Gravity.Set(0.0f, -1.0f);
+	b2Gravity.Set(0.0f, -15.0f);
 	//WWWWRRRRRYYYYYYYYYYYYYYYYYY
 	world = new b2World(b2Gravity);
 	world->SetContinuousPhysics(true);
@@ -79,7 +80,8 @@ void Physics::removeCollidableObject(CollidableObject *collidableObjectToRemove)
 void Physics::update(Game *game)
 {
 	//No more original physics. I have no idea what to do here for now.
-	world->Step(0.1f, 6, 2);
+	//Nevermind, this is literally all you need to do here.
+	world->Step(1.0f/60.0f, 6, 2);
 }
 
 void Physics::removeCollidableObject(unsigned int ordering, CollidableObject *co)

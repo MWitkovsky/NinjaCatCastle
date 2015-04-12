@@ -47,7 +47,8 @@ void AnimatedSprite::changeFrame()
 	// GO BACK TO FIRST INDEX IF NECESSARY
 	// THIS IS ALSO WHERE ALL ANIMATIONS RELIANT ON OTHER ANIMATIONS ARE HANDLED
 	if (frameIndex == spriteType->getSequenceSize(currentState)){
-		if (currentState != L"DIE" && currentState != L"HIT"){
+		if (currentState != L"DIE" && currentState != L"HIT_LEFT"
+			&& currentState != L"HIT_RIGHT"){
 			if (currentState == L"JUMPING_ARC_RIGHT"){
 				setCurrentState(L"JUMPING_DESCEND_RIGHT");
 			}

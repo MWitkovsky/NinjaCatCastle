@@ -330,7 +330,13 @@ void SpriteManager::updateAnimations(Game *game){
 	// UPDATE THE PLAYER SPRITE
 	float velocityY = player.getBody()->GetLinearVelocity().y;
 	wstring state = player.getCurrentState();
+	if (velocityY < 0){
+		if (player.wasHit()){
+			player.setHit(false);
+		}
+	}
 
+	//ANIMATION STUFF
 	if (state != L"ATTACK_RIGHT"){
 		if (velocityY > 0){
 			if (state == L"WALK_RIGHT" || state == L"IDLE_RIGHT" || state == L"JUMPING_ASCEND_RIGHT"){
@@ -354,25 +360,32 @@ void SpriteManager::updateAnimations(Game *game){
 		}
 		else if (velocityY == 0.0f && state != L"JUMPING_ASCEND_LEFT" && state != L"JUMPING_ASCEND_RIGHT"
 			&& state != L"JUMPING_ARC_LEFT" && state != L"JUMPING_ARC_RIGHT"){
-			if (player.getCurrentState() == L"JUMPING_DESCEND_LEFT"){
-				player.setCurrentState(L"IDLE_LEFT");
-			}
-			else if (state == L"HIT" && player.getHP() == 0){
-				player.setCurrentState(L"DIE");
-			}
-			else if (player.getCurrentState() == L"JUMPING_DESCEND_RIGHT" || state == L"HIT"){
-				player.setCurrentState(L"IDLE_RIGHT");
+			if (!player.wasHit()){
+				if (state == L"JUMPING_DESCEND_LEFT" || state == L"HIT_RIGHT"){
+					player.setCurrentState(L"IDLE_LEFT");
+				}
+				else if ((state == L"HIT_LEFT" || state == L"HIT_RIGHT") && player.getHP() == 0){
+					player.setCurrentState(L"DIE");
+				}
+				else if (player.getCurrentState() == L"JUMPING_DESCEND_RIGHT" || state == L"HIT_LEFT"){
+					player.setCurrentState(L"IDLE_RIGHT");
+				}
 			}
 		}
 	}
 
+	//Invincibility frames should ideally last about 1 second.
 	if (player.getInvincibilityFrames() != 0){
 		player.decrementInvincibilityFrames();
 	}
+
+	//Makes it so if the player falls off a platform they can't jump afterwards
 	if (player.getBody()->GetLinearVelocity().y == 0){
 		player.setWasJump(false);
 	}
-	if (player.getHP() != 10){
+
+	//LEGACY FLICKER CODE FROM HOMEWORK 3
+	/*if (player.getHP() != 10){
 		if (player.getHP() == 0){
 			player.setAlpha(255);
 			if (player.getVisibleFrames() == 0){
@@ -405,7 +418,7 @@ void SpriteManager::updateAnimations(Game *game){
 	}
 	else{
 		player.setAlpha(255);
-	}
+	}*/
 
 	player.updateSprite();
 }

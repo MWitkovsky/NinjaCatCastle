@@ -44,10 +44,11 @@ protected:
 	boolean controllable = true;
 	boolean jump = false;
 	boolean facingRight = false;
+	boolean hit = false;
 
-	int HP = 10;
+	int HP = 3;
 	int visibleFrames = HP;
-	int invincibilityFrames = 0;
+	int invincibilityFrames = 60;
 
 	int lives = 3;
 	
@@ -66,6 +67,7 @@ public:
 	wstring				getOriginalState()  { return originalState; }
 	int					getLives()			{ return lives; }
 	boolean				isFacingRight()		{ return facingRight; }
+	boolean				wasHit()			{ return hit; }
 
 	// INLINED MUTATOR METHODS
 	void setAlpha(int initAlpha)
@@ -94,7 +96,7 @@ public:
 	}
 	void resetInvincibilityFrames()
 	{
-		invincibilityFrames = 10;
+		invincibilityFrames = 60;
 	}
 	void decrementInvincibilityFrames()
 	{
@@ -117,6 +119,9 @@ public:
 	}
 	void setFacingRight(boolean facingRight){
 		this->facingRight = facingRight;
+	}
+	void setHit(boolean hit){
+		this->hit = hit;
 	}
 
 	// METHODS DEFINED IN AnimatedSprite.cpp

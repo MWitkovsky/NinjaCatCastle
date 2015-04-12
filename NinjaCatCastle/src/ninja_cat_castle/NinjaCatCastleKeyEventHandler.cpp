@@ -60,7 +60,8 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 			{
 				if (state != L"JUMPING_DESCEND_LEFT" && state != L"JUMPING_DESCEND_RIGHT"
 					&& state != L"JUMPING_ASCEND_LEFT" && state != L"JUMPING_ASCEND_RIGHT"
-					&& state != L"JUMPING_ARC_LEFT" && state != L"JUMPING_ARC_RIGHT"){
+					&& state != L"JUMPING_ARC_LEFT" && state != L"JUMPING_ARC_RIGHT"
+					&& state != L"HIT_LEFT" && state != L"HIT_RIGHT"){
 					if (state != L"ATTACK_LEFT" && state != L"ATTACK_RIGHT"
 						&& state != L"ATTACK_LEFT_2" && state != L"ATTACK_RIGHT_2"){
 						player->setFacingRight(false);
@@ -68,18 +69,37 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 					}
 					vX = -PLAYER_SPEED;
 				}
+				if (state == L"JUMPING_DESCEND_RIGHT"){
+					player->setCurrentState(L"JUMPING_DESCEND_LEFT");
+				}
+				else if (state == L"JUMPING_ARC_RIGHT"){
+					player->setCurrentState(L"JUMPING_ARC_LEFT");
+				}
+				else if (state == L"JUMPING_ASCEND_RIGHT"){
+					player->setCurrentState(L"JUMPING_ASCEND_LEFT");
+				}
 			}
 			else if (input->isKeyDown(D_KEY))
 			{
 				if (state != L"JUMPING_DESCEND_LEFT" && state != L"JUMPING_DESCEND_RIGHT"
 					&& state != L"JUMPING_ASCEND_LEFT" && state != L"JUMPING_ASCEND_RIGHT"
-					&& state != L"JUMPING_ARC_LEFT" && state != L"JUMPING_ARC_RIGHT"){
+					&& state != L"JUMPING_ARC_LEFT" && state != L"JUMPING_ARC_RIGHT"
+					&& state != L"HIT_LEFT" && state != L"HIT_RIGHT"){
 					if (state != L"ATTACK_LEFT" && state != L"ATTACK_RIGHT"
 						&& state != L"ATTACK_LEFT_2" && state != L"ATTACK_RIGHT_2"){
 						player->setFacingRight(true);
 						player->setCurrentState(L"WALK_RIGHT");
 					}
 					vX = PLAYER_SPEED;
+				}
+				if (state == L"JUMPING_DESCEND_LEFT"){
+					player->setCurrentState(L"JUMPING_DESCEND_RIGHT");
+				}
+				else if (state == L"JUMPING_ARC_LEFT"){
+					player->setCurrentState(L"JUMPING_ARC_RIGHT");
+				}
+				else if (state == L"JUMPING_ASCEND_LEFT"){
+					player->setCurrentState(L"JUMPING_ASCEND_RIGHT");
 				}
 			}
 			else
@@ -106,7 +126,7 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 					player->setWasJump(true);
 				}
 			}
-			//FOR PRECISION JUMPING
+			//FOR PRECISION JUMPING, halts ascent when jump key is released
 			if (input->wasKeyReleased(SPACE_KEY)){
 				if (vY > 0 && player->wasJump()){
 					vY = vY / 3.0f;
@@ -156,7 +176,19 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 				}
 			}
 
-
+			//Hit testing
+			if (input->isKeyDownForFirstTime(H_KEY)){
+				if (player->isFacingRight()){
+					player->setCurrentState(L"HIT_LEFT");
+					vX = -3.0f;
+				}
+				else{
+					player->setCurrentState(L"HIT_RIGHT");
+					vX = 3.0f;
+				}
+				vY = 8.0f;
+				player->setHit(true);
+			}
 
 			//for testing HP and death
 			/*if (input->isKeyDownForFirstTime(K_KEY)){

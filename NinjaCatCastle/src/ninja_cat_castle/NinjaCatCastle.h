@@ -63,6 +63,7 @@ static const wstring	W_QUIT_IMAGE_MO_PATH	= L"data/gui/buttons/quit_mo.png";
 static const wstring	W_LIVES_HEAD_PATH		= L"data/gui/HUD/lives_head.png";
 
 // FOR OUR SPRITE
+// ...kind of neglected to bother listing them all here. oops.
 static const wstring	SPRITE_TYPES_DIR = L"data/sprite_types/";
 static const wstring	SPRITE_TYPES_LIST = SPRITE_TYPES_DIR + L"sprite_type_list.xml";
 static const wstring	JUMPING = L"JUMPING";
@@ -72,15 +73,15 @@ static const wstring	IDLE = L"IDLE";
 static const wstring    DIE = L"DIE";
 
 // FOR THE GAME WORLD
-static const float		MAX_VIEWPORT_AXIS_VELOCITY = 20.0f;
+static const float		MAX_VIEWPORT_AXIS_VELOCITY = 30.0f;
 static const float		W_GRAVITY = 3.2f;
 static const float		JUMPING_BOT_MIN_CYCLES = 30;
 static const float		JUMPING_BOT_MAX_CYCLES = 120;
 static const float		JUMPING_BOT_MAX_VELOCITY = 40;
 static const float		PLAYER_INIT_X = 80.0f;
 static const float		PLAYER_INIT_Y = 1000.0f;
-static const float		JUMP_SPEED = 3.0f;
-static const float		PLAYER_SPEED = 2.0f;
+static const float		JUMP_SPEED = 12.0f;
+static const float		PLAYER_SPEED = 7.5f;
 static const int		MIN_FPS = 5;
 static const int		MAX_FPS = 60;
 static const int		FPS_INC = 1;
@@ -98,6 +99,7 @@ const unsigned int P_KEY = (unsigned int)'P';
 const unsigned int T_KEY = (unsigned int)'T';
 const unsigned int K_KEY = (unsigned int)'K';
 const unsigned int J_KEY = (unsigned int)'J';
+const unsigned int H_KEY = (unsigned int)'H';
 const unsigned int UP_KEY = VK_UP;
 const unsigned int DOWN_KEY = VK_DOWN;
 const unsigned int LEFT_KEY = VK_LEFT;
