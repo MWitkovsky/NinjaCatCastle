@@ -231,7 +231,21 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 		player->setBody(game->getGSM()->getPhysics()->getWorld()->CreateBody(&playerProps));
 		b2FixtureDef fixtureDef;
 		b2PolygonShape shape;
-		shape.SetAsBox(0.7, 1);
+		float32 width = 0.7;
+		float32 height = 1;
+		float32 edgeWidth = 0.1;
+		float32 edgeHeight = 0.2;
+		b2Vec2 vertices[8];
+		vertices[0].Set(-width + edgeWidth, -height);		// bottom
+		vertices[1].Set(width - edgeWidth, -height);		// bottom-right edge start
+		vertices[2].Set(width, -height + edgeHeight);		// bottom-right edge end
+		vertices[3].Set(width, height - edgeHeight);		// top-right edge start
+		vertices[4].Set(width - edgeWidth, height);			// top-right edge end
+		vertices[5].Set(-width + edgeWidth, height);		// top-left edge start
+		vertices[6].Set(-width, height - edgeHeight);		// top-left edge end
+		vertices[7].Set(-width, -height + edgeHeight);		// bottom-left edge
+		shape.Set(vertices, 8);
+		//shape.SetAsBox(0.7, 1);
 		fixtureDef.shape = &shape;
 		player->getBody()->CreateFixture(&fixtureDef);
 

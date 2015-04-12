@@ -86,11 +86,13 @@
 #include "MapLoadTest.h"
 #include "AnatomyCollision.h"
 #include "Sensors.h"
+#include "GhostVertices.h"
 
 
 TestEntry g_testEntries[] =
 {
 	{"Ray-Cast", RayCast::Create},
+	{ "GhostVertices", GhostVertices::Create },
 	{ "Sensors", Sensors::Create },
 	{ "AnatomyCollision", AnatomyCollision::Create },
 	{ "MapLoadTest", MapLoadTest::Create },
