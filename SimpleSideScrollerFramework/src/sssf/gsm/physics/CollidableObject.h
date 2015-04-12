@@ -13,10 +13,10 @@ const unsigned int BOTTOM_EDGE = 3;
 class CollidableObject
 {
 protected:
-	//These are replacements for the AABB and physical properties
+	//This is the replacement for the AABB and physical properties
 	b2Body *body;
-	bool onTileThisFrame;
-	bool onTileLastFrame;
+	//This is for keeping track of boxes spawned when attacking
+	b2Body *hurtBox;
 	unsigned int collisionEdge;
 
 public:
@@ -26,24 +26,15 @@ public:
 
 	// INLINED METHODS
 	b2Body*				getBody()					{ return body; }
-	bool				isOnTileThisFrame()			{ return onTileThisFrame;		}
-	bool				wasOnTileLastFrame()		{ return onTileLastFrame;		}
+	b2Body*				getHurtBox()				{ return hurtBox; }
 	unsigned int		getCollisionEdge()			{ return collisionEdge;			}
 
 	void setBody(b2Body* body){
 		this->body = body;
 	}
+	void setHurtBox(b2Body* hurtBox){
+		this->hurtBox = hurtBox;
+	}
 	void				setCollisionEdge(unsigned int initCollisionEdge)
 	{	collisionEdge = initCollisionEdge; }
-	void setOnTileThisFrame(bool initOnTileThisFrame)
-	{	onTileThisFrame = initOnTileThisFrame; }
-	void setOnTileLastFrame(bool initOnTileLastFrame)
-	{	onTileLastFrame = initOnTileLastFrame; }
-
-	void advanceOnTileStatus()
-	{
-		onTileLastFrame = onTileThisFrame;
-		onTileThisFrame = false;
-	}
-
 };

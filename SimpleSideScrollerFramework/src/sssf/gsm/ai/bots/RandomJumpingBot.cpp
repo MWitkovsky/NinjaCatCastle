@@ -131,7 +131,7 @@ void RandomJumpingBot::think(Game *game)
 	if (currentState != L"DIE"){
 		if (cyclesRemainingBeforeThinking == 0)
 		{
-			if (this->wasOnTileLastFrame())
+			if (body->GetLinearVelocity().y == 0)
 			{
 				GameStateManager *gsm = game->getGSM();
 				pickRandomJump(gsm->getPhysics());

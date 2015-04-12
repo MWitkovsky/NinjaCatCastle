@@ -45,6 +45,8 @@ protected:
 	boolean jump = false;
 	boolean facingRight = false;
 	boolean hit = false;
+	boolean airborne = false;
+	boolean attackFinished = false;
 
 	int HP = 3;
 	int visibleFrames = HP;
@@ -68,6 +70,8 @@ public:
 	int					getLives()			{ return lives; }
 	boolean				isFacingRight()		{ return facingRight; }
 	boolean				wasHit()			{ return hit; }
+	boolean				isAirborne()		{ return airborne; }
+	boolean				isAttackFinished()	{ return attackFinished; }
 
 	// INLINED MUTATOR METHODS
 	void setAlpha(int initAlpha)
@@ -123,7 +127,12 @@ public:
 	void setHit(boolean hit){
 		this->hit = hit;
 	}
-
+	void setAirborne(boolean airborne){
+		this->airborne = airborne;
+	}
+	void setAttackFinished(boolean attackFinished){
+		this->attackFinished = attackFinished;
+	}
 	// METHODS DEFINED IN AnimatedSprite.cpp
 	AnimatedSprite();
 	~AnimatedSprite();

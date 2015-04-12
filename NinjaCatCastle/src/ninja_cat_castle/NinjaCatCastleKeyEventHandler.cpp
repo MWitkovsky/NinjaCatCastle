@@ -58,17 +58,15 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 		if (player->isControllable()){
 			if (input->isKeyDown(A_KEY))
 			{
-				if (state != L"JUMPING_DESCEND_LEFT" && state != L"JUMPING_DESCEND_RIGHT"
-					&& state != L"JUMPING_ASCEND_LEFT" && state != L"JUMPING_ASCEND_RIGHT"
-					&& state != L"JUMPING_ARC_LEFT" && state != L"JUMPING_ARC_RIGHT"
-					&& state != L"HIT_LEFT" && state != L"HIT_RIGHT"){
+				if (!player->isAirborne()){
 					if (state != L"ATTACK_LEFT" && state != L"ATTACK_RIGHT"
 						&& state != L"ATTACK_LEFT_2" && state != L"ATTACK_RIGHT_2"){
-						player->setFacingRight(false);
 						player->setCurrentState(L"WALK_LEFT");
 					}
 					vX = -PLAYER_SPEED;
 				}
+
+				//Just changes the way the sprite is facing, doesn't change anything about the jump.
 				if (state == L"JUMPING_DESCEND_RIGHT"){
 					player->setCurrentState(L"JUMPING_DESCEND_LEFT");
 				}
@@ -78,20 +76,19 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 				else if (state == L"JUMPING_ASCEND_RIGHT"){
 					player->setCurrentState(L"JUMPING_ASCEND_LEFT");
 				}
+				player->setFacingRight(false);
 			}
 			else if (input->isKeyDown(D_KEY))
 			{
-				if (state != L"JUMPING_DESCEND_LEFT" && state != L"JUMPING_DESCEND_RIGHT"
-					&& state != L"JUMPING_ASCEND_LEFT" && state != L"JUMPING_ASCEND_RIGHT"
-					&& state != L"JUMPING_ARC_LEFT" && state != L"JUMPING_ARC_RIGHT"
-					&& state != L"HIT_LEFT" && state != L"HIT_RIGHT"){
+				if (!player->isAirborne()){
 					if (state != L"ATTACK_LEFT" && state != L"ATTACK_RIGHT"
 						&& state != L"ATTACK_LEFT_2" && state != L"ATTACK_RIGHT_2"){
-						player->setFacingRight(true);
 						player->setCurrentState(L"WALK_RIGHT");
 					}
 					vX = PLAYER_SPEED;
 				}
+
+				//Just changes the way the sprite is facing, doesn't change anything about the jump.
 				if (state == L"JUMPING_DESCEND_LEFT"){
 					player->setCurrentState(L"JUMPING_DESCEND_RIGHT");
 				}
@@ -101,6 +98,7 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 				else if (state == L"JUMPING_ASCEND_LEFT"){
 					player->setCurrentState(L"JUMPING_ASCEND_RIGHT");
 				}
+				player->setFacingRight(true);
 			}
 			else
 			{
@@ -136,43 +134,75 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 
 			//ATTACKS
 			if (input->isKeyDownForFirstTime(K_KEY)){
-				if (state == L"ATTACK_RIGHT" || state == L"ATTACK_LEFT"){
-					if (vX > 0){
-						player->setCurrentState(L"ATTACK_RIGHT_2");
-					}
-					else if (vX < 0){
-						player->setCurrentState(L"ATTACK_LEFT_2");
-					}
-					else{
-						if (state == L"ATTACK_RIGHT"){
-							player->setCurrentState(L"ATTACK_RIGHT_2");
-						}
-						else{
-							player->setCurrentState(L"ATTACK_LEFT_2");
-						}
-					}
-				}
-				else if (state == L"ATTACK_RIGHT_2" || state == L"ATTACK_LEFT_2"){
-					if (vX > 0){
-						player->setCurrentState(L"ATTACK_RIGHT");
-					}
-					else if (vX < 0){
-						player->setCurrentState(L"ATTACK_LEFT");
+				if (state != L"HIT_LEFT" && state != L"HIT_RIGHT"){
+					b2BodyDef hurtBoxProps;
+					b2FixtureDef fixtureDef;
+					b2PolygonShape shape;
+
+					hurtBoxProps.fixedRotation = true;
+					fixtureDef.isSensor = true;
+
+					if (player->isAirborne()){
+
 					}
 					else{
-						if (state == L"ATTACK_RIGHT_2"){
+						//Animation Handling
+						if (state == L"ATTACK_RIGHT" || state == L"ATTACK_LEFT"){
+							game->getGSM()->getPhysics()->getWorld()->DestroyBody(player->getHurtBox());
+							if (vX > 0){
+								player->setCurrentState(L"ATTACK_RIGHT_2");
+							}
+							else if (vX < 0){
+								player->setCurrentState(L"ATTACK_LEFT_2");
+							}
+							else{
+								if (state == L"ATTACK_RIGHT"){
+									player->setCurrentState(L"ATTACK_RIGHT_2");
+								}
+								else{
+									player->setCurrentState(L"ATTACK_LEFT_2");
+								}
+							}
+						}
+						else if (state == L"ATTACK_RIGHT_2" || state == L"ATTACK_LEFT_2"){
+							game->getGSM()->getPhysics()->getWorld()->DestroyBody(player->getHurtBox());
+							if (vX > 0){
+								player->setCurrentState(L"ATTACK_RIGHT");
+							}
+							else if (vX < 0){
+								player->setCurrentState(L"ATTACK_LEFT");
+							}
+							else{
+								if (state == L"ATTACK_RIGHT_2"){
+									player->setCurrentState(L"ATTACK_RIGHT");
+								}
+								else{
+									player->setCurrentState(L"ATTACK_LEFT");
+								}
+							}
+						}
+						else if (state == L"WALK_RIGHT" || state == L"IDLE_RIGHT"){
 							player->setCurrentState(L"ATTACK_RIGHT");
 						}
-						else{
+						else if (state == L"WALK_LEFT" || state == L"IDLE_LEFT"){
 							player->setCurrentState(L"ATTACK_LEFT");
 						}
+
+						//Spawn the hitbox for the attack
+						b2Vec2 playerPos = player->getBody()->GetPosition();
+						shape.SetAsBox(0.5f, 0.25f);
+						fixtureDef.shape = &shape;
+
+						if (player->isFacingRight()){
+							hurtBoxProps.position.Set(playerPos.x + 0.7f, playerPos.y);
+						}
+						else{
+							hurtBoxProps.position.Set(playerPos.x - 0.7f, playerPos.y);
+						}
+
+						player->setHurtBox(game->getGSM()->getPhysics()->getWorld()->CreateBody(&hurtBoxProps));
+						player->getHurtBox()->CreateFixture(&fixtureDef);
 					}
-				}
-				else if (state == L"WALK_RIGHT" || state == L"IDLE_RIGHT"){
-					player->setCurrentState(L"ATTACK_RIGHT");
-				}
-				else if (state == L"WALK_LEFT" || state == L"IDLE_LEFT"){
-					player->setCurrentState(L"ATTACK_LEFT");
 				}
 			}
 

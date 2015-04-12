@@ -176,7 +176,6 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 	game->getGUI()->getViewport()->setViewportY(900);
 
 	//NOW ADD ALL COLLIDABLE TILES TO THE BOX2D SIMULATION
-	b2Body* tile;
 	b2BodyDef tileDef;
 	b2FixtureDef tileFixDef;
 	b2PolygonShape tileShape;
@@ -211,101 +210,96 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 	SpriteManager *spriteManager = gsm->getSpriteManager();
 	AnimatedSprite *player = spriteManager->getPlayer();
 
-	// NOTE THAT RED BOX MAN IS SPRITE ID 2
-	if (!spriteManager->getPlayer()->getSpriteType()){
-		physics->addCollidableObject(player);
-		AnimatedSpriteType *playerSpriteType = spriteManager->getSpriteType(2);
-		player->setSpriteType(playerSpriteType);
-		player->setAlpha(255);
-		player->setCurrentState(L"JUMPING_DESCEND_RIGHT");
-		//Right here is what I think making the character's box should look like
-		//Then I started wonderning how the hell we're going to do rendering
-		//when we handle it by pixel and now everything's done in METERS
-		//WHY DOES IT HAVE TO BE METERS? I stopped here.
-		//^ That problem was solved. The things being shown to a player are actually
-		//just a projection of the simulation, the actual simulation isn't tied to
-		//rendering like I thought it was.
-		b2BodyDef playerProps;
-		playerProps.position.Set(2.0f, 15.0f);
-		player->setOnTileThisFrame(false);
-		player->setOnTileLastFrame(false);
-		playerProps.type = b2_dynamicBody;
-		playerProps.fixedRotation = true;
-		player->setBody(game->getGSM()->getPhysics()->getWorld()->CreateBody(&playerProps));
-		b2FixtureDef fixtureDef;
-		b2PolygonShape shape;
-		/*This solution made the main character an octagon, he didn't get snagged anymore,
-		but he also ramped off of random pieces of ground... no fun*/
-		//Actually, this octagon shape is better for jumping up on higher platforms.
-		//The octagonal shape gives a more natural curve to the hitbox, leading to less frustration.
-		//Also gives a nice little push forward if you fall of a ledge.
-		float32 width = 0.7;
-		float32 height = 1;
-		float32 edgeWidth = 0.1;
-		float32 edgeHeight = 0.2;
-		b2Vec2 vertices[8];
-		vertices[0].Set(-width + edgeWidth, -height);		// bottom
-		vertices[1].Set(width - edgeWidth, -height);		// bottom-right edge start
-		vertices[2].Set(width, -height + edgeHeight);		// bottom-right edge end
-		vertices[3].Set(width, height - edgeHeight);		// top-right edge start
-		vertices[4].Set(width - edgeWidth, height);			// top-right edge end
-		vertices[5].Set(-width + edgeWidth, height);		// top-left edge start
-		vertices[6].Set(-width, height - edgeHeight);		// top-left edge end
-		vertices[7].Set(-width, -height + edgeHeight);		// bottom-left edge
-		shape.Set(vertices, 8);
+	// NOTE THAT NINJA CAT DUDE IS SPRITE ID 2
+	physics->addCollidableObject(player);
+	AnimatedSpriteType *playerSpriteType = spriteManager->getSpriteType(2);
+	player->setSpriteType(playerSpriteType);
+	player->setAlpha(255);
+	player->setCurrentState(L"JUMPING_DESCEND_RIGHT");
+	player->setFacingRight(true);
 
-		//I like rectangles anyway
-		//shape.SetAsBox(0.7, 1);
-		fixtureDef.shape = &shape;
-		player->getBody()->CreateFixture(&fixtureDef);
+	//Right here is what I think making the character's box should look like
+	//Then I started wonderning how the hell we're going to do rendering
+	//when we handle it by pixel and now everything's done in METERS
+	//WHY DOES IT HAVE TO BE METERS? I stopped here.
 
-		AnimatedSpriteType *botSpriteType = spriteManager->getSpriteType(1);
-		// AND LET'S ADD A BUNCH OF RANDOM JUMPING BOTS, FIRST ALONG
-		// A LINE NEAR THE TOP
+	//^ That problem was solved. The things being shown to a player are actually
+	//just a projection of the simulation, the actual simulation isn't tied to
+	//rendering like I thought it was.
+	b2BodyDef playerProps;
+	playerProps.position.Set(2.0f, 15.0f);
+	playerProps.type = b2_dynamicBody;
+	playerProps.fixedRotation = true;
+	player->setBody(game->getGSM()->getPhysics()->getWorld()->CreateBody(&playerProps));
+	b2FixtureDef fixtureDef;
+	b2PolygonShape shape;
+	/*This solution made the main character an octagon, he didn't get snagged anymore,
+	but he also ramped off of random pieces of ground... no fun*/
+	//Actually, this octagon shape is better for jumping up on higher platforms.
+	//The octagonal shape gives a more natural curve to the hitbox, leading to less frustration.
+	//Also gives a nice little push forward if you fall of a ledge.
+	float32 width = 0.7f;
+	float32 height = 1.0f;
+	float32 edgeWidth = 0.1f;
+	float32 edgeHeight = 0.2f;
+	b2Vec2 vertices[8];
+	vertices[0].Set(-width + edgeWidth, -height);		// bottom
+	vertices[1].Set(width - edgeWidth, -height);		// bottom-right edge start
+	vertices[2].Set(width, -height + edgeHeight);		// bottom-right edge end
+	vertices[3].Set(width, height - edgeHeight);		// top-right edge start
+	vertices[4].Set(width - edgeWidth, height);			// top-right edge end
+	vertices[5].Set(-width + edgeWidth, height);		// top-left edge start
+	vertices[6].Set(-width, height - edgeHeight);		// top-left edge end
+	vertices[7].Set(-width, -height + edgeHeight);		// bottom-left edge
+	shape.Set(vertices, 8);
 
-		// UNCOMMENT THE FOLLOWING CODE BLOCK WHEN YOU ARE READY TO ADD SOME BOTS
+	//I like rectangles anyway
+	//shape.SetAsBox(0.7, 1);
+	fixtureDef.shape = &shape;
+	player->getBody()->CreateFixture(&fixtureDef);
 
-		for (int i = 4; i <= 10; i++)
-		{
-			float botX = 400.0f + (i * 100.0f);
-			float botY = 200.0f;
-			makeRandomJumpingBot(game, botSpriteType, botX, botY);
-		}
-		botSpriteType = spriteManager->getSpriteType(0);
-		for (int i = 16; i <= 22; i++){
-			float botX = 400.0f + (i * 100.0f);
-			float botY = 200.0f;
-			makeRandomJumpingBot(game, botSpriteType, botX, botY);
-		}
-
-		makeRandomFloatingBot(game, spriteManager->getSpriteType(3), 1000, 500);
+	player->setHP(3);
+	if (!player->isControllable()){
+		player->toggleControllable();
 	}
-	else{
-		player->setAlpha(255);
-		player->setCurrentState(L"JUMPING_DESCEND_RIGHT");
-		/*PhysicalProperties *playerProps = player->getPhysicalProperties();
-		playerProps->setX(playerProps->getOriginalX());
-		playerProps->setY(playerProps->getOriginalY());
-		playerProps->setVelocity(0.0f, 0.0f);
-		playerProps->setAccelerationX(0);
-		playerProps->setAccelerationY(0);
-		player->setOnTileThisFrame(false);
-		player->setOnTileLastFrame(false);
-		player->affixTightAABBBoundingVolume();*/
-		if (!player->isControllable()){
-			player->toggleControllable();
-		}
 
-		player->setHP(10);
+	AnimatedSpriteType *botSpriteType = spriteManager->getSpriteType(1);
+	// AND LET'S ADD A BUNCH OF RANDOM JUMPING BOTS, FIRST ALONG
+	// A LINE NEAR THE TOP
+		
+	// UNCOMMENT THE FOLLOWING CODE BLOCK WHEN YOU ARE READY TO ADD SOME BOTS
 
-		list<Bot*>::iterator botsIterator = spriteManager->getBotsIterator();
-		/*while (botsIterator != spriteManager->getEndOfBotsIterator()){
-			(*botsIterator)->getPhysicalProperties()->setPosition((*botsIterator)->getPhysicalProperties()->getOriginalX(), (*botsIterator)->getPhysicalProperties()->getOriginalY());
-			(*botsIterator)->setCurrentState((*botsIterator)->getOriginalState());
-			(*botsIterator)->affixTightAABBBoundingVolume();
-			botsIterator++;
-		}*/
+	/*for (int i = 4; i <= 10; i++)
+	{
+		float botX = 400.0f + (i * 100.0f);
+		float botY = 200.0f;
+		makeRandomJumpingBot(game, botSpriteType, botX, botY);
 	}
+	botSpriteType = spriteManager->getSpriteType(0);
+	for (int i = 16; i <= 22; i++){
+		float botX = 400.0f + (i * 100.0f);
+		float botY = 200.0f;
+		makeRandomJumpingBot(game, botSpriteType, botX, botY);
+	}*/
+
+	//makeRandomFloatingBot(game, spriteManager->getSpriteType(3), 1000, 500);
+	/*PhysicalProperties *playerProps = player->getPhysicalProperties();
+	playerProps->setX(playerProps->getOriginalX());
+	playerProps->setY(playerProps->getOriginalY());
+	playerProps->setVelocity(0.0f, 0.0f);
+	playerProps->setAccelerationX(0);
+	playerProps->setAccelerationY(0);
+	player->setOnTileThisFrame(false);
+	player->setOnTileLastFrame(false);
+	player->affixTightAABBBoundingVolume();*/
+
+	//list<Bot*>::iterator botsIterator = spriteManager->getBotsIterator();
+	/*while (botsIterator != spriteManager->getEndOfBotsIterator()){
+		(*botsIterator)->getPhysicalProperties()->setPosition((*botsIterator)->getPhysicalProperties()->getOriginalX(), (*botsIterator)->getPhysicalProperties()->getOriginalY());
+		(*botsIterator)->setCurrentState((*botsIterator)->getOriginalState());
+		(*botsIterator)->affixTightAABBBoundingVolume();
+		botsIterator++;
+	}*/
 
 	// AND THEN STRATEGICALLY PLACED AROUND THE LEVEL
 	/*makeRandomJumpingBot(game, botSpriteType, 400, 100);

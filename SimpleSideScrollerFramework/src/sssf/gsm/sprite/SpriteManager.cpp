@@ -285,6 +285,15 @@ void SpriteManager::unloadSprites(Game *game)
 		delete botToDelete;
 	}
 	bots.clear();*/
+
+	//Deletes all bodies from THE WORLD
+	b2Body* bodyToDelete = game->getGSM()->getPhysics()->getWorld()->GetBodyList();
+	b2Body* temp;
+	while (bodyToDelete){
+		temp = bodyToDelete->GetNext();
+		game->getGSM()->getPhysics()->getWorld()->DestroyBody(bodyToDelete);
+		bodyToDelete = temp;
+	}
 }
 
 Bot* SpriteManager::removeBot(Bot *botToRemove)
@@ -372,6 +381,11 @@ void SpriteManager::updateAnimations(Game *game){
 				}
 			}
 		}
+	}
+
+	if (player.isAttackFinished()){
+		game->getGSM()->getPhysics()->getWorld()->DestroyBody(player.getHurtBox());
+		player.setAttackFinished(false);
 	}
 
 	//Invincibility frames should ideally last about 1 second.
