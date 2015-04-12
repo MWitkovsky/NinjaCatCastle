@@ -45,6 +45,7 @@ void AnimatedSprite::changeFrame()
 	frameIndex += 2;
 
 	// GO BACK TO FIRST INDEX IF NECESSARY
+	// THIS IS ALSO WHERE ALL ANIMATIONS RELIANT ON OTHER ANIMATIONS ARE HANDLED
 	if (frameIndex == spriteType->getSequenceSize(currentState)){
 		if (currentState != L"DIE" && currentState != L"HIT"){
 			if (currentState == L"JUMPING_ARC_RIGHT"){
@@ -52,6 +53,23 @@ void AnimatedSprite::changeFrame()
 			}
 			else if (currentState == L"JUMPING_ARC_LEFT"){
 				setCurrentState(L"JUMPING_DESCEND_LEFT");
+			}
+			else if (currentState == L"ATTACK_RIGHT" || currentState == L"ATTACK_LEFT"
+				|| currentState == L"ATTACK_RIGHT_2" || currentState == L"ATTACK_LEFT_2"){
+				if (body->GetLinearVelocity().x > 0){
+					setCurrentState(L"WALK_RIGHT");
+				}
+				else if (body->GetLinearVelocity().x < 0){
+					setCurrentState(L"WALK_LEFT");
+				}
+				else{
+					if (currentState == L"ATTACK_RIGHT"){
+						setCurrentState(L"IDLE_RIGHT");
+					}
+					else{
+						setCurrentState(L"IDLE_LEFT");
+					}
+				}
 			}
 			else{
 				frameIndex = 0;

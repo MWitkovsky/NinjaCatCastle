@@ -66,4 +66,5 @@ public:
 	unsigned int		getNumberOfBotsInNode(int node);
 	//void				checkForCollisions(Game *game, AnimatedSprite *sprite);
 	void				update(Game *game);
+	void				updateAnimations(Game *game);
 };

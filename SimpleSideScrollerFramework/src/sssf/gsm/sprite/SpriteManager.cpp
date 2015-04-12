@@ -308,48 +308,68 @@ unsigned int SpriteManager::getNumberOfBots(){
 */
 void SpriteManager::update(Game *game)
 {
+	//Player stuff mostly
+	updateAnimations(game);
+
+	// NOW UPDATE THE REST OF THE SPRITES
+	list<Bot*>::iterator botIterator;
+	botIterator = bots.begin();
+	while (botIterator != bots.end())
+	{
+		Bot *bot = (*botIterator);
+		bot->think(game);
+		bot->updateSprite();
+		botIterator++;
+	}
+
+	//legacy
+	//checkForCollisions(game, &player);
+}
+
+void SpriteManager::updateAnimations(Game *game){
 	// UPDATE THE PLAYER SPRITE
 	float velocityY = player.getBody()->GetLinearVelocity().y;
 	wstring state = player.getCurrentState();
-	if (velocityY > 0){
-		if (state == L"WALK_RIGHT" || state == L"IDLE_RIGHT" || state == L"JUMPING_ASCEND_RIGHT"){
-			player.setCurrentState(L"JUMPING_ASCEND_RIGHT");
+
+	if (state != L"ATTACK_RIGHT"){
+		if (velocityY > 0){
+			if (state == L"WALK_RIGHT" || state == L"IDLE_RIGHT" || state == L"JUMPING_ASCEND_RIGHT"){
+				player.setCurrentState(L"JUMPING_ASCEND_RIGHT");
+			}
+			else if (state == L"WALK_LEFT" || state == L"IDLE_LEFT" || state == L"JUMPING_ASCEND_LEFT"){
+				player.setCurrentState(L"JUMPING_ASCEND_LEFT");
+			}
 		}
-		else if (state == L"WALK_LEFT" || state == L"IDLE_LEFT" || state == L"JUMPING_ASCEND_LEFT"){
-			player.setCurrentState(L"JUMPING_ASCEND_LEFT");
+		else if (velocityY < 0.0f && state == L"JUMPING_ASCEND_LEFT"){
+			player.setCurrentState(L"JUMPING_ARC_LEFT");
+		}
+		else if (velocityY < 0.0f && state == L"JUMPING_ASCEND_RIGHT"){
+			player.setCurrentState(L"JUMPING_ARC_RIGHT");
+		}
+		else if (velocityY < 0.0f && (state == L"WALK_LEFT" || state == L"IDLE_LEFT")){
+			player.setCurrentState(L"JUMPING_DESCEND_LEFT");
+		}
+		else if (velocityY < 0.0f && (state == L"WALK_RIGHT" || state == L"IDLE_RIGHT")){
+			player.setCurrentState(L"JUMPING_DESCEND_RIGHT");
+		}
+		else if (velocityY == 0.0f && state != L"JUMPING_ASCEND_LEFT" && state != L"JUMPING_ASCEND_RIGHT"
+			&& state != L"JUMPING_ARC_LEFT" && state != L"JUMPING_ARC_RIGHT"){
+			if (player.getCurrentState() == L"JUMPING_DESCEND_LEFT"){
+				player.setCurrentState(L"IDLE_LEFT");
+			}
+			else if (state == L"HIT" && player.getHP() == 0){
+				player.setCurrentState(L"DIE");
+			}
+			else if (player.getCurrentState() == L"JUMPING_DESCEND_RIGHT" || state == L"HIT"){
+				player.setCurrentState(L"IDLE_RIGHT");
+			}
 		}
 	}
-	else if (velocityY < 0.0f && state == L"JUMPING_ASCEND_LEFT"){
-		player.setCurrentState(L"JUMPING_ARC_LEFT");
-	}
-	else if (velocityY < 0.0f && state == L"JUMPING_ASCEND_RIGHT"){
-		player.setCurrentState(L"JUMPING_ARC_RIGHT");
-	}
-	else if (velocityY < 0.0f && (state == L"WALK_LEFT" || state == L"IDLE_LEFT")){
-		player.setCurrentState(L"JUMPING_DESCEND_LEFT");
-	}
-	else if (velocityY < 0.0f && (state == L"WALK_RIGHT" || state == L"IDLE_RIGHT")){
-		player.setCurrentState(L"JUMPING_DESCEND_RIGHT");
-	}
-	else if (velocityY == 0.0f && state != L"JUMPING_ASCEND_LEFT" && state != L"JUMPING_ASCEND_RIGHT"
-		&& state != L"JUMPING_ARC_LEFT" && state != L"JUMPING_ARC_RIGHT"){
-		if (player.getCurrentState() == L"JUMPING_DESCEND_LEFT"){
-			player.setCurrentState(L"IDLE_LEFT");
-		}
-		else if (state == L"HIT" && player.getHP() == 0){
-			player.setCurrentState(L"DIE");
-		}
-		else if (player.getCurrentState() == L"JUMPING_DESCEND_RIGHT" || state == L"HIT"){
-			player.setCurrentState(L"IDLE_RIGHT");
-		}
-		
-	}
-	player.updateSprite();
 
 	if (player.getInvincibilityFrames() != 0){
 		player.decrementInvincibilityFrames();
 	}
-	if (player.isOnTileThisFrame()){
+	if (player.getBody()->GetLinearVelocity().y == 0){
 		player.setWasJump(false);
 	}
 	if (player.getHP() != 10){
@@ -387,16 +407,5 @@ void SpriteManager::update(Game *game)
 		player.setAlpha(255);
 	}
 
-	// NOW UPDATE THE REST OF THE SPRITES
-	list<Bot*>::iterator botIterator;
-	botIterator = bots.begin();
-	while (botIterator != bots.end())
-	{
-		Bot *bot = (*botIterator);
-		bot->think(game);
-		bot->updateSprite();
-		botIterator++;
-	}
-
-	//checkForCollisions(game, &player);
+	player.updateSprite();
 }

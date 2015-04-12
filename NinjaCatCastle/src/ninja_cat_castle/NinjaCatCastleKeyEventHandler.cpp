@@ -61,8 +61,11 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 				if (state != L"JUMPING_DESCEND_LEFT" && state != L"JUMPING_DESCEND_RIGHT"
 					&& state != L"JUMPING_ASCEND_LEFT" && state != L"JUMPING_ASCEND_RIGHT"
 					&& state != L"JUMPING_ARC_LEFT" && state != L"JUMPING_ARC_RIGHT"){
-					player->setFacingRight(false);
-					player->setCurrentState(L"WALK_LEFT");
+					if (state != L"ATTACK_LEFT" && state != L"ATTACK_RIGHT"
+						&& state != L"ATTACK_LEFT_2" && state != L"ATTACK_RIGHT_2"){
+						player->setFacingRight(false);
+						player->setCurrentState(L"WALK_LEFT");
+					}
 					vX = -PLAYER_SPEED;
 				}
 			}
@@ -71,41 +74,92 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 				if (state != L"JUMPING_DESCEND_LEFT" && state != L"JUMPING_DESCEND_RIGHT"
 					&& state != L"JUMPING_ASCEND_LEFT" && state != L"JUMPING_ASCEND_RIGHT"
 					&& state != L"JUMPING_ARC_LEFT" && state != L"JUMPING_ARC_RIGHT"){
-					player->setFacingRight(true);
-					player->setCurrentState(L"WALK_RIGHT");
+					if (state != L"ATTACK_LEFT" && state != L"ATTACK_RIGHT"
+						&& state != L"ATTACK_LEFT_2" && state != L"ATTACK_RIGHT_2"){
+						player->setFacingRight(true);
+						player->setCurrentState(L"WALK_RIGHT");
+					}
 					vX = PLAYER_SPEED;
 				}
 			}
 			else
 			{
 				if (state == L"WALK_LEFT" || state == L"IDLE_LEFT"){
-					vX = 0.0f;
 					player->setCurrentState(L"IDLE_LEFT");
+					vX = 0.0f;
 				}
 				else if (state == L"WALK_RIGHT" || state == L"IDLE_RIGHT"){
-					vX = 0.0f;
 					player->setCurrentState(L"IDLE_RIGHT");
+					vX = 0.0f;
+				}
+				else if (state == L"ATTACK_LEFT" || state == L"ATTACK_RIGHT"
+					|| state == L"ATTACK_LEFT_2" || state == L"ATTACK_RIGHT_2"){
+					vX = 0.0f;
 				}
 			}
 
 			if (input->isKeyDownForFirstTime(SPACE_KEY))
 			{
-				//if (player->wasOnTileLastFrame()){
+				if (state == L"WALK_LEFT" || state == L"IDLE_LEFT"
+					|| state == L"WALK_RIGHT" || state == L"IDLE_RIGHT"){
 					vY = JUMP_SPEED;
 					player->setWasJump(true);
-				//}
+				}
 			}
-
 			//FOR PRECISION JUMPING
 			if (input->wasKeyReleased(SPACE_KEY)){
-				//if (vY < 0){
+				if (vY > 0 && player->wasJump()){
 					vY = vY / 3.0f;
-				//}
+				}
 				player->setWasJump(false);
 			}
 
-			//for testing HP and death
+			//ATTACKS
 			if (input->isKeyDownForFirstTime(K_KEY)){
+				if (state == L"ATTACK_RIGHT" || state == L"ATTACK_LEFT"){
+					if (vX > 0){
+						player->setCurrentState(L"ATTACK_RIGHT_2");
+					}
+					else if (vX < 0){
+						player->setCurrentState(L"ATTACK_LEFT_2");
+					}
+					else{
+						if (state == L"ATTACK_RIGHT"){
+							player->setCurrentState(L"ATTACK_RIGHT_2");
+						}
+						else{
+							player->setCurrentState(L"ATTACK_LEFT_2");
+						}
+					}
+				}
+				else if (state == L"ATTACK_RIGHT_2" || state == L"ATTACK_LEFT_2"){
+					if (vX > 0){
+						player->setCurrentState(L"ATTACK_RIGHT");
+					}
+					else if (vX < 0){
+						player->setCurrentState(L"ATTACK_LEFT");
+					}
+					else{
+						if (state == L"ATTACK_RIGHT_2"){
+							player->setCurrentState(L"ATTACK_RIGHT");
+						}
+						else{
+							player->setCurrentState(L"ATTACK_LEFT");
+						}
+					}
+				}
+				else if (state == L"WALK_RIGHT" || state == L"IDLE_RIGHT"){
+					player->setCurrentState(L"ATTACK_RIGHT");
+				}
+				else if (state == L"WALK_LEFT" || state == L"IDLE_LEFT"){
+					player->setCurrentState(L"ATTACK_LEFT");
+				}
+			}
+
+
+
+			//for testing HP and death
+			/*if (input->isKeyDownForFirstTime(K_KEY)){
 				AnimatedSprite* player = gsm->getSpriteManager()->getPlayer();
 				if (player->getHP() != 1){
 					player->decrementHP();
@@ -117,7 +171,8 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 					player->setCurrentState(L"DIE");
 					player->setVisibleFrames(100);
 				}
-			}
+			}*/
+
 		}
 		if (input->isKeyDownForFirstTime(G_KEY))
 		{

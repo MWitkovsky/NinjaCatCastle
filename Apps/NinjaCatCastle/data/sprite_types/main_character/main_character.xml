@@ -71,14 +71,56 @@
   <image_file id="66" file_name="JUMPING_ARC_LEFT/maincharacter_JUMPING_ARC0001.png"/>
   <image_file id="67" file_name="JUMPING_ARC_LEFT/maincharacter_JUMPING_ARC0002.png"/>
   <image_file id="68" file_name="JUMPING_ARC_LEFT/maincharacter_JUMPING_ARC0003.png"/>
-  <image_file id="69" file_name="HIT/maincharacter_HIT0001.png"/>
-  <image_file id="70" file_name="HIT/maincharacter_HIT0002.png"/>
-  <image_file id="71" file_name="HIT/maincharacter_HIT0003.png"/>
-  <image_file id="72" file_name="HIT/maincharacter_HIT0004.png"/>
-  <image_file id="73" file_name="HIT/maincharacter_HIT0005.png"/>
-  <image_file id="74" file_name="HIT/maincharacter_HIT0006.png"/>
+  <image_file id="69" file_name="GROUND_ATTACK_1_RIGHT/maincharacter_GROUNDATTACK_10001.png"/>
+  <image_file id="70" file_name="GROUND_ATTACK_1_RIGHT/maincharacter_GROUNDATTACK_10002.png"/>
+  <image_file id="71" file_name="GROUND_ATTACK_1_RIGHT/maincharacter_GROUNDATTACK_10003.png"/>
+  <image_file id="72" file_name="GROUND_ATTACK_1_RIGHT/maincharacter_GROUNDATTACK_10004.png"/>
+  <image_file id="73" file_name="GROUND_ATTACK_1_LEFT/maincharacter_GROUNDATTACK_10001.png"/>
+  <image_file id="74" file_name="GROUND_ATTACK_1_LEFT/maincharacter_GROUNDATTACK_10002.png"/>
+  <image_file id="75" file_name="GROUND_ATTACK_1_LEFT/maincharacter_GROUNDATTACK_10003.png"/>
+  <image_file id="76" file_name="GROUND_ATTACK_1_LEFT/maincharacter_GROUNDATTACK_10004.png"/>
+  <image_file id="77" file_name="GROUND_ATTACK_2_RIGHT/maincharacter_GROUNDATTACK_20004.png"/>
+  <image_file id="78" file_name="GROUND_ATTACK_2_RIGHT/maincharacter_GROUNDATTACK_20005.png"/>
+  <image_file id="79" file_name="GROUND_ATTACK_2_RIGHT/maincharacter_GROUNDATTACK_20006.png"/>
+  <image_file id="80" file_name="GROUND_ATTACK_2_LEFT/maincharacter_GROUNDATTACK_20004.png"/>
+  <image_file id="81" file_name="GROUND_ATTACK_2_LEFT/maincharacter_GROUNDATTACK_20005.png"/>
+  <image_file id="82" file_name="GROUND_ATTACK_2_LEFT/maincharacter_GROUNDATTACK_20006.png"/>
  </images_list>
  <animations_list>
+ <animation_state>
+ <state>ATTACK_LEFT_2</state>
+   <animation_sequence>
+    <pose image_id="80" duration="2"/>
+    <pose image_id="81" duration="2"/>
+    <pose image_id="82" duration="2"/>
+   </animation_sequence>
+  </animation_state>
+  <animation_state>
+  <state>ATTACK_RIGHT_2</state>
+   <animation_sequence>
+    <pose image_id="77" duration="2"/>
+    <pose image_id="78" duration="2"/>
+    <pose image_id="79" duration="2"/>
+   </animation_sequence>
+  </animation_state>
+  <animation_state>
+  <state>ATTACK_LEFT</state>
+   <animation_sequence>
+    <pose image_id="73" duration="2"/>
+    <pose image_id="74" duration="2"/>
+    <pose image_id="75" duration="2"/>
+    <pose image_id="76" duration="2"/>
+   </animation_sequence>
+  </animation_state>
+  <animation_state>
+  <state>ATTACK_RIGHT</state>
+   <animation_sequence>
+    <pose image_id="69" duration="2"/>
+    <pose image_id="70" duration="2"/>
+    <pose image_id="71" duration="2"/>
+    <pose image_id="72" duration="2"/>
+   </animation_sequence>
+  </animation_state>
   <animation_state>
    <state>IDLE_RIGHT</state>
    <animation_sequence>
