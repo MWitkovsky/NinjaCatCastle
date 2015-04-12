@@ -342,7 +342,8 @@ bool TMXMapImporter::buildWorldFromInfo(Game *game)
 			row = 0;
 			col = 0;
 
-			while (row < tiledLayerToAdd->getRows()){
+			//Tile by tile, NOT GOOD ENOUGH!
+			/*while (row < tiledLayerToAdd->getRows()){
 				while (col < tiledLayerToAdd->getColumns()){
 					if (tiledLayerToAdd->getTile(row, col)->collidable){
 						tilePos.Set(col-0.5f, tiledLayerToAdd->getRows()-row+0.5f);
@@ -354,7 +355,45 @@ bool TMXMapImporter::buildWorldFromInfo(Game *game)
 				}
 				row++;
 				col = 0;
+			}*/
+
+			//WHAZAM! COMBINES CONTIGUOUS HROIZONTAL TILES INTO ONE LARGE PLANE!
+			int collidableCount = 0;
+			int firstIndex = 0;
+			while (row < tiledLayerToAdd->getRows()){
+				while (col < tiledLayerToAdd->getColumns()){
+					if (tiledLayerToAdd->getTile(row, col)->collidable){
+						if (firstIndex == 0){
+							firstIndex = col;
+						}
+						collidableCount++;
+					}
+					else{
+						if (collidableCount > 0){
+							tilePos.Set((col - 0.5f)-(collidableCount*0.5f)-0.5f, tiledLayerToAdd->getRows() - row + 0.5f);
+							tileDef.position = tilePos;
+							tileShape.SetAsBox(0.5f*(collidableCount), 0.5f);
+							tile = game->getGSM()->getPhysics()->getWorld()->CreateBody(&tileDef);
+							tile->CreateFixture(&tileFixDef);
+						}
+						collidableCount = 0;
+						firstIndex = 0;
+					}
+					col++;
+				}
+				if (collidableCount > 0){
+					tilePos.Set((col - 0.5f) - (collidableCount*0.5f)-0.5f, tiledLayerToAdd->getRows() - row + 0.5f);
+					tileDef.position = tilePos;
+					tileShape.SetAsBox(0.5f*(collidableCount), 0.5f);
+					tile = game->getGSM()->getPhysics()->getWorld()->CreateBody(&tileDef);
+					tile->CreateFixture(&tileFixDef);
+				}
+				collidableCount = 0;
+				firstIndex = 0;
+				row++;
+				col = 0;
 			}
+
 			tliIt++;
 		}
 

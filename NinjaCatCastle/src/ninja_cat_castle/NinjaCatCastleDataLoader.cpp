@@ -222,6 +222,9 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 		//Then I started wonderning how the hell we're going to do rendering
 		//when we handle it by pixel and now everything's done in METERS
 		//WHY DOES IT HAVE TO BE METERS? I stopped here.
+		//^ That problem was solved. The things being shown to a player are actually
+		//just a projection of the simulation, the actual simulation isn't tied to
+		//rendering like I thought it was.
 		b2BodyDef playerProps;
 		playerProps.position.Set(5.0f, 10.0f);
 		player->setOnTileThisFrame(false);
@@ -231,7 +234,9 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 		player->setBody(game->getGSM()->getPhysics()->getWorld()->CreateBody(&playerProps));
 		b2FixtureDef fixtureDef;
 		b2PolygonShape shape;
-		float32 width = 0.7;
+		/*This solution made the main character an octagon, he didn't get snagged anymore,
+		but he also ramped off of random pieces of ground... no fun*/
+		/*float32 width = 0.7;
 		float32 height = 1;
 		float32 edgeWidth = 0.1;
 		float32 edgeHeight = 0.2;
@@ -244,8 +249,10 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 		vertices[5].Set(-width + edgeWidth, height);		// top-left edge start
 		vertices[6].Set(-width, height - edgeHeight);		// top-left edge end
 		vertices[7].Set(-width, -height + edgeHeight);		// bottom-left edge
-		shape.Set(vertices, 8);
-		//shape.SetAsBox(0.7, 1);
+		shape.Set(vertices, 8);*/
+
+		//I like rectangles anyway
+		shape.SetAsBox(0.7, 1);
 		fixtureDef.shape = &shape;
 		player->getBody()->CreateFixture(&fixtureDef);
 
