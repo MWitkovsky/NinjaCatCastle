@@ -10,7 +10,7 @@
 // GAME OBJECT INCLUDES
 #include "sssf\game\Game.h"
 #include "sssf\graphics\GameGraphics.h"
-#include "sssf\gsm\ai\bots\RandomJumpingBot.h"
+#include "sssf\gsm\ai\bots\PounceBot.h"
 #include "sssf\gsm\ai\bots\RandomFloatingBot.h"
 #include "sssf\gsm\state\GameState.h"
 #include "sssf\gsm\world\TiledLayer.h"
@@ -210,13 +210,14 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 	SpriteManager *spriteManager = gsm->getSpriteManager();
 	AnimatedSprite *player = spriteManager->getPlayer();
 
-	// NOTE THAT NINJA CAT DUDE IS SPRITE ID 2
+	// NOTE THAT NINJA CAT DUDE IS SPRITE ID 0
 	physics->addCollidableObject(player);
-	AnimatedSpriteType *playerSpriteType = spriteManager->getSpriteType(2);
+	AnimatedSpriteType *playerSpriteType = spriteManager->getSpriteType(0);
 	player->setSpriteType(playerSpriteType);
 	player->setAlpha(255);
 	player->setCurrentState(L"JUMPING_DESCEND_RIGHT");
 	player->setFacingRight(true);
+	player->setAirborne(true);
 
 	//Right here is what I think making the character's box should look like
 	//Then I started wonderning how the hell we're going to do rendering
@@ -238,7 +239,7 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 	//Actually, this octagon shape is better for jumping up on higher platforms.
 	//The octagonal shape gives a more natural curve to the hitbox, leading to less frustration.
 	//Also gives a nice little push forward if you fall of a ledge.
-	float32 width = 0.7f;
+	float32 width = 0.65f;
 	float32 height = 1.0f;
 	float32 edgeWidth = 0.1f;
 	float32 edgeHeight = 0.2f;
@@ -264,6 +265,17 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 	}
 
 	AnimatedSpriteType *botSpriteType = spriteManager->getSpriteType(1);
+	shape.SetAsBox(0.7f, 0.4f);
+	playerProps.position.Set(6.0f, 15.0f);
+	fixtureDef.shape = &shape;
+	PounceBot *bot = new PounceBot();
+	bot->setSpriteType(spriteManager->getSpriteType(1));
+	bot->setBody(physics->world->CreateBody(&playerProps));
+	bot->getBody()->CreateFixture(&fixtureDef);
+	bot->setCurrentState(L"IDLE_LEFT");
+	bot->setAlpha(255);
+	spriteManager->addBot(bot);
+
 	// AND LET'S ADD A BUNCH OF RANDOM JUMPING BOTS, FIRST ALONG
 	// A LINE NEAR THE TOP
 		
@@ -325,7 +337,7 @@ void NinjaCatCastleDataLoader::makeRandomJumpingBot(Game *game, AnimatedSpriteTy
 {
 	SpriteManager *spriteManager = game->getGSM()->getSpriteManager();
 	Physics *physics = game->getGSM()->getPhysics();
-	RandomJumpingBot *bot = new RandomJumpingBot(physics, 30, 120, 40);
+	PounceBot *bot = new PounceBot();
 	physics->addCollidableObject(bot);
 	b2Body *pp = bot->getBody();
 	/*pp->setPosition(initX, initY);

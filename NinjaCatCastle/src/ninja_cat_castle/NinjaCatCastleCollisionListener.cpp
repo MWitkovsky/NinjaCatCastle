@@ -3,7 +3,7 @@
 #include "ninja_cat_castle\NinjaCatCastleCollisionListener.h"
 #include "sssf\gsm\sprite\AnimatedSprite.h"
 #include "ninja_cat_castle\NinjaCatCastle.h"
-#include "sssf\gsm\ai\bots\RandomJumpingBot.h"
+#include "sssf\gsm\ai\bots\PounceBot.h"
 #include "sssf\gsm\ai\bots\RandomFloatingBot.h"
 
 void NinjaCatCastleCollisionListener::respondToCollision(Collision *collision)

@@ -22,7 +22,7 @@
     <ClCompile Include="src\sssf\graphics\TextureManager.cpp" />
     <ClCompile Include="src\sssf\gsm\ai\BotRecycler.cpp" />
     <ClCompile Include="src\sssf\gsm\ai\bots\RandomFloatingBot.cpp" />
-    <ClCompile Include="src\sssf\gsm\ai\bots\RandomJumpingBot.cpp" />
+    <ClCompile Include="src\sssf\gsm\ai\bots\PounceBot.cpp" />
     <ClCompile Include="src\sssf\gsm\physics\AABB.cpp" />
     <ClCompile Include="src\sssf\gsm\physics\CollidableObject.cpp" />
     <ClCompile Include="src\sssf\gsm\physics\Physics.cpp" />
@@ -61,7 +61,7 @@
     <ClInclude Include="src\sssf\gsm\ai\Bot.h" />
     <ClInclude Include="src\sssf\gsm\ai\BotRecycler.h" />
     <ClInclude Include="src\sssf\gsm\ai\bots\RandomFloatingBot.h" />
-    <ClInclude Include="src\sssf\gsm\ai\bots\RandomJumpingBot.h" />
+    <ClInclude Include="src\sssf\gsm\ai\bots\PounceBot.h" />
     <ClInclude Include="src\sssf\gsm\physics\AABB.h" />
     <ClInclude Include="src\sssf\gsm\physics\CollidableObject.h" />
     <ClInclude Include="src\sssf\gsm\physics\Collision.h" />

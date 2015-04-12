@@ -52,9 +52,6 @@ void AnimatedSprite::changeFrame()
 		|| currentState == L"HIT_LEFT" || currentState == L"HIT_RIGHT"){
 		airborne = true;
 	}
-	else{
-		airborne = false;
-	}
 
 	if (frameIndex == spriteType->getSequenceSize(currentState)){
 		if (currentState != L"DIE" && currentState != L"HIT_LEFT"
@@ -68,6 +65,7 @@ void AnimatedSprite::changeFrame()
 			else if (currentState == L"ATTACK_RIGHT" || currentState == L"ATTACK_LEFT"
 				|| currentState == L"ATTACK_RIGHT_2" || currentState == L"ATTACK_LEFT_2"){
 				attackFinished = true;
+				waitFrame = true;
 				if (body->GetLinearVelocity().x > 0){
 					setCurrentState(L"WALK_RIGHT");
 				}

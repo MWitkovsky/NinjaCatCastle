@@ -102,17 +102,15 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 			}
 			else
 			{
+				if (!player->isAirborne()){
+					vX = 0.0f;
+				}
+
 				if (state == L"WALK_LEFT" || state == L"IDLE_LEFT"){
 					player->setCurrentState(L"IDLE_LEFT");
-					vX = 0.0f;
 				}
 				else if (state == L"WALK_RIGHT" || state == L"IDLE_RIGHT"){
 					player->setCurrentState(L"IDLE_RIGHT");
-					vX = 0.0f;
-				}
-				else if (state == L"ATTACK_LEFT" || state == L"ATTACK_RIGHT"
-					|| state == L"ATTACK_LEFT_2" || state == L"ATTACK_RIGHT_2"){
-					vX = 0.0f;
 				}
 			}
 
@@ -122,6 +120,7 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 					|| state == L"WALK_RIGHT" || state == L"IDLE_RIGHT"){
 					vY = JUMP_SPEED;
 					player->setWasJump(true);
+					player->setAirborne(true);
 				}
 			}
 			//FOR PRECISION JUMPING, halts ascent when jump key is released
@@ -142,67 +141,45 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 					hurtBoxProps.fixedRotation = true;
 					fixtureDef.isSensor = true;
 
-					if (player->isAirborne()){
-
-					}
-					else{
-						//Animation Handling
-						if (state == L"ATTACK_RIGHT" || state == L"ATTACK_LEFT"){
-							game->getGSM()->getPhysics()->getWorld()->DestroyBody(player->getHurtBox());
-							if (vX > 0){
-								player->setCurrentState(L"ATTACK_RIGHT_2");
-							}
-							else if (vX < 0){
-								player->setCurrentState(L"ATTACK_LEFT_2");
-							}
-							else{
-								if (state == L"ATTACK_RIGHT"){
-									player->setCurrentState(L"ATTACK_RIGHT_2");
-								}
-								else{
-									player->setCurrentState(L"ATTACK_LEFT_2");
-								}
-							}
-						}
-						else if (state == L"ATTACK_RIGHT_2" || state == L"ATTACK_LEFT_2"){
-							game->getGSM()->getPhysics()->getWorld()->DestroyBody(player->getHurtBox());
-							if (vX > 0){
-								player->setCurrentState(L"ATTACK_RIGHT");
-							}
-							else if (vX < 0){
-								player->setCurrentState(L"ATTACK_LEFT");
-							}
-							else{
-								if (state == L"ATTACK_RIGHT_2"){
-									player->setCurrentState(L"ATTACK_RIGHT");
-								}
-								else{
-									player->setCurrentState(L"ATTACK_LEFT");
-								}
-							}
-						}
-						else if (state == L"WALK_RIGHT" || state == L"IDLE_RIGHT"){
-							player->setCurrentState(L"ATTACK_RIGHT");
-						}
-						else if (state == L"WALK_LEFT" || state == L"IDLE_LEFT"){
-							player->setCurrentState(L"ATTACK_LEFT");
-						}
-
-						//Spawn the hitbox for the attack
-						b2Vec2 playerPos = player->getBody()->GetPosition();
-						shape.SetAsBox(0.5f, 0.25f);
-						fixtureDef.shape = &shape;
-
+					//Animation Handling
+					if (state == L"ATTACK_RIGHT" || state == L"ATTACK_LEFT"){
 						if (player->isFacingRight()){
-							hurtBoxProps.position.Set(playerPos.x + 0.7f, playerPos.y);
+							player->setCurrentState(L"ATTACK_RIGHT_2");
 						}
 						else{
-							hurtBoxProps.position.Set(playerPos.x - 0.7f, playerPos.y);
+							player->setCurrentState(L"ATTACK_LEFT_2");
 						}
-
-						player->setHurtBox(game->getGSM()->getPhysics()->getWorld()->CreateBody(&hurtBoxProps));
-						player->getHurtBox()->CreateFixture(&fixtureDef);
 					}
+					else if (state == L"ATTACK_RIGHT_2" || state == L"ATTACK_LEFT_2"){
+						if (player->isFacingRight()){
+							player->setCurrentState(L"ATTACK_RIGHT");
+						}
+						else{
+							player->setCurrentState(L"ATTACK_LEFT");
+						}
+					}
+					else if (player->isFacingRight()){
+						player->setCurrentState(L"ATTACK_RIGHT");
+					}
+					else{
+						player->setCurrentState(L"ATTACK_LEFT");
+					}
+
+					//Spawn the hitbox for the attack
+					b2Vec2 playerPos = player->getBody()->GetPosition();
+					shape.SetAsBox(0.5f, 0.25f);
+					fixtureDef.shape = &shape;
+
+					if (player->isFacingRight()){
+						hurtBoxProps.position.Set(playerPos.x + 0.7f, playerPos.y);
+					}
+					else{
+						hurtBoxProps.position.Set(playerPos.x - 0.7f, playerPos.y);
+					}
+					if (!player->isAttacking()){
+						player->setHurtBox(player->getBody()->CreateFixture(&fixtureDef));
+					}
+					player->setAttacking(true);
 				}
 			}
 

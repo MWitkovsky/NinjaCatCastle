@@ -71,20 +71,20 @@
   <image_file id="66" file_name="JUMPING_ARC_LEFT/maincharacter_JUMPING_ARC0001.png"/>
   <image_file id="67" file_name="JUMPING_ARC_LEFT/maincharacter_JUMPING_ARC0002.png"/>
   <image_file id="68" file_name="JUMPING_ARC_LEFT/maincharacter_JUMPING_ARC0003.png"/>
-  <image_file id="69" file_name="GROUND_ATTACK_1_RIGHT/maincharacter_GROUNDATTACK_10001.png"/>
-  <image_file id="70" file_name="GROUND_ATTACK_1_RIGHT/maincharacter_GROUNDATTACK_10002.png"/>
-  <image_file id="71" file_name="GROUND_ATTACK_1_RIGHT/maincharacter_GROUNDATTACK_10003.png"/>
-  <image_file id="72" file_name="GROUND_ATTACK_1_RIGHT/maincharacter_GROUNDATTACK_10004.png"/>
-  <image_file id="73" file_name="GROUND_ATTACK_1_LEFT/maincharacter_GROUNDATTACK_10001.png"/>
-  <image_file id="74" file_name="GROUND_ATTACK_1_LEFT/maincharacter_GROUNDATTACK_10002.png"/>
-  <image_file id="75" file_name="GROUND_ATTACK_1_LEFT/maincharacter_GROUNDATTACK_10003.png"/>
-  <image_file id="76" file_name="GROUND_ATTACK_1_LEFT/maincharacter_GROUNDATTACK_10004.png"/>
-  <image_file id="77" file_name="GROUND_ATTACK_2_RIGHT/maincharacter_GROUNDATTACK_20004.png"/>
-  <image_file id="78" file_name="GROUND_ATTACK_2_RIGHT/maincharacter_GROUNDATTACK_20005.png"/>
-  <image_file id="79" file_name="GROUND_ATTACK_2_RIGHT/maincharacter_GROUNDATTACK_20006.png"/>
-  <image_file id="80" file_name="GROUND_ATTACK_2_LEFT/maincharacter_GROUNDATTACK_20004.png"/>
-  <image_file id="81" file_name="GROUND_ATTACK_2_LEFT/maincharacter_GROUNDATTACK_20005.png"/>
-  <image_file id="82" file_name="GROUND_ATTACK_2_LEFT/maincharacter_GROUNDATTACK_20006.png"/>
+  <image_file id="69" file_name="ATTACK_1_RIGHT/maincharacter_GROUNDATTACK_10001.png"/>
+  <image_file id="70" file_name="ATTACK_1_RIGHT/maincharacter_GROUNDATTACK_10002.png"/>
+  <image_file id="71" file_name="ATTACK_1_RIGHT/maincharacter_GROUNDATTACK_10003.png"/>
+  <image_file id="72" file_name="ATTACK_1_RIGHT/maincharacter_GROUNDATTACK_10004.png"/>
+  <image_file id="73" file_name="ATTACK_1_LEFT/maincharacter_GROUNDATTACK_10001.png"/>
+  <image_file id="74" file_name="ATTACK_1_LEFT/maincharacter_GROUNDATTACK_10002.png"/>
+  <image_file id="75" file_name="ATTACK_1_LEFT/maincharacter_GROUNDATTACK_10003.png"/>
+  <image_file id="76" file_name="ATTACK_1_LEFT/maincharacter_GROUNDATTACK_10004.png"/>
+  <image_file id="77" file_name="ATTACK_2_RIGHT/maincharacter_GROUNDATTACK_20004.png"/>
+  <image_file id="78" file_name="ATTACK_2_RIGHT/maincharacter_GROUNDATTACK_20005.png"/>
+  <image_file id="79" file_name="ATTACK_2_RIGHT/maincharacter_GROUNDATTACK_20006.png"/>
+  <image_file id="80" file_name="ATTACK_2_LEFT/maincharacter_GROUNDATTACK_20004.png"/>
+  <image_file id="81" file_name="ATTACK_2_LEFT/maincharacter_GROUNDATTACK_20005.png"/>
+  <image_file id="82" file_name="ATTACK_2_LEFT/maincharacter_GROUNDATTACK_20006.png"/>
   <image_file id="83" file_name="HIT_RIGHT/maincharacter_HIT0001.png"/>
   <image_file id="84" file_name="HIT_RIGHT/maincharacter_HIT0002.png"/>
   <image_file id="85" file_name="HIT_RIGHT/maincharacter_HIT0003.png"/>

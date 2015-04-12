@@ -11,6 +11,7 @@
 #pragma once
 #include "sssf_VS\stdafx.h"
 #include "sssf\gsm\ai\Bot.h"
+#include "sssf\gsm\ai\bots\PounceBot.h"
 #include "sssf\gsm\physics\PhysicalProperties.h"
 #include "sssf\graphics\GameGraphics.h"
 #include "sssf\gsm\sprite\AnimatedSprite.h"
@@ -45,15 +46,29 @@ void SpriteManager::addSpriteToRenderList(Game *game, AnimatedSprite *sprite,
 									spriteType->getTextureHeight()))
 	{
 		// SINCE IT'S VIEWABLE, ADD IT TO THE RENDER LIST
-		RenderItem itemToAdd;
-		itemToAdd.id = sprite->getFrameIndex();
-		renderList->addRenderItem(	sprite->getCurrentImageID(),
-			x - viewport->getViewportX(),
-			y - viewport->getViewportY(),
-									0,
-									sprite->getAlpha(),
-									spriteType->getTextureWidth(),
-									spriteType->getTextureHeight());
+		PounceBot* pounceBot = dynamic_cast<PounceBot*>(sprite);
+		if (pounceBot){
+			RenderItem itemToAdd;
+			itemToAdd.id = sprite->getFrameIndex();
+			renderList->addRenderItem(sprite->getCurrentImageID(),
+				x - viewport->getViewportX(),
+				y - viewport->getViewportY() - 32,
+				0,
+				sprite->getAlpha(),
+				spriteType->getTextureWidth(),
+				spriteType->getTextureHeight());
+		}
+		else{
+			RenderItem itemToAdd;
+			itemToAdd.id = sprite->getFrameIndex();
+			renderList->addRenderItem(sprite->getCurrentImageID(),
+				x - viewport->getViewportX(),
+				y - viewport->getViewportY(),
+				0,
+				sprite->getAlpha(),
+				spriteType->getTextureWidth(),
+				spriteType->getTextureHeight());
+		}
 	}
 }
 
@@ -107,11 +122,11 @@ void SpriteManager::addSpriteItemsToRenderList(	Game *game)
 		}
 
 		//Debugging Box2D
-		b2Body* list = game->getGSM()->getPhysics()->getWorld()->GetBodyList();
+		/*b2Body* list = game->getGSM()->getPhysics()->getWorld()->GetBodyList();
 		while(list){
 			box2DDebugRender(game, list, renderList, viewport, &player);
 			list = list->GetNext();
-		}
+		}*/
 	}
 }
 
@@ -346,8 +361,10 @@ void SpriteManager::updateAnimations(Game *game){
 	}
 
 	//ANIMATION STUFF
-	if (state != L"ATTACK_RIGHT"){
+	if (state != L"ATTACK_RIGHT_1" && state != L"ATTACK_RIGHT_2"
+		&& state != L"ATTACK_LEFT_1" && state != L"ATTACK_LEFT_2"){
 		if (velocityY > 0){
+			player.setAirborne(true);
 			if (state == L"WALK_RIGHT" || state == L"IDLE_RIGHT" || state == L"JUMPING_ASCEND_RIGHT"){
 				player.setCurrentState(L"JUMPING_ASCEND_RIGHT");
 			}
@@ -356,20 +373,25 @@ void SpriteManager::updateAnimations(Game *game){
 			}
 		}
 		else if (velocityY < 0.0f && state == L"JUMPING_ASCEND_LEFT"){
+			player.setAirborne(true);
 			player.setCurrentState(L"JUMPING_ARC_LEFT");
 		}
 		else if (velocityY < 0.0f && state == L"JUMPING_ASCEND_RIGHT"){
+			player.setAirborne(true);
 			player.setCurrentState(L"JUMPING_ARC_RIGHT");
 		}
 		else if (velocityY < 0.0f && (state == L"WALK_LEFT" || state == L"IDLE_LEFT")){
+			player.setAirborne(true);
 			player.setCurrentState(L"JUMPING_DESCEND_LEFT");
 		}
 		else if (velocityY < 0.0f && (state == L"WALK_RIGHT" || state == L"IDLE_RIGHT")){
+			player.setAirborne(true);
 			player.setCurrentState(L"JUMPING_DESCEND_RIGHT");
 		}
 		else if (velocityY == 0.0f && state != L"JUMPING_ASCEND_LEFT" && state != L"JUMPING_ASCEND_RIGHT"
 			&& state != L"JUMPING_ARC_LEFT" && state != L"JUMPING_ARC_RIGHT"){
 			if (!player.wasHit()){
+				player.setAirborne(false);
 				if (state == L"JUMPING_DESCEND_LEFT" || state == L"HIT_RIGHT"){
 					player.setCurrentState(L"IDLE_LEFT");
 				}
@@ -384,8 +406,12 @@ void SpriteManager::updateAnimations(Game *game){
 	}
 
 	if (player.isAttackFinished()){
-		game->getGSM()->getPhysics()->getWorld()->DestroyBody(player.getHurtBox());
-		player.setAttackFinished(false);
+		if (player.getHurtBox()){
+			player.getBody()->DestroyFixture(player.getHurtBox());
+			player.setHurtBox(NULL);
+			player.setAttackFinished(false);
+			player.setAttacking(false);
+		}
 	}
 
 	//Invincibility frames should ideally last about 1 second.
