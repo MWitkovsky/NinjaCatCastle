@@ -40,19 +40,23 @@ void NinjaCatCastleCollisionListener::respondToCollision(AnimatedSprite *player,
 {
 	b2Fixture *playerBox = player->getBody()->GetFixtureList();
 	if (contact->GetFixtureA() == playerBox || contact->GetFixtureB() == playerBox){
-		if (player->getHurtBox()){
-			player->setAttackFinished(true);
-			player->setAttacking(false);
+		wstring enemyState = enemy->getCurrentState();
+		if (enemyState != L"DIE_LEFT"  && enemyState != L"DIE_RIGHT"
+			&& enemyState != L"HIT_LEFT" && enemyState != L"HIT_RIGHT"){
+			if (player->getHurtBox()){
+				player->setAttackFinished(true);
+				player->setAttacking(false);
+			}
+			if (player->isFacingRight()){
+				player->setCurrentState(L"HIT_LEFT");
+				player->getBody()->SetLinearVelocity(b2Vec2(-3.0f, 8.0f));
+			}
+			else{
+				player->setCurrentState(L"HIT_RIGHT");
+				player->getBody()->SetLinearVelocity(b2Vec2(3.0f, 8.0f));
+			}
+			player->setHit(true);
 		}
-		if (player->isFacingRight()){
-			player->setCurrentState(L"HIT_LEFT");
-			player->getBody()->SetLinearVelocity(b2Vec2(-3.0f, 8.0f));
-		}
-		else{
-			player->setCurrentState(L"HIT_RIGHT");
-			player->getBody()->SetLinearVelocity(b2Vec2(3.0f, 8.0f));
-		}
-		player->setHit(true);
 	}
 	else{
 		if (enemy->getBody()->GetPosition().x < player->getHurtBox()->GetPosition().x){

@@ -183,11 +183,13 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 					else{
 						hurtBoxProps.position.Set(playerPos.x - 0.7f, playerPos.y);
 					}
-					if (!player->isAttacking()){
-						player->setHurtBox(game->getGSM()->getPhysics()->getWorld()->CreateBody(&hurtBoxProps));
-						player->getHurtBox()->CreateFixture(&fixtureDef);
-						player->getHurtBox()->SetUserData(player);
+					if (player->getHurtBox()){
+						game->getGSM()->getPhysics()->getWorld()->DestroyBody(player->getHurtBox());
+						player->setHurtBox(NULL);
 					}
+					player->setHurtBox(game->getGSM()->getPhysics()->getWorld()->CreateBody(&hurtBoxProps));
+					player->getHurtBox()->CreateFixture(&fixtureDef);
+					player->getHurtBox()->SetUserData(player);
 					player->setAttacking(true);
 				}
 			}
