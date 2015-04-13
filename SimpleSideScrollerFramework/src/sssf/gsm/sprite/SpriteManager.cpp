@@ -388,8 +388,7 @@ void SpriteManager::updateAnimations(Game *game){
 			player.setAirborne(true);
 			player.setCurrentState(L"JUMPING_DESCEND_RIGHT");
 		}
-		else if (velocityY == 0.0f && state != L"JUMPING_ASCEND_LEFT" && state != L"JUMPING_ASCEND_RIGHT"
-			&& state != L"JUMPING_ARC_LEFT" && state != L"JUMPING_ARC_RIGHT"){
+		else if (velocityY == 0.0f && state != L"JUMPING_ASCEND_LEFT" && state != L"JUMPING_ASCEND_RIGHT"){
 			if (!player.wasHit()){
 				player.setAirborne(false);
 				if (state == L"JUMPING_DESCEND_LEFT" || state == L"HIT_RIGHT"){
