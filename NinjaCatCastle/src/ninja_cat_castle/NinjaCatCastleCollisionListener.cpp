@@ -6,8 +6,46 @@
 #include "sssf\gsm\ai\bots\PounceBot.h"
 #include "sssf\gsm\ai\bots\RandomFloatingBot.h"
 
-void NinjaCatCastleCollisionListener::respondToCollision(Collision *collision)
+void NinjaCatCastleCollisionListener::BeginContact(b2Contact* contact) {
+
+	//Checks if either of the two fixtures belong to the player.
+	void* bodyUserData = contact->GetFixtureA()->GetBody()->GetUserData();
+	AnimatedSprite* sprite1 = 0;
+	AnimatedSprite* sprite2 = 0;
+
+	if (bodyUserData){
+		sprite1 = static_cast<AnimatedSprite*>(bodyUserData);
+	}
+
+	bodyUserData = contact->GetFixtureB()->GetBody()->GetUserData();
+	if (bodyUserData){
+		sprite2 = static_cast<AnimatedSprite*>(bodyUserData);
+	}
+
+	//Fixes the two sprites up nicely so the player is always first,
+	//then calls the helper method respondToCollision
+	if (sprite1 && sprite2){
+		if (sprite1->isPlayer()){
+			respondToCollision(sprite1, sprite2);
+		}
+		else if (sprite2->isPlayer()){
+			respondToCollision(sprite2, sprite1);
+		}
+	}
+}
+
+void NinjaCatCastleCollisionListener::respondToCollision(AnimatedSprite *player, AnimatedSprite *enemy)
 {
+	if (player->isFacingRight()){
+		player->setCurrentState(L"HIT_LEFT");
+		player->getBody()->SetLinearVelocity(b2Vec2(-3.0f, 8.0f));
+	}
+	else{
+		player->setCurrentState(L"HIT_RIGHT");
+		player->getBody()->SetLinearVelocity(b2Vec2(3.0f, 8.0f));
+	}
+	player->setHit(true);
+	/**EVERYTHING BELOW HERE IS LEGACY CODE FORM HOMEWORK 3, LEFT FOR REFERENCE**/
 	// NOTE FROM THE COLLIDABLE OBJECTS, WHICH ARE IN THE COLLISION,
 	// WE CAN CHECK AND SEE ON WHICH SIDE THE COLLISION HAPPENED AND
 	// CHANGE SOME APPROPRIATE STATE ACCORDINGLY

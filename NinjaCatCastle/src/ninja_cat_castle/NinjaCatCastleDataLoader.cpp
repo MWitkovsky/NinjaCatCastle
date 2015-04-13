@@ -259,10 +259,14 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 	fixtureDef.shape = &shape;
 	player->getBody()->CreateFixture(&fixtureDef);
 
+	player->setIsPlayer(true);
 	player->setHP(3);
 	if (!player->isControllable()){
 		player->toggleControllable();
 	}
+
+	//For collision detection, tells the player's body to point back at the player
+	player->getBody()->SetUserData(player);
 
 	AnimatedSpriteType *botSpriteType = spriteManager->getSpriteType(1);
 	shape.SetAsBox(0.7f, 0.4f);
@@ -274,6 +278,7 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 	bot->getBody()->CreateFixture(&fixtureDef);
 	bot->setCurrentState(L"IDLE_LEFT");
 	bot->setAlpha(255);
+	bot->getBody()->SetUserData(bot);
 	spriteManager->addBot(bot);
 
 	// AND LET'S ADD A BUNCH OF RANDOM JUMPING BOTS, FIRST ALONG

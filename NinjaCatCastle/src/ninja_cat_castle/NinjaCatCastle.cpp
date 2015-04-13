@@ -88,7 +88,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 	// THIS WILL HANDLE PHYSICS COLLISION EVENTS
 	NinjaCatCastleCollisionListener *ninjaCatCastleCollisionListener = new NinjaCatCastleCollisionListener();
-	ninjaCatCastleGame->getGSM()->getPhysics()->setCollisionListener(ninjaCatCastleCollisionListener);
+	ninjaCatCastleGame->getGSM()->getPhysics()->getWorld()->SetContactListener(ninjaCatCastleCollisionListener);
 
 	// START THE GAME LOOP
 	ninjaCatCastleGame->runGameLoop();

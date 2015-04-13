@@ -41,6 +41,7 @@ protected:
 	unsigned int animationCounter;
 
 	// Player Specific values
+	boolean player = false;
 	boolean controllable = true;
 	boolean jump = false;
 	boolean facingRight = false;
@@ -76,6 +77,7 @@ public:
 	boolean				isAttackFinished()	{ return attackFinished; }
 	boolean				hasWaitFrame()		{ return waitFrame; }
 	boolean				isAttacking()		{ return attacking; }
+	boolean				isPlayer()			{ return player; }
 
 	// INLINED MUTATOR METHODS
 	void setAlpha(int initAlpha)
@@ -143,7 +145,9 @@ public:
 	void decWaitFrame(){
 		waitFrame = false;
 	}
-
+	void setIsPlayer(boolean player){
+		this->player = player;
+	}
 	// METHODS DEFINED IN AnimatedSprite.cpp
 	AnimatedSprite();
 	~AnimatedSprite();
