@@ -55,14 +55,15 @@ void NinjaCatCastleCollisionListener::respondToCollision(AnimatedSprite *player,
 		player->setHit(true);
 	}
 	else{
-		if (enemy->isFacingRight()){
-			enemy->setCurrentState(L"HIT_LEFT");
+		if (enemy->getBody()->GetPosition().x < player->getHurtBox()->GetPosition().x){
+			enemy->setCurrentState(L"HIT_RIGHT");
 			enemy->getBody()->SetLinearVelocity(b2Vec2(-3.0f, 8.0f));
 		}
 		else{
-			enemy->setCurrentState(L"HIT_RIGHT");
+			enemy->setCurrentState(L"HIT_LEFT");
 			enemy->getBody()->SetLinearVelocity(b2Vec2(3.0f, 8.0f));
 		}
+		enemy->setHit(true);
 	}
 	/**EVERYTHING BELOW HERE IS LEGACY CODE FORM HOMEWORK 3, LEFT FOR REFERENCE**/
 	// NOTE FROM THE COLLIDABLE OBJECTS, WHICH ARE IN THE COLLISION,

@@ -437,6 +437,32 @@ void SpriteManager::updateAnimations(Game *game){
 		player.setWasJump(false);
 	}
 
+	//ENEMY STUFF
+	list<Bot*>::iterator botIterator;
+	botIterator = bots.begin();
+	while (botIterator != bots.end()){
+		PounceBot* pounceBot = dynamic_cast<PounceBot*>(*botIterator);
+		if (pounceBot){
+			wstring state = pounceBot->getCurrentState();
+			if (state == L"HIT_LEFT" || state == L"HIT_RIGHT"){
+				if (pounceBot->getBody()->GetLinearVelocity().y == 0){
+					if (pounceBot->wasHit()){
+						pounceBot->setHit(false);
+					}
+					else{
+						if (state == L"HIT_LEFT"){
+							pounceBot->setCurrentState(L"DIE_LEFT");
+						}
+						else{
+							pounceBot->setCurrentState(L"DIE_RIGHT");
+						}
+					}
+				}
+			}
+		}
+		botIterator++;
+	}
+
 	//LEGACY FLICKER CODE FROM HOMEWORK 3
 	/*if (player.getHP() != 10){
 		if (player.getHP() == 0){
