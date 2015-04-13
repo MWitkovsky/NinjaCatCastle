@@ -62,6 +62,7 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 					if (state != L"ATTACK_LEFT" && state != L"ATTACK_RIGHT"
 						&& state != L"ATTACK_LEFT_2" && state != L"ATTACK_RIGHT_2"){
 						player->setCurrentState(L"WALK_LEFT");
+						player->setFacingRight(false);
 					}
 					vX = -PLAYER_SPEED;
 				}
@@ -69,14 +70,16 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 				//Just changes the way the sprite is facing, doesn't change anything about the jump.
 				if (state == L"JUMPING_DESCEND_RIGHT"){
 					player->setCurrentState(L"JUMPING_DESCEND_LEFT");
+					player->setFacingRight(false);
 				}
 				else if (state == L"JUMPING_ARC_RIGHT"){
 					player->setCurrentState(L"JUMPING_ARC_LEFT");
+					player->setFacingRight(false);
 				}
 				else if (state == L"JUMPING_ASCEND_RIGHT"){
 					player->setCurrentState(L"JUMPING_ASCEND_LEFT");
+					player->setFacingRight(false);
 				}
-				player->setFacingRight(false);
 			}
 			else if (input->isKeyDown(D_KEY))
 			{
@@ -84,6 +87,7 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 					if (state != L"ATTACK_LEFT" && state != L"ATTACK_RIGHT"
 						&& state != L"ATTACK_LEFT_2" && state != L"ATTACK_RIGHT_2"){
 						player->setCurrentState(L"WALK_RIGHT");
+						player->setFacingRight(true);
 					}
 					vX = PLAYER_SPEED;
 				}
@@ -91,14 +95,17 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 				//Just changes the way the sprite is facing, doesn't change anything about the jump.
 				if (state == L"JUMPING_DESCEND_LEFT"){
 					player->setCurrentState(L"JUMPING_DESCEND_RIGHT");
+					player->setFacingRight(true);
 				}
 				else if (state == L"JUMPING_ARC_LEFT"){
 					player->setCurrentState(L"JUMPING_ARC_RIGHT");
+					player->setFacingRight(true);
 				}
 				else if (state == L"JUMPING_ASCEND_LEFT"){
 					player->setCurrentState(L"JUMPING_ASCEND_RIGHT");
+					player->setFacingRight(true);
 				}
-				player->setFacingRight(true);
+				
 			}
 			else
 			{
@@ -177,7 +184,9 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 						hurtBoxProps.position.Set(playerPos.x - 0.7f, playerPos.y);
 					}
 					if (!player->isAttacking()){
-						player->setHurtBox(player->getBody()->CreateFixture(&fixtureDef));
+						player->setHurtBox(game->getGSM()->getPhysics()->getWorld()->CreateBody(&hurtBoxProps));
+						player->getHurtBox()->CreateFixture(&fixtureDef);
+						player->getHurtBox()->SetUserData(player);
 					}
 					player->setAttacking(true);
 				}

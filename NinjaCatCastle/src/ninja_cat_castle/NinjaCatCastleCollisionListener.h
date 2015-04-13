@@ -8,5 +8,5 @@ class NinjaCatCastleCollisionListener : public CollisionListener
 {
 public:
 	void BeginContact(b2Contact* contact);
-	void respondToCollision(AnimatedSprite *player, AnimatedSprite *enemy);
+	void respondToCollision(AnimatedSprite *player, AnimatedSprite *enemy, b2Contact* contact);
 };

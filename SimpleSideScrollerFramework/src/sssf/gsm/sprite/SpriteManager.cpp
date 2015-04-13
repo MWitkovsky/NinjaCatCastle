@@ -407,13 +407,26 @@ void SpriteManager::updateAnimations(Game *game){
 
 	if (player.isAttackFinished()){
 		if (player.getHurtBox()){
-			player.getBody()->DestroyFixture(player.getHurtBox());
+			game->getGSM()->getPhysics()->getWorld()->DestroyBody(player.getHurtBox());
 			player.setHurtBox(NULL);
 			player.setAttackFinished(false);
 			player.setAttacking(false);
 		}
 	}
 
+	if (player.getHurtBox()){
+		float32 y = player.getBody()->GetPosition().y;
+		float32 x;
+		if (player.isFacingRight()){
+			x = player.getBody()->GetPosition().x + 0.7f;
+		}
+		else{
+			x = player.getBody()->GetPosition().x - 0.7f;
+		}
+		
+		player.getHurtBox()->SetTransform(b2Vec2(x, y), player.getHurtBox()->GetAngle());
+	}
+	
 	//Invincibility frames should ideally last about 1 second.
 	if (player.getInvincibilityFrames() != 0){
 		player.decrementInvincibilityFrames();

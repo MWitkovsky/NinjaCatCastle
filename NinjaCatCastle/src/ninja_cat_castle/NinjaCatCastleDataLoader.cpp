@@ -265,12 +265,15 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 		player->toggleControllable();
 	}
 
+	player->setHurtBox(NULL);
+
 	//For collision detection, tells the player's body to point back at the player
 	player->getBody()->SetUserData(player);
 
 	AnimatedSpriteType *botSpriteType = spriteManager->getSpriteType(1);
 	shape.SetAsBox(0.7f, 0.4f);
 	playerProps.position.Set(6.0f, 15.0f);
+	playerProps.type = b2_dynamicBody;
 	fixtureDef.shape = &shape;
 	PounceBot *bot = new PounceBot();
 	bot->setSpriteType(spriteManager->getSpriteType(1));

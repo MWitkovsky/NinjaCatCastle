@@ -16,7 +16,7 @@ protected:
 	//This is the replacement for the AABB and physical properties
 	b2Body *body;
 	//This is for keeping track of boxes spawned when attacking
-	b2Fixture *hurtBox;
+	b2Body *hurtBox;
 	unsigned int collisionEdge;
 
 public:
@@ -26,13 +26,13 @@ public:
 
 	// INLINED METHODS
 	b2Body*				getBody()					{ return body; }
-	b2Fixture*			getHurtBox()				{ return hurtBox; }
+	b2Body*			getHurtBox()				{ return hurtBox; }
 	unsigned int		getCollisionEdge()			{ return collisionEdge;			}
 
 	void setBody(b2Body* body){
 		this->body = body;
 	}
-	void setHurtBox(b2Fixture* hurtBox){
+	void setHurtBox(b2Body* hurtBox){
 		this->hurtBox = hurtBox;
 	}
 	void				setCollisionEdge(unsigned int initCollisionEdge)

@@ -25,26 +25,45 @@ void NinjaCatCastleCollisionListener::BeginContact(b2Contact* contact) {
 	//Fixes the two sprites up nicely so the player is always first,
 	//then calls the helper method respondToCollision
 	if (sprite1 && sprite2){
-		if (sprite1->isPlayer()){
-			respondToCollision(sprite1, sprite2);
+		if (sprite1->isPlayer() && sprite2->isPlayer()){
+		}
+		else if (sprite1->isPlayer()){
+			respondToCollision(sprite1, sprite2, contact);
 		}
 		else if (sprite2->isPlayer()){
-			respondToCollision(sprite2, sprite1);
+			respondToCollision(sprite2, sprite1, contact);
 		}
 	}
 }
 
-void NinjaCatCastleCollisionListener::respondToCollision(AnimatedSprite *player, AnimatedSprite *enemy)
+void NinjaCatCastleCollisionListener::respondToCollision(AnimatedSprite *player, AnimatedSprite *enemy, b2Contact* contact)
 {
-	if (player->isFacingRight()){
-		player->setCurrentState(L"HIT_LEFT");
-		player->getBody()->SetLinearVelocity(b2Vec2(-3.0f, 8.0f));
+	b2Fixture *playerBox = player->getBody()->GetFixtureList();
+	if (contact->GetFixtureA() == playerBox || contact->GetFixtureB() == playerBox){
+		if (player->getHurtBox()){
+			player->setAttackFinished(true);
+			player->setAttacking(false);
+		}
+		if (player->isFacingRight()){
+			player->setCurrentState(L"HIT_LEFT");
+			player->getBody()->SetLinearVelocity(b2Vec2(-3.0f, 8.0f));
+		}
+		else{
+			player->setCurrentState(L"HIT_RIGHT");
+			player->getBody()->SetLinearVelocity(b2Vec2(3.0f, 8.0f));
+		}
+		player->setHit(true);
 	}
 	else{
-		player->setCurrentState(L"HIT_RIGHT");
-		player->getBody()->SetLinearVelocity(b2Vec2(3.0f, 8.0f));
+		if (enemy->isFacingRight()){
+			enemy->setCurrentState(L"HIT_LEFT");
+			enemy->getBody()->SetLinearVelocity(b2Vec2(-3.0f, 8.0f));
+		}
+		else{
+			enemy->setCurrentState(L"HIT_RIGHT");
+			enemy->getBody()->SetLinearVelocity(b2Vec2(3.0f, 8.0f));
+		}
 	}
-	player->setHit(true);
 	/**EVERYTHING BELOW HERE IS LEGACY CODE FORM HOMEWORK 3, LEFT FOR REFERENCE**/
 	// NOTE FROM THE COLLIDABLE OBJECTS, WHICH ARE IN THE COLLISION,
 	// WE CAN CHECK AND SEE ON WHICH SIDE THE COLLISION HAPPENED AND

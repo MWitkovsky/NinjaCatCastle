@@ -8,5 +8,5 @@
 class CollisionListener : public b2ContactListener
 {
 public:
-	virtual void respondToCollision(AnimatedSprite *player, AnimatedSprite *enemy)=0;
+	virtual void respondToCollision(AnimatedSprite *player, AnimatedSprite *enemy, b2Contact* contact) = 0;
 };
