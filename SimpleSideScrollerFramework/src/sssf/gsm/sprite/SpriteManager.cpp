@@ -403,9 +403,11 @@ void SpriteManager::updateAnimations(Game *game){
 				if ((state == L"HIT_LEFT" || state == L"HIT_RIGHT") && player.getHP() <= 0){
 					if (state == L"HIT_LEFT"){
 						player.setCurrentState(L"DIE_RIGHT");
+						player.toggleControllable();
 					}
 					else{
 						player.setCurrentState(L"DIE_LEFT");
+						player.toggleControllable();
 					}
 				}
 				else if (state == L"JUMPING_DESCEND_LEFT" || state == L"HIT_RIGHT"){
