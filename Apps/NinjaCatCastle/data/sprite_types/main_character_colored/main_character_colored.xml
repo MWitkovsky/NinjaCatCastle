@@ -16,22 +16,22 @@
   <image_file id="11" file_name="HIT_LEFT/coloredmaincharacter_HIT_RIGHT0005.png"/>
   <image_file id="12" file_name="HIT_LEFT/coloredmaincharacter_HIT_RIGHT0006.png"/>
   <image_file id="13" file_name="JUMPING_DOWN_RIGHT/coloredmaincharacter_JUMPING_DOWN_RIGHT.png"/>
-  <image_file id="14" file_name="WALK_LEFT/maincharacter_WALK_LEFT0001.png"/>
-  <image_file id="15" file_name="WALK_LEFT/maincharacter_WALK_LEFT0002.png"/>
-  <image_file id="16" file_name="WALK_LEFT/maincharacter_WALK_LEFT0003.png"/>
-  <image_file id="17" file_name="WALK_LEFT/maincharacter_WALK_LEFT0004.png"/>
-  <image_file id="18" file_name="WALK_LEFT/maincharacter_WALK_LEFT0005.png"/>
-  <image_file id="19" file_name="WALK_LEFT/maincharacter_WALK_LEFT0006.png"/>
-  <image_file id="20" file_name="WALK_LEFT/maincharacter_WALK_LEFT0007.png"/>
-  <image_file id="21" file_name="WALK_LEFT/maincharacter_WALK_LEFT0008.png"/>
-  <image_file id="22" file_name="WALK_RIGHT/maincharacter_WALK_RIGHT0001.png"/>
-  <image_file id="23" file_name="WALK_RIGHT/maincharacter_WALK_RIGHT0002.png"/>
-  <image_file id="24" file_name="WALK_RIGHT/maincharacter_WALK_RIGHT0003.png"/>
-  <image_file id="25" file_name="WALK_RIGHT/maincharacter_WALK_RIGHT0004.png"/>
-  <image_file id="26" file_name="WALK_RIGHT/maincharacter_WALK_RIGHT0005.png"/>
-  <image_file id="27" file_name="WALK_RIGHT/maincharacter_WALK_RIGHT0006.png"/>
-  <image_file id="28" file_name="WALK_RIGHT/maincharacter_WALK_RIGHT0007.png"/>
-  <image_file id="29" file_name="WALK_RIGHT/maincharacter_WALK_RIGHT0008.png"/>
+  <image_file id="14" file_name="WALK_LEFT/coloredmaincharacter_WALK_LEFT0001.png"/>
+  <image_file id="15" file_name="WALK_LEFT/coloredmaincharacter_WALK_LEFT0002.png"/>
+  <image_file id="16" file_name="WALK_LEFT/coloredmaincharacter_WALK_LEFT0003.png"/>
+  <image_file id="17" file_name="WALK_LEFT/coloredmaincharacter_WALK_LEFT0004.png"/>
+  <image_file id="18" file_name="WALK_LEFT/coloredmaincharacter_WALK_LEFT0005.png"/>
+  <image_file id="19" file_name="WALK_LEFT/coloredmaincharacter_WALK_LEFT0006.png"/>
+  <image_file id="20" file_name="WALK_LEFT/coloredmaincharacter_WALK_LEFT0007.png"/>
+  <image_file id="21" file_name="WALK_LEFT/coloredmaincharacter_WALK_LEFT0008.png"/>
+  <image_file id="22" file_name="WALK_RIGHT/coloredmaincharacter_WALK_RIGHT0001.png"/>
+  <image_file id="23" file_name="WALK_RIGHT/coloredmaincharacter_WALK_RIGHT0002.png"/>
+  <image_file id="24" file_name="WALK_RIGHT/coloredmaincharacter_WALK_RIGHT0003.png"/>
+  <image_file id="25" file_name="WALK_RIGHT/coloredmaincharacter_WALK_RIGHT0004.png"/>
+  <image_file id="26" file_name="WALK_RIGHT/coloredmaincharacter_WALK_RIGHT0005.png"/>
+  <image_file id="27" file_name="WALK_RIGHT/coloredmaincharacter_WALK_RIGHT0006.png"/>
+  <image_file id="28" file_name="WALK_RIGHT/coloredmaincharacter_WALK_RIGHT0007.png"/>
+  <image_file id="29" file_name="WALK_RIGHT/coloredmaincharacter_WALK_RIGHT0008.png"/>
   <image_file id="30" file_name="JUMPING_UP_RIGHT/coloredmaincharacter_JUMP_START_RIGHT0005.png"/>
   <image_file id="31" file_name="DEAD/coloredmaincharacter_DEAD_RIGHT0001.png"/>
   <image_file id="32" file_name="DEAD/coloredmaincharacter_DEAD_RIGHT0002.png"/>
