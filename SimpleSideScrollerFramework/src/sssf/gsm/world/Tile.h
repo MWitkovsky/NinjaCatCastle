@@ -1,4 +1,5 @@
 #pragma once
+#include <unordered_map>
 
 /*
 	A Tile represents a single image in a tiled background.
@@ -8,9 +9,12 @@
 	as stored in the GameGraphics's world string table and
 	it's partnered texture manager.
 */
+using std::unordered_map;
+
 class Tile
 {
 public:
 	int textureID;
 	bool collidable;
+	unordered_map<string, string> properties;
 };

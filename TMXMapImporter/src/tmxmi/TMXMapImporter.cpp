@@ -1,7 +1,7 @@
 #include "tmxmi_VS\stdafx.h"
 #include "tmxmi\TMXMapImporter.h"
-#include "tinyxml\tinystr.h";
-#include "tinyxml\tinyxml.h";
+#include "tinyxml\tinystr.h"
+#include "tinyxml\tinyxml.h"
 #include "sssf\game\Game.h"
 #include "sssf\gsm\world\TiledLayer.h"
 #include "sssf\gsm\world\Tile.h"
@@ -87,6 +87,13 @@ bool TMXMapImporter::loadOrthographicMap(const TiXmlElement *pElem)
 		{
 			loadTiledLayerInfo(node);
 		}
+		else if (eName == PROPERTIES_ELEMENT) { // <properties>
+			for (const TiXmlElement* p = node->FirstChildElement(); p; p = p->NextSiblingElement()) {
+				if (strcmp(p->Value(), PROPERTY_ELEMENT.c_str()) == 0) { // <property>
+					this->custom[p->Attribute(NAME_ATT.c_str())] = p->Attribute(VALUE_ATT.c_str());
+				}
+			}
+		}
 		node = node->NextSibling();
 	}
 	return true;
@@ -127,6 +134,9 @@ void TMXMapImporter::loadImageLayerInfo(const TiXmlNode *node)
 				{
 					imageLayerInfo.imagewidth = extractIntAtt(grandchildNode->ToElement(), VALUE_ATT);
 				}
+				else { // This is a custom property
+					imageLayerInfo.properties[att] = grandchildElement->Attribute(VALUE_ATT.c_str());
+				}
 				grandchildNode = grandchildNode->NextSibling();
 			}
 		}
@@ -159,6 +169,9 @@ void TMXMapImporter::loadTiledLayerInfo(const TiXmlNode *node)
 			if (strcmp(att.c_str(), COLLIDABLE_ATT.c_str()) == 0)
 			{
 				tiledLayerInfo.collidable = extractBoolAtt(propNode->ToElement(), VALUE_ATT);
+			}
+			else {
+				tiledLayerInfo.properties[att] = propElement->Attribute(VALUE_ATT.c_str());
 			}
 			propNode = propNode->NextSibling();
 		}
@@ -193,11 +206,50 @@ void TMXMapImporter::loadTileSetInfo(const TiXmlNode *node)
 	tileSetInfo.tileheight = extractIntAtt(element, TILEHEIGHT_ATT);
 
 	// NOW GET THE IMAGE INFO
-	node = node->FirstChild();
-	element = node->ToElement();
+	element = node->FirstChildElement(IMAGE_ELEMENT.c_str());
 	tileSetInfo.sourceImage = extractCharAtt(element, SOURCE_ATT);
 	tileSetInfo.sourceImageWidth = extractIntAtt(element, WIDTH_ATT);
 	tileSetInfo.sourceImageHeight = extractIntAtt(element, HEIGHT_ATT);
+
+	// Rows and columns in the TILESET, not the level
+	int cols = tileSetInfo.sourceImageWidth / tileSetInfo.tilewidth;
+	int rows = tileSetInfo.sourceImageHeight / tileSetInfo.tileheight;
+	vector<bool> tilesAdded(rows * cols, false);
+
+	for (const TiXmlElement* t = node->FirstChildElement(TILE_ELEMENT.c_str()); t; t = t->NextSiblingElement()) {
+		if (strcmp(t->Value(), TILE_ELEMENT.c_str()) == 0) {
+			// If this is really a <tile> element...
+			const TiXmlElement* tileProps = t->FirstChildElement(PROPERTIES_ELEMENT.c_str());
+			TileInfo tileInfo;
+
+			for (const TiXmlElement* p = tileProps->FirstChildElement(); p; p = p->NextSiblingElement()) {
+				if (strcmp(p->Value(), PROPERTY_ELEMENT.c_str()) == 0) {
+					// If this is really a <property> element...
+					tileInfo.properties[p->Attribute(NAME_ATT.c_str())] = p->Attribute(VALUE_ATT.c_str());
+				}
+			}
+
+			int id = std::stoi(t->Attribute(ID_ATTXML.c_str()));
+			tilesAdded[id] = true;
+			tileSetInfo.tileInfo[id] = tileInfo;
+		}
+	}
+
+	for (size_t i = 0; i < tilesAdded.size(); ++i) {
+		if (!tilesAdded[i]) {
+			tileSetInfo.tileInfo[i] = TileInfo();
+		}
+	}
+
+	const TiXmlElement* properties = node->FirstChildElement(PROPERTIES_ELEMENT.c_str());
+	if (properties) {
+		for (const TiXmlElement* p = properties->FirstChildElement(); p; p = p->NextSiblingElement()) {
+			if (strcmp(p->Value(), PROPERTY_ELEMENT.c_str()) == 0) {
+				// If this is really a <property> element...
+				tileSetInfo.properties[p->Attribute(NAME_ATT.c_str())] = p->Attribute(VALUE_ATT.c_str());
+			}
+		}
+	}
 
 	tileSetInfos[tileSetInfo.name] = tileSetInfo;
 }
@@ -312,6 +364,8 @@ bool TMXMapImporter::buildWorldFromInfo(Game *game)
 			world->addLayer(tiledLayerToAdd);
 
 			// WE HAVE TO ADD ALL THE TILES
+			TileSetInfo* tileSet = tli.tileSetInfo;
+
 			int row = 0;
 			int col = 0;
 			int uncollidableIndex = tli.tileSetInfo->firstgid;
@@ -326,6 +380,8 @@ bool TMXMapImporter::buildWorldFromInfo(Game *game)
 				else{
 					tileToAdd->collidable = tli.collidable;
 				}
+				tileToAdd->properties = tileSet->tileInfo[tileToAdd->textureID].properties;
+
 				tiledLayerToAdd->addTile(tileToAdd);
 			}
 
@@ -427,6 +483,85 @@ bool TMXMapImporter::buildWorldFromInfo(Game *game)
 				row = 0;
 			}
 
+
+			//HERE IS WHERE WE INTERPRET ALL OF THE SPAWN TILES!
+			row = 0;
+			col = 0;
+			string spawn = "spawn";
+			string playerID = "player";
+			while (row < tiledLayerToAdd->getRows()){
+				while (col < tiledLayerToAdd->getColumns()){
+					if (tiledLayerToAdd->getTile(row, col)->properties[spawn] == playerID){
+						AnimatedSprite *player = game->getGSM()->getSpriteManager()->getPlayer();
+
+						// NOTE THAT NINJA CAT DUDE IS SPRITE ID 0
+						game->getGSM()->getPhysics()->addCollidableObject(player);
+						AnimatedSpriteType *playerSpriteType = game->getGSM()->getSpriteManager()->getSpriteType(0);
+						player->setSpriteType(playerSpriteType);
+						player->setAlpha(255);
+						player->setCurrentState(L"JUMPING_DESCEND_RIGHT");
+						player->setFacingRight(true);
+						player->setAirborne(true);
+
+						//Right here is what I think making the character's box should look like
+						//Then I started wonderning how the hell we're going to do rendering
+						//when we handle it by pixel and now everything's done in METERS
+						//WHY DOES IT HAVE TO BE METERS? I stopped here.
+
+						//^ That problem was solved. The things being shown to a player are actually
+						//just a projection of the simulation, the actual simulation isn't tied to
+						//rendering like I thought it was.
+						b2BodyDef playerProps;
+						playerProps.position.Set(col - 0.5f, tiledLayerToAdd->getRows() - row + 0.5f);
+						playerProps.type = b2_dynamicBody;
+						playerProps.fixedRotation = true;
+						player->setBody(game->getGSM()->getPhysics()->getWorld()->CreateBody(&playerProps));
+						b2FixtureDef fixtureDef;
+						b2PolygonShape shape;
+						/*This solution made the main character an octagon, he didn't get snagged anymore,
+						but he also ramped off of random pieces of ground... no fun*/
+						//Actually, this octagon shape is better for jumping up on higher platforms.
+						//The octagonal shape gives a more natural curve to the hitbox, leading to less frustration.
+						//Also gives a nice little push forward if you fall of a ledge.
+						float32 width = 0.60f;
+						float32 height = 1.0f;
+						float32 edgeWidth = 0.1f;
+						float32 edgeHeight = 0.2f;
+						b2Vec2 vertices[8];
+						vertices[0].Set(-width + edgeWidth, -height);		// bottom
+						vertices[1].Set(width - edgeWidth, -height);		// bottom-right edge start
+						vertices[2].Set(width, -height + edgeHeight);		// bottom-right edge end
+						vertices[3].Set(width, height - edgeHeight);		// top-right edge start
+						vertices[4].Set(width - edgeWidth, height);			// top-right edge end
+						vertices[5].Set(-width + edgeWidth, height);		// top-left edge start
+						vertices[6].Set(-width, height - edgeHeight);		// top-left edge end
+						vertices[7].Set(-width, -height + edgeHeight);		// bottom-left edge
+						shape.Set(vertices, 8);
+
+						//I like rectangles anyway
+						//shape.SetAsBox(0.7, 1);
+						fixtureDef.shape = &shape;
+						player->getBody()->CreateFixture(&fixtureDef);
+
+						player->setIsPlayer(true);
+						player->setHP(3);
+						if (!player->isControllable()){
+							player->toggleControllable();
+						}
+
+						player->setHurtBox(NULL);
+
+						//For collision detection, tells the player's body to point back at the player
+						player->getBody()->SetUserData(player);
+					}
+					else{
+					}
+					col++;
+				}
+				row++;
+				col = 0;
+			}
+
 			tliIt++;
 		}
 
@@ -446,7 +581,7 @@ TileSetInfo* TMXMapImporter::getTileSetForId(int id)
 		string key = it->first;
 		TileSetInfo tsi = tileSetInfos[key];
 		int columns = tsi.sourceImageWidth/tsi.tilewidth;
-			int rows = tsi.sourceImageHeight/tsi.tileheight;
+		int rows = tsi.sourceImageHeight/tsi.tileheight;
 		int numTiles = rows * columns;
 		if ((id >= tsi.firstgid) && (id < (tsi.firstgid + numTiles)))
 		{

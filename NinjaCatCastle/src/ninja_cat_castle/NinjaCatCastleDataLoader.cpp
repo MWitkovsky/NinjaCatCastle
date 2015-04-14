@@ -231,44 +231,8 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 	playerProps.position.Set(2.0f, 15.0f);
 	playerProps.type = b2_dynamicBody;
 	playerProps.fixedRotation = true;
-	player->setBody(game->getGSM()->getPhysics()->getWorld()->CreateBody(&playerProps));
 	b2FixtureDef fixtureDef;
 	b2PolygonShape shape;
-	/*This solution made the main character an octagon, he didn't get snagged anymore,
-	but he also ramped off of random pieces of ground... no fun*/
-	//Actually, this octagon shape is better for jumping up on higher platforms.
-	//The octagonal shape gives a more natural curve to the hitbox, leading to less frustration.
-	//Also gives a nice little push forward if you fall of a ledge.
-	float32 width = 0.60f;
-	float32 height = 1.0f;
-	float32 edgeWidth = 0.1f;
-	float32 edgeHeight = 0.2f;
-	b2Vec2 vertices[8];
-	vertices[0].Set(-width + edgeWidth, -height);		// bottom
-	vertices[1].Set(width - edgeWidth, -height);		// bottom-right edge start
-	vertices[2].Set(width, -height + edgeHeight);		// bottom-right edge end
-	vertices[3].Set(width, height - edgeHeight);		// top-right edge start
-	vertices[4].Set(width - edgeWidth, height);			// top-right edge end
-	vertices[5].Set(-width + edgeWidth, height);		// top-left edge start
-	vertices[6].Set(-width, height - edgeHeight);		// top-left edge end
-	vertices[7].Set(-width, -height + edgeHeight);		// bottom-left edge
-	shape.Set(vertices, 8);
-
-	//I like rectangles anyway
-	//shape.SetAsBox(0.7, 1);
-	fixtureDef.shape = &shape;
-	player->getBody()->CreateFixture(&fixtureDef);
-
-	player->setIsPlayer(true);
-	player->setHP(3);
-	if (!player->isControllable()){
-		player->toggleControllable();
-	}
-
-	player->setHurtBox(NULL);
-
-	//For collision detection, tells the player's body to point back at the player
-	player->getBody()->SetUserData(player);
 
 	AnimatedSpriteType *botSpriteType = spriteManager->getSpriteType(1);
 	shape.SetAsBox(0.7f, 0.4f);

@@ -6,12 +6,14 @@
 #include "sssf\game\Game.h"
 #include "sssf\gsm\state\GameStateManager.h"
 #include "xmlfi\XMLFileImporter.h"
+#include <unordered_map>
 
 // XML TEXT
 static const string		MAP_ELEMENT				= "map";
 static const string		ORIENTATION_ATT			= "orientation";
 static const string		ORTHOGONAL_VAL			= "orthogonal";
 static const string		ISOMETRIC_VAL			= "isometric";
+static const string		ID_ATTXML				= "id";
 static const string		WIDTH_ATT				= "width";
 static const string		HEIGHT_ATT				= "height";
 static const string		TILEWIDTH_ATT			= "tilewidth";
@@ -29,40 +31,48 @@ static const string		DATA_ELEMENT			= "data";
 static const string		PROPERTIES_ELEMENT		= "properties";
 static const string		PROPERTY_ELEMENT		= "property";
 static const string		COLLIDABLE_ATT			= "collidable";
+static const string		PLAYER_ATT				= "player";
 static const string		VALUE_ATT				= "value";
 static const string		TILE_ELEMENT			= "tile";
 static const string		GID_ATT					= "gid";
 
+using std::unordered_map;
+
 enum MapType {ORTHOGONAL_MAP, ISOMETRIC_MAP};
 
-struct TileSetInfo
-{
-	int firstgid;
+struct TileInfo {
+	unordered_map<string, string> properties;
+};
+
+struct TileSetInfo {
 	string name;
-	int tilewidth;
-	int tileheight;
 	string sourceImage;
-	int sourceImageWidth;
-	int sourceImageHeight;
+	int firstgid;
+	uint16_t tilewidth;
+	uint16_t tileheight;
+	uint16_t sourceImageWidth;
+	uint16_t sourceImageHeight;
+	map<size_t, TileInfo> tileInfo;
+	unordered_map<string, string> properties;
 };
 
-struct TiledLayerInfo
-{
+struct TiledLayerInfo {
+	string name;
+	vector<size_t> gids;
+	TileSetInfo* tileSetInfo;
+	uint16_t width;
+	uint16_t height;
 	bool collidable;
-	string name;
-	int width;
-	int height;
-	vector<int> gids;
-	TileSetInfo *tileSetInfo;
+	unordered_map<string, string> properties;
 };
 
-struct ImageLayerInfo
-{
+struct ImageLayerInfo {
 	string name;
-	int imagewidth;
-	int imageheight;
 	string imageSource;
+	uint16_t imagewidth;
+	uint16_t imageheight;
 	bool collidable;
+	unordered_map<string, string> properties;
 };
 
 class TMXMapImporter : public XMLFileImporter
@@ -76,6 +86,7 @@ protected:
 	map<string, TileSetInfo> tileSetInfos;
 	map<string, TiledLayerInfo> tiledLayerInfos;
 	map<string, ImageLayerInfo> imageLayerInfos;
+	unordered_map<string, string> custom;
 	wstring dir;
 	wstring mapLevelFilePath;
 
