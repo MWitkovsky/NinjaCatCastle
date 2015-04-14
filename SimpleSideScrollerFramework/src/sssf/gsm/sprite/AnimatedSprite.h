@@ -47,12 +47,13 @@ protected:
 	boolean facingRight = false;
 	boolean hit = false;
 	boolean airborne = false;
+	boolean airborneGuard = false;
 	boolean attackFinished = false;
 	boolean attacking = false;
 
 	int HP = 3;
 	int visibleFrames = HP;
-	int invincibilityFrames = 60;
+	int invincibilityFrames = 0;
 	boolean waitFrame = false;
 
 	int lives = 3;
@@ -78,6 +79,12 @@ public:
 	boolean				hasWaitFrame()		{ return waitFrame; }
 	boolean				isAttacking()		{ return attacking; }
 	boolean				isPlayer()			{ return player; }
+
+	//"Airborne Guard" is for making sure animations don't break as currently they're handled by
+	//checking if velocity is zero. In any given arc, the velocity is zero twice, once at the peak
+	//and once when it lands on the ground. This makes it so things don't change when at the peak
+	//of an arc unintentionally.
+	boolean				hasAirborneGuard()  { return airborneGuard; }
 
 	// INLINED MUTATOR METHODS
 	void setAlpha(int initAlpha)
@@ -106,7 +113,7 @@ public:
 	}
 	void resetInvincibilityFrames()
 	{
-		invincibilityFrames = 60;
+		invincibilityFrames = 120;
 	}
 	void decrementInvincibilityFrames()
 	{
@@ -132,9 +139,14 @@ public:
 	}
 	void setHit(boolean hit){
 		this->hit = hit;
+		if (hit){
+			resetInvincibilityFrames();
+			airborneGuard = true;
+		}
 	}
 	void setAirborne(boolean airborne){
 		this->airborne = airborne;
+		airborneGuard = airborne;
 	}
 	void setAttackFinished(boolean attackFinished){
 		this->attackFinished = attackFinished;
@@ -148,6 +160,10 @@ public:
 	void setIsPlayer(boolean player){
 		this->player = player;
 	}
+	void setAirborneGuard(boolean airborneGuard){
+		this->airborneGuard = airborneGuard;
+	}
+
 	// METHODS DEFINED IN AnimatedSprite.cpp
 	AnimatedSprite();
 	~AnimatedSprite();

@@ -123,9 +123,6 @@
     <ClCompile Include="src\sssf\gsm\physics\AABB.cpp">
       <Filter>src\sssf\gsm\physics</Filter>
     </ClCompile>
-    <ClCompile Include="src\sssf\gsm\physics\CollidableObject.cpp">
-      <Filter>src\sssf\gsm\physics</Filter>
-    </ClCompile>
     <ClCompile Include="src\sssf\gsm\physics\Physics.cpp">
       <Filter>src\sssf\gsm\physics</Filter>
     </ClCompile>

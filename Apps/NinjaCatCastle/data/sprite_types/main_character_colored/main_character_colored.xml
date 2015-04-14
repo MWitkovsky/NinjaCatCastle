@@ -92,6 +92,43 @@
   <image_file id="87" file_name="HIT_RIGHT/coloredmaincharacter_HIT_LEFT0005.png"/>
   <image_file id="88" file_name="HIT_RIGHT/coloredmaincharacter_HIT_LEFT0006.png"/>
   <image_file id="89" file_name="DEAD/coloredmaincharacter_DEAD_RIGHT0030.png"/>
+  <image_file id="90" file_name="DEAD_LEFT/coloredmaincharacter_DEAD_LEFT0001.png"/>
+  <image_file id="91" file_name="DEAD_LEFT/coloredmaincharacter_DEAD_LEFT0002.png"/>
+  <image_file id="92" file_name="DEAD_LEFT/coloredmaincharacter_DEAD_LEFT0003.png"/>
+  <image_file id="93" file_name="DEAD_LEFT/coloredmaincharacter_DEAD_LEFT0004.png"/>
+  <image_file id="94" file_name="DEAD_LEFT/coloredmaincharacter_DEAD_LEFT0005.png"/>
+  <image_file id="95" file_name="DEAD_LEFT/coloredmaincharacter_DEAD_LEFT0006.png"/>
+  <image_file id="96" file_name="DEAD_LEFT/coloredmaincharacter_DEAD_LEFT0007.png"/>
+  <image_file id="97" file_name="DEAD_LEFT/coloredmaincharacter_DEAD_LEFT0008.png"/>
+  <image_file id="98" file_name="DEAD_LEFT/coloredmaincharacter_DEAD_LEFT0009.png"/>
+  <image_file id="99" file_name="DEAD_LEFT/coloredmaincharacter_DEAD_LEFT0010.png"/>
+  <image_file id="100" file_name="DEAD_LEFT/coloredmaincharacter_DEAD_LEFT0011.png"/>
+  <image_file id="101" file_name="DEAD_LEFT/coloredmaincharacter_DEAD_LEFT0012.png"/>
+  <image_file id="102" file_name="DEAD_LEFT/coloredmaincharacter_DEAD_LEFT0013.png"/>
+  <image_file id="103" file_name="DEAD_LEFT/coloredmaincharacter_DEAD_LEFT0014.png"/>
+  <image_file id="104" file_name="DEAD_LEFT/coloredmaincharacter_DEAD_LEFT0015.png"/>
+  <image_file id="105" file_name="DEAD_LEFT/coloredmaincharacter_DEAD_LEFT0016.png"/>
+  <image_file id="106" file_name="DEAD_LEFT/coloredmaincharacter_DEAD_LEFT0017.png"/>
+  <image_file id="107" file_name="DEAD_LEFT/coloredmaincharacter_DEAD_LEFT0018.png"/>
+  <image_file id="108" file_name="DEAD_LEFT/coloredmaincharacter_DEAD_LEFT0019.png"/>
+  <image_file id="109" file_name="DEAD_LEFT/coloredmaincharacter_DEAD_LEFT0020.png"/>
+  <image_file id="110" file_name="DEAD_LEFT/coloredmaincharacter_DEAD_LEFT0021.png"/>
+  <image_file id="111" file_name="DEAD_LEFT/coloredmaincharacter_DEAD_LEFT0022.png"/>
+  <image_file id="112" file_name="DEAD_LEFT/coloredmaincharacter_DEAD_LEFT0023.png"/>
+  <image_file id="113" file_name="DEAD_LEFT/coloredmaincharacter_DEAD_LEFT0024.png"/>
+  <image_file id="114" file_name="DEAD_LEFT/coloredmaincharacter_DEAD_LEFT0025.png"/>
+  <image_file id="115" file_name="DEAD_LEFT/coloredmaincharacter_DEAD_LEFT0026.png"/>
+  <image_file id="116" file_name="DEAD_LEFT/coloredmaincharacter_DEAD_LEFT0027.png"/>
+  <image_file id="117" file_name="DEAD_LEFT/coloredmaincharacter_DEAD_LEFT0028.png"/>
+  <image_file id="118" file_name="DEAD_LEFT/coloredmaincharacter_DEAD_LEFT0029.png"/>
+  <image_file id="119" file_name="JUMP_LAND_LEFT/coloredmaincharacter_JUMP_START_LEFT0004.png"/>
+  <image_file id="120" file_name="JUMP_LAND_LEFT/coloredmaincharacter_JUMP_START_LEFT0003.png"/>
+  <image_file id="121" file_name="JUMP_LAND_LEFT/coloredmaincharacter_JUMP_START_LEFT0002.png"/>
+  <image_file id="122" file_name="JUMP_LAND_LEFT/coloredmaincharacter_JUMP_START_LEFT0001.png"/>
+  <image_file id="123" file_name="JUMP_LAND_RIGHT/coloredmaincharacter_JUMP_START_RIGHT0004.png"/>
+  <image_file id="124" file_name="JUMP_LAND_RIGHT/coloredmaincharacter_JUMP_START_RIGHT0003.png"/>
+  <image_file id="125" file_name="JUMP_LAND_RIGHT/coloredmaincharacter_JUMP_START_RIGHT0002.png"/>
+  <image_file id="126" file_name="JUMP_LAND_RIGHT/coloredmaincharacter_JUMP_START_RIGHT0001.png"/>
  </images_list>
  <animations_list>
  <animation_state>
@@ -245,7 +282,7 @@
    </animation_sequence>
   </animation_state>
   <animation_state>
-   <state>DIE</state>
+   <state>DIE_RIGHT</state>
    <animation_sequence>
 	<pose image_id="31" duration="4"/>
     <pose image_id="32" duration="4"/>
@@ -277,6 +314,58 @@
 	<pose image_id="58" duration="4"/>
     <pose image_id="59" duration="4"/>
 	<pose image_id="89" duration="1"/>
+   </animation_sequence>
+  </animation_state>
+  <animation_state>
+   <state>DIE_LEFT</state>
+   <animation_sequence>
+    <pose image_id="90" duration="4"/>
+	<pose image_id="91" duration="4"/>
+    <pose image_id="92" duration="4"/>
+	<pose image_id="93" duration="4"/>
+    <pose image_id="94" duration="4"/>
+	<pose image_id="95" duration="4"/>
+    <pose image_id="96" duration="4"/>
+	<pose image_id="97" duration="4"/>
+    <pose image_id="98" duration="4"/>
+	<pose image_id="99" duration="4"/>
+    <pose image_id="100" duration="4"/>
+	<pose image_id="101" duration="4"/>
+    <pose image_id="102" duration="4"/>
+    <pose image_id="103" duration="4"/>
+    <pose image_id="104" duration="4"/>
+    <pose image_id="105" duration="4"/>
+	<pose image_id="106" duration="4"/>
+    <pose image_id="107" duration="4"/>
+	<pose image_id="108" duration="4"/>
+    <pose image_id="109" duration="4"/>
+	<pose image_id="110" duration="4"/>
+    <pose image_id="111" duration="4"/>
+	<pose image_id="112" duration="4"/>
+    <pose image_id="113" duration="4"/>
+	<pose image_id="114" duration="4"/>
+    <pose image_id="115" duration="4"/>
+	<pose image_id="116" duration="4"/>
+    <pose image_id="117" duration="4"/>
+	<pose image_id="118" duration="1"/>
+   </animation_sequence>
+  </animation_state>
+ <animation_state>
+ <state>LAND_RIGHT</state>
+   <animation_sequence>
+    <pose image_id="123" duration="5"/>
+    <pose image_id="124" duration="5"/>
+    <pose image_id="125" duration="5"/>
+    <pose image_id="126" duration="5"/>
+   </animation_sequence>
+  </animation_state>
+ <animation_state>
+ <state>LAND_LEFT</state>
+   <animation_sequence>
+    <pose image_id="119" duration="5"/>
+    <pose image_id="120" duration="5"/>
+    <pose image_id="121" duration="5"/>
+    <pose image_id="122" duration="5"/>
    </animation_sequence>
   </animation_state>
  </animations_list>  

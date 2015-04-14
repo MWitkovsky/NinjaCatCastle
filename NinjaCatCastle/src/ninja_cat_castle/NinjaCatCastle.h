@@ -67,11 +67,6 @@ static const wstring	W_LIVES_HEAD_PATH		= L"data/gui/HUD/lives_head.png";
 // I like how the states stand out as a different color anyway. Easier to read.
 static const wstring	SPRITE_TYPES_DIR = L"data/sprite_types/";
 static const wstring	SPRITE_TYPES_LIST = SPRITE_TYPES_DIR + L"sprite_type_list.xml";
-static const wstring	JUMPING = L"JUMPING";
-static const wstring	ATTACKING_RIGHT = L"ATTACKING_RIGHT";
-static const wstring	ATTACKING_LEFT = L"ATTACKING_LEFT";
-static const wstring	IDLE = L"IDLE";
-static const wstring    DIE = L"DIE";
 
 // FOR THE GAME WORLD
 static const float		MAX_VIEWPORT_AXIS_VELOCITY = 30.0f;
@@ -81,7 +76,7 @@ static const float		JUMPING_BOT_MAX_CYCLES = 120;
 static const float		JUMPING_BOT_MAX_VELOCITY = 40;
 static const float		PLAYER_INIT_X = 80.0f;
 static const float		PLAYER_INIT_Y = 1000.0f;
-static const float		JUMP_SPEED = 12.0f;
+static const float		JUMP_SPEED = 10.0f;
 static const float		PLAYER_SPEED = 7.5f;
 static const float		PLAYER_MELEE_RANGE = 0.5f;
 static const int		MIN_FPS = 5;

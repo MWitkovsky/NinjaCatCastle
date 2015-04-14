@@ -42,7 +42,8 @@ void NinjaCatCastleCollisionListener::respondToCollision(AnimatedSprite *player,
 	if (contact->GetFixtureA() == playerBox || contact->GetFixtureB() == playerBox){
 		wstring enemyState = enemy->getCurrentState();
 		if (enemyState != L"DIE_LEFT"  && enemyState != L"DIE_RIGHT"
-			&& enemyState != L"HIT_LEFT" && enemyState != L"HIT_RIGHT"){
+			&& enemyState != L"HIT_LEFT" && enemyState != L"HIT_RIGHT"
+			&& !player->getInvincibilityFrames()){
 			if (player->getHurtBox()){
 				player->setAttackFinished(true);
 				player->setAttacking(false);
@@ -55,6 +56,7 @@ void NinjaCatCastleCollisionListener::respondToCollision(AnimatedSprite *player,
 				player->setCurrentState(L"HIT_RIGHT");
 				player->getBody()->SetLinearVelocity(b2Vec2(3.0f, 8.0f));
 			}
+			player->decrementHP();
 			player->setHit(true);
 		}
 	}

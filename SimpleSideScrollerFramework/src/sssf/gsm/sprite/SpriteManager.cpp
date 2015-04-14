@@ -51,8 +51,8 @@ void SpriteManager::addSpriteToRenderList(Game *game, AnimatedSprite *sprite,
 			RenderItem itemToAdd;
 			itemToAdd.id = sprite->getFrameIndex();
 			renderList->addRenderItem(sprite->getCurrentImageID(),
-				x - viewport->getViewportX(),
-				y - viewport->getViewportY() - 32,
+				(int)x - viewport->getViewportX(),
+				(int)y - viewport->getViewportY() - 32,
 				0,
 				sprite->getAlpha(),
 				spriteType->getTextureWidth(),
@@ -62,8 +62,8 @@ void SpriteManager::addSpriteToRenderList(Game *game, AnimatedSprite *sprite,
 			RenderItem itemToAdd;
 			itemToAdd.id = sprite->getFrameIndex();
 			renderList->addRenderItem(sprite->getCurrentImageID(),
-				x - viewport->getViewportX(),
-				y - viewport->getViewportY(),
+				(int)x - viewport->getViewportX(),
+				(int)y - viewport->getViewportY(),
 				0,
 				sprite->getAlpha(),
 				spriteType->getTextureWidth(),
@@ -84,8 +84,8 @@ void SpriteManager::box2DDebugRender(Game *game, b2Body *body, RenderList *rende
 		RenderItem itemToAdd;
 		itemToAdd.id = sprite->getFrameIndex();
 		renderList->addRenderItem(sprite->getCurrentImageID(),
-			x - viewport->getViewportX(),
-			y - viewport->getViewportY(),
+			(int)x - viewport->getViewportX(),
+			(int)y - viewport->getViewportY(),
 			0,
 			sprite->getAlpha(),
 			spriteType->getTextureWidth(),
@@ -177,7 +177,7 @@ void SpriteManager::renderVisibleSprite(Game *game, AnimatedSprite *sprite, Rend
 	itemToAdd.id = sprite->getFrameIndex();
 	renderList->addRenderItem(sprite->getCurrentImageID(),
 		(int)(pp->GetPosition().x*meterToPixelScale) - viewport->getViewportX(),
-		(int)(game->getGSM()->getWorld()->getWorldHeight())-(pp->GetPosition().y*meterToPixelScale) - viewport->getViewportY(),
+		(int)(game->getGSM()->getWorld()->getWorldHeight())-(int)(pp->GetPosition().y*meterToPixelScale) - viewport->getViewportY(),
 		0,
 		sprite->getAlpha(),
 		spriteType->getTextureWidth(),
@@ -354,8 +354,11 @@ void SpriteManager::updateAnimations(Game *game){
 	// UPDATE THE PLAYER SPRITE
 	float velocityY = player.getBody()->GetLinearVelocity().y;
 	wstring state = player.getCurrentState();
-	if (velocityY < 0){
-		if (player.wasHit()){
+	if (velocityY == 0){
+		if (player.hasAirborneGuard()){
+			player.setAirborneGuard(false);
+		}
+		else{
 			player.setHit(false);
 		}
 	}
@@ -390,15 +393,26 @@ void SpriteManager::updateAnimations(Game *game){
 		}
 		else if (velocityY == 0.0f && state != L"JUMPING_ASCEND_LEFT" && state != L"JUMPING_ASCEND_RIGHT"){
 			if (!player.wasHit()){
-				player.setAirborne(false);
-				if (state == L"JUMPING_DESCEND_LEFT" || state == L"HIT_RIGHT"){
-					player.setCurrentState(L"IDLE_LEFT");
+				if (player.hasAirborneGuard()){
+					player.setAirborneGuard(false);
 				}
-				else if ((state == L"HIT_LEFT" || state == L"HIT_RIGHT") && player.getHP() == 0){
-					player.setCurrentState(L"DIE");
+				else{
+					player.setAirborne(false);
+				}
+
+				if ((state == L"HIT_LEFT" || state == L"HIT_RIGHT") && player.getHP() <= 0){
+					if (state == L"HIT_LEFT"){
+						player.setCurrentState(L"DIE_RIGHT");
+					}
+					else{
+						player.setCurrentState(L"DIE_LEFT");
+					}
+				}
+				else if (state == L"JUMPING_DESCEND_LEFT" || state == L"HIT_RIGHT"){
+					player.setCurrentState(L"LAND_LEFT");
 				}
 				else if (player.getCurrentState() == L"JUMPING_DESCEND_RIGHT" || state == L"HIT_LEFT"){
-					player.setCurrentState(L"IDLE_RIGHT");
+					player.setCurrentState(L"LAND_RIGHT");
 				}
 			}
 		}
@@ -414,7 +428,7 @@ void SpriteManager::updateAnimations(Game *game){
 	}
 
 	if (player.getHurtBox()){
-		float32 y = player.getBody()->GetPosition().y;
+		float32 y = player.getBody()->GetPosition().y - 0.2f;
 		float32 x;
 		if (player.isFacingRight()){
 			x = player.getBody()->GetPosition().x + 0.7f;
@@ -426,13 +440,22 @@ void SpriteManager::updateAnimations(Game *game){
 		player.getHurtBox()->SetTransform(b2Vec2(x, y), player.getHurtBox()->GetAngle());
 	}
 	
-	//Invincibility frames should ideally last about 1 second.
-	if (player.getInvincibilityFrames() != 0){
-		player.decrementInvincibilityFrames();
+	//Invincibility frames should ideally last about 2 seconds.
+	if (!player.wasHit() && state != L"DIE_LEFT" && state != L"DIE_RIGHT"){
+		if (player.getInvincibilityFrames() != 0){
+			player.decrementInvincibilityFrames();
+			if (player.getInvincibilityFrames() % 15 <= 1 && player.getInvincibilityFrames() != 0){
+				player.setAlpha(0);
+			}
+			else{
+				player.setAlpha(255);
+			}
+		}
 	}
 
 	//Makes it so if the player falls off a platform they can't jump afterwards
 	if (player.getBody()->GetLinearVelocity().y == 0){
+		//So the player can't cancel y velocity by mashing space bar
 		player.setWasJump(false);
 	}
 
@@ -446,7 +469,12 @@ void SpriteManager::updateAnimations(Game *game){
 			if (state == L"HIT_LEFT" || state == L"HIT_RIGHT"){
 				if (pounceBot->getBody()->GetLinearVelocity().y == 0){
 					if (pounceBot->wasHit()){
-						pounceBot->setHit(false);
+						if (pounceBot->hasAirborneGuard()){
+							pounceBot->setAirborneGuard(false);
+						}
+						else{
+							pounceBot->setHit(false);
+						}
 					}
 					else{
 						if (state == L"HIT_LEFT"){

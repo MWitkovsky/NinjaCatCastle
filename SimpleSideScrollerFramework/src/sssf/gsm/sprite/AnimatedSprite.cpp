@@ -82,6 +82,14 @@ void AnimatedSprite::changeFrame()
 					}
 				}
 			}
+			else if (currentState == L"LAND_LEFT" || currentState == L"LAND_RIGHT"){
+				if (currentState == L"LAND_LEFT"){
+					setCurrentState(L"IDLE_LEFT");
+				}
+				else{
+					setCurrentState(L"IDLE_RIGHT");
+				}
+			}
 			else{
 				frameIndex = 0;
 			}

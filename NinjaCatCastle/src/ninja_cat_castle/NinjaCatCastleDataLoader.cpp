@@ -239,7 +239,7 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 	//Actually, this octagon shape is better for jumping up on higher platforms.
 	//The octagonal shape gives a more natural curve to the hitbox, leading to less frustration.
 	//Also gives a nice little push forward if you fall of a ledge.
-	float32 width = 0.65f;
+	float32 width = 0.60f;
 	float32 height = 1.0f;
 	float32 edgeWidth = 0.1f;
 	float32 edgeHeight = 0.2f;

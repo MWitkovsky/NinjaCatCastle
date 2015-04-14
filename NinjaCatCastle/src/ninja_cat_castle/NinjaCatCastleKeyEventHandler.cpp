@@ -53,8 +53,6 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 		float vY = pp->GetLinearVelocity().y;
 		wstring state = player->getCurrentState();
 
-		// YOU MIGHT WANT TO UNCOMMENT THIS FOR SOME TESTING,
-		// BUT IN THIS ASSIGNMENT, THE USER MOVES VIA MOUSE BUTTON PRESSES
 		if (player->isControllable()){
 			if (input->isKeyDown(A_KEY))
 			{
@@ -148,21 +146,43 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 					hurtBoxProps.fixedRotation = true;
 					fixtureDef.isSensor = true;
 
+					boolean dPressed = input->isKeyDown(D_KEY);
+					boolean aPressed = input->isKeyDown(A_KEY);
 					//Animation Handling
 					if (state == L"ATTACK_RIGHT" || state == L"ATTACK_LEFT"){
-						if (player->isFacingRight()){
+						if (dPressed){
 							player->setCurrentState(L"ATTACK_RIGHT_2");
+							player->setFacingRight(true);
+						}
+						else if (aPressed){
+							player->setCurrentState(L"ATTACK_LEFT_2");
+							player->setFacingRight(false);
 						}
 						else{
-							player->setCurrentState(L"ATTACK_LEFT_2");
+							if (state == L"ATTACK_RIGHT"){
+								player->setCurrentState(L"ATTACK_RIGHT_2");
+							}
+							else{
+								player->setCurrentState(L"ATTACK_LEFT_2");
+							}
 						}
 					}
 					else if (state == L"ATTACK_RIGHT_2" || state == L"ATTACK_LEFT_2"){
-						if (player->isFacingRight()){
+						if (dPressed){
 							player->setCurrentState(L"ATTACK_RIGHT");
+							player->setFacingRight(true);
+						}
+						else if (aPressed){
+							player->setCurrentState(L"ATTACK_LEFT");
+							player->setFacingRight(false);
 						}
 						else{
-							player->setCurrentState(L"ATTACK_LEFT");
+							if (state == L"ATTACK_RIGHT_2"){
+								player->setCurrentState(L"ATTACK_RIGHT");
+							}
+							else{
+								player->setCurrentState(L"ATTACK_LEFT");
+							}
 						}
 					}
 					else if (player->isFacingRight()){
@@ -178,14 +198,13 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 					fixtureDef.shape = &shape;
 
 					if (player->isFacingRight()){
-						hurtBoxProps.position.Set(playerPos.x + 0.7f, playerPos.y);
+						hurtBoxProps.position.Set(playerPos.x + 0.7f, playerPos.y - 0.2f);
 					}
 					else{
-						hurtBoxProps.position.Set(playerPos.x - 0.7f, playerPos.y);
+						hurtBoxProps.position.Set(playerPos.x - 0.7f, playerPos.y - 0.2f);
 					}
 					if (player->getHurtBox()){
 						game->getGSM()->getPhysics()->getWorld()->DestroyBody(player->getHurtBox());
-						player->setHurtBox(NULL);
 					}
 					player->setHurtBox(game->getGSM()->getPhysics()->getWorld()->CreateBody(&hurtBoxProps));
 					player->getHurtBox()->CreateFixture(&fixtureDef);
@@ -206,6 +225,7 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 				}
 				vY = 8.0f;
 				player->setHit(true);
+				player->decrementHP();
 			}
 
 			//for testing HP and death
@@ -272,7 +292,7 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 		//Recenters viewport back on player if no camera keys are being pressed
 		else{
 			float diff;
-			float height = gsm->getWorld()->getWorldHeight();
+			float height = (float)gsm->getWorld()->getWorldHeight();
 			if (pp->GetPosition().x*METER_TO_PIXEL_SCALE > viewportX - 60){
 				diff = (pp->GetPosition().x*METER_TO_PIXEL_SCALE - viewportX + 60) / 7;
 				if (diff > MAX_VIEWPORT_AXIS_VELOCITY){

@@ -26,8 +26,7 @@ public:
 
 	// INLINED METHODS
 	b2Body*				getBody()					{ return body; }
-	b2Body*			getHurtBox()				{ return hurtBox; }
-	unsigned int		getCollisionEdge()			{ return collisionEdge;			}
+	b2Body*				getHurtBox()				{ return hurtBox; }
 
 	void setBody(b2Body* body){
 		this->body = body;
@@ -35,6 +34,4 @@ public:
 	void setHurtBox(b2Body* hurtBox){
 		this->hurtBox = hurtBox;
 	}
-	void				setCollisionEdge(unsigned int initCollisionEdge)
-	{	collisionEdge = initCollisionEdge; }
 };
