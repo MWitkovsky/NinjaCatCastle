@@ -50,7 +50,7 @@ void AnimatedSprite::changeFrame()
 		|| currentState == L"JUMPING_ASCEND_LEFT" || currentState == L"JUMPING_ASCEND_RIGHT"
 		|| currentState == L"JUMPING_ARC_LEFT" || currentState == L"JUMPING_ARC_RIGHT"
 		|| currentState == L"HIT_LEFT" || currentState == L"HIT_RIGHT"){
-		airborne = true;
+		setAirborne(true);
 	}
 
 	if (frameIndex == spriteType->getSequenceSize(currentState)){
@@ -68,19 +68,25 @@ void AnimatedSprite::changeFrame()
 				waitFrame = true;
 				float32 vY = body->GetLinearVelocity().y;
 				float32 vX = body->GetLinearVelocity().x;
-				if (vY == 0 && !airborneGuard){
-					if (vX > 0){
-						setCurrentState(L"WALK_RIGHT");
-					}
-					else if (vX < 0){
-						setCurrentState(L"WALK_LEFT");
+				if (vY == 0){
+					if (airborneGuard){
+						airborneGuard = false;
 					}
 					else{
-						if (currentState == L"ATTACK_RIGHT" || currentState == L"ATTACK_RIGHT_2"){
-							setCurrentState(L"IDLE_RIGHT");
+						setAirborne(false);
+						if (vX > 0){
+							setCurrentState(L"WALK_RIGHT");
+						}
+						else if (vX < 0){
+							setCurrentState(L"WALK_LEFT");
 						}
 						else{
-							setCurrentState(L"IDLE_LEFT");
+							if (currentState == L"ATTACK_RIGHT" || currentState == L"ATTACK_RIGHT_2"){
+								setCurrentState(L"IDLE_RIGHT");
+							}
+							else{
+								setCurrentState(L"IDLE_LEFT");
+							}
 						}
 					}
 				}

@@ -124,12 +124,11 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 				if (state == L"WALK_LEFT" || state == L"IDLE_LEFT"
 					|| state == L"WALK_RIGHT" || state == L"IDLE_RIGHT"
 					|| player->isAttacking()){
-					if (player->isAttacking()){
-						player->setAttackFinished(true);
+					if (!player->isAirborne()){
+						vY = JUMP_SPEED;
+						player->setWasJump(true);
+						player->setAirborne(true);
 					}
- 					vY = JUMP_SPEED;
-					player->setWasJump(true);
-					player->setAirborne(true);
 				}
 			}
 			//FOR PRECISION JUMPING, halts ascent when jump key is released

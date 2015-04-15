@@ -359,6 +359,7 @@ void SpriteManager::updateAnimations(Game *game){
 			player.setAirborneGuard(false);
 		}
 		else{
+			player.setAirborne(false);
 			player.setHit(false);
 		}
 	}
@@ -396,15 +397,8 @@ void SpriteManager::updateAnimations(Game *game){
 			player.setAirborne(true);
 			player.setCurrentState(L"JUMPING_DESCEND_RIGHT");
 		}
-		else if (velocityY == 0.0f && state != L"JUMPING_ASCEND_LEFT" && state != L"JUMPING_ASCEND_RIGHT"){
+		else if (velocityY == 0.0f){
 			if (!player.wasHit()){
-				if (player.hasAirborneGuard()){
-					player.setAirborneGuard(false);
-				}
-				else{
-					player.setAirborne(false);
-				}
-
 				if ((state == L"HIT_LEFT" || state == L"HIT_RIGHT") && player.getHP() <= 0){
 					if (state == L"HIT_LEFT"){
 						player.setCurrentState(L"DIE_RIGHT");
