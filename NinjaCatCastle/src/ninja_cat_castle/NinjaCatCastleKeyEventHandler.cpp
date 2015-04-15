@@ -122,8 +122,12 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 			if (input->isKeyDownForFirstTime(SPACE_KEY))
 			{
 				if (state == L"WALK_LEFT" || state == L"IDLE_LEFT"
-					|| state == L"WALK_RIGHT" || state == L"IDLE_RIGHT"){
-					vY = JUMP_SPEED;
+					|| state == L"WALK_RIGHT" || state == L"IDLE_RIGHT"
+					|| player->isAttacking()){
+					if (player->isAttacking()){
+						player->setAttackFinished(true);
+					}
+ 					vY = JUMP_SPEED;
 					player->setWasJump(true);
 					player->setAirborne(true);
 				}

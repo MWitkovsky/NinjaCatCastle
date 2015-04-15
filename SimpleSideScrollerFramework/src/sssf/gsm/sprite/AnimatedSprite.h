@@ -153,6 +153,7 @@ public:
 	}
 	void setAttacking(boolean attacking){
 		this->attacking = attacking;
+		attackFinished = !attacking;
 	}
 	void decWaitFrame(){
 		waitFrame = false;

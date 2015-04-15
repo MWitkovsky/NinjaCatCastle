@@ -364,30 +364,35 @@ void SpriteManager::updateAnimations(Game *game){
 	}
 
 	//ANIMATION STUFF
-	if (state != L"ATTACK_RIGHT_1" && state != L"ATTACK_RIGHT_2"
-		&& state != L"ATTACK_LEFT_1" && state != L"ATTACK_LEFT_2"){
+	if (!player.isAttacking()){
 		if (velocityY > 0){
 			player.setAirborne(true);
-			if (state == L"WALK_RIGHT" || state == L"IDLE_RIGHT" || state == L"JUMPING_ASCEND_RIGHT"){
+			if (state == L"WALK_RIGHT" || state == L"IDLE_RIGHT" || state == L"JUMPING_ASCEND_RIGHT"
+				|| state == L"ATTACK_RIGHT" || state == L"ATTACK_RIGHT_2"){
 				player.setCurrentState(L"JUMPING_ASCEND_RIGHT");
 			}
-			else if (state == L"WALK_LEFT" || state == L"IDLE_LEFT" || state == L"JUMPING_ASCEND_LEFT"){
+			else if (state == L"WALK_LEFT" || state == L"IDLE_LEFT" || state == L"JUMPING_ASCEND_LEFT"
+				|| state == L"ATTACK_LEFT" || state == L"ATTACK_LEFT_2"){
 				player.setCurrentState(L"JUMPING_ASCEND_LEFT");
 			}
 		}
-		else if (velocityY < 0.0f && state == L"JUMPING_ASCEND_LEFT"){
+		else if (velocityY < 0.0f && (state == L"JUMPING_ASCEND_LEFT"
+			|| state == L"ATTACK_LEFT" || state == L"ATTACK_LEFT_2")){
 			player.setAirborne(true);
 			player.setCurrentState(L"JUMPING_ARC_LEFT");
 		}
-		else if (velocityY < 0.0f && state == L"JUMPING_ASCEND_RIGHT"){
+		else if (velocityY < 0.0f && (state == L"JUMPING_ASCEND_RIGHT"
+			|| state == L"ATTACK_RIGHT" || state == L"ATTACK_RIGHT_2")){
 			player.setAirborne(true);
 			player.setCurrentState(L"JUMPING_ARC_RIGHT");
 		}
-		else if (velocityY < 0.0f && (state == L"WALK_LEFT" || state == L"IDLE_LEFT")){
+		else if (velocityY < 0.0f && (state == L"WALK_LEFT" || state == L"IDLE_LEFT"
+			|| state == L"ATTACK_LEFT" || state == L"ATTACK_LEFT_2")){
 			player.setAirborne(true);
 			player.setCurrentState(L"JUMPING_DESCEND_LEFT");
 		}
-		else if (velocityY < 0.0f && (state == L"WALK_RIGHT" || state == L"IDLE_RIGHT")){
+		else if (velocityY < 0.0f && (state == L"WALK_RIGHT" || state == L"IDLE_RIGHT"
+			|| state == L"ATTACK_RIGHT" || state == L"ATTACK_RIGHT_2")){
 			player.setAirborne(true);
 			player.setCurrentState(L"JUMPING_DESCEND_RIGHT");
 		}
@@ -410,10 +415,12 @@ void SpriteManager::updateAnimations(Game *game){
 						player.toggleControllable();
 					}
 				}
-				else if (state == L"JUMPING_DESCEND_LEFT" || state == L"HIT_RIGHT"){
+				else if (state == L"JUMPING_DESCEND_LEFT" || state == L"HIT_RIGHT"
+					|| state == L"ATTACK_LEFT" || state == L"ATTACK_LEFT_2"){
 					player.setCurrentState(L"LAND_LEFT");
 				}
-				else if (player.getCurrentState() == L"JUMPING_DESCEND_RIGHT" || state == L"HIT_LEFT"){
+				else if (player.getCurrentState() == L"JUMPING_DESCEND_RIGHT" || state == L"HIT_LEFT"
+					|| state == L"ATTACK_RIGHT" || state == L"ATTACK_RIGHT_2"){
 					player.setCurrentState(L"LAND_RIGHT");
 				}
 			}
@@ -424,7 +431,6 @@ void SpriteManager::updateAnimations(Game *game){
 		if (player.getHurtBox()){
 			game->getGSM()->getPhysics()->getWorld()->DestroyBody(player.getHurtBox());
 			player.setHurtBox(NULL);
-			player.setAttackFinished(false);
 			player.setAttacking(false);
 		}
 	}

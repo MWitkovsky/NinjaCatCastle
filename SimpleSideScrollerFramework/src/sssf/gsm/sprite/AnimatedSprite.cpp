@@ -63,22 +63,73 @@ void AnimatedSprite::changeFrame()
 			else if (currentState == L"JUMPING_ARC_LEFT"){
 				setCurrentState(L"JUMPING_DESCEND_LEFT");
 			}
-			else if (currentState == L"ATTACK_RIGHT" || currentState == L"ATTACK_LEFT"
-				|| currentState == L"ATTACK_RIGHT_2" || currentState == L"ATTACK_LEFT_2"){
+			else if (attacking){
 				attackFinished = true;
 				waitFrame = true;
-				if (body->GetLinearVelocity().x > 0){
-					setCurrentState(L"WALK_RIGHT");
-				}
-				else if (body->GetLinearVelocity().x < 0){
-					setCurrentState(L"WALK_LEFT");
-				}
-				else{
-					if (currentState == L"ATTACK_RIGHT" || currentState == L"ATTACK_RIGHT_2"){
-						setCurrentState(L"IDLE_RIGHT");
+				float32 vY = body->GetLinearVelocity().y;
+				float32 vX = body->GetLinearVelocity().x;
+				if (vY == 0 && !airborneGuard){
+					if (vX > 0){
+						setCurrentState(L"WALK_RIGHT");
+					}
+					else if (vX < 0){
+						setCurrentState(L"WALK_LEFT");
 					}
 					else{
-						setCurrentState(L"IDLE_LEFT");
+						if (currentState == L"ATTACK_RIGHT" || currentState == L"ATTACK_RIGHT_2"){
+							setCurrentState(L"IDLE_RIGHT");
+						}
+						else{
+							setCurrentState(L"IDLE_LEFT");
+						}
+					}
+				}
+				else if(vY < 0){
+					if (vX > 0){
+						setCurrentState(L"JUMPING_DESCEND_RIGHT");
+					}
+					else if (vX < 0){
+						setCurrentState(L"JUMPING_DESCEND_LEFT");
+					}
+					else{
+						if (currentState == L"ATTACK_RIGHT" || currentState == L"ATTACK_RIGHT_2"){
+							setCurrentState(L"JUMPING_DESCEND_RIGHT");
+						}
+						else{
+							setCurrentState(L"JUMPING_DESCEND_LEFT");
+						}
+					}
+				}
+				else if (vY > 0){
+					if (vX > 0){
+						setCurrentState(L"JUMPING_ASCEND_RIGHT");
+					}
+					else if (vX < 0){
+						setCurrentState(L"JUMPING_ASCEND_LEFT");
+					}
+					else{
+						if (currentState == L"ATTACK_RIGHT" || currentState == L"ATTACK_RIGHT_2"){
+							setCurrentState(L"JUMPING_ASCEND_RIGHT");
+						}
+						else{
+							setCurrentState(L"JUMPING_ASCEND_LEFT");
+						}
+					}
+				}
+				else{
+					if (vX > 0){
+						setCurrentState(L"JUMPING_ARC_RIGHT");
+					}
+					else if (vX < 0){
+						setCurrentState(L"JUMPING_ARC_LEFT");
+					}
+					else{
+						if (currentState == L"ATTACK_RIGHT" || currentState == L"ATTACK_RIGHT_2"){
+							setCurrentState(L"JUMPING_ARC_RIGHT");
+						}
+						else{
+							setCurrentState(L"JUMPING_ARC_LEFT");
+						}
 					}
 				}
 			}
