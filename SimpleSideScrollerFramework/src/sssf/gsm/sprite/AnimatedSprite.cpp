@@ -46,17 +46,11 @@ void AnimatedSprite::changeFrame()
 
 	// GO BACK TO FIRST INDEX IF NECESSARY
 	// THIS IS ALSO WHERE ALL ANIMATIONS RELIANT ON OTHER ANIMATIONS ARE HANDLED
-	if (currentState == L"JUMPING_DESCEND_LEFT" || currentState == L"JUMPING_DESCEND_RIGHT"
-		|| currentState == L"JUMPING_ASCEND_LEFT" || currentState == L"JUMPING_ASCEND_RIGHT"
-		|| currentState == L"JUMPING_ARC_LEFT" || currentState == L"JUMPING_ARC_RIGHT"
-		|| currentState == L"HIT_LEFT" || currentState == L"HIT_RIGHT"){
-		setAirborne(true);
-	}
 
 	if (frameIndex == spriteType->getSequenceSize(currentState)){
-		if (currentState != L"DIE" && currentState != L"HIT_LEFT"
-			&& currentState != L"HIT_RIGHT" && currentState != L"DIE_LEFT"
-			&& currentState != L"DIE_RIGHT"){
+		if (!wasHit() && !isDead()){
+			//THIS IS ALL PLAYER ANIMATION STUFF THAT IS RELIANT
+			//ON THE END OF AN ANIMATION (Example: When attack ends, set to idle state)
 			if (currentState == L"JUMPING_ARC_RIGHT"){
 				setCurrentState(L"JUMPING_DESCEND_RIGHT");
 			}

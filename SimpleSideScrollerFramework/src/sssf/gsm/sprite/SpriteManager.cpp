@@ -363,11 +363,13 @@ void SpriteManager::updateAnimations(Game *game){
 			player.setHit(false);
 		}
 	}
+	else{
+		player.setAirborne(true);
+	}
 
 	//ANIMATION STUFF
 	if (!player.isAttacking()){
 		if (velocityY > 0){
-			player.setAirborne(true);
 			if (state == L"WALK_RIGHT" || state == L"IDLE_RIGHT" || state == L"JUMPING_ASCEND_RIGHT"
 				|| state == L"ATTACK_RIGHT" || state == L"ATTACK_RIGHT_2"){
 				player.setCurrentState(L"JUMPING_ASCEND_RIGHT");
@@ -379,22 +381,18 @@ void SpriteManager::updateAnimations(Game *game){
 		}
 		else if (velocityY < 0.0f && (state == L"JUMPING_ASCEND_LEFT"
 			|| state == L"ATTACK_LEFT" || state == L"ATTACK_LEFT_2")){
-			player.setAirborne(true);
 			player.setCurrentState(L"JUMPING_ARC_LEFT");
 		}
 		else if (velocityY < 0.0f && (state == L"JUMPING_ASCEND_RIGHT"
 			|| state == L"ATTACK_RIGHT" || state == L"ATTACK_RIGHT_2")){
-			player.setAirborne(true);
 			player.setCurrentState(L"JUMPING_ARC_RIGHT");
 		}
 		else if (velocityY < 0.0f && (state == L"WALK_LEFT" || state == L"IDLE_LEFT"
 			|| state == L"ATTACK_LEFT" || state == L"ATTACK_LEFT_2")){
-			player.setAirborne(true);
 			player.setCurrentState(L"JUMPING_DESCEND_LEFT");
 		}
 		else if (velocityY < 0.0f && (state == L"WALK_RIGHT" || state == L"IDLE_RIGHT"
 			|| state == L"ATTACK_RIGHT" || state == L"ATTACK_RIGHT_2")){
-			player.setAirborne(true);
 			player.setCurrentState(L"JUMPING_DESCEND_RIGHT");
 		}
 		else if (velocityY == 0.0f){
@@ -465,26 +463,33 @@ void SpriteManager::updateAnimations(Game *game){
 	list<Bot*>::iterator botIterator;
 	botIterator = bots.begin();
 	while (botIterator != bots.end()){
+		Bot* genericBot = *botIterator;
+		if (genericBot->getBody()->GetLinearVelocity().y == 0){
+			if (genericBot->hasAirborneGuard()){
+				genericBot->setAirborneGuard(false);
+			}
+			else{
+				genericBot->setAirborne(false);
+				genericBot->setHit(false);
+			}
+		}
+		else{
+			genericBot->setAirborne(true);
+		}
+
 		PounceBot* pounceBot = dynamic_cast<PounceBot*>(*botIterator);
 		if (pounceBot){
 			wstring state = pounceBot->getCurrentState();
 			if (state == L"HIT_LEFT" || state == L"HIT_RIGHT"){
 				if (pounceBot->getBody()->GetLinearVelocity().y == 0){
-					if (pounceBot->wasHit()){
-						if (pounceBot->hasAirborneGuard()){
-							pounceBot->setAirborneGuard(false);
-						}
-						else{
-							pounceBot->setHit(false);
-						}
-					}
-					else{
+					if (!pounceBot->wasHit()){
 						if (state == L"HIT_LEFT"){
 							pounceBot->setCurrentState(L"DIE_LEFT");
 						}
 						else{
 							pounceBot->setCurrentState(L"DIE_RIGHT");
 						}
+						pounceBot->getBody()->SetType(b2_staticBody);
 					}
 				}
 			}

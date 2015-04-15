@@ -79,6 +79,7 @@ public:
 	boolean				hasWaitFrame()		{ return waitFrame; }
 	boolean				isAttacking()		{ return attacking; }
 	boolean				isPlayer()			{ return player; }
+	boolean				isDead()			{ return (currentState == L"DIE_LEFT" || currentState == L"DIE_RIGHT"); }
 
 	//"Airborne Guard" is for making sure animations don't break as currently they're handled by
 	//checking if velocity is zero. In any given arc, the velocity is zero twice, once at the peak

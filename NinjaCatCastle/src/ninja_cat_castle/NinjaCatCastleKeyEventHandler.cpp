@@ -141,7 +141,7 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 
 			//ATTACKS
 			if (input->isKeyDownForFirstTime(K_KEY)){
-				if (state != L"HIT_LEFT" && state != L"HIT_RIGHT"){
+				if (!player->wasHit()){
 					b2BodyDef hurtBoxProps;
 					b2FixtureDef fixtureDef;
 					b2PolygonShape shape;
@@ -201,10 +201,10 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 					fixtureDef.shape = &shape;
 
 					if (player->isFacingRight()){
-						hurtBoxProps.position.Set(playerPos.x + 0.7f, playerPos.y - 0.2f);
+						hurtBoxProps.position.Set(playerPos.x + 0.9f, playerPos.y - 0.25f);
 					}
 					else{
-						hurtBoxProps.position.Set(playerPos.x - 0.7f, playerPos.y - 0.2f);
+						hurtBoxProps.position.Set(playerPos.x - 0.9f, playerPos.y - 0.25f);
 					}
 					if (player->getHurtBox()){
 						game->getGSM()->getPhysics()->getWorld()->DestroyBody(player->getHurtBox());

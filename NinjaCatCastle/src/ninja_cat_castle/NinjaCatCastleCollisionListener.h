@@ -8,5 +8,6 @@ class NinjaCatCastleCollisionListener : public CollisionListener
 {
 public:
 	void BeginContact(b2Contact* contact);
+	bool ShouldCollide(b2Fixture* fixtureA, b2Fixture* fixtureB);
 	void respondToCollision(AnimatedSprite *player, AnimatedSprite *enemy, b2Contact* contact);
 };

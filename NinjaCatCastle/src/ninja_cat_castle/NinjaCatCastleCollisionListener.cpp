@@ -9,10 +9,10 @@
 void NinjaCatCastleCollisionListener::BeginContact(b2Contact* contact) {
 
 	//Checks if either of the two fixtures belong to the player.
-	void* bodyUserData = contact->GetFixtureA()->GetBody()->GetUserData();
 	AnimatedSprite* sprite1 = 0;
 	AnimatedSprite* sprite2 = 0;
 
+	void* bodyUserData = contact->GetFixtureA()->GetBody()->GetUserData();
 	if (bodyUserData){
 		sprite1 = static_cast<AnimatedSprite*>(bodyUserData);
 	}
@@ -33,6 +33,42 @@ void NinjaCatCastleCollisionListener::BeginContact(b2Contact* contact) {
 		else if (sprite2->isPlayer()){
 			respondToCollision(sprite2, sprite1, contact);
 		}
+	}
+}
+
+bool NinjaCatCastleCollisionListener::ShouldCollide(b2Fixture* fixtureA, b2Fixture* fixtureB){
+	AnimatedSprite* sprite1 = 0;
+	AnimatedSprite* sprite2 = 0;
+
+	void* bodyUserData = fixtureA->GetBody()->GetUserData();
+	if (bodyUserData){
+		sprite1 = static_cast<AnimatedSprite*>(bodyUserData);
+	}
+
+	bodyUserData = fixtureB->GetBody()->GetUserData();
+	if (bodyUserData){
+		sprite2 = static_cast<AnimatedSprite*>(bodyUserData);
+	}
+
+	if (sprite1 && sprite2){
+		if (sprite1->isPlayer() || sprite2->isPlayer()){
+			if (sprite1->wasHit() || sprite2->wasHit()){
+				return false;
+			}
+			else if (sprite1->getInvincibilityFrames() || sprite2->getInvincibilityFrames()
+				|| sprite1->isDead() || sprite2->isDead()){
+				return false;
+			}
+			else{
+				return true;
+			}
+		}
+		else{
+			return false;
+		}
+	}
+	else{
+		return true;
 	}
 }
 
@@ -63,11 +99,21 @@ void NinjaCatCastleCollisionListener::respondToCollision(AnimatedSprite *player,
 	else{
 		if (enemy->getBody()->GetPosition().x < player->getHurtBox()->GetPosition().x){
 			enemy->setCurrentState(L"HIT_RIGHT");
-			enemy->getBody()->SetLinearVelocity(b2Vec2(-3.0f, 8.0f));
+			if (player->getBody()->GetLinearVelocity().x < 0.0f){
+				enemy->getBody()->SetLinearVelocity(b2Vec2(-8.0f, 8.0f));
+			}
+			else{
+				enemy->getBody()->SetLinearVelocity(b2Vec2(-3.0f, 8.0f));
+			}
 		}
 		else{
 			enemy->setCurrentState(L"HIT_LEFT");
-			enemy->getBody()->SetLinearVelocity(b2Vec2(3.0f, 8.0f));
+			if (player->getBody()->GetLinearVelocity().x > 0.0f){
+				enemy->getBody()->SetLinearVelocity(b2Vec2(8.0f, 8.0f));
+			}
+			else{
+				enemy->getBody()->SetLinearVelocity(b2Vec2(3.0f, 8.0f));
+			}
 		}
 		enemy->setHit(true);
 	}
