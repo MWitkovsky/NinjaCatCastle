@@ -43,6 +43,8 @@
 #include "sssf\platforms\DirectX\DirectXGraphics.h"
 #include "sssf\platforms\DirectX\DirectXTextureManager.h"
 
+#include "fmod.hpp"
+
 /*
 	WinMain - This is the application's starting point. In this method we will construct a Game object, 
 	then initialize all the platform-dependent technologies, then construct all the custom data for our 
@@ -90,6 +92,15 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	NinjaCatCastleCollisionListener *ninjaCatCastleCollisionListener = new NinjaCatCastleCollisionListener();
 	ninjaCatCastleGame->getGSM()->getPhysics()->getWorld()->SetContactListener(ninjaCatCastleCollisionListener);
 	ninjaCatCastleGame->getGSM()->getPhysics()->getWorld()->SetContactFilter(ninjaCatCastleCollisionListener);
+
+	FMOD::Sound      *sound1 = NULL; //sound that will be loaded and played
+	FMOD::Channel    *channel = 0;
+
+	FMOD::System* wow = ninjaCatCastleGame->getSoundSystem();
+	wow->createSound("data/song 3.mp3", FMOD_DEFAULT, 0, &sound1);
+	sound1->setMode(FMOD_LOOP_NORMAL);
+
+	wow->playSound(sound1, 0, false, &channel);
 
 	// START THE GAME LOOP
 	ninjaCatCastleGame->runGameLoop();

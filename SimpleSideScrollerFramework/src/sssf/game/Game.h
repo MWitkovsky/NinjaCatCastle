@@ -31,6 +31,7 @@
 // PREPROCESSOR INCLUDE STATEMENTS
 #include "sssf_VS\stdafx.h"
 #include "sssf\gsm\state\GameState.h"
+#include "fmod.hpp"
 
 // FORWARD DECLARATIONS OF CLASSES USED BY GAME
 class GameDataLoader;
@@ -68,6 +69,9 @@ private:
 	GameOS				*os;
 	GameTimer			*timer;
 
+	//FMod Stuff
+	FMOD::System     *systemz; //handle to FMOD engine
+
 	// THIS WILL KEEP TRACK OF THE NAME OF THE LEVEL FILE
 	// THAT IS CURRENTLY BEING USED
 	wstring				currentLevelFileName;
@@ -77,7 +81,7 @@ public:
 	GameStateManager*	getGSM()				{ return gsm;								}
 	GameGUI*			getGUI()				{ return gui;								}
 	GameText*			getText()				{ return text;								}
-
+	FMOD::System *		getSoundSystem()		{ return systemz; }
 	// INLINED ACCESSOR METHODS - ACTUALLY SUB-CLASSES
 	GameDataLoader*		getDataLoader()			{ return dataLoader;						}
 	GameGraphics*		getGraphics()			{ return graphics;							}

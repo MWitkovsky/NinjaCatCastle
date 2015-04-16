@@ -44,6 +44,10 @@ Game::Game()
 	gsm = new GameStateManager();
 	gui = new GameGUI();
 	text = new GameText();
+
+
+	FMOD::System_Create(&systemz);
+	systemz->init(32, FMOD_INIT_NORMAL, 0);
 }
 
 /*
@@ -120,6 +124,8 @@ void Game::runGameLoop()
 	// KEEP RENDERING UNTIL SOMEONE PULLS THE PLUG
 	while(gsm->isAppActive())
 	{
+		systemz->update();
+
 		// MOVE ALONG WINDOWS MESSAGES, THIS ALLOWS
 		// US TO GET USER INPUT
 		os->processOSMessages();
