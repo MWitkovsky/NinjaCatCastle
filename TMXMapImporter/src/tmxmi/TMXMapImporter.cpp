@@ -545,9 +545,7 @@ bool TMXMapImporter::buildWorldFromInfo(Game *game)
 
 						player->setIsPlayer(true);
 						player->setHP(3);
-						if (!player->isControllable()){
-							player->toggleControllable();
-						}
+						player->setControllable(true);
 
 						player->setHurtBox(NULL);
 

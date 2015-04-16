@@ -47,9 +47,9 @@ void SpriteManager::addSpriteToRenderList(Game *game, AnimatedSprite *sprite,
 	{
 		// SINCE IT'S VIEWABLE, ADD IT TO THE RENDER LIST
 		PounceBot* pounceBot = dynamic_cast<PounceBot*>(sprite);
+		RenderItem itemToAdd;
+		itemToAdd.id = sprite->getFrameIndex();
 		if (pounceBot){
-			RenderItem itemToAdd;
-			itemToAdd.id = sprite->getFrameIndex();
 			renderList->addRenderItem(sprite->getCurrentImageID(),
 				(int)x - viewport->getViewportX(),
 				(int)y - viewport->getViewportY() - 32,
@@ -59,8 +59,6 @@ void SpriteManager::addSpriteToRenderList(Game *game, AnimatedSprite *sprite,
 				spriteType->getTextureHeight());
 		}
 		else{
-			RenderItem itemToAdd;
-			itemToAdd.id = sprite->getFrameIndex();
 			renderList->addRenderItem(sprite->getCurrentImageID(),
 				(int)x - viewport->getViewportX(),
 				(int)y - viewport->getViewportY(),
@@ -360,7 +358,9 @@ void SpriteManager::updateAnimations(Game *game){
 		}
 		else{
 			player.setAirborne(false);
-			player.setHit(false);
+			if (player.wasHit()){
+				player.setHit(false);
+			}
 		}
 	}
 	else{
@@ -400,11 +400,11 @@ void SpriteManager::updateAnimations(Game *game){
 				if ((state == L"HIT_LEFT" || state == L"HIT_RIGHT") && player.getHP() <= 0){
 					if (state == L"HIT_LEFT"){
 						player.setCurrentState(L"DIE_RIGHT");
-						player.toggleControllable();
+						player.setControllable(false);
 					}
 					else{
 						player.setCurrentState(L"DIE_LEFT");
-						player.toggleControllable();
+						player.setControllable(false);
 					}
 				}
 				else if (state == L"JUMPING_DESCEND_LEFT" || state == L"HIT_RIGHT"
@@ -489,7 +489,6 @@ void SpriteManager::updateAnimations(Game *game){
 						else{
 							pounceBot->setCurrentState(L"DIE_RIGHT");
 						}
-						pounceBot->getBody()->SetType(b2_staticBody);
 					}
 				}
 			}

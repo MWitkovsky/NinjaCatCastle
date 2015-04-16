@@ -120,8 +120,8 @@ public:
 	{
 		invincibilityFrames--;
 	}
-	void toggleControllable(){
-		controllable = !controllable;
+	void setControllable(boolean controllable){
+		this->controllable = controllable;
 	}
 	void setOriginalState(wstring originalState){
 		this->originalState = originalState;
@@ -143,6 +143,10 @@ public:
 		if (hit){
 			resetInvincibilityFrames();
 			airborneGuard = true;
+			controllable = false;
+		}
+		else{
+			controllable = true;
 		}
 	}
 	void setAirborne(boolean airborne){

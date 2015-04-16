@@ -54,56 +54,71 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 		wstring state = player->getCurrentState();
 
 		if (player->isControllable()){
-			if (input->isKeyDown(A_KEY))
-			{
-				if (!player->isAirborne()){
-					if (state != L"ATTACK_LEFT" && state != L"ATTACK_RIGHT"
-						&& state != L"ATTACK_LEFT_2" && state != L"ATTACK_RIGHT_2"){
-						player->setCurrentState(L"WALK_LEFT");
+			if (!(input->isKeyDown(A_KEY) && input->isKeyDown(D_KEY))){
+				if (input->isKeyDown(A_KEY))
+				{
+					if (!player->isAirborne()){
+						if (state != L"ATTACK_LEFT" && state != L"ATTACK_RIGHT"
+							&& state != L"ATTACK_LEFT_2" && state != L"ATTACK_RIGHT_2"){
+							player->setCurrentState(L"WALK_LEFT");
+							player->setFacingRight(false);
+						}
+						vX = -PLAYER_SPEED;
+					}
+
+					//Just changes the way the sprite is facing, doesn't change anything about the jump.
+					if (state == L"JUMPING_DESCEND_RIGHT"){
+						player->setCurrentState(L"JUMPING_DESCEND_LEFT");
 						player->setFacingRight(false);
 					}
-					vX = -PLAYER_SPEED;
+					else if (state == L"JUMPING_ARC_RIGHT"){
+						player->setCurrentState(L"JUMPING_ARC_LEFT");
+						player->setFacingRight(false);
+					}
+					else if (state == L"JUMPING_ASCEND_RIGHT"){
+						player->setCurrentState(L"JUMPING_ASCEND_LEFT");
+						player->setFacingRight(false);
+					}
 				}
+				else if (input->isKeyDown(D_KEY))
+				{
+					if (!player->isAirborne()){
+						if (state != L"ATTACK_LEFT" && state != L"ATTACK_RIGHT"
+							&& state != L"ATTACK_LEFT_2" && state != L"ATTACK_RIGHT_2"){
+							player->setCurrentState(L"WALK_RIGHT");
+							player->setFacingRight(true);
+						}
+						vX = PLAYER_SPEED;
+					}
 
-				//Just changes the way the sprite is facing, doesn't change anything about the jump.
-				if (state == L"JUMPING_DESCEND_RIGHT"){
-					player->setCurrentState(L"JUMPING_DESCEND_LEFT");
-					player->setFacingRight(false);
-				}
-				else if (state == L"JUMPING_ARC_RIGHT"){
-					player->setCurrentState(L"JUMPING_ARC_LEFT");
-					player->setFacingRight(false);
-				}
-				else if (state == L"JUMPING_ASCEND_RIGHT"){
-					player->setCurrentState(L"JUMPING_ASCEND_LEFT");
-					player->setFacingRight(false);
-				}
-			}
-			else if (input->isKeyDown(D_KEY))
-			{
-				if (!player->isAirborne()){
-					if (state != L"ATTACK_LEFT" && state != L"ATTACK_RIGHT"
-						&& state != L"ATTACK_LEFT_2" && state != L"ATTACK_RIGHT_2"){
-						player->setCurrentState(L"WALK_RIGHT");
+					//Just changes the way the sprite is facing, doesn't change anything about the jump.
+					if (state == L"JUMPING_DESCEND_LEFT"){
+						player->setCurrentState(L"JUMPING_DESCEND_RIGHT");
 						player->setFacingRight(true);
 					}
-					vX = PLAYER_SPEED;
-				}
+					else if (state == L"JUMPING_ARC_LEFT"){
+						player->setCurrentState(L"JUMPING_ARC_RIGHT");
+						player->setFacingRight(true);
+					}
+					else if (state == L"JUMPING_ASCEND_LEFT"){
+						player->setCurrentState(L"JUMPING_ASCEND_RIGHT");
+						player->setFacingRight(true);
+					}
 
-				//Just changes the way the sprite is facing, doesn't change anything about the jump.
-				if (state == L"JUMPING_DESCEND_LEFT"){
-					player->setCurrentState(L"JUMPING_DESCEND_RIGHT");
-					player->setFacingRight(true);
 				}
-				else if (state == L"JUMPING_ARC_LEFT"){
-					player->setCurrentState(L"JUMPING_ARC_RIGHT");
-					player->setFacingRight(true);
+				else
+				{
+					if (!player->isAirborne()){
+						vX = 0.0f;
+					}
+
+					if (state == L"WALK_LEFT" || state == L"IDLE_LEFT"){
+						player->setCurrentState(L"IDLE_LEFT");
+					}
+					else if (state == L"WALK_RIGHT" || state == L"IDLE_RIGHT"){
+						player->setCurrentState(L"IDLE_RIGHT");
+					}
 				}
-				else if (state == L"JUMPING_ASCEND_LEFT"){
-					player->setCurrentState(L"JUMPING_ASCEND_RIGHT");
-					player->setFacingRight(true);
-				}
-				
 			}
 			else
 			{
@@ -153,11 +168,11 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 					boolean aPressed = input->isKeyDown(A_KEY);
 					//Animation Handling
 					if (state == L"ATTACK_RIGHT" || state == L"ATTACK_LEFT"){
-						if (dPressed){
+						if (dPressed && !aPressed){
 							player->setCurrentState(L"ATTACK_RIGHT_2");
 							player->setFacingRight(true);
 						}
-						else if (aPressed){
+						else if (aPressed && !dPressed){
 							player->setCurrentState(L"ATTACK_LEFT_2");
 							player->setFacingRight(false);
 						}
@@ -171,11 +186,11 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 						}
 					}
 					else if (state == L"ATTACK_RIGHT_2" || state == L"ATTACK_LEFT_2"){
-						if (dPressed){
+						if (dPressed && !aPressed){
 							player->setCurrentState(L"ATTACK_RIGHT");
 							player->setFacingRight(true);
 						}
-						else if (aPressed){
+						else if (aPressed && !dPressed){
 							player->setCurrentState(L"ATTACK_LEFT");
 							player->setFacingRight(false);
 						}
@@ -197,9 +212,9 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 
 					//Spawn the hitbox for the attack
 					b2Vec2 playerPos = player->getBody()->GetPosition();
-					shape.SetAsBox(0.5f, 0.25f);
+					shape.SetAsBox(0.5f, 0.5f);
 					fixtureDef.shape = &shape;
-
+					fixtureDef.isSensor = true;
 					if (player->isFacingRight()){
 						hurtBoxProps.position.Set(playerPos.x + 0.9f, playerPos.y - 0.25f);
 					}
