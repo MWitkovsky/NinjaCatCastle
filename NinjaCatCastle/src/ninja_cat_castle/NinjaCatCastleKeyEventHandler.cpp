@@ -351,19 +351,6 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 		}
 	}
 
-	// 0X43 is HEX FOR THE 'C' VIRTUAL KEY
-	// THIS CHANGES THE CURSOR IMAGE
-	if ((input->isKeyDownForFirstTime(C_KEY))
-		&& input->isKeyDown(VK_SHIFT))
-	{
-		Cursor *cursor = game->getGUI()->getCursor();
-		unsigned int id = cursor->getActiveCursorID();
-		id++;
-		if (id == cursor->getNumCursorIDs())
-			id = 0;		
-		cursor->setActiveCursorID(id);
-	}
-
 	// LET'S MESS WITH THE TARGET FRAME RATE IF THE USER PRESSES THE HOME OR END KEYS
 	WindowsTimer *timer = (WindowsTimer*)game->getTimer();
 	int fps = timer->getTargetFPS();

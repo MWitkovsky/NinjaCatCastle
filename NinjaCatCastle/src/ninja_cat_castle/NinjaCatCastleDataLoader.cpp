@@ -661,3 +661,14 @@ void NinjaCatCastleDataLoader::initViewport(GameGUI *gui, map<wstring, wstring> 
 	viewport->setViewportOffsetY(viewportOffsetY);
 	viewport->setToggleOffsetY(toggleOffsetY);
 }
+
+//THIS IS WHERE ALL THE SOUNDS WILL BE LOADED (right now it just loads and plays the sample song)
+//We will probably have several arrays for different categories with indexes pointing to sounds
+//For example music[0] may refer to the main menu and music[1] may refer to level 1's theme
+void NinjaCatCastleDataLoader::initSounds(Game *game){
+	FMOD::System* system = game->getSoundSystem();
+	system->createSound("data/song 3.mp3", FMOD_DEFAULT, 0, &music[0]);
+	music[0]->setMode(FMOD_LOOP_NORMAL);
+
+	system->playSound(music[0], 0, false, &channels[0]);
+}

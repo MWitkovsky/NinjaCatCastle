@@ -70,7 +70,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	ninjaCatCastleDataLoader->initWinHandle(hInstance, nCmdShow);
 	ninjaCatCastleGame->setDataLoader(ninjaCatCastleDataLoader);
 	ninjaCatCastleDataLoader->loadGame(ninjaCatCastleGame, W_INIT_FILE);
-	
+	ninjaCatCastleDataLoader->initSounds(ninjaCatCastleGame);
+
 	// WHAT WE SHOULD BE DOING HERE IS LOADING THE GAME DATA FROM FILES. THIS
 	// MEANS THE GUIS THEMSELVES AS WELL AS THE LEVELS. THAT WILL BE LEFT
 	// FOR BECHMARK HWS. FOR NOW WE WILL JUST HARD CODE THE LOADING OF THE GUI
@@ -92,15 +93,6 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	NinjaCatCastleCollisionListener *ninjaCatCastleCollisionListener = new NinjaCatCastleCollisionListener();
 	ninjaCatCastleGame->getGSM()->getPhysics()->getWorld()->SetContactListener(ninjaCatCastleCollisionListener);
 	ninjaCatCastleGame->getGSM()->getPhysics()->getWorld()->SetContactFilter(ninjaCatCastleCollisionListener);
-
-	FMOD::Sound      *sound1 = NULL; //sound that will be loaded and played
-	FMOD::Channel    *channel = 0;
-
-	FMOD::System* wow = ninjaCatCastleGame->getSoundSystem();
-	wow->createSound("data/song 3.mp3", FMOD_DEFAULT, 0, &sound1);
-	sound1->setMode(FMOD_LOOP_NORMAL);
-
-	wow->playSound(sound1, 0, false, &channel);
 
 	// START THE GAME LOOP
 	ninjaCatCastleGame->runGameLoop();

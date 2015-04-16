@@ -56,4 +56,5 @@ public:
 	void initHelpScreen(Game *game, GameGUI *gui, DirectXTextureManager *guiTextureManager);
 	void initAboutScreen(Game *game, GameGUI *gui, DirectXTextureManager *guiTextureManager);
 	void initInGameGUI(GameGUI *gui, DirectXTextureManager *guiTextureManager);
+	void initSounds(Game *game);
 };

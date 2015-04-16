@@ -9,6 +9,11 @@
 	all of this data would better serve us if loaded from files.
 */
 
+//Example of the sound arrays that will be loaded in the NinjaCatCastleDataLoader
+static FMOD::Sound*			music[5] = { 0 };
+static FMOD::Sound*			soundEffects[5] = { 0 };
+static FMOD::Channel*		channels[32] = { 0 };
+
 // HERE IS THE NinjaCatCastle GAME SETUP/INIT FILE. EVERYTHING WOULD START FROM HERE
 static const wstring	W_LEVEL_1_DIR			= L"data/levels/SideScrollerMetal/";
 static const wstring	W_LEVEL_1_NAME			= L"SideScrollerMetalLevel.tmx";
@@ -103,6 +108,3 @@ const unsigned int DOWN_KEY = VK_DOWN;
 const unsigned int LEFT_KEY = VK_LEFT;
 const unsigned int RIGHT_KEY = VK_RIGHT;
 const unsigned int SPACE_KEY = VK_SPACE;
-
-// THIS IS JUST FOR SHOWING HOW THE CURSOR CAN BE CHANGED
-const unsigned int C_KEY = (unsigned int)'C';
