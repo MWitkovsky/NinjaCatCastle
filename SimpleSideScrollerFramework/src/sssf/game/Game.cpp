@@ -244,14 +244,15 @@ void Game::startGame()
 //This will 99.9%-100% of the time be used to define what song
 //to play after an intro to a song ends
 void Game::processMusicLogic(){
-	if (gsm->getCurrentGameState() == GS_MAIN_MENU){
+	GameState gs = gsm->getCurrentGameState();
+	if (gs == GS_MAIN_MENU || gs == GS_HELP_SCREEN || gs == GS_ABOUT_SCREEN){
 		bool isMusicPlaying = false;
 		musicChannel->isPlaying(&isMusicPlaying);
 		if (!isMusicPlaying){
 			musicChannel = playSong(MAIN_MENU_SONG, musicChannel);
 		}
 	}
-	else if (gsm->getCurrentGameState() == GS_GAME_IN_PROGRESS){
+	else if (gs == GS_GAME_IN_PROGRESS){
 		bool isMusicPlaying = false;
 		musicChannel->isPlaying(&isMusicPlaying);
 		if (!isMusicPlaying){
@@ -265,13 +266,12 @@ void Game::processMusicLogic(){
 
 //Plays a song in the specified channel (should always be the musicChannel)
 FMOD::Channel* Game::playSong(const char* song, FMOD::Channel* songChannel){
-	songChannel->setMute(true);
-	songChannel->setMode(FMOD_LOOP_OFF); //Song shuts off when its done and its muted, essentially off...
+	songChannel->stop(); //stops song currently playing in the music channel
 
 	FMOD::Sound* newSong = 0;
 	FMOD::Channel* newChannel = 0;
 
-	fmodSystem->createSound(song, FMOD_DEFAULT, 0, &newSong);
+	fmodSystem->createStream(song, FMOD_DEFAULT, 0, &newSong);
 	newSong->setMode(FMOD_LOOP_NORMAL); //loops
 
 	fmodSystem->playSound(newSong, 0, false, &newChannel); //plays sound in newChannel
@@ -282,8 +282,7 @@ FMOD::Channel* Game::playSong(const char* song, FMOD::Channel* songChannel){
 //song over and over again without worry about the intro (the intro and the main song have to be
 //separate sound files for this to work)
 FMOD::Channel* Game::playSongIntro(const char* song, FMOD::Channel* songChannel){
-	songChannel->setMute(true);
-	songChannel->setMode(FMOD_LOOP_OFF); //Song shuts off when its done and its muted, essentially off...
+	songChannel->stop(); //stops song currently playing in the music channel
 
 	FMOD::Sound* newSong = 0;
 	FMOD::Channel* newChannel = 0;

@@ -93,6 +93,9 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	ninjaCatCastleGame->getGSM()->getPhysics()->getWorld()->SetContactListener(ninjaCatCastleCollisionListener);
 	ninjaCatCastleGame->getGSM()->getPhysics()->getWorld()->SetContactFilter(ninjaCatCastleCollisionListener);
 
+	// Play the intro jingle (only ever happens once on start up)
+	ninjaCatCastleGame->setMusicChannel(ninjaCatCastleGame->playSongIntro(SPLASH_JINGLE, ninjaCatCastleGame->getMusicChannel()));
+
 	// START THE GAME LOOP
 	ninjaCatCastleGame->runGameLoop();
 

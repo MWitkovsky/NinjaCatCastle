@@ -483,6 +483,7 @@ void SpriteManager::updateAnimations(Game *game){
 			if (state == L"HIT_LEFT" || state == L"HIT_RIGHT"){
 				if (pounceBot->getBody()->GetLinearVelocity().y == 0){
 					if (!pounceBot->wasHit()){
+						pounceBot->getBody()->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
 						if (state == L"HIT_LEFT"){
 							pounceBot->setCurrentState(L"DIE_LEFT");
 						}

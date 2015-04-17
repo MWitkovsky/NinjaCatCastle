@@ -29,7 +29,9 @@ void NinjaCatCastleButtonEventHandler::handleButtonEvents(Game *game,
 	else if (command.compare(W_GO_TO_MM_COMMAND) == 0)
 	{
 		GameStateManager *gsm = game->getGSM();
-		game->setMusicChannel(game->playSongIntro(MAIN_MENU_SONG_INTRO, game->getMusicChannel()));
+		if (gsm->getCurrentGameState() == GS_SPLASH_SCREEN){
+			game->setMusicChannel(game->playSongIntro(MAIN_MENU_SONG_INTRO, game->getMusicChannel()));
+		}
 		gsm->goToMainMenu();
 	}
 	// THE USER PRESSED THE Start BUTTON ON THE MAIN MENU,
@@ -45,7 +47,6 @@ void NinjaCatCastleButtonEventHandler::handleButtonEvents(Game *game,
 	}
 
 	else if (command.compare(W_HELP_COMMAND) == 0){
-		game->setMusicChannel(game->playSongIntro(MAIN_MENU_SONG_INTRO, game->getMusicChannel()));
 		game->getGSM()->goToHelpScreen();
 	}
 
