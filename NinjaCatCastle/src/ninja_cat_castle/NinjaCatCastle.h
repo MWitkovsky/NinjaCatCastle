@@ -9,14 +9,6 @@
 	all of this data would better serve us if loaded from files.
 */
 
-//Example of the sound arrays that will be loaded in the NinjaCatCastleDataLoader
-static const char*	SPLASH_JINGLE = "data/music/Splash Jingle.mp3";
-static const char*	MAIN_MENU_INTRO = "data/music/Main Menu Intro.mp3";
-static const char*	MAIN_MENU_SONG = "data/music/Main Menu.mp3";
-static const char*	LEVEL_SONG = "data/music/Song 3.mp3";
-static FMOD::Sound*			soundEffects[31];
-static FMOD::Sound*			musicChannel;
-
 // HERE IS THE NinjaCatCastle GAME SETUP/INIT FILE. EVERYTHING WOULD START FROM HERE
 static const wstring	W_LEVEL_1_DIR			= L"data/levels/SideScrollerMetal/";
 static const wstring	W_LEVEL_1_NAME			= L"SideScrollerMetalLevel.tmx";

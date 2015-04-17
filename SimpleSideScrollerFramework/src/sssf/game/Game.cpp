@@ -142,6 +142,9 @@ void Game::runGameLoop()
 			// USE THE INPUT TO UPDATE THE GAME
 			processGameData();
 
+			// UPDATE MUSIC HANDLING
+			processMusicLogic();
+
 			// AND RENDER THE GAME
 			graphics->renderGame(this);
 		}
@@ -210,6 +213,7 @@ void Game::shutdown()
 	// RELEASE GAME CONTROLLERS IF NECESSARY
 	input->shutdown();
 
+	// DESTROYS FMOD
 	fmodSystem->release();
 
 	// WE MAY SHUTDOWN OTHER THINGS HERE LIKE SOUND & MUSIC
@@ -236,27 +240,68 @@ void Game::startGame()
 	}
 }
 
-//Plays a song in the specified channel (should always be the musicChannel)
-void Game::playSong(const char* song, FMOD::Sound* songToLoad){
-	//I can't figure out how to make songs stop early.
-	songToLoad->release();
-	fmodSystem->createStream(song, FMOD_DEFAULT, 0, &songToLoad);
-	songToLoad->setMode(FMOD_LOOP_NORMAL); //loops
-	fmodSystem->playSound(songToLoad, 0, false, 0); //plays sound in channel zero
-}
-
-
-/*void Game::playSound(const char* sound, FMOD::Channel* channels[], int arraySize){
-	for (int i = 0; i < arraySize; i++){
-		//This is weird, you have to pass the address of a bool to check things with FMOD
-		bool playing = false;
-		channels[i]->isPlaying(&playing); //checks if sound is currently playing in channel
-		if (!playing){ //if not...
-			fmodSystem->playSound(sound, 0, false, &channels[i]); //plays sound in channel
-			return;
+//ALL LOGIC REGARDING MUSIC QUEUEING GOES HERE
+//This will 99.9%-100% of the time be used to define what song
+//to play after an intro to a song ends
+void Game::processMusicLogic(){
+	if (gsm->getCurrentGameState() == GS_MAIN_MENU){
+		bool isMusicPlaying = false;
+		musicChannel->isPlaying(&isMusicPlaying);
+		if (!isMusicPlaying){
+			musicChannel = playSong(MAIN_MENU_SONG, musicChannel);
 		}
 	}
+	else if (gsm->getCurrentGameState() == GS_GAME_IN_PROGRESS){
+		bool isMusicPlaying = false;
+		musicChannel->isPlaying(&isMusicPlaying);
+		if (!isMusicPlaying){
+			//Lets just keep these level file name checks hard coded...
+			if (currentLevelFileName == L"SideScrollerMetalLevel.tmx"){
+				musicChannel = playSong(LEVEL_1_SONG, musicChannel);
+			}
+		}
+	}
+}
 
-	//If for some reason theres THAT MANY sounds playing at once, just play it in channel 0
-	fmodSystem->playSound(sound, 0, false, &channels[0]);
-}*/
+//Plays a song in the specified channel (should always be the musicChannel)
+FMOD::Channel* Game::playSong(const char* song, FMOD::Channel* songChannel){
+	songChannel->setMute(true);
+	songChannel->setMode(FMOD_LOOP_OFF); //Song shuts off when its done and its muted, essentially off...
+
+	FMOD::Sound* newSong = 0;
+	FMOD::Channel* newChannel = 0;
+
+	fmodSystem->createSound(song, FMOD_DEFAULT, 0, &newSong);
+	newSong->setMode(FMOD_LOOP_NORMAL); //loops
+
+	fmodSystem->playSound(newSong, 0, false, &newChannel); //plays sound in newChannel
+	return newChannel; //returns newChannel
+}
+
+//Plays a song's intro in the music channel. This sets loop to off so we can just loop the main
+//song over and over again without worry about the intro (the intro and the main song have to be
+//separate sound files for this to work)
+FMOD::Channel* Game::playSongIntro(const char* song, FMOD::Channel* songChannel){
+	songChannel->setMute(true);
+	songChannel->setMode(FMOD_LOOP_OFF); //Song shuts off when its done and its muted, essentially off...
+
+	FMOD::Sound* newSong = 0;
+	FMOD::Channel* newChannel = 0;
+
+	fmodSystem->createSound(song, FMOD_DEFAULT, 0, &newSong);
+	newSong->setMode(FMOD_LOOP_OFF); //doesn't loop
+
+	fmodSystem->playSound(newSong, 0, false, &newChannel); //plays sound in newChannel
+	return newChannel; //returns newChannel
+}
+
+//Plays a sound in first available channel
+void Game::playSound(const char* sound){
+	FMOD::Sound* newSound = 0;
+	FMOD::Channel* newChannel = 0;
+
+	fmodSystem->createSound(sound, FMOD_DEFAULT, 0, &newSound);
+	newChannel->setMode(FMOD_LOOP_OFF); //doesn't loop, will automatically be destoryed when sound ends
+
+	fmodSystem->playSound(newSound, 0, false, &newChannel);
+}

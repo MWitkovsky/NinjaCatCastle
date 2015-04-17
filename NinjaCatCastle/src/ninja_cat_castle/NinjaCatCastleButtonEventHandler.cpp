@@ -13,6 +13,7 @@
 #include "ninja_cat_castle\NinjaCatCastleButtonEventHandler.h"
 #include "sssf\game\Game.h"
 #include "sssf\gsm\state\GameStateManager.h"
+#include "fmod.hpp"
 
 void NinjaCatCastleButtonEventHandler::handleButtonEvents(Game *game,
 													wstring command)
@@ -28,7 +29,7 @@ void NinjaCatCastleButtonEventHandler::handleButtonEvents(Game *game,
 	else if (command.compare(W_GO_TO_MM_COMMAND) == 0)
 	{
 		GameStateManager *gsm = game->getGSM();
-		game->playSong(MAIN_MENU_INTRO, musicChannel);
+		game->setMusicChannel(game->playSongIntro(MAIN_MENU_SONG_INTRO, game->getMusicChannel()));
 		gsm->goToMainMenu();
 	}
 	// THE USER PRESSED THE Start BUTTON ON THE MAIN MENU,
@@ -36,12 +37,15 @@ void NinjaCatCastleButtonEventHandler::handleButtonEvents(Game *game,
 	else if (command.compare(W_START_COMMAND) == 0)
 	{
 		game->setCurrentLevelFileName(W_LEVEL_1_NAME);
-		game->playSong(LEVEL_SONG, musicChannel);
+		//This shoulnd't actually be here because the song should start playing AFTER the level is loaded,
+		//but you can just shift this next call to the place where the level is done loading so the music
+		//plays when the player first sees the field. This is just an example of how the logic works :D
+		game->setMusicChannel(game->playSongIntro(LEVEL_1_SONG_INTRO, game->getMusicChannel()));
 		game->startGame();
 	}
 
 	else if (command.compare(W_HELP_COMMAND) == 0){
-		game->playSong(MAIN_MENU_INTRO, musicChannel);
+		game->setMusicChannel(game->playSongIntro(MAIN_MENU_SONG_INTRO, game->getMusicChannel()));
 		game->getGSM()->goToHelpScreen();
 	}
 
@@ -54,6 +58,7 @@ void NinjaCatCastleButtonEventHandler::handleButtonEvents(Game *game,
 	else if (command.compare(W_QUIT_COMMAND) == 0)
 	{
 		game->getGSM()->getSpriteManager()->getPlayer()->setLives(3);
+		game->setMusicChannel(game->playSongIntro(MAIN_MENU_SONG_INTRO, game->getMusicChannel()));
 		game->quitGame();
 	}
 }

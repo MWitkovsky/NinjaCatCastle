@@ -45,6 +45,13 @@ class GameText;
 
 static const float PI = 3.1415926535897932384626433f;
 
+//these should be moved to LUA when we get the chance~
+static const char*	SPLASH_JINGLE = "data/music/Splash Jingle.mp3";
+static const char*	MAIN_MENU_SONG_INTRO = "data/music/Main Menu Intro.mp3";
+static const char*	MAIN_MENU_SONG = "data/music/Main Menu.mp3";
+static const char*	LEVEL_1_SONG_INTRO = "data/music/Level 1 Intro.mp3";
+static const char*	LEVEL_1_SONG = "data/music/Level 1.mp3";
+
 class Game
 {
 private:
@@ -70,7 +77,9 @@ private:
 	GameTimer			*timer;
 
 	//FMod Stuff
-	FMOD::System     *fmodSystem; //handle to FMOD engine
+	FMOD::System		*fmodSystem; //handle to FMOD engine
+	FMOD::Channel*		musicChannel;
+	FMOD::Channel*		loopChannel; //needed for seamless looping
 
 	// THIS WILL KEEP TRACK OF THE NAME OF THE LEVEL FILE
 	// THAT IS CURRENTLY BEING USED
@@ -88,6 +97,12 @@ public:
 	GameInput*			getInput()				{ return input;								}
 	GameOS*				getOS()					{ return os;								}
 	GameTimer*			getTimer()				{ return timer;								}
+
+	//FMOD METHODS
+	FMOD::Channel* getMusicChannel()			{ return musicChannel; }
+	void setMusicChannel(FMOD::Channel* musicChannel){
+		this->musicChannel = musicChannel;
+	}
 
 	// AND FOR GETTING THE NAME OF THE FILE USED FOR LOADING THIS LEVEL
 	wstring				getCurrentLevelFileName()	{ return currentLevelFileName;			}
@@ -110,6 +125,8 @@ public:
 	void	runGameLoop();
 	void	shutdown();
 	void	startGame();
-	void	playSong(const char* song, FMOD::Sound* songToLoad);
-	void	playSound(FMOD::Sound* sound, FMOD::Channel* channels[], int arrraySize);
+	void	processMusicLogic();
+	FMOD::Channel*	playSong(const char* song, FMOD::Channel* songChannel);
+	FMOD::Channel*	playSongIntro(const char* song, FMOD::Channel* songChannel);
+	void	playSound(const char* sound);
 };
