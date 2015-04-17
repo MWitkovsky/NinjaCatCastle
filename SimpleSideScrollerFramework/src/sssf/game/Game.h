@@ -70,7 +70,7 @@ private:
 	GameTimer			*timer;
 
 	//FMod Stuff
-	FMOD::System     *systemz; //handle to FMOD engine
+	FMOD::System     *fmodSystem; //handle to FMOD engine
 
 	// THIS WILL KEEP TRACK OF THE NAME OF THE LEVEL FILE
 	// THAT IS CURRENTLY BEING USED
@@ -81,7 +81,7 @@ public:
 	GameStateManager*	getGSM()				{ return gsm;								}
 	GameGUI*			getGUI()				{ return gui;								}
 	GameText*			getText()				{ return text;								}
-	FMOD::System *		getSoundSystem()		{ return systemz; }
+	FMOD::System *		getSoundSystem()		{ return fmodSystem; }
 	// INLINED ACCESSOR METHODS - ACTUALLY SUB-CLASSES
 	GameDataLoader*		getDataLoader()			{ return dataLoader;						}
 	GameGraphics*		getGraphics()			{ return graphics;							}
@@ -110,4 +110,6 @@ public:
 	void	runGameLoop();
 	void	shutdown();
 	void	startGame();
+	void	playSong(const char* song, FMOD::Sound* songToLoad);
+	void	playSound(FMOD::Sound* sound, FMOD::Channel* channels[], int arrraySize);
 };

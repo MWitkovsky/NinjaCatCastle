@@ -70,7 +70,6 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	ninjaCatCastleDataLoader->initWinHandle(hInstance, nCmdShow);
 	ninjaCatCastleGame->setDataLoader(ninjaCatCastleDataLoader);
 	ninjaCatCastleDataLoader->loadGame(ninjaCatCastleGame, W_INIT_FILE);
-	ninjaCatCastleDataLoader->initSounds(ninjaCatCastleGame);
 
 	// WHAT WE SHOULD BE DOING HERE IS LOADING THE GAME DATA FROM FILES. THIS
 	// MEANS THE GUIS THEMSELVES AS WELL AS THE LEVELS. THAT WILL BE LEFT
@@ -93,6 +92,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	NinjaCatCastleCollisionListener *ninjaCatCastleCollisionListener = new NinjaCatCastleCollisionListener();
 	ninjaCatCastleGame->getGSM()->getPhysics()->getWorld()->SetContactListener(ninjaCatCastleCollisionListener);
 	ninjaCatCastleGame->getGSM()->getPhysics()->getWorld()->SetContactFilter(ninjaCatCastleCollisionListener);
+
+	ninjaCatCastleDataLoader->initSounds(ninjaCatCastleGame);
 
 	// START THE GAME LOOP
 	ninjaCatCastleGame->runGameLoop();

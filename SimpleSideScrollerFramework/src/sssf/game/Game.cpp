@@ -45,9 +45,9 @@ Game::Game()
 	gui = new GameGUI();
 	text = new GameText();
 
-
-	FMOD::System_Create(&systemz);
-	systemz->init(32, FMOD_INIT_NORMAL, 0);
+	//Creates the fmod sound system
+	FMOD::System_Create(&fmodSystem);
+	fmodSystem->init(32, FMOD_INIT_NORMAL, 0);
 }
 
 /*
@@ -124,7 +124,8 @@ void Game::runGameLoop()
 	// KEEP RENDERING UNTIL SOMEONE PULLS THE PLUG
 	while(gsm->isAppActive())
 	{
-		systemz->update();
+		// UPDATES THE FMOD SOUND SYSTEM
+		fmodSystem->update();
 
 		// MOVE ALONG WINDOWS MESSAGES, THIS ALLOWS
 		// US TO GET USER INPUT
@@ -209,6 +210,8 @@ void Game::shutdown()
 	// RELEASE GAME CONTROLLERS IF NECESSARY
 	input->shutdown();
 
+	fmodSystem->release();
+
 	// WE MAY SHUTDOWN OTHER THINGS HERE LIKE SOUND & MUSIC
 	// RESOURCES IN THE FUTURE
 	// AND KILL THE WINDOW
@@ -232,3 +235,28 @@ void Game::startGame()
 		dataLoader->loadWorld(this, L"data/levels/SideScrollerDesert/", L"SideScrollerDesertLevel.tmx");
 	}
 }
+
+//Plays a song in the specified channel (should always be the musicChannel)
+void Game::playSong(const char* song, FMOD::Sound* songToLoad){
+	//I can't figure out how to make songs stop early.
+	songToLoad->release();
+	fmodSystem->createStream(song, FMOD_DEFAULT, 0, &songToLoad);
+	songToLoad->setMode(FMOD_LOOP_NORMAL); //loops
+	fmodSystem->playSound(songToLoad, 0, false, 0); //plays sound in channel zero
+}
+
+
+/*void Game::playSound(const char* sound, FMOD::Channel* channels[], int arraySize){
+	for (int i = 0; i < arraySize; i++){
+		//This is weird, you have to pass the address of a bool to check things with FMOD
+		bool playing = false;
+		channels[i]->isPlaying(&playing); //checks if sound is currently playing in channel
+		if (!playing){ //if not...
+			fmodSystem->playSound(sound, 0, false, &channels[i]); //plays sound in channel
+			return;
+		}
+	}
+
+	//If for some reason theres THAT MANY sounds playing at once, just play it in channel 0
+	fmodSystem->playSound(sound, 0, false, &channels[0]);
+}*/

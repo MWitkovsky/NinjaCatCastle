@@ -28,6 +28,7 @@ void NinjaCatCastleButtonEventHandler::handleButtonEvents(Game *game,
 	else if (command.compare(W_GO_TO_MM_COMMAND) == 0)
 	{
 		GameStateManager *gsm = game->getGSM();
+		game->playSong(MAIN_MENU_INTRO, musicChannel);
 		gsm->goToMainMenu();
 	}
 	// THE USER PRESSED THE Start BUTTON ON THE MAIN MENU,
@@ -35,10 +36,12 @@ void NinjaCatCastleButtonEventHandler::handleButtonEvents(Game *game,
 	else if (command.compare(W_START_COMMAND) == 0)
 	{
 		game->setCurrentLevelFileName(W_LEVEL_1_NAME);
+		game->playSong(LEVEL_SONG, musicChannel);
 		game->startGame();
 	}
 
 	else if (command.compare(W_HELP_COMMAND) == 0){
+		game->playSong(MAIN_MENU_INTRO, musicChannel);
 		game->getGSM()->goToHelpScreen();
 	}
 
