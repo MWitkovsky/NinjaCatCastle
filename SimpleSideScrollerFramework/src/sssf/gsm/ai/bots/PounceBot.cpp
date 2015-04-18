@@ -33,10 +33,15 @@ void PounceBot::resetThinkCycles()
 	pickRandomVelocity - calculates a random velocity vector for this
 	bot and initializes the appropriate instance variables.
 */
-void PounceBot::Jump(Physics *physics)
+void PounceBot::Jump(boolean jumpRight)
 {
-	//pp.setVelocity(jumpVelocityX, jumpVelocityY);
-	//pp.setVelocity(0.0f, jumpVelocity);
+	if (jumpRight){
+		body->SetLinearVelocity(b2Vec2(jumpVelocityX, jumpVelocityY));
+	}
+	else{
+		body->SetLinearVelocity(b2Vec2(-jumpVelocityX, jumpVelocityY));
+	}
+	setAirborne(true);
 }
 
 /*
@@ -48,21 +53,38 @@ void PounceBot::think(Game *game)
 {
 	// EACH FRAME WE'LL TEST THIS BOT TO SEE IF WE NEED
 	// TO PICK A DIFFERENT DIRECTION TO FLOAT IN
-	if (currentState != L"DIE"){
-		if (cyclesRemainingBeforeThinking == 0)
-		{
-			//POUNCING LOGIC GOES HERE
-			/*if (body->GetLinearVelocity().y == 0)
-			{
+	if (!isDead()){
+		//POUNCING LOGIC GOES HERE
+		if (!isAirborne()){
+			if (cyclesRemainingBeforeThinking){
+				cyclesRemainingBeforeThinking--;
+				if (currentState == L"JUMPING_LEFT"){
+					setCurrentState(L"IDLE_LEFT");
+					body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
+				}
+				else if (currentState == L"JUMPING_RIGHT"){
+					setCurrentState(L"IDLE_RIGHT");
+					body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
+				}
+			}
+			else{
 				GameStateManager *gsm = game->getGSM();
-				Jump(gsm->getPhysics());
-				resetThinkCycles();
-			}*/
+				b2Vec2 playerPos = gsm->getSpriteManager()->getPlayer()->getBody()->GetPosition();
+				float32 diffX = body->GetPosition().x - playerPos.x;
+				float32 diffY = body->GetPosition().y - playerPos.y;
+				if (diffX > -9.0f && diffX < 9.0f){
+					if (diffY > -2.0f && diffY < 2.0f){
+						if (diffX > 0){
+							setCurrentState(L"JUMP_START_LEFT");
+						}
+						else{
+							setCurrentState(L"JUMP_START_RIGHT");
+						}
+						resetThinkCycles();
+					}
+				}
+			}
 		}
-		else{
-			cyclesRemainingBeforeThinking--;
-		}
-
-		animationCounter++;
 	}
+	animationCounter++;
 }

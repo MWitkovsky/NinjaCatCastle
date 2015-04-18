@@ -477,16 +477,26 @@ void SpriteManager::updateAnimations(Game *game){
 		PounceBot* pounceBot = dynamic_cast<PounceBot*>(*botIterator);
 		if (pounceBot){
 			wstring state = pounceBot->getCurrentState();
-			if (state == L"HIT_LEFT" || state == L"HIT_RIGHT"){
-				if (pounceBot->getBody()->GetLinearVelocity().y == 0){
-					if (!pounceBot->wasHit()){
-						pounceBot->getBody()->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
-						if (state == L"HIT_LEFT"){
-							pounceBot->setCurrentState(L"DIE_LEFT");
+			if (!pounceBot->isDead()){
+				if (state == L"HIT_LEFT" || state == L"HIT_RIGHT"){
+					if (pounceBot->getBody()->GetLinearVelocity().y == 0){
+						if (!pounceBot->wasHit()){
+							pounceBot->getBody()->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
+							if (state == L"HIT_LEFT"){
+								pounceBot->setCurrentState(L"DIE_LEFT");
+							}
+							else{
+								pounceBot->setCurrentState(L"DIE_RIGHT");
+							}
 						}
-						else{
-							pounceBot->setCurrentState(L"DIE_RIGHT");
-						}
+					}
+				}
+				else if (!pounceBot->isAirborne() && pounceBot->getBody()->GetLinearVelocity().x == 0.0f){
+					if (state == L"JUMPING_LEFT"){
+						pounceBot->Jump(false);
+					}
+					else if (state == L"JUMPING_RIGHT"){
+						pounceBot->Jump(true);
 					}
 				}
 			}

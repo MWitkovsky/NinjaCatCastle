@@ -141,6 +141,12 @@ void AnimatedSprite::changeFrame()
 					setCurrentState(L"IDLE_RIGHT");
 				}
 			}
+			else if (currentState == L"JUMP_START_LEFT"){
+				setCurrentState(L"JUMPING_LEFT");
+			}
+			else if (currentState == L"JUMP_START_RIGHT"){
+				setCurrentState(L"JUMPING_RIGHT");
+			}
 			else{
 				frameIndex = 0;
 			}
