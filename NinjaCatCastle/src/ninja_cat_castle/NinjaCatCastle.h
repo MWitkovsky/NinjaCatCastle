@@ -1,6 +1,8 @@
 #pragma once
 #include "ninja_cat_castle_VS\stdafx.h"
 #include "fmod.hpp"
+#include "luaplus.h"
+using namespace LuaPlus;
 
 /*
 	NinjaCatCastleGame.h

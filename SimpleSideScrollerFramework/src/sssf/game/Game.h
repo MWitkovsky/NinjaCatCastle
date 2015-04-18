@@ -32,6 +32,8 @@
 #include "sssf_VS\stdafx.h"
 #include "sssf\gsm\state\GameState.h"
 #include "fmod.hpp"
+#include "luaplus.h"
+using namespace LuaPlus;
 
 // FORWARD DECLARATIONS OF CLASSES USED BY GAME
 class GameDataLoader;

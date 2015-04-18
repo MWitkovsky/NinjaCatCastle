@@ -8,5 +8,4 @@ Apps/NinjaCatCastle/data/levels/SideScrollerMetal
 *.pdb
 #These are anti-ignores.. This forces specific files to NOT be ignored
 !Sound/
-!fmodL_vc.lib
 !fmodL.dll
