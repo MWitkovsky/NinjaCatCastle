@@ -307,3 +307,7 @@ void Game::playSound(const char* sound){
 
 	fmodSystem->playSound(newSound, 0, false, &newChannel);
 }
+
+void Game::readLUA(const char* sound){
+	//LUA STUFF WOO
+}

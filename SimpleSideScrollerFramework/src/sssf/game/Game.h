@@ -131,4 +131,5 @@ public:
 	FMOD::Channel*	playSong(const char* song, FMOD::Channel* songChannel);
 	FMOD::Channel*	playSongIntro(const char* song, FMOD::Channel* songChannel);
 	void	playSound(const char* sound);
+	void	readLUA(const char* fileName);
 };
