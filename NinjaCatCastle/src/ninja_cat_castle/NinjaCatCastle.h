@@ -18,6 +18,7 @@ static const wstring	W_LEVEL_2_DIR			= L"data/levels/SideScrollerDesert/";
 static const wstring	W_LEVEL_2_NAME			= L"SideScrollerDesertLevel.tmx";
 static const wstring	W_LEVEL_1_PATH			= W_LEVEL_1_DIR + W_LEVEL_1_NAME;
 static const wstring	W_INIT_FILE				= L"data/NinjaCatCastleInit.txt";
+static const char*		W_LUA_FILE				= "data/NinjaCatCastle.lua";
 static const wstring	W_GUI_INIT_FILE			= L"data/gui/NinjaCatCastleGUI.txt";
 static const string		W_DEBUG_FILE			= "DebugOutput.txt";
 
