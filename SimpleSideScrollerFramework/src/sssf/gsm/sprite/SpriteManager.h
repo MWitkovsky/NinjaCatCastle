@@ -20,6 +20,9 @@
 class SpriteManager
 {
 private:
+	const float		PLAYER_HURTBOX_OFFSET_Y = 0.2f;
+	const float		PLAYER_HURTBOX_OFFSET_X = 0.7f;
+
 	// NOTE THAT MULTIPLE SPRITES MAY SHARE ARTWORK, SO SPRITE TYPES
 	// SPECIFIES A TYPE OF SPRITE, OF WHICH THERE MAY BE MANY INSTANCES
 	vector<AnimatedSpriteType*> spriteTypes;

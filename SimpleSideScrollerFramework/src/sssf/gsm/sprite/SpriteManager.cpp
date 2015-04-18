@@ -19,8 +19,8 @@
 #include "sssf\gsm\sprite\SpriteManager.h"
 #include "sssf\gsm\state\GameStateManager.h"
 #include "sssf\gsm\physics\Collision.h"
-#include "sssf\gsm\sprite\Quadtree.h"
 #include "Box2D\Box2D.h"
+
 AABB viewportDimensions;
 
 /*
@@ -425,13 +425,13 @@ void SpriteManager::updateAnimations(Game *game){
 	}
 
 	if (player.getHurtBox()->IsActive()){
-		float32 y = player.getBody()->GetPosition().y - 0.2f;
+		float32 y = player.getBody()->GetPosition().y - PLAYER_HURTBOX_OFFSET_Y;
 		float32 x;
 		if (player.isFacingRight()){
-			x = player.getBody()->GetPosition().x + 0.7f;
+			x = player.getBody()->GetPosition().x + PLAYER_HURTBOX_OFFSET_X;
 		}
 		else{
-			x = player.getBody()->GetPosition().x - 0.7f;
+			x = player.getBody()->GetPosition().x - PLAYER_HURTBOX_OFFSET_X;
 		}
 		
 		player.getHurtBox()->SetTransform(b2Vec2(x, y), player.getHurtBox()->GetAngle());

@@ -304,6 +304,11 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 	/*for (int i = 0; i < 14; i++)
 		makeRandomJumpingBot(game, botSpriteType, 1700.0f + (i*100.0f), 1300.0f);
 		*/
+
+	//This shoulnd't actually be here because the song should start playing AFTER the level is loaded,
+	//but you can just shift this next call to the place where the level is done loading so the music
+	//plays when the player first sees the field. This is just an example of how the logic works :D
+	game->setMusicChannel(game->playSongIntro(LEVEL_1_SONG_INTRO, game->getMusicChannel()));
 }
 
 void NinjaCatCastleDataLoader::makeRandomJumpingBot(Game *game, AnimatedSpriteType *randomJumpingBotType, float initX, float initY)
