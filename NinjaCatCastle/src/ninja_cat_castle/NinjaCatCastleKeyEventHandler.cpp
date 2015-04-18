@@ -210,23 +210,9 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 						player->setCurrentState(L"ATTACK_LEFT");
 					}
 
-					//Spawn the hitbox for the attack
-					b2Vec2 playerPos = player->getBody()->GetPosition();
-					shape.SetAsBox(0.5f, 0.5f);
-					fixtureDef.shape = &shape;
-					fixtureDef.isSensor = true;
-					if (player->isFacingRight()){
-						hurtBoxProps.position.Set(playerPos.x + 0.9f, playerPos.y - 0.25f);
+					if (!player->getHurtBox()->IsActive()){
+						player->getHurtBox()->SetActive(true);
 					}
-					else{
-						hurtBoxProps.position.Set(playerPos.x - 0.9f, playerPos.y - 0.25f);
-					}
-					if (player->getHurtBox()){
-						game->getGSM()->getPhysics()->getWorld()->DestroyBody(player->getHurtBox());
-					}
-					player->setHurtBox(game->getGSM()->getPhysics()->getWorld()->CreateBody(&hurtBoxProps));
-					player->getHurtBox()->CreateFixture(&fixtureDef);
-					player->getHurtBox()->SetUserData(player);
 					player->setAttacking(true);
 				}
 			}

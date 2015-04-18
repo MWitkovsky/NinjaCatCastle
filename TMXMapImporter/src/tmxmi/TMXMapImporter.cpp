@@ -549,6 +549,28 @@ bool TMXMapImporter::buildWorldFromInfo(Game *game)
 
 						player->setHurtBox(NULL);
 
+						b2BodyDef hurtBoxProps;
+						b2Vec2 playerPos = player->getBody()->GetPosition();
+						hurtBoxProps.fixedRotation = true;
+						fixtureDef.isSensor = true;
+
+						shape.SetAsBox(0.5f, 0.5f);
+						fixtureDef.shape = &shape;
+						fixtureDef.isSensor = true;
+						if (player->isFacingRight()){
+							hurtBoxProps.position.Set(playerPos.x + 0.9f, playerPos.y - 0.25f);
+						}
+						else{
+							hurtBoxProps.position.Set(playerPos.x - 0.9f, playerPos.y - 0.25f);
+						}
+
+						player->setHurtBox(game->getGSM()->getPhysics()->getWorld()->CreateBody(&hurtBoxProps));
+						player->getHurtBox()->CreateFixture(&fixtureDef);
+						player->getHurtBox()->SetUserData(player);
+						player->getHurtBox()->SetActive(false);
+
+						player->getBody()->SetSleepingAllowed(false);
+
 						//For collision detection, tells the player's body to point back at the player
 						player->getBody()->SetUserData(player);
 					}

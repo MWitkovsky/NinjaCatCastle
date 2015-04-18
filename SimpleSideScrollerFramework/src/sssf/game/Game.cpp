@@ -281,6 +281,7 @@ FMOD::Channel* Game::playSong(const char* song, FMOD::Channel* songChannel){
 //Plays a song's intro in the music channel. This sets loop to off so we can just loop the main
 //song over and over again without worry about the intro (the intro and the main song have to be
 //separate sound files for this to work)
+//Logic for playing the main song after the intro is handled by the method processMusicLogic() right above.
 FMOD::Channel* Game::playSongIntro(const char* song, FMOD::Channel* songChannel){
 	songChannel->stop(); //stops song currently playing in the music channel
 
@@ -295,6 +296,8 @@ FMOD::Channel* Game::playSongIntro(const char* song, FMOD::Channel* songChannel)
 }
 
 //Plays a sound in first available channel
+//Doesn't return the sound channel because we actually don't care about managing it.
+//The channel gets freed automatically as soon as the sound ends.
 void Game::playSound(const char* sound){
 	FMOD::Sound* newSound = 0;
 	FMOD::Channel* newChannel = 0;

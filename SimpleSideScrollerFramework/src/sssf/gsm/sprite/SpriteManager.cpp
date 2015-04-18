@@ -420,14 +420,11 @@ void SpriteManager::updateAnimations(Game *game){
 	}
 
 	if (player.isAttackFinished()){
-		if (player.getHurtBox()){
-			game->getGSM()->getPhysics()->getWorld()->DestroyBody(player.getHurtBox());
-			player.setHurtBox(NULL);
-			player.setAttacking(false);
-		}
+		player.getHurtBox()->SetActive(false);
+		player.setAttacking(false);
 	}
 
-	if (player.getHurtBox()){
+	if (player.getHurtBox()->IsActive()){
 		float32 y = player.getBody()->GetPosition().y - 0.2f;
 		float32 x;
 		if (player.isFacingRight()){

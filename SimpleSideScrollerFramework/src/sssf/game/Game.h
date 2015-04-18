@@ -48,9 +48,9 @@ static const float PI = 3.1415926535897932384626433f;
 //these should be moved to LUA when we get the chance~
 static const char*	SPLASH_JINGLE = "data/music/Splash Jingle.mp3";
 static const char*	MAIN_MENU_SONG_INTRO = "data/music/Main Menu Intro.mp3";
-static const char*	MAIN_MENU_SONG = "data/music/Main Menu.mp3";
-static const char*	LEVEL_1_SONG_INTRO = "data/music/Level 1 Intro.mp3";
-static const char*	LEVEL_1_SONG = "data/music/Level 1.mp3";
+static const char*	MAIN_MENU_SONG = "data/music/Main Menu.wav";
+static const char*	LEVEL_1_SONG_INTRO = "data/music/Level 1 Intro.wav";
+static const char*	LEVEL_1_SONG = "data/music/Level 1.wav";
 
 class Game
 {

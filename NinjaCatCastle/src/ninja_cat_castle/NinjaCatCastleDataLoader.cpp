@@ -246,6 +246,7 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 	bot->setCurrentState(L"IDLE_LEFT");
 	bot->setAlpha(255);
 	bot->getBody()->SetUserData(bot);
+	bot->getBody()->SetSleepingAllowed(false);
 	spriteManager->addBot(bot);
 
 	// AND LET'S ADD A BUNCH OF RANDOM JUMPING BOTS, FIRST ALONG
