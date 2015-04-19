@@ -175,33 +175,6 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 
 	game->getGUI()->getViewport()->setViewportY(900);
 
-	//NOW ADD ALL COLLIDABLE TILES TO THE BOX2D SIMULATION
-	b2BodyDef tileDef;
-	b2FixtureDef tileFixDef;
-	b2PolygonShape tileShape;
-	tileShape.SetAsBox(0.5f, 0.5f);
-	tileFixDef.shape = &tileShape;
-	tileDef.type = b2_staticBody;
-	int row = 0;
-	int col = 0;
-	vector<WorldLayer*>* layers = game->getGSM()->getWorld()->getLayers();
-	/*
-	while (layers != layers->end()){
-		while (row < (game->getGSM()->getWorld()->getWorldHeight() / 64)){
-			while (col < (game->getGSM()->getWorld()->getWorldWidth() / 64)){
-				if (->->getTile(row, col)->collidable){
-					b2Vec2 tilePos(row, col);
-					tileDef.position = tilePos;
-					tile = game->getGSM()->getPhysics()->getWorld()->CreateBody(&tileDef);
-					tile->CreateFixture(&tileFixDef);
-				}
-				col++;
-			}
-			row++;
-		}
-	}*/
-	
-
 	// LET'S MAKE A PLAYER SPRITE
 	// @TODO - IT WOULD BE BETTER TO LOAD THIS STUFF FROM A FILE
 	GameStateManager *gsm = game->getGSM();
@@ -209,105 +182,29 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 	physics->setGravity(W_GRAVITY);
 	SpriteManager *spriteManager = gsm->getSpriteManager();
 	AnimatedSprite *player = spriteManager->getPlayer();
+	
+	//For some reason loading the sprite types before loading the level
+	//breaks everything. So now we have to set all the sprite types out here..
+	player->setSpriteType(spriteManager->getSpriteType(0));
 
-	// NOTE THAT NINJA CAT DUDE IS SPRITE ID 0
-	physics->addCollidableObject(player);
-	AnimatedSpriteType *playerSpriteType = spriteManager->getSpriteType(0);
-	player->setSpriteType(playerSpriteType);
-	player->setAlpha(255);
-	player->setCurrentState(L"JUMPING_DESCEND_RIGHT");
-	player->setFacingRight(true);
-	player->setAirborne(true);
-
-	//Right here is what I think making the character's box should look like
-	//Then I started wonderning how the hell we're going to do rendering
-	//when we handle it by pixel and now everything's done in METERS
-	//WHY DOES IT HAVE TO BE METERS? I stopped here.
-
-	//^ That problem was solved. The things being shown to a player are actually
-	//just a projection of the simulation, the actual simulation isn't tied to
-	//rendering like I thought it was.
-	b2BodyDef playerProps;
-	playerProps.position.Set(2.0f, 15.0f);
-	playerProps.type = b2_dynamicBody;
-	playerProps.fixedRotation = true;
-	b2FixtureDef fixtureDef;
-	b2PolygonShape shape;
-
-	AnimatedSpriteType *botSpriteType = spriteManager->getSpriteType(1);
-	shape.SetAsBox(0.7f, 0.4f);
-	playerProps.position.Set(6.0f, 15.0f);
-	playerProps.type = b2_dynamicBody;
-	fixtureDef.shape = &shape;
-	PounceBot *bot = new PounceBot();
-	bot->setSpriteType(spriteManager->getSpriteType(1));
-	bot->setBody(physics->world->CreateBody(&playerProps));
-	bot->getBody()->CreateFixture(&fixtureDef);
-	bot->setCurrentState(L"IDLE_LEFT");
-	bot->setAlpha(255);
-	bot->getBody()->SetUserData(bot);
-	bot->getBody()->SetSleepingAllowed(false);
-	spriteManager->addBot(bot);
-
-	// AND LET'S ADD A BUNCH OF RANDOM JUMPING BOTS, FIRST ALONG
-	// A LINE NEAR THE TOP
-		
-	// UNCOMMENT THE FOLLOWING CODE BLOCK WHEN YOU ARE READY TO ADD SOME BOTS
-
-	/*for (int i = 4; i <= 10; i++)
+	list<Bot*>::iterator botIterator;
+	botIterator = game->getGSM()->getSpriteManager()->getBotsIterator();
+	while (botIterator != game->getGSM()->getSpriteManager()->getEndOfBotsIterator())
 	{
-		float botX = 400.0f + (i * 100.0f);
-		float botY = 200.0f;
-		makeRandomJumpingBot(game, botSpriteType, botX, botY);
+		Bot *bot = (*botIterator);
+		PounceBot* pounceBot = dynamic_cast<PounceBot*>(bot);
+		if (pounceBot){
+			pounceBot->setSpriteType(spriteManager->getSpriteType(1));
+		}
+		botIterator++;
 	}
-	botSpriteType = spriteManager->getSpriteType(0);
-	for (int i = 16; i <= 22; i++){
-		float botX = 400.0f + (i * 100.0f);
-		float botY = 200.0f;
-		makeRandomJumpingBot(game, botSpriteType, botX, botY);
-	}*/
-
-	//makeRandomFloatingBot(game, spriteManager->getSpriteType(3), 1000, 500);
-	/*PhysicalProperties *playerProps = player->getPhysicalProperties();
-	playerProps->setX(playerProps->getOriginalX());
-	playerProps->setY(playerProps->getOriginalY());
-	playerProps->setVelocity(0.0f, 0.0f);
-	playerProps->setAccelerationX(0);
-	playerProps->setAccelerationY(0);
-	player->setOnTileThisFrame(false);
-	player->setOnTileLastFrame(false);
-	player->affixTightAABBBoundingVolume();*/
-
-	//list<Bot*>::iterator botsIterator = spriteManager->getBotsIterator();
-	/*while (botsIterator != spriteManager->getEndOfBotsIterator()){
-		(*botsIterator)->getPhysicalProperties()->setPosition((*botsIterator)->getPhysicalProperties()->getOriginalX(), (*botsIterator)->getPhysicalProperties()->getOriginalY());
-		(*botsIterator)->setCurrentState((*botsIterator)->getOriginalState());
-		(*botsIterator)->affixTightAABBBoundingVolume();
-		botsIterator++;
-	}*/
-
-	// AND THEN STRATEGICALLY PLACED AROUND THE LEVEL
-	/*makeRandomJumpingBot(game, botSpriteType, 400, 100);
-	makeRandomJumpingBot(game, botSpriteType, 200, 400);
-	makeRandomJumpingBot(game, botSpriteType, 400, 400);
-	makeRandomJumpingBot(game, botSpriteType, 800, 700);
-	makeRandomJumpingBot(game, botSpriteType, 900, 700);
-	makeRandomJumpingBot(game, botSpriteType, 1000, 700);
-	makeRandomJumpingBot(game, botSpriteType, 100, 1000);
-	makeRandomJumpingBot(game, botSpriteType, 300, 1000);	
-	makeRandomJumpingBot(game, botSpriteType, 500, 1000);
-	makeRandomJumpingBot(game, botSpriteType, 100, 1400);
-	makeRandomJumpingBot(game, botSpriteType, 400, 1400);	
-	makeRandomJumpingBot(game, botSpriteType, 700, 1400);*/
-
-	// AND THEN A BUNCH LINED UP NEAR THE LEVEL EXIT
-	/*for (int i = 0; i < 14; i++)
-		makeRandomJumpingBot(game, botSpriteType, 1700.0f + (i*100.0f), 1300.0f);
-		*/
 
 	//This shoulnd't actually be here because the song should start playing AFTER the level is loaded,
 	//but you can just shift this next call to the place where the level is done loading so the music
 	//plays when the player first sees the field. This is just an example of how the logic works :D
+
+	//Actually not a bad way to handle this would be to check the file name of the level here and play
+	//the appropriate intro/song
 	game->setMusicChannel(game->playSongIntro(LEVEL_1_SONG_INTRO, game->getMusicChannel()));
 }
 

@@ -6,6 +6,7 @@
 #include "sssf\gsm\world\TiledLayer.h"
 #include "sssf\gsm\world\Tile.h"
 #include "sssf\gsm\state\GameStateManager.h"
+#include "sssf\gsm\ai\bots\PounceBot.h"
 #include "xmlfi\XMLFileImporter.h"
 #include "Box2D\Box2D.h"
 
@@ -382,6 +383,11 @@ bool TMXMapImporter::buildWorldFromInfo(Game *game)
 				}
 				tileToAdd->properties = tileSet->tileInfo[tileToAdd->textureID].properties;
 
+				if (tileToAdd->properties[spawn] != ""){
+					tileToAdd->collidable = false;
+					tileToAdd->textureID = idOffset - 1;
+				}
+
 				tiledLayerToAdd->addTile(tileToAdd);
 			}
 
@@ -487,21 +493,10 @@ bool TMXMapImporter::buildWorldFromInfo(Game *game)
 			//HERE IS WHERE WE INTERPRET ALL OF THE SPAWN TILES!
 			row = 0;
 			col = 0;
-			string spawn = "spawn";
-			string playerID = "player";
 			while (row < tiledLayerToAdd->getRows()){
 				while (col < tiledLayerToAdd->getColumns()){
 					if (tiledLayerToAdd->getTile(row, col)->properties[spawn] == playerID){
 						AnimatedSprite *player = game->getGSM()->getSpriteManager()->getPlayer();
-
-						// NOTE THAT NINJA CAT DUDE IS SPRITE ID 0
-						game->getGSM()->getPhysics()->addCollidableObject(player);
-						AnimatedSpriteType *playerSpriteType = game->getGSM()->getSpriteManager()->getSpriteType(0);
-						player->setSpriteType(playerSpriteType);
-						player->setAlpha(255);
-						player->setCurrentState(L"JUMPING_DESCEND_RIGHT");
-						player->setFacingRight(true);
-						player->setAirborne(true);
 
 						//Right here is what I think making the character's box should look like
 						//Then I started wonderning how the hell we're going to do rendering
@@ -573,8 +568,34 @@ bool TMXMapImporter::buildWorldFromInfo(Game *game)
 
 						//For collision detection, tells the player's body to point back at the player
 						player->getBody()->SetUserData(player);
+
+						player->setAlpha(255);
+						player->setCurrentState(L"JUMPING_DESCEND_RIGHT");
+						player->setFacingRight(true);
+						player->setAirborne(true);
 					}
-					else{
+					else if (tiledLayerToAdd->getTile(row, col)->properties[spawn] == pounceBotID){
+						PounceBot *pounceBot = new PounceBot();
+
+						b2BodyDef pounceBotProps;
+						b2FixtureDef fixtureDef;
+						b2PolygonShape shape;
+
+						pounceBotProps.position.Set(col - 0.5f, tiledLayerToAdd->getRows() - row + 0.5f);
+						pounceBotProps.type = b2_dynamicBody;
+						pounceBotProps.fixedRotation = true;
+						shape.SetAsBox(0.7f, 0.4f);
+						fixtureDef.shape = &shape;
+
+						pounceBot->setBody(game->getGSM()->getPhysics()->getWorld()->CreateBody(&pounceBotProps));
+						pounceBot->getBody()->CreateFixture(&fixtureDef);
+						pounceBot->getBody()->SetUserData(pounceBot);
+						pounceBot->getBody()->SetSleepingAllowed(false);
+						pounceBot->setFacingRight(false);
+						pounceBot->setAirborne(true);
+						pounceBot->setAlpha(255);
+						pounceBot->setCurrentState(L"IDLE_LEFT");
+						game->getGSM()->getSpriteManager()->addBot(pounceBot);
 					}
 					col++;
 				}

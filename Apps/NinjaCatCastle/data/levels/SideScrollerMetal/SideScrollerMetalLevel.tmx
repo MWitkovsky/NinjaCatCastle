@@ -2,9 +2,14 @@
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="30" tilewidth="64" tileheight="64" nextobjectid="1">
  <tileset firstgid="1" name="MetalPlatforms" tilewidth="64" tileheight="64">
   <image source="MetalPlatforms.png" width="640" height="400"/>
-  <tile id="13">
+  <tile id="50">
    <properties>
     <property name="spawn" value="player"/>
+   </properties>
+  </tile>
+  <tile id="51">
+   <properties>
+    <property name="spawn" value="pounceCat"/>
    </properties>
   </tile>
  </tileset>
@@ -217,6 +222,7 @@
    <tile gid="23"/>
    <tile gid="1"/>
    <tile gid="1"/>
+   <tile gid="52"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
@@ -225,8 +231,7 @@
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
-   <tile gid="1"/>
-   <tile gid="1"/>
+   <tile gid="52"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
@@ -340,13 +345,13 @@
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
+   <tile gid="52"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
-   <tile gid="1"/>
-   <tile gid="1"/>
+   <tile gid="52"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
@@ -509,7 +514,7 @@
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
-   <tile gid="1"/>
+   <tile gid="52"/>
    <tile gid="1"/>
    <tile gid="21"/>
    <tile gid="23"/>
@@ -519,13 +524,13 @@
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
+   <tile gid="52"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
-   <tile gid="1"/>
-   <tile gid="1"/>
+   <tile gid="52"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
@@ -638,14 +643,14 @@
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
+   <tile gid="52"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
-   <tile gid="1"/>
-   <tile gid="1"/>
+   <tile gid="52"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
@@ -716,7 +721,7 @@
    <tile gid="23"/>
    <tile gid="23"/>
    <tile gid="1"/>
-   <tile gid="14"/>
+   <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
@@ -809,7 +814,7 @@
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
-   <tile gid="1"/>
+   <tile gid="52"/>
    <tile gid="1"/>
    <tile gid="21"/>
    <tile gid="23"/>
@@ -876,12 +881,12 @@
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
+   <tile gid="52"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
-   <tile gid="1"/>
-   <tile gid="1"/>
+   <tile gid="52"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
@@ -916,7 +921,7 @@
    <tile gid="23"/>
    <tile gid="23"/>
    <tile gid="1"/>
-   <tile gid="1"/>
+   <tile gid="51"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
@@ -990,14 +995,14 @@
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
+   <tile gid="52"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
-   <tile gid="1"/>
-   <tile gid="1"/>
+   <tile gid="52"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
@@ -1236,11 +1241,11 @@
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
+   <tile gid="52"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
-   <tile gid="1"/>
-   <tile gid="1"/>
+   <tile gid="52"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
@@ -1436,7 +1441,7 @@
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
-   <tile gid="1"/>
+   <tile gid="52"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>

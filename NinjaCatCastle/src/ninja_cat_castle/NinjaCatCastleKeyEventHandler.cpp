@@ -264,12 +264,15 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 		// NOW SET THE ACTUAL PLAYER VELOCITY
 		pp->SetLinearVelocity(b2Vec2(vX, vY));
 
+
+		//Since the viewport being moved is reliant on some player input, its handled here
 		bool viewportMoved = false;
 		float viewportVx = 0.0f;
 		float viewportVy = 0.0f;
 		float viewportX = viewport->getViewportX() - viewport->getViewportOffsetX() + viewport->getViewportWidth() / 2.0f;
 		float viewportY = viewport->getViewportY() - viewport->getViewportOffsetY() + viewport->getViewportHeight() / 2.0f;
-		if (input->isKeyDown(UP_KEY))
+		//We're removing the ability to move the viewport manually.
+		/*if (input->isKeyDown(UP_KEY))
 		{
 			viewportVy -= MAX_VIEWPORT_AXIS_VELOCITY;
 			viewportMoved = true;
@@ -288,7 +291,7 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 		{
 			viewportVx += MAX_VIEWPORT_AXIS_VELOCITY;
 			viewportMoved = true;
-		}
+		}*/
 		Viewport *viewport = game->getGUI()->getViewport();
 		if (viewportMoved){
 			viewport->moveViewport((int)floor(viewportVx + 0.5f), (int)floor(viewportVy + 0.5f), game->getGSM()->getWorld()->getWorldWidth(), game->getGSM()->getWorld()->getWorldHeight());
@@ -297,24 +300,50 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 		else{
 			float diff;
 			float height = (float)gsm->getWorld()->getWorldHeight();
-			if (pp->GetPosition().x*METER_TO_PIXEL_SCALE > viewportX - 60){
-				diff = (pp->GetPosition().x*METER_TO_PIXEL_SCALE - viewportX + 60) / 7;
-				if (diff > MAX_VIEWPORT_AXIS_VELOCITY){
-					viewportVx += MAX_VIEWPORT_AXIS_VELOCITY;
+			//IF PLAYER IS FACING RIGHT, VIEWPORT SHOULD BE MORE RIGHT
+			//ELSE, MORE LEFT
+			if (player->isFacingRight()){
+				if (pp->GetPosition().x*METER_TO_PIXEL_SCALE > viewportX - 240){
+					diff = (pp->GetPosition().x*METER_TO_PIXEL_SCALE - viewportX + 240) / 7;
+					if (diff > MAX_VIEWPORT_AXIS_VELOCITY){
+						viewportVx += MAX_VIEWPORT_AXIS_VELOCITY;
+					}
+					else{
+						viewportVx += diff;
+					}
 				}
-				else{
-					viewportVx += diff;
+				else if (pp->GetPosition().x*METER_TO_PIXEL_SCALE < viewportX - 240){
+					diff = (viewportX - pp->GetPosition().x*METER_TO_PIXEL_SCALE - 240) / 7;
+					if (diff > MAX_VIEWPORT_AXIS_VELOCITY){
+						viewportVx -= MAX_VIEWPORT_AXIS_VELOCITY;
+					}
+					else{
+						viewportVx -= diff;
+					}
 				}
 			}
-			else if (pp->GetPosition().x*METER_TO_PIXEL_SCALE < viewportX - 60){
-				diff = (viewportX - pp->GetPosition().x*METER_TO_PIXEL_SCALE - 60) / 7;
-				if (diff > MAX_VIEWPORT_AXIS_VELOCITY){
-					viewportVx -= MAX_VIEWPORT_AXIS_VELOCITY;
+			else{
+				if (pp->GetPosition().x*METER_TO_PIXEL_SCALE > viewportX + 120){
+					diff = (pp->GetPosition().x*METER_TO_PIXEL_SCALE - viewportX - 120) / 7;
+					if (diff > MAX_VIEWPORT_AXIS_VELOCITY){
+						viewportVx += MAX_VIEWPORT_AXIS_VELOCITY;
+					}
+					else{
+						viewportVx += diff;
+					}
 				}
-				else{
-					viewportVx -= diff;
+				else if (pp->GetPosition().x*METER_TO_PIXEL_SCALE < viewportX + 120){
+					diff = (viewportX - pp->GetPosition().x*METER_TO_PIXEL_SCALE + 120) / 7;
+					if (diff > MAX_VIEWPORT_AXIS_VELOCITY){
+						viewportVx -= MAX_VIEWPORT_AXIS_VELOCITY;
+					}
+					else{
+						viewportVx -= diff;
+					}
 				}
 			}
+			
+
 			if ((height - (pp->GetPosition().y*METER_TO_PIXEL_SCALE)) < viewportY){
 				diff = (viewportY - (height - (pp->GetPosition().y*METER_TO_PIXEL_SCALE))) / 7;
 				if (diff > MAX_VIEWPORT_AXIS_VELOCITY){

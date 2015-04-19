@@ -35,6 +35,9 @@ static const string		PLAYER_ATT				= "player";
 static const string		VALUE_ATT				= "value";
 static const string		TILE_ELEMENT			= "tile";
 static const string		GID_ATT					= "gid";
+static const string		spawn					= "spawn";
+static const string		playerID				= "player";
+static const string		pounceBotID				= "pounceCat";
 
 using std::unordered_map;
 
