@@ -35,12 +35,22 @@ void PounceBot::resetThinkCycles()
 */
 void PounceBot::Jump(boolean jumpRight)
 {
+	b2PolygonShape boxShape;
+	b2FixtureDef fixtureDef;
+	b2FixtureDef boxFixtureDef;
+	body->DestroyFixture(body->GetFixtureList());
+
 	if (jumpRight){
+		boxShape.SetAsBox(0.7f, 0.4f, b2Vec2(0.0f, 0.0f), 0.5f);
 		body->SetLinearVelocity(b2Vec2(jumpVelocityX, jumpVelocityY));
 	}
 	else{
+		boxShape.SetAsBox(0.7f, 0.4f, b2Vec2(0.0f, 0.0f), 2.6f);
 		body->SetLinearVelocity(b2Vec2(-jumpVelocityX, jumpVelocityY));
 	}
+
+	boxFixtureDef.shape = &boxShape;
+	body->CreateFixture(&boxFixtureDef);
 	setAirborne(true);
 }
 
@@ -60,10 +70,24 @@ void PounceBot::think(Game *game)
 				cyclesRemainingBeforeThinking--;
 				if (currentState == L"JUMPING_LEFT"){
 					setCurrentState(L"IDLE_LEFT");
+
+					body->DestroyFixture(body->GetFixtureList());
+					b2FixtureDef fixtureDef;
+					b2PolygonShape shape;
+					shape.SetAsBox(0.7f, 0.4f);
+					fixtureDef.shape = &shape;
+					body->CreateFixture(&fixtureDef);
 					body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
 				}
 				else if (currentState == L"JUMPING_RIGHT"){
 					setCurrentState(L"IDLE_RIGHT");
+
+					body->DestroyFixture(body->GetFixtureList());
+					b2FixtureDef fixtureDef;
+					b2PolygonShape shape;
+					shape.SetAsBox(0.7f, 0.4f);
+					fixtureDef.shape = &shape;
+					body->CreateFixture(&fixtureDef);
 					body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
 				}
 			}

@@ -398,6 +398,7 @@ void SpriteManager::updateAnimations(Game *game){
 		else if (velocityY == 0.0f){
 			if (!player.wasHit()){
 				if ((state == L"HIT_LEFT" || state == L"HIT_RIGHT") && player.getHP() <= 0){
+					player.getBody()->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
 					if (state == L"HIT_LEFT"){
 						player.setCurrentState(L"DIE_RIGHT");
 						player.setControllable(false);
@@ -481,6 +482,13 @@ void SpriteManager::updateAnimations(Game *game){
 				if (state == L"HIT_LEFT" || state == L"HIT_RIGHT"){
 					if (pounceBot->getBody()->GetLinearVelocity().y == 0){
 						if (!pounceBot->wasHit()){
+							pounceBot->getBody()->SetSleepingAllowed(true);
+							pounceBot->getBody()->DestroyFixture(pounceBot->getBody()->GetFixtureList());
+							b2FixtureDef fixtureDef;
+							b2PolygonShape shape;
+							shape.SetAsBox(0.7f, 0.4f);
+							fixtureDef.shape = &shape;
+							pounceBot->getBody()->CreateFixture(&fixtureDef);
 							pounceBot->getBody()->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
 							if (state == L"HIT_LEFT"){
 								pounceBot->setCurrentState(L"DIE_LEFT");
@@ -497,6 +505,20 @@ void SpriteManager::updateAnimations(Game *game){
 					}
 					else if (state == L"JUMPING_RIGHT"){
 						pounceBot->Jump(true);
+					}
+				}
+				else if (pounceBot->isAirborne() && pounceBot->getBody()->GetLinearVelocity().x == 0.0f){
+					pounceBot->getBody()->DestroyFixture(pounceBot->getBody()->GetFixtureList());
+					b2FixtureDef fixtureDef;
+					b2PolygonShape shape;
+					shape.SetAsBox(0.7f, 0.4f);
+					fixtureDef.shape = &shape;
+					pounceBot->getBody()->CreateFixture(&fixtureDef);
+					if (state == L"JUMPING_LEFT"){
+						pounceBot->setCurrentState(L"IDLE_LEFT");
+					}
+					else if (state == L"JUMPING_RIGHT"){
+						pounceBot->setCurrentState(L"IDLE_RIGHT");
 					}
 				}
 			}

@@ -14,7 +14,7 @@ public:
 		b2Body* dynamicBody = m_world->CreateBody(&myBodyDef);
 
 		b2PolygonShape boxShape;
-		boxShape.SetAsBox(1, 1);
+		boxShape.SetAsBox(0.7f, 0.4f, b2Vec2(0.0f, 0.0f), 0.5f);
 
 		b2FixtureDef boxFixtureDef;
 		boxFixtureDef.shape = &boxShape;
