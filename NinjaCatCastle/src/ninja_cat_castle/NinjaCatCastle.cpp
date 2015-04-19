@@ -64,7 +64,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	// CREATE THE GAME
 	Game *ninjaCatCastleGame = new Game();
 
-	ninjaCatCastleGame->readLUA("FILENAME.lua");
+	ninjaCatCastleGame->readLUA("data/NinjaCatCastle.lua");
 
 	// FIRST WE'LL SETUP THE DATA LOADER, SINCE IT MAY NEED TO READ
 	// IN DATA TO SETUP OTHER STUFF
@@ -100,16 +100,6 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 	// START THE GAME LOOP
 	ninjaCatCastleGame->runGameLoop();
-
-	// Init Lua
-	LuaState* luaPState = LuaState::Create();
-
-	// Open the Lua Script File
-	//int result = luaPState->DoFile("data/NinjaCatCastle.lua");
-
-	// Get a global variable
-	//LuaObject healthObj = luaPState->GetGlobal("health");
-	//int health = healthObj.GetInteger();
 
 	// GAME'S OVER SHUTDOWN ALL THE STUFF WE CONSTRUCTED HERE
 	delete (WindowsOS*)ninjaCatCastleGame->getOS();
