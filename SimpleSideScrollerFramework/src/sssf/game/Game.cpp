@@ -25,11 +25,6 @@
 
 float MAX_VIEWPORT_AXIS_VELOCITY;
 float W_GRAVITY;
-float JUMPING_BOT_MIN_CYCLES;
-float JUMPING_BOT_MAX_CYCLES;
-float JUMPING_BOT_MAX_VELOCITY;
-float PLAYER_INIT_X;
-float PLAYER_INIT_Y;
 float JUMP_SPEED;
 float PLAYER_SPEED;
 float PLAYER_MELEE_RANGE;
@@ -73,7 +68,7 @@ string W_DEBUG_FILE;
 wstring	W_GO_TO_MM_COMMAND;
 wstring	W_START_COMMAND;
 wstring	W_HELP_COMMAND;
-wstring    W_ABOUT_COMMAND;
+wstring W_ABOUT_COMMAND;
 wstring	W_EXIT_COMMAND;
 wstring	W_QUIT_COMMAND;
 wstring	W_CURSOR_PATH;
@@ -93,6 +88,304 @@ wstring	W_QUIT_IMAGE_PATH;
 wstring	W_QUIT_IMAGE_MO_PATH;
 wstring	W_LIVES_HEAD_PATH;
 
+wstring	SPRITE_TYPES_DIR;
+wstring	SPRITE_TYPES_LIST;
+
+//ALL GLOBAL SCOPE VARIABLES ARE LOADED HERE FROM THE LUA FILE IN THE DATA DIRECTORY
+void Game::readLUA(const char* fileName){
+	//LUA STUFF WOO
+
+	// Init Lua
+	LuaState* luaPState = LuaState::Create();
+
+	// Open the Lua Script File
+	int result = luaPState->DoFile(fileName);
+
+	// Get a global variable  
+	LuaObject MAX_VIEWPORT_AXIS_VELOCITY_obj = luaPState->GetGlobal("MAX_VIEWPORT_AXIS_VELOCITY");
+	MAX_VIEWPORT_AXIS_VELOCITY = MAX_VIEWPORT_AXIS_VELOCITY_obj.GetFloat();
+
+	LuaObject W_GRAVITY_obj = luaPState->GetGlobal("W_GRAVITY");
+	W_GRAVITY = W_GRAVITY_obj.GetFloat();
+
+	LuaObject JUMP_SPEED_obj = luaPState->GetGlobal("JUMP_SPEED");
+	JUMP_SPEED = JUMP_SPEED_obj.GetFloat();
+
+	LuaObject PLAYER_SPEED_obj = luaPState->GetGlobal("PLAYER_SPEED");
+	PLAYER_SPEED = PLAYER_SPEED_obj.GetFloat();
+
+	LuaObject PLAYER_MELEE_RANGE_obj = luaPState->GetGlobal("PLAYER_MELEE_RANGE");
+	PLAYER_MELEE_RANGE = PLAYER_MELEE_RANGE_obj.GetFloat();
+
+
+	LuaObject MIN_FPS_obj = luaPState->GetGlobal("MIN_FPS");
+	MIN_FPS = MIN_FPS_obj.GetInteger();
+
+	LuaObject MAX_FPS_obj = luaPState->GetGlobal("MAX_FPS");
+	MAX_FPS = MAX_FPS_obj.GetInteger();
+
+	LuaObject FPS_INC_obj = luaPState->GetGlobal("FPS_INC");
+	FPS_INC = FPS_INC_obj.GetInteger();
+
+	LuaObject START_BUTTON_X_obj = luaPState->GetGlobal("START_BUTTON_X");
+	START_BUTTON_X = START_BUTTON_X_obj.GetInteger();
+
+	LuaObject START_BUTTON_Y_obj = luaPState->GetGlobal("START_BUTTON_Y");
+	START_BUTTON_Y = START_BUTTON_Y_obj.GetInteger();
+
+	LuaObject METER_TO_PIXEL_SCALE_obj = luaPState->GetGlobal("METER_TO_PIXEL_SCALE");
+	METER_TO_PIXEL_SCALE = METER_TO_PIXEL_SCALE_obj.GetInteger();
+
+
+
+	LuaObject SPLASH_JINGLE_obj = luaPState->GetGlobal("SPLASH_JINGLE");
+	string splash_jingle = SPLASH_JINGLE_obj.GetString();
+	SPLASH_JINGLE = strcpy((char*)malloc(splash_jingle.length() + 1), splash_jingle.c_str());
+
+	LuaObject MAIN_MENU_SONG_INTRO_obj = luaPState->GetGlobal("MAIN_MENU_SONG_INTRO");
+	string main_menu_song_intro = MAIN_MENU_SONG_INTRO_obj.GetString();
+	MAIN_MENU_SONG_INTRO = strcpy((char*)malloc(main_menu_song_intro.length() + 1), main_menu_song_intro.c_str());
+
+	LuaObject MAIN_MENU_SONG_obj = luaPState->GetGlobal("MAIN_MENU_SONG");
+	string main_menu_song = MAIN_MENU_SONG_obj.GetString();
+	MAIN_MENU_SONG = strcpy((char*)malloc(main_menu_song.length() + 1), main_menu_song.c_str());
+
+	LuaObject LEVEL_1_SONG_INTRO_obj = luaPState->GetGlobal("LEVEL_1_SONG_INTRO");
+	string level_1_song_intro = LEVEL_1_SONG_INTRO_obj.GetString();
+	LEVEL_1_SONG_INTRO = strcpy((char*)malloc(level_1_song_intro.length() + 1), level_1_song_intro.c_str());
+
+	LuaObject LEVEL_1_SONG_obj = luaPState->GetGlobal("LEVEL_1_SONG");
+	string levle_1_song = LEVEL_1_SONG_obj.GetString();
+	LEVEL_1_SONG = strcpy((char*)malloc(levle_1_song.length() + 1), levle_1_song.c_str());
+
+
+	LuaObject W_LEVEL_1_DIR_obj = luaPState->GetGlobal("W_LEVEL_1_DIR");
+	string w_level1_dir = W_LEVEL_1_DIR_obj.GetString();
+	wstring wW_LEVEL_1_DIR(w_level1_dir.begin(), w_level1_dir.end());
+	W_LEVEL_1_DIR = wW_LEVEL_1_DIR;
+
+	LuaObject W_LEVEL_1_NAME_obj = luaPState->GetGlobal("W_LEVEL_1_NAME");
+	string w_level_1_name = W_LEVEL_1_NAME_obj.GetString();
+	wstring wW_LEVEL_1_NAME(w_level_1_name.begin(), w_level_1_name.end());
+	W_LEVEL_1_NAME = wW_LEVEL_1_NAME;
+
+	LuaObject W_LEVEL_2_DIR_obj = luaPState->GetGlobal("W_LEVEL_2_DIR");
+	string w_level_2_dir = W_LEVEL_2_DIR_obj.GetString();
+	wstring wW_LEVEL_2_DIR(w_level_2_dir.begin(), w_level_2_dir.end());
+	W_LEVEL_2_DIR = wW_LEVEL_2_DIR;
+
+	LuaObject W_LEVEL_2_NAME_obj = luaPState->GetGlobal("W_LEVEL_2_NAME");
+	string w_level_2_name = W_LEVEL_2_NAME_obj.GetString();
+	wstring wW_LEVEL_2_NAME(w_level_2_name.begin(), w_level_2_name.end());
+	W_LEVEL_2_NAME = wW_LEVEL_2_NAME;
+
+	LuaObject W_INIT_FILE_obj = luaPState->GetGlobal("W_INIT_FILE");
+	string w_init_file = W_INIT_FILE_obj.GetString();
+	wstring wW_INIT_FILE(w_init_file.begin(), w_init_file.end());
+	W_INIT_FILE = wW_INIT_FILE;
+
+	LuaObject W_GUI_INIT_FILE_obj = luaPState->GetGlobal("W_GUI_INIT_FILE");
+	string w_gui_init_file = W_GUI_INIT_FILE_obj.GetString();
+	wstring wW_GUI_INIT_FILE(w_gui_init_file.begin(), w_gui_init_file.end());
+	W_GUI_INIT_FILE = wW_GUI_INIT_FILE;
+
+	LuaObject W_TITLE_obj = luaPState->GetGlobal("W_TITLE");
+	string w_title = W_TITLE_obj.GetString();
+	wstring wW_TITLE(w_title.begin(), w_title.end());
+	W_TITLE = wW_TITLE;
+
+	LuaObject W_SCREEN_WIDTH_obj = luaPState->GetGlobal("W_SCREEN_WIDTH");
+	string w_screen_width = W_SCREEN_WIDTH_obj.GetString();
+	wstring wW_SCREEN_WIDTH(w_screen_width.begin(), w_screen_width.end());
+	W_SCREEN_WIDTH = wW_SCREEN_WIDTH;
+
+	LuaObject W_SCREEN_HEIGHT_obj = luaPState->GetGlobal("W_SCREEN_HEIGHT");
+	string w_screen_height = W_SCREEN_HEIGHT_obj.GetString();
+	wstring wW_SCREEN_HEIGHT(w_screen_height.begin(), w_screen_height.end());
+	W_SCREEN_HEIGHT = wW_SCREEN_HEIGHT;
+
+	LuaObject W_USE_FULLSCREEN_MODE_obj = luaPState->GetGlobal("W_USE_FULLSCREEN_MODE");
+	string w_use_fullscreen_mode = W_USE_FULLSCREEN_MODE_obj.GetString();
+	wstring wW_USE_FULLSCREEN_MODE(w_use_fullscreen_mode.begin(), w_use_fullscreen_mode.end());
+	W_USE_FULLSCREEN_MODE = wW_USE_FULLSCREEN_MODE;
+
+	LuaObject W_TEXT_FONT_SIZE_obj = luaPState->GetGlobal("W_TEXT_FONT_SIZE");
+	string w_text_font_size = W_TEXT_FONT_SIZE_obj.GetString();
+	wstring wW_TEXT_FONT_SIZE(w_text_font_size.begin(), w_text_font_size.end());
+	W_TEXT_FONT_SIZE = wW_TEXT_FONT_SIZE;
+
+	LuaObject W_VIEWPORT_OFFSET_X_obj = luaPState->GetGlobal("W_VIEWPORT_OFFSET_X");
+	string w_viewport_offset_x = W_VIEWPORT_OFFSET_X_obj.GetString();
+	wstring wW_VIEWPORT_OFFSET_X(w_viewport_offset_x.begin(), w_viewport_offset_x.end());
+	W_VIEWPORT_OFFSET_X = wW_VIEWPORT_OFFSET_X;
+
+	LuaObject W_VIEWPORT_OFFSET_Y_obj = luaPState->GetGlobal("W_VIEWPORT_OFFSET_Y");
+	string w_viewport_offset_y = W_VIEWPORT_OFFSET_Y_obj.GetString();
+	wstring wW_VIEWPORT_OFFSET_Y(w_viewport_offset_y.begin(), w_viewport_offset_y.end());
+	W_VIEWPORT_OFFSET_Y = wW_VIEWPORT_OFFSET_Y;
+
+	LuaObject W_TOGGLE_OFFSET_Y_obj = luaPState->GetGlobal("W_TOGGLE_OFFSET_Y");
+	string w_toggle_offset_y = W_TOGGLE_OFFSET_Y_obj.GetString();
+	wstring wW_TOGGLE_OFFSET_Y(w_toggle_offset_y.begin(), w_toggle_offset_y.end());
+	W_TOGGLE_OFFSET_Y = wW_TOGGLE_OFFSET_Y;
+
+	LuaObject W_FONT_COLOR_RED_obj = luaPState->GetGlobal("W_FONT_COLOR_RED");
+	string w_font_color_red = W_FONT_COLOR_RED_obj.GetString();
+	wstring wW_FONT_COLOR_RED(w_font_color_red.begin(), w_font_color_red.end());
+	W_FONT_COLOR_RED = wW_FONT_COLOR_RED;
+
+	LuaObject W_FONT_COLOR_GREEN_obj = luaPState->GetGlobal("W_FONT_COLOR_GREEN");
+	string w_font_color_green = W_FONT_COLOR_GREEN_obj.GetString();
+	wstring wW_FONT_COLOR_GREEN(w_font_color_green.begin(), w_font_color_green.end());
+	W_FONT_COLOR_GREEN = wW_FONT_COLOR_GREEN;
+
+	LuaObject W_FONT_COLOR_BLUE_obj = luaPState->GetGlobal("W_FONT_COLOR_BLUE");
+	string w_font_color_blue = W_FONT_COLOR_BLUE_obj.GetString();
+	wstring wW_FONT_COLOR_BLUE(w_font_color_blue.begin(), w_font_color_blue.end());
+	W_FONT_COLOR_BLUE = wW_FONT_COLOR_BLUE;
+
+	LuaObject W_COLOR_KEY_RED_obj = luaPState->GetGlobal("W_COLOR_KEY_RED");
+	string w_color_key_red = W_COLOR_KEY_RED_obj.GetString();
+	wstring wW_COLOR_KEY_RED(w_color_key_red.begin(), w_color_key_red.end());
+	W_COLOR_KEY_RED = wW_COLOR_KEY_RED;
+
+	LuaObject W_COLOR_KEY_GREEN_obj = luaPState->GetGlobal("W_COLOR_KEY_GREEN");
+	string w_color_key_green = W_COLOR_KEY_GREEN_obj.GetString();
+	wstring wW_COLOR_KEY_GREEN(w_color_key_green.begin(), w_color_key_green.end());
+	W_COLOR_KEY_GREEN = wW_COLOR_KEY_GREEN;
+
+	LuaObject W_COLOR_KEY_BLUE_obj = luaPState->GetGlobal("W_COLOR_KEY_BLUE");
+	string w_color_key_blue = W_COLOR_KEY_BLUE_obj.GetString();
+	wstring wW_COLOR_KEY_BLUE(w_color_key_blue.begin(), w_color_key_blue.end());
+	W_COLOR_KEY_BLUE = wW_COLOR_KEY_BLUE;
+
+	LuaObject W_GO_TO_MM_COMMAND_obj = luaPState->GetGlobal("W_GO_TO_MM_COMMAND");
+	string w_go_to_mm_command = W_GO_TO_MM_COMMAND_obj.GetString();
+	wstring wW_GO_TO_MM_COMMAND(w_go_to_mm_command.begin(), w_go_to_mm_command.end());
+	W_GO_TO_MM_COMMAND = wW_GO_TO_MM_COMMAND;
+
+	LuaObject W_START_COMMAND_obj = luaPState->GetGlobal("W_START_COMMAND");
+	string w_start_command = W_START_COMMAND_obj.GetString();
+	wstring wW_START_COMMAND(w_start_command.begin(), w_start_command.end());
+	W_START_COMMAND = wW_START_COMMAND;
+
+	LuaObject W_HELP_COMMAND_obj = luaPState->GetGlobal("W_HELP_COMMAND");
+	string w_help_command = W_HELP_COMMAND_obj.GetString();
+	wstring wW_HELP_COMMAND(w_help_command.begin(), w_help_command.end());
+	W_HELP_COMMAND = wW_HELP_COMMAND;
+
+	LuaObject W_ABOUT_COMMAND_obj = luaPState->GetGlobal("W_ABOUT_COMMAND");
+	string w_about_command = W_ABOUT_COMMAND_obj.GetString();
+	wstring wW_ABOUT_COMMAND(w_about_command.begin(), w_about_command.end());
+	W_ABOUT_COMMAND = wW_ABOUT_COMMAND;
+
+	LuaObject W_EXIT_COMMAND_obj = luaPState->GetGlobal("W_EXIT_COMMAND");
+	string w_exit_command = W_EXIT_COMMAND_obj.GetString();
+	wstring wW_EXIT_COMMAND(w_exit_command.begin(), w_exit_command.end());
+	W_EXIT_COMMAND = wW_EXIT_COMMAND;
+
+	LuaObject W_QUIT_COMMAND_obj = luaPState->GetGlobal("W_QUIT_COMMAND");
+	string w_quit_command = W_QUIT_COMMAND_obj.GetString();
+	wstring wW_QUIT_COMMAND(w_quit_command.begin(), w_quit_command.end());
+	W_QUIT_COMMAND = wW_QUIT_COMMAND;
+
+	LuaObject W_CURSOR_PATH_obj = luaPState->GetGlobal("W_CURSOR_PATH");
+	string w_cursor_path = W_CURSOR_PATH_obj.GetString();
+	wstring wW_CURSOR_PATH(w_cursor_path.begin(), w_cursor_path.end());
+	W_CURSOR_PATH = wW_CURSOR_PATH;
+
+	LuaObject W_SPLASH_SCREEN_PATH_obj = luaPState->GetGlobal("W_SPLASH_SCREEN_PATH");
+	string w_splash_screen_path = W_SPLASH_SCREEN_PATH_obj.GetString();
+	wstring wW_SPLASH_SCREEN_PATH(w_splash_screen_path.begin(), w_splash_screen_path.end());
+	W_SPLASH_SCREEN_PATH = wW_SPLASH_SCREEN_PATH;
+
+	LuaObject W_MAIN_MENU_PATH_obj = luaPState->GetGlobal("W_MAIN_MENU_PATH");
+	string w_main_menu_path = W_MAIN_MENU_PATH_obj.GetString();
+	wstring wW_MAIN_MENU_PATH(w_main_menu_path.begin(), w_main_menu_path.end());
+	W_MAIN_MENU_PATH = wW_MAIN_MENU_PATH;
+
+	LuaObject W_HELP_SCREEN_PATH_obj = luaPState->GetGlobal("W_HELP_SCREEN_PATH");
+	string w_help_screen_path = W_HELP_SCREEN_PATH_obj.GetString();
+	wstring wW_HELP_SCREEN_PATH(w_help_screen_path.begin(), w_help_screen_path.end());
+	W_HELP_SCREEN_PATH = wW_HELP_SCREEN_PATH;
+
+	LuaObject W_ABOUT_SCREEN_PATH_obj = luaPState->GetGlobal("W_ABOUT_SCREEN_PATH");
+	string w_about_screen_path = W_ABOUT_SCREEN_PATH_obj.GetString();
+	wstring wW_ABOUT_SCREEN_PATH(w_about_screen_path.begin(), w_about_screen_path.end());
+	W_ABOUT_SCREEN_PATH = wW_ABOUT_SCREEN_PATH;
+
+	LuaObject W_HELP_IMAGE_PATH_obj = luaPState->GetGlobal("W_HELP_IMAGE_PATH");
+	string w_help_image_path = W_HELP_IMAGE_PATH_obj.GetString();
+	wstring wW_HELP_IMAGE_PATH(w_help_image_path.begin(), w_help_image_path.end());
+	W_HELP_IMAGE_PATH = wW_HELP_IMAGE_PATH;
+
+	LuaObject W_HELP_IMAGE_MO_PATH_obj = luaPState->GetGlobal("W_HELP_IMAGE_MO_PATH");
+	string w_help_image_mo_path = W_HELP_IMAGE_MO_PATH_obj.GetString();
+	wstring wW_HELP_IMAGE_MO_PATH(w_help_image_mo_path.begin(), w_help_image_mo_path.end());
+	W_HELP_IMAGE_MO_PATH = wW_HELP_IMAGE_MO_PATH;
+
+	LuaObject W_ABOUT_IMAGE_PATH_obj = luaPState->GetGlobal("W_ABOUT_IMAGE_PATH");
+	string w_about_image_path = W_ABOUT_IMAGE_PATH_obj.GetString();
+	wstring wW_ABOUT_IMAGE_PATH(w_about_image_path.begin(), w_about_image_path.end());
+	W_ABOUT_IMAGE_PATH = wW_ABOUT_IMAGE_PATH;
+
+	LuaObject W_ABOUT_IMAGE_MO_PATH_obj = luaPState->GetGlobal("W_ABOUT_IMAGE_MO_PATH");
+	string w_about_image_mo_path = W_ABOUT_IMAGE_MO_PATH_obj.GetString();
+	wstring wW_ABOUT_IMAGE_MO_PATH(w_about_image_mo_path.begin(), w_about_image_mo_path.end());
+	W_ABOUT_IMAGE_MO_PATH = wW_ABOUT_IMAGE_MO_PATH;
+
+	LuaObject W_START_IMAGE_PATH_obj = luaPState->GetGlobal("W_START_IMAGE_PATH");
+	string w_start_image_path = W_START_IMAGE_PATH_obj.GetString();
+	wstring wW_START_IMAGE_PATH(w_start_image_path.begin(), w_start_image_path.end());
+	W_START_IMAGE_PATH = wW_START_IMAGE_PATH;
+
+	LuaObject W_START_IMAGE_MO_PATH_obj = luaPState->GetGlobal("W_START_IMAGE_MO_PATH");
+	string w_start_image_mo_path = W_START_IMAGE_MO_PATH_obj.GetString();
+	wstring wW_START_IMAGE_MO_PATH(w_start_image_mo_path.begin(), w_start_image_mo_path.end());
+	W_START_IMAGE_MO_PATH = wW_START_IMAGE_MO_PATH;
+
+	LuaObject W_EXIT_IMAGE_PATH_obj = luaPState->GetGlobal("W_EXIT_IMAGE_PATH");
+	string w_exit_image_path = W_EXIT_IMAGE_PATH_obj.GetString();
+	wstring wW_EXIT_IMAGE_PATH(w_exit_image_path.begin(), w_exit_image_path.end());
+	W_EXIT_IMAGE_PATH = wW_EXIT_IMAGE_PATH;
+
+	LuaObject W_EXIT_IMAGE_MO_PATH_obj = luaPState->GetGlobal("W_EXIT_IMAGE_MO_PATH");
+	string w_exit_image_mo_path = W_EXIT_IMAGE_MO_PATH_obj.GetString();
+	wstring wW_EXIT_IMAGE_MO_PATH(w_exit_image_mo_path.begin(), w_exit_image_mo_path.end());
+	W_EXIT_IMAGE_MO_PATH = wW_EXIT_IMAGE_MO_PATH;
+
+	LuaObject W_QUIT_IMAGE_PATH_obj = luaPState->GetGlobal("W_QUIT_IMAGE_PATH");
+	string w_quit_image_path = W_QUIT_IMAGE_PATH_obj.GetString();
+	wstring wW_QUIT_IMAGE_PATH(w_quit_image_path.begin(), w_quit_image_path.end());
+	W_QUIT_IMAGE_PATH = wW_QUIT_IMAGE_PATH;
+
+	LuaObject W_QUIT_IMAGE_MO_PATH_obj = luaPState->GetGlobal("W_QUIT_IMAGE_MO_PATH");
+	string w_quit_image_mo_path = W_QUIT_IMAGE_MO_PATH_obj.GetString();
+	wstring wW_QUIT_IMAGE_MO_PATH(w_quit_image_mo_path.begin(), w_quit_image_mo_path.end());
+	W_QUIT_IMAGE_MO_PATH = wW_QUIT_IMAGE_MO_PATH;
+
+	LuaObject W_LIVES_HEAD_PATH_obj = luaPState->GetGlobal("W_LIVES_HEAD_PATH");
+	string w_lives_head_path = W_LIVES_HEAD_PATH_obj.GetString();
+	wstring wW_LIVES_HEAD_PATH(w_lives_head_path.begin(), w_lives_head_path.end());
+	W_LIVES_HEAD_PATH = wW_LIVES_HEAD_PATH;
+
+	LuaObject SPRITE_TYPES_DIR_obj = luaPState->GetGlobal("SPRITE_TYPES_DIR");
+	string w_sprite_types_path = SPRITE_TYPES_DIR_obj.GetString();
+	wstring wW_SPRITE_TYPES_DIR(w_sprite_types_path.begin(), w_sprite_types_path.end());
+	SPRITE_TYPES_DIR = wW_SPRITE_TYPES_DIR;
+
+	LuaObject SPRITE_TYPES_LIST_obj = luaPState->GetGlobal("SPRITE_TYPES_LIST");
+	string w_sprite_types_list = SPRITE_TYPES_LIST_obj.GetString();
+	wstring wW_SPRITE_TYPES_LIST(w_sprite_types_list.begin(), w_sprite_types_list.end());
+	SPRITE_TYPES_LIST = wW_SPRITE_TYPES_LIST;
+
+	LuaObject W_DEBUG_FILE_obj = luaPState->GetGlobal("W_DEBUG_FILE");
+	W_DEBUG_FILE = W_DEBUG_FILE_obj.GetString();
+
+	W_LEVEL_1_PATH = W_LEVEL_1_DIR + W_LEVEL_1_NAME;
+
+}
+
 /*
 	Game  - Constructor, this method begins the 
 	construction and loading of all major game objects. 
@@ -107,6 +400,9 @@ wstring	W_LIVES_HEAD_PATH;
 */
 Game::Game()
 {
+	//This is the earliest possible time to read this file
+	readLUA("data/NinjaCatCastle.lua");
+
 	// NOTE THAT graphics, input, os, & timer
 	// ARE CUSTOM GAME OBJECTS. DEPENDING ON WHAT TECHNOLOGY 
 	// IS TO BE USED THESE OBJECT SHOULD BE CONSTRUCTED
@@ -376,305 +672,4 @@ void Game::playSound(const char* sound){
 	newChannel->setMode(FMOD_LOOP_OFF); //doesn't loop, will automatically be destoryed when sound ends
 
 	fmodSystem->playSound(newSound, 0, false, &newChannel);
-}
-
-
-void Game::readLUA(const char* fileName){
-	//LUA STUFF WOO
-
-	// Init Lua
-	LuaState* luaPState = LuaState::Create();
-
-	// Open the Lua Script File
-	int result = luaPState->DoFile(fileName);
-
-	// Get a global variable  
-	LuaObject MAX_VIEWPORT_AXIS_VELOCITY_obj = luaPState->GetGlobal("MAX_VIEWPORT_AXIS_VELOCITY");
-	MAX_VIEWPORT_AXIS_VELOCITY = MAX_VIEWPORT_AXIS_VELOCITY_obj.GetFloat();
-
-	LuaObject W_GRAVITY_obj = luaPState->GetGlobal("W_GRAVITY");
-	W_GRAVITY = W_GRAVITY_obj.GetFloat();
-
-	LuaObject JUMPING_BOT_MIN_CYCLES_obj = luaPState->GetGlobal("JUMPING_BOT_MIN_CYCLES");
-	JUMPING_BOT_MIN_CYCLES = JUMPING_BOT_MIN_CYCLES_obj.GetFloat();
-
-	LuaObject JUMPING_BOT_MAX_CYCLES_obj = luaPState->GetGlobal("JUMPING_BOT_MAX_CYCLES");
-	JUMPING_BOT_MAX_CYCLES = JUMPING_BOT_MAX_CYCLES_obj.GetFloat();
-
-	LuaObject JUMPING_BOT_MAX_VELOCITY_obj = luaPState->GetGlobal("JUMPING_BOT_MAX_VELOCITY");
-	JUMPING_BOT_MAX_VELOCITY = JUMPING_BOT_MAX_VELOCITY_obj.GetFloat();
-
-	LuaObject PLAYER_INIT_X_obj = luaPState->GetGlobal("PLAYER_INIT_X");
-	PLAYER_INIT_X = PLAYER_INIT_X_obj.GetFloat();
-
-	LuaObject PLAYER_INIT_Y_obj = luaPState->GetGlobal("PLAYER_INIT_Y");
-	PLAYER_INIT_Y = PLAYER_INIT_Y_obj.GetFloat();
-
-	LuaObject JUMP_SPEED_obj = luaPState->GetGlobal("JUMP_SPEED");
-	JUMP_SPEED = JUMP_SPEED_obj.GetFloat();
-
-	LuaObject PLAYER_SPEED_obj = luaPState->GetGlobal("PLAYER_SPEED");
-	PLAYER_SPEED = PLAYER_SPEED_obj.GetFloat();
-
-	LuaObject PLAYER_MELEE_RANGE_obj = luaPState->GetGlobal("PLAYER_MELEE_RANGE");
-	PLAYER_MELEE_RANGE = PLAYER_MELEE_RANGE_obj.GetFloat();
-
-
-	LuaObject MIN_FPS_obj = luaPState->GetGlobal("MIN_FPS");
-	MIN_FPS = MIN_FPS_obj.GetInteger();
-
-	LuaObject MAX_FPS_obj = luaPState->GetGlobal("MAX_FPS");
-	MAX_FPS = MAX_FPS_obj.GetInteger();
-
-	LuaObject FPS_INC_obj = luaPState->GetGlobal("FPS_INC");
-	FPS_INC = FPS_INC_obj.GetInteger();
-
-	LuaObject START_BUTTON_X_obj = luaPState->GetGlobal("START_BUTTON_X");
-	START_BUTTON_X = START_BUTTON_X_obj.GetInteger();
-
-	LuaObject START_BUTTON_Y_obj = luaPState->GetGlobal("START_BUTTON_Y");
-	START_BUTTON_Y = START_BUTTON_Y_obj.GetInteger();
-
-	LuaObject METER_TO_PIXEL_SCALE_obj = luaPState->GetGlobal("METER_TO_PIXEL_SCALE");
-	METER_TO_PIXEL_SCALE = METER_TO_PIXEL_SCALE_obj.GetInteger();
-
-
-
-	LuaObject SPLASH_JINGLE_obj = luaPState->GetGlobal("SPLASH_JINGLE");
-	string splash_jingle = SPLASH_JINGLE_obj.GetString();
-	SPLASH_JINGLE = strcpy((char*)malloc(splash_jingle.length() + 1), splash_jingle.c_str());
-
-	LuaObject MAIN_MENU_SONG_INTRO_obj = luaPState->GetGlobal("MAIN_MENU_SONG_INTRO");
-	string main_menu_song_intro = MAIN_MENU_SONG_INTRO_obj.GetString();
-	MAIN_MENU_SONG_INTRO = strcpy((char*)malloc(main_menu_song_intro.length() + 1), main_menu_song_intro.c_str());
-
-	LuaObject MAIN_MENU_SONG_obj = luaPState->GetGlobal("MAIN_MENU_SONG");
-	string main_menu_song = MAIN_MENU_SONG_obj.GetString();
-	MAIN_MENU_SONG = strcpy((char*)malloc(main_menu_song.length() + 1), main_menu_song.c_str());
-
-	LuaObject LEVEL_1_SONG_INTRO_obj = luaPState->GetGlobal("LEVEL_1_SONG_INTRO");
-	string level_1_song_intro = LEVEL_1_SONG_INTRO_obj.GetString();
-	LEVEL_1_SONG_INTRO = strcpy((char*)malloc(level_1_song_intro.length() + 1), level_1_song_intro.c_str());
-
-	LuaObject LEVEL_1_SONG_obj = luaPState->GetGlobal("LEVEL_1_SONG");
-	string levle_1_song = LEVEL_1_SONG_obj.GetString();
-	LEVEL_1_SONG = strcpy((char*)malloc(levle_1_song.length() + 1), levle_1_song.c_str());
-
-
-	LuaObject W_LEVEL_1_DIR_obj = luaPState->GetGlobal("W_LEVEL_1_DIR");
-	string w_level1_dir = W_LEVEL_1_DIR_obj.GetString();
-	wstring wW_LEVEL_1_DIR(w_level1_dir.begin(), w_level1_dir.end());
-	W_LEVEL_1_DIR = wW_LEVEL_1_DIR;
-
-	LuaObject W_LEVEL_1_NAME_obj = luaPState->GetGlobal("W_LEVEL_1_NAME");
-	string w_level_1_name = W_LEVEL_1_NAME_obj.GetString();
-	wstring wW_LEVEL_1_NAME(w_level_1_name.begin(), w_level_1_name.end());
-	W_LEVEL_1_NAME = wW_LEVEL_1_NAME;
-
-	LuaObject W_LEVEL_2_DIR_obj = luaPState->GetGlobal("W_LEVEL_2_DIR");
-	string w_level_2_dir = W_LEVEL_2_DIR_obj.GetString();
-	wstring wW_LEVEL_2_DIR(w_level_2_dir.begin(), w_level_2_dir.end());
-	W_LEVEL_2_DIR = wW_LEVEL_2_DIR;
-
-	LuaObject W_LEVEL_2_NAME_obj = luaPState->GetGlobal("W_LEVEL_2_NAME");
-	string w_level_2_name = W_LEVEL_2_NAME_obj.GetString();
-	wstring wW_LEVEL_2_NAME(w_level_2_name.begin(), w_level_2_name.end());
-	W_LEVEL_2_NAME = wW_LEVEL_2_NAME;
-
-	LuaObject W_INIT_FILE_obj = luaPState->GetGlobal("W_INIT_FILE");
-	string w_init_file = W_INIT_FILE_obj.GetString();
-	wstring wW_INIT_FILE(w_init_file.begin(), w_init_file.end());
-	W_INIT_FILE = wW_INIT_FILE;
-
-	LuaObject W_GUI_INIT_FILE_obj = luaPState->GetGlobal("W_GUI_INIT_FILE");
-	string w_gui_init_file = W_GUI_INIT_FILE_obj.GetString();
-	wstring wW_GUI_INIT_FILE(w_gui_init_file.begin(), w_gui_init_file.end());
-	W_GUI_INIT_FILE = wW_GUI_INIT_FILE;
-
-	LuaObject W_TITLE_obj = luaPState->GetGlobal("W_TITLE");
-	string w_title = W_TITLE_obj.GetString();
-	wstring wW_TITLE(w_title.begin(), w_title.end());
-	W_TITLE = wW_TITLE;
-
-	LuaObject W_SCREEN_WIDTH_obj = luaPState->GetGlobal("W_SCREEN_WIDTH");
-	string w_screen_width = W_SCREEN_WIDTH_obj.GetString();
-	wstring wW_SCREEN_WIDTH(w_screen_width.begin(), w_screen_width.end());
-	W_SCREEN_WIDTH = wW_SCREEN_WIDTH;
-
-	LuaObject W_SCREEN_HEIGHT_obj = luaPState->GetGlobal("W_SCREEN_HEIGHT");
-	string w_screen_height = W_SCREEN_HEIGHT_obj.GetString();
-	wstring wW_SCREEN_HEIGHT(w_screen_height.begin(), w_screen_height.end());
-	W_SCREEN_HEIGHT = wW_SCREEN_HEIGHT;
-
-	LuaObject W_USE_FULLSCREEN_MODE_obj = luaPState->GetGlobal("W_USE_FULLSCREEN_MODE");
-	string w_use_fullscreen_mode = W_USE_FULLSCREEN_MODE_obj.GetString();
-	wstring wW_USE_FULLSCREEN_MODE(w_use_fullscreen_mode.begin(), w_use_fullscreen_mode.end());
-	W_USE_FULLSCREEN_MODE = wW_USE_FULLSCREEN_MODE;
-
-	LuaObject W_TEXT_FONT_SIZE_obj = luaPState->GetGlobal("W_TEXT_FONT_SIZE");
-	string w_text_font_size = W_TEXT_FONT_SIZE_obj.GetString();
-	wstring wW_TEXT_FONT_SIZE(w_text_font_size.begin(), w_text_font_size.end());
-	W_TEXT_FONT_SIZE = wW_TEXT_FONT_SIZE;
-
-	LuaObject W_VIEWPORT_OFFSET_X_obj = luaPState->GetGlobal("W_VIEWPORT_OFFSET_X");
-	string w_viewport_offset_x = W_VIEWPORT_OFFSET_X_obj.GetString();
-	wstring wW_VIEWPORT_OFFSET_X(w_viewport_offset_x.begin(), w_viewport_offset_x.end());
-	W_VIEWPORT_OFFSET_X = wW_VIEWPORT_OFFSET_X;
-
-	LuaObject W_VIEWPORT_OFFSET_Y_obj = luaPState->GetGlobal("W_VIEWPORT_OFFSET_Y");
-	string w_viewport_offset_y = W_VIEWPORT_OFFSET_Y_obj.GetString();
-	wstring wW_VIEWPORT_OFFSET_Y(w_viewport_offset_y.begin(), w_viewport_offset_y.end());
-	W_VIEWPORT_OFFSET_Y = wW_VIEWPORT_OFFSET_Y;
-
-	LuaObject W_TOGGLE_OFFSET_Y_obj = luaPState->GetGlobal("W_TOGGLE_OFFSET_Y");
-	string w_toggle_offset_y = W_TOGGLE_OFFSET_Y_obj.GetString();
-	wstring wW_TOGGLE_OFFSET_Y(w_toggle_offset_y.begin(), w_toggle_offset_y.end());
-	W_TOGGLE_OFFSET_Y = wW_TOGGLE_OFFSET_Y;
-
-	LuaObject W_FONT_COLOR_RED_obj = luaPState->GetGlobal("W_FONT_COLOR_RED");
-	string w_font_color_red = W_FONT_COLOR_RED_obj.GetString();
-	wstring wW_FONT_COLOR_RED(w_font_color_red.begin(), w_font_color_red.end());
-	W_FONT_COLOR_RED = wW_FONT_COLOR_RED;
-
-	LuaObject W_FONT_COLOR_GREEN_obj = luaPState->GetGlobal("W_FONT_COLOR_GREEN");
-	string w_font_color_green = W_FONT_COLOR_GREEN_obj.GetString();
-	wstring wW_FONT_COLOR_GREEN(w_font_color_green.begin(), w_font_color_green.end());
-	W_FONT_COLOR_GREEN = wW_FONT_COLOR_GREEN;
-
-	LuaObject W_FONT_COLOR_BLUE_obj = luaPState->GetGlobal("W_FONT_COLOR_BLUE");
-	string w_font_color_blue = W_FONT_COLOR_BLUE_obj.GetString();
-	wstring wW_FONT_COLOR_BLUE(w_font_color_blue.begin(), w_font_color_blue.end());
-	W_FONT_COLOR_BLUE = wW_FONT_COLOR_BLUE;
-
-	LuaObject W_COLOR_KEY_RED_obj = luaPState->GetGlobal("W_COLOR_KEY_RED");
-	string w_color_key_red = W_COLOR_KEY_RED_obj.GetString();
-	wstring wW_COLOR_KEY_RED(w_color_key_red.begin(), w_color_key_red.end());
-	W_COLOR_KEY_RED = wW_COLOR_KEY_RED;
-
-	LuaObject W_COLOR_KEY_GREEN_obj = luaPState->GetGlobal("W_COLOR_KEY_GREEN");
-	string w_color_key_green = W_COLOR_KEY_GREEN_obj.GetString();
-	wstring wW_COLOR_KEY_GREEN(w_color_key_green.begin(), w_color_key_green.end());
-	W_COLOR_KEY_GREEN = wW_COLOR_KEY_GREEN;
-
-	LuaObject W_COLOR_KEY_BLUE_obj = luaPState->GetGlobal("W_COLOR_KEY_BLUE");
-	string w_color_key_blue = W_COLOR_KEY_BLUE_obj.GetString();
-	wstring wW_COLOR_KEY_BLUE(w_color_key_blue.begin(), w_color_key_blue.end());
-	W_COLOR_KEY_BLUE = wW_COLOR_KEY_BLUE;
-
-	LuaObject W_GO_TO_MM_COMMAND_obj = luaPState->GetGlobal("W_GO_TO_MM_COMMAND");
-	string w_go_to_mm_command = W_GO_TO_MM_COMMAND_obj.GetString();
-	wstring wW_GO_TO_MM_COMMAND(w_go_to_mm_command.begin(), w_go_to_mm_command.end());
-	W_GO_TO_MM_COMMAND = wW_GO_TO_MM_COMMAND;
-
-	LuaObject W_START_COMMAND_obj = luaPState->GetGlobal("W_START_COMMAND");
-	string w_start_command = W_START_COMMAND_obj.GetString();
-	wstring wW_START_COMMAND(w_start_command.begin(), w_start_command.end());
-	W_START_COMMAND = wW_START_COMMAND;
-
-	LuaObject W_HELP_COMMAND_obj = luaPState->GetGlobal("W_HELP_COMMAND");
-	string w_help_command = W_HELP_COMMAND_obj.GetString();
-	wstring wW_HELP_COMMAND(w_help_command.begin(), w_help_command.end());
-	W_HELP_COMMAND = wW_HELP_COMMAND;
-
-	LuaObject W_ABOUT_COMMAND_obj = luaPState->GetGlobal("W_ABOUT_COMMAND");
-	string w_about_command = W_ABOUT_COMMAND_obj.GetString();
-	wstring wW_ABOUT_COMMAND(w_about_command.begin(), w_about_command.end());
-	W_ABOUT_COMMAND = wW_ABOUT_COMMAND;
-
-	LuaObject W_EXIT_COMMAND_obj = luaPState->GetGlobal("W_EXIT_COMMAND");
-	string w_exit_command = W_EXIT_COMMAND_obj.GetString();
-	wstring wW_EXIT_COMMAND(w_exit_command.begin(), w_exit_command.end());
-	W_EXIT_COMMAND = wW_EXIT_COMMAND;
-
-	LuaObject W_QUIT_COMMAND_obj = luaPState->GetGlobal("W_QUIT_COMMAND");
-	string w_quit_command = W_QUIT_COMMAND_obj.GetString();
-	wstring wW_QUIT_COMMAND(w_quit_command.begin(), w_quit_command.end());
-	W_QUIT_COMMAND = wW_QUIT_COMMAND;
-
-	LuaObject W_CURSOR_PATH_obj = luaPState->GetGlobal("W_CURSOR_PATH");
-	string w_cursor_path = W_CURSOR_PATH_obj.GetString();
-	wstring wW_CURSOR_PATH(w_cursor_path.begin(), w_cursor_path.end());
-	W_CURSOR_PATH = wW_CURSOR_PATH;
-
-	LuaObject W_SPLASH_SCREEN_PATH_obj = luaPState->GetGlobal("W_SPLASH_SCREEN_PATH");
-	string w_splash_screen_path = W_SPLASH_SCREEN_PATH_obj.GetString();
-	wstring wW_SPLASH_SCREEN_PATH(w_splash_screen_path.begin(), w_splash_screen_path.end());
-	W_SPLASH_SCREEN_PATH = wW_SPLASH_SCREEN_PATH;
-
-	LuaObject W_MAIN_MENU_PATH_obj = luaPState->GetGlobal("W_MAIN_MENU_PATH");
-	string w_main_menu_path = W_MAIN_MENU_PATH_obj.GetString();
-	wstring wW_MAIN_MENU_PATH(w_main_menu_path.begin(), w_main_menu_path.end());
-	W_MAIN_MENU_PATH = wW_MAIN_MENU_PATH;
-
-	LuaObject W_HELP_SCREEN_PATH_obj = luaPState->GetGlobal("W_HELP_SCREEN_PATH");
-	string w_help_screen_path = W_HELP_SCREEN_PATH_obj.GetString();
-	wstring wW_HELP_SCREEN_PATH(w_help_screen_path.begin(), w_help_screen_path.end());
-	W_HELP_SCREEN_PATH = wW_HELP_SCREEN_PATH;
-
-	LuaObject W_ABOUT_SCREEN_PATH_obj = luaPState->GetGlobal("W_ABOUT_SCREEN_PATH");
-	string w_about_screen_path = W_ABOUT_SCREEN_PATH_obj.GetString();
-	wstring wW_ABOUT_SCREEN_PATH(w_about_screen_path.begin(), w_about_screen_path.end());
-	W_ABOUT_SCREEN_PATH = wW_ABOUT_SCREEN_PATH;
-
-	LuaObject W_HELP_IMAGE_PATH_obj = luaPState->GetGlobal("W_HELP_IMAGE_PATH");
-	string w_help_image_path = W_HELP_IMAGE_PATH_obj.GetString();
-	wstring wW_HELP_IMAGE_PATH(w_help_image_path.begin(), w_help_image_path.end());
-	W_HELP_IMAGE_PATH = wW_HELP_IMAGE_PATH;
-
-	LuaObject W_HELP_IMAGE_MO_PATH_obj = luaPState->GetGlobal("W_HELP_IMAGE_MO_PATH");
-	string w_help_image_mo_path = W_HELP_IMAGE_MO_PATH_obj.GetString();
-	wstring wW_HELP_IMAGE_MO_PATH(w_help_image_mo_path.begin(), w_help_image_mo_path.end());
-	W_HELP_IMAGE_MO_PATH = wW_HELP_IMAGE_MO_PATH;
-
-	LuaObject W_ABOUT_IMAGE_PATH_obj = luaPState->GetGlobal("W_ABOUT_IMAGE_PATH");
-	string w_about_image_path = W_ABOUT_IMAGE_PATH_obj.GetString();
-	wstring wW_ABOUT_IMAGE_PATH(w_about_image_path.begin(), w_about_image_path.end());
-	W_ABOUT_IMAGE_PATH = wW_ABOUT_IMAGE_PATH;
-
-	LuaObject W_ABOUT_IMAGE_MO_PATH_obj = luaPState->GetGlobal("W_ABOUT_IMAGE_MO_PATH");
-	string w_about_image_mo_path = W_ABOUT_IMAGE_MO_PATH_obj.GetString();
-	wstring wW_ABOUT_IMAGE_MO_PATH(w_about_image_mo_path.begin(), w_about_image_mo_path.end());
-	W_ABOUT_IMAGE_MO_PATH = wW_ABOUT_IMAGE_MO_PATH;
-
-	LuaObject W_START_IMAGE_PATH_obj = luaPState->GetGlobal("W_START_IMAGE_PATH");
-	string w_start_image_path = W_START_IMAGE_PATH_obj.GetString();
-	wstring wW_START_IMAGE_PATH(w_start_image_path.begin(), w_start_image_path.end());
-	W_START_IMAGE_PATH = wW_START_IMAGE_PATH;
-
-	LuaObject W_START_IMAGE_MO_PATH_obj = luaPState->GetGlobal("W_START_IMAGE_MO_PATH");
-	string w_start_image_mo_path = W_START_IMAGE_MO_PATH_obj.GetString();
-	wstring wW_START_IMAGE_MO_PATH(w_start_image_mo_path.begin(), w_start_image_mo_path.end());
-	W_START_IMAGE_MO_PATH = wW_START_IMAGE_MO_PATH;
-
-	LuaObject W_EXIT_IMAGE_PATH_obj = luaPState->GetGlobal("W_EXIT_IMAGE_PATH");
-	string w_exit_image_path = W_EXIT_IMAGE_PATH_obj.GetString();
-	wstring wW_EXIT_IMAGE_PATH(w_exit_image_path.begin(), w_exit_image_path.end());
-	W_EXIT_IMAGE_PATH = wW_EXIT_IMAGE_PATH;
-
-	LuaObject W_EXIT_IMAGE_MO_PATH_obj = luaPState->GetGlobal("W_EXIT_IMAGE_MO_PATH");
-	string w_exit_image_mo_path = W_EXIT_IMAGE_MO_PATH_obj.GetString();
-	wstring wW_EXIT_IMAGE_MO_PATH(w_exit_image_mo_path.begin(), w_exit_image_mo_path.end());
-	W_EXIT_IMAGE_MO_PATH = wW_EXIT_IMAGE_MO_PATH;
-
-	LuaObject W_QUIT_IMAGE_PATH_obj = luaPState->GetGlobal("W_QUIT_IMAGE_PATH");
-	string w_quit_image_path = W_QUIT_IMAGE_PATH_obj.GetString();
-	wstring wW_QUIT_IMAGE_PATH(w_quit_image_path.begin(), w_quit_image_path.end());
-	W_QUIT_IMAGE_PATH = wW_QUIT_IMAGE_PATH;
-
-	LuaObject W_QUIT_IMAGE_MO_PATH_obj = luaPState->GetGlobal("W_QUIT_IMAGE_MO_PATH");
-	string w_quit_image_mo_path = W_QUIT_IMAGE_MO_PATH_obj.GetString();
-	wstring wW_QUIT_IMAGE_MO_PATH(w_quit_image_mo_path.begin(), w_quit_image_mo_path.end());
-	W_QUIT_IMAGE_MO_PATH = wW_QUIT_IMAGE_MO_PATH;
-
-	LuaObject W_LIVES_HEAD_PATH_obj = luaPState->GetGlobal("W_LIVES_HEAD_PATH");
-	string w_lives_head_path = W_LIVES_HEAD_PATH_obj.GetString();
-	wstring wW_LIVES_HEAD_PATH(w_lives_head_path.begin(), w_lives_head_path.end());
-	W_LIVES_HEAD_PATH = wW_LIVES_HEAD_PATH;
-
-
-	LuaObject W_DEBUG_FILE_obj = luaPState->GetGlobal("W_DEBUG_FILE");
-	W_DEBUG_FILE = W_DEBUG_FILE_obj.GetString();
-
-	W_LEVEL_1_PATH = W_LEVEL_1_DIR + W_LEVEL_1_NAME;
-
 }

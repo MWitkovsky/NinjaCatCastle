@@ -64,8 +64,6 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	// CREATE THE GAME
 	Game *ninjaCatCastleGame = new Game();
 
-	ninjaCatCastleGame->readLUA("data/NinjaCatCastle.lua");
-
 	// FIRST WE'LL SETUP THE DATA LOADER, SINCE IT MAY NEED TO READ
 	// IN DATA TO SETUP OTHER STUFF
 	NinjaCatCastleDataLoader *ninjaCatCastleDataLoader = new NinjaCatCastleDataLoader();

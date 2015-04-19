@@ -170,7 +170,7 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 
 	// LOAD THE LEVEL'S SPRITE IMAGES
 	PoseurSpriteTypesImporter psti;
-	psti.loadSpriteTypes(game, SPRITE_TYPES_LIST);
+	psti.loadSpriteTypes(game, SPRITE_TYPES_DIR, SPRITE_TYPES_LIST);
 
 
 	game->getGUI()->getViewport()->setViewportY(900);

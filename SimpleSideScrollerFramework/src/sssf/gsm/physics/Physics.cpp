@@ -32,7 +32,7 @@
 Physics::Physics()
 {
 	//Down is finally negative Y!
-	b2Gravity.Set(0.0f, -15.0f);
+	b2Gravity.Set(0.0f, W_GRAVITY);
 	//WWWWRRRRRYYYYYYYYYYYYYYYYYY
 	world = new b2World(b2Gravity);
 	world->SetContinuousPhysics(true);

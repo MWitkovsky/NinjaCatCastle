@@ -48,7 +48,7 @@ protected:
 public:
 	PoseurSpriteTypesImporter() {}
 	~PoseurSpriteTypesImporter(){}
-	bool loadSpriteTypes(Game *game, wstring spriteTypesListFileName);
+	bool loadSpriteTypes(Game *game, wstring spriteTypesListPath, wstring spriteTypesListFileName);
 
 	// THESE ARE ALL THE HELPER METHODS
 private:

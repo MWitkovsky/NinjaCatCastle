@@ -47,6 +47,9 @@ class GameText;
 
 static const float PI = 3.1415926535897932384626433f;
 
+//File that all the following values are loaded from
+static const char*		W_LUA_FILE = "data/NinjaCatCastle.lua";
+
 //these should be moved to LUA when we get the chance~
 extern char*	SPLASH_JINGLE;
 extern char*	MAIN_MENU_SONG_INTRO;
@@ -62,8 +65,7 @@ extern wstring	W_LEVEL_2_NAME;
 extern wstring	W_INIT_FILE;
 extern wstring	W_GUI_INIT_FILE;
 extern wstring	W_LEVEL_1_PATH;
-extern string		W_DEBUG_FILE;
-static const char*		W_LUA_FILE = "data/NinjaCatCastle.lua";
+extern string	W_DEBUG_FILE;
 
 // HERE ARE THE GAME PROPERTIES WE ARE LOADING FROM FROM THE SETUP FILE
 extern wstring	W_TITLE;
@@ -108,23 +110,19 @@ extern wstring	W_LIVES_HEAD_PATH;
 // FOR OUR SPRITE
 // ...kind of neglected to bother listing them all here. oops.
 // I like how the states stand out as a different color anyway. Easier to read.
-static const wstring	SPRITE_TYPES_DIR = L"data/sprite_types/";
-static const wstring	SPRITE_TYPES_LIST = SPRITE_TYPES_DIR + L"sprite_type_list.xml";
+extern wstring	SPRITE_TYPES_DIR;
+extern wstring	SPRITE_TYPES_LIST;
 
 // FOR THE GAME WORLD
 extern float		MAX_VIEWPORT_AXIS_VELOCITY;
 extern float		W_GRAVITY;
-extern float		JUMPING_BOT_MIN_CYCLES;
-extern float		JUMPING_BOT_MAX_CYCLES;
-extern float		JUMPING_BOT_MAX_VELOCITY;
-extern float		PLAYER_INIT_X;
-extern float		PLAYER_INIT_Y;
 extern float		JUMP_SPEED;
 extern float		PLAYER_SPEED;
 extern float		PLAYER_MELEE_RANGE;
 extern int			MIN_FPS;
 extern int			MAX_FPS;
 extern int			FPS_INC;
+//TODO: put all other button positions below here..
 extern int			START_BUTTON_X;
 extern int			START_BUTTON_Y;
 extern int			METER_TO_PIXEL_SCALE;

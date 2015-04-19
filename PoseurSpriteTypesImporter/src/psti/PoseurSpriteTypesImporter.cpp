@@ -13,11 +13,12 @@
 	This method loads all the sprite types found in the provided sprite type list file
 	into the game state manager, including their images.
 */
-bool PoseurSpriteTypesImporter::loadSpriteTypes(Game *game, wstring spriteTypesListFileName)
+bool PoseurSpriteTypesImporter::loadSpriteTypes(Game *game, wstring spriteTypesListPath, wstring spriteTypesListFileName)
 {
-	int slashIndex = spriteTypesListFileName.rfind('/');
-	dir = string(spriteTypesListFileName.begin(), spriteTypesListFileName.end()).substr(0, slashIndex+1);
-	const char *spriteTypesListFile = newCharArrayFromWstring(spriteTypesListFileName);
+	wstring fullPath = spriteTypesListPath + spriteTypesListFileName;
+	int slashIndex = fullPath.rfind('/');
+	dir = string(fullPath.begin(), fullPath.end()).substr(0, slashIndex + 1);
+	const char *spriteTypesListFile = newCharArrayFromWstring(fullPath);
 	bool success = loadSpriteTypesListInfo(spriteTypesListFile);
 	if (!success) return false;
 	for (unsigned int i = 0; i < spriteTypes.size(); i++)
