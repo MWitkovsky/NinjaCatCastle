@@ -15,7 +15,7 @@ private:
 	float32 maxDistance = 3.0f;
 	float32 bobDistance = 0.2f;
 	float32 flyVelocity = 1.5f;
-	float32 bobVelocity = 1.0f;
+	float32 bobVelocity = 0.75f;
 
 	// THIS PRIVATE CONSTRUCTOR IS ONLY USED FOR CLONING
 	PropellerBot(unsigned int initMin,

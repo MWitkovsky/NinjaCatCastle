@@ -91,6 +91,10 @@ wstring	W_LIVES_HEAD_PATH;
 wstring	SPRITE_TYPES_DIR;
 wstring	SPRITE_TYPES_LIST;
 
+FMOD::System*		fmodSystem; //handle to FMOD engine
+FMOD::Channel*		musicChannel;
+FMOD::Channel*		introChannel; //needed for seamless looping
+
 //ALL GLOBAL SCOPE VARIABLES ARE LOADED HERE FROM THE LUA FILE IN THE DATA DIRECTORY
 void Game::readLUA(const char* fileName){
 	//LUA STUFF WOO
@@ -415,7 +419,7 @@ Game::Game()
 	FMOD::System_Create(&fmodSystem);
 	//default buffers is 1024 and 4, but this didn't work on my system for some reason.
 	//this does.
-	fmodSystem->setDSPBufferSize(1024, 8);
+	fmodSystem->setDSPBufferSize(1024, 6);
 	fmodSystem->init(32, FMOD_INIT_NORMAL, 0);
 	
 }
@@ -617,35 +621,18 @@ void Game::processMusicLogic(){
 	GameState gs = gsm->getCurrentGameState();
 	if (gs == GS_MAIN_MENU || gs == GS_HELP_SCREEN || gs == GS_ABOUT_SCREEN){
 		bool isMusicPlaying = false;
-		musicChannel->isPlaying(&isMusicPlaying);
+		introChannel->isPlaying(&isMusicPlaying);
 		if (!isMusicPlaying){
-			musicChannel = playSong(MAIN_MENU_SONG, musicChannel);
+			musicChannel->setPaused(false);
 		}
 	}
 	else if (gs == GS_GAME_IN_PROGRESS){
 		bool isMusicPlaying = false;
-		musicChannel->isPlaying(&isMusicPlaying);
+		introChannel->isPlaying(&isMusicPlaying);
 		if (!isMusicPlaying){
-			//Lets just keep these level file name checks hard coded...
-			if (currentLevelFileName == L"SideScrollerMetalLevel.tmx"){
-				musicChannel = playSong(LEVEL_1_SONG, musicChannel);
-			}
+			musicChannel->setPaused(false);
 		}
 	}
-}
-
-//Plays a song in the specified channel (should always be the musicChannel)
-FMOD::Channel* Game::playSong(const char* song, FMOD::Channel* songChannel){
-	songChannel->stop(); //stops song currently playing in the music channel
-
-	FMOD::Sound* newSong = 0;
-	FMOD::Channel* newChannel = 0;
-
-	fmodSystem->createStream(song, FMOD_DEFAULT, 0, &newSong);
-	newSong->setMode(FMOD_LOOP_NORMAL); //loops
-
-	fmodSystem->playSound(newSong, 0, false, &newChannel); //plays sound in newChannel
-	return newChannel; //returns newChannel
 }
 
 //Plays a song's intro in the music channel. This sets loop to off so we can just loop the main
@@ -660,6 +647,39 @@ FMOD::Channel* Game::playSongIntro(const char* song, FMOD::Channel* songChannel)
 
 	fmodSystem->createSound(song, FMOD_DEFAULT, 0, &newSong);
 	newSong->setMode(FMOD_LOOP_OFF); //doesn't loop
+
+	fmodSystem->playSound(newSong, 0, false, &newChannel); //plays sound in newChannel
+	return newChannel; //returns newChannel
+}
+
+//Queues a song for play to produce a (hopefully) gapless transition
+//This also simplifies the music logic so it automatically plays the queued song
+//as soon as the intro is done playing
+FMOD::Channel* Game::queueSong(const char* song, FMOD::Channel* songChannel){
+	songChannel->stop(); //stops song currently playing in the music channel
+
+	FMOD::Sound* newSong = 0;
+	FMOD::Channel* newChannel = 0;
+
+	fmodSystem->createStream(song, FMOD_DEFAULT, 0, &newSong);
+	newSong->setMode(FMOD_LOOP_NORMAL); //loops
+
+	fmodSystem->playSound(newSong, 0, false, &newChannel); //plays sound in newChannel
+	newChannel->setPaused(true);
+
+	return newChannel; //returns newChannel
+}
+
+//Plays a song in the specified channel that doesn't have an intro.
+FMOD::Channel* Game::playSongNoIntro(const char* song, FMOD::Channel* songChannel){
+	musicChannel->stop(); //stops song currently playing in the music channel
+	introChannel->stop();
+
+	FMOD::Sound* newSong = 0;
+	FMOD::Channel* newChannel = 0;
+
+	fmodSystem->createStream(song, FMOD_DEFAULT, 0, &newSong);
+	newSong->setMode(FMOD_LOOP_NORMAL); //loops
 
 	fmodSystem->playSound(newSong, 0, false, &newChannel); //plays sound in newChannel
 	return newChannel; //returns newChannel

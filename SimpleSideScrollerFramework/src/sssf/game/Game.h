@@ -127,6 +127,11 @@ extern int			START_BUTTON_X;
 extern int			START_BUTTON_Y;
 extern int			METER_TO_PIXEL_SCALE;
 
+//FMod Stuff
+extern FMOD::System*		fmodSystem; //handle to FMOD engine
+extern FMOD::Channel*		musicChannel;
+extern FMOD::Channel*		introChannel; //needed for seamless looping
+
 // USED FOR MOVEMENT
 // LEAVE THESE HERE
 const unsigned int W_KEY = (unsigned int)'W';
@@ -169,11 +174,6 @@ private:
 	GameOS				*os;
 	GameTimer			*timer;
 
-	//FMod Stuff
-	FMOD::System		*fmodSystem; //handle to FMOD engine
-	FMOD::Channel*		musicChannel;
-	FMOD::Channel*		loopChannel; //needed for seamless looping
-
 	// THIS WILL KEEP TRACK OF THE NAME OF THE LEVEL FILE
 	// THAT IS CURRENTLY BEING USED
 	wstring				currentLevelFileName;
@@ -193,8 +193,8 @@ public:
 
 	//FMOD METHODS
 	FMOD::Channel* getMusicChannel()			{ return musicChannel; }
-	void setMusicChannel(FMOD::Channel* musicChannel){
-		this->musicChannel = musicChannel;
+	void setMusicChannel(FMOD::Channel* newMusicChannel){
+		musicChannel = newMusicChannel;
 	}
 
 	// AND FOR GETTING THE NAME OF THE FILE USED FOR LOADING THIS LEVEL
@@ -219,8 +219,9 @@ public:
 	void	shutdown();
 	void	startGame();
 	void	processMusicLogic();
-	FMOD::Channel*	playSong(const char* song, FMOD::Channel* songChannel);
 	FMOD::Channel*	playSongIntro(const char* song, FMOD::Channel* songChannel);
+	FMOD::Channel*	queueSong(const char* song, FMOD::Channel* songChannel);
+	FMOD::Channel*	playSongNoIntro(const char* song, FMOD::Channel* songChannel);
 	void	playSound(const char* sound);
 	void	readLUA(const char* fileName);
 };

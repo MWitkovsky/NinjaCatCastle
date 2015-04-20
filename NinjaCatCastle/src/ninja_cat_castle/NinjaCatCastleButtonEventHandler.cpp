@@ -30,7 +30,8 @@ void NinjaCatCastleButtonEventHandler::handleButtonEvents(Game *game,
 	{
 		GameStateManager *gsm = game->getGSM();
 		if (gsm->getCurrentGameState() == GS_SPLASH_SCREEN){
-			game->setMusicChannel(game->playSongIntro(MAIN_MENU_SONG_INTRO, game->getMusicChannel()));
+			introChannel = game->playSongIntro(MAIN_MENU_SONG_INTRO, introChannel);
+			musicChannel = game->queueSong(MAIN_MENU_SONG, musicChannel);
 		}
 		gsm->goToMainMenu();
 	}
