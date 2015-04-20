@@ -21,7 +21,7 @@
     <ClCompile Include="src\sssf\graphics\RenderList.cpp" />
     <ClCompile Include="src\sssf\graphics\TextureManager.cpp" />
     <ClCompile Include="src\sssf\gsm\ai\BotRecycler.cpp" />
-    <ClCompile Include="src\sssf\gsm\ai\bots\PropellorBot.cpp" />
+    <ClCompile Include="src\sssf\gsm\ai\bots\PropellerBot.cpp" />
     <ClCompile Include="src\sssf\gsm\ai\bots\PounceBot.cpp" />
     <ClCompile Include="src\sssf\gsm\physics\AABB.cpp" />
     <ClCompile Include="src\sssf\gsm\physics\Physics.cpp" />
@@ -59,7 +59,7 @@
     <ClInclude Include="src\sssf\graphics\TextureManager.h" />
     <ClInclude Include="src\sssf\gsm\ai\Bot.h" />
     <ClInclude Include="src\sssf\gsm\ai\BotRecycler.h" />
-    <ClInclude Include="src\sssf\gsm\ai\bots\PropellorBot.h" />
+    <ClInclude Include="src\sssf\gsm\ai\bots\PropellerBot.h" />
     <ClInclude Include="src\sssf\gsm\ai\bots\PounceBot.h" />
     <ClInclude Include="src\sssf\gsm\physics\AABB.h" />
     <ClInclude Include="src\sssf\gsm\physics\CollidableObject.h" />

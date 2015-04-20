@@ -263,7 +263,6 @@ bool TMXMapImporter::loadIsometricMap(const TiXmlElement *pElem)
 bool TMXMapImporter::buildWorldFromInfo(Game *game)
 {
 	TextureManager *worldTextureManager = game->getGraphics()->getWorldTextureManager();
-	b2Body* tile;
 	b2BodyDef tileDef;
 	b2FixtureDef tileFixDef;
 	b2PolygonShape tileShape;
@@ -597,7 +596,7 @@ bool TMXMapImporter::buildWorldFromInfo(Game *game)
 						pounceBot->setCurrentState(L"IDLE_LEFT");
 						game->getGSM()->getSpriteManager()->addBot(pounceBot);
 					}
-					else if (tiledLayerToAdd->getTile(row, col)->properties[spawn] == propellorBotID){
+					else if (tiledLayerToAdd->getTile(row, col)->properties[spawn] == propellerBotID){
 
 					}
 					col++;

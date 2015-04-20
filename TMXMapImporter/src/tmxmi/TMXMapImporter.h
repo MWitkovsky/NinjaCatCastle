@@ -38,7 +38,7 @@ static const string		GID_ATT					= "gid";
 static const string		spawn					= "spawn";
 static const string		playerID				= "player";
 static const string		pounceBotID				= "pounceCat";
-static const string		propellorBotID			= "propellorCat";
+static const string		propellerBotID			= "propellerCat";
 
 using std::unordered_map;
 

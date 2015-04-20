@@ -168,7 +168,7 @@
     <ClCompile Include="src\sssf\gsm\ai\bots\PounceBot.cpp">
       <Filter>src\sssf\gsm\ai\bots</Filter>
     </ClCompile>
-    <ClCompile Include="src\sssf\gsm\ai\bots\PropellorBot.cpp">
+    <ClCompile Include="src\sssf\gsm\ai\bots\PropellerBot.cpp">
       <Filter>src\sssf\gsm\ai\bots</Filter>
     </ClCompile>
   </ItemGroup>
@@ -320,7 +320,7 @@
     <ClInclude Include="src\sssf\gsm\ai\bots\PounceBot.h">
       <Filter>src\sssf\gsm\ai\bots</Filter>
     </ClInclude>
-    <ClInclude Include="src\sssf\gsm\ai\bots\PropellorBot.h">
+    <ClInclude Include="src\sssf\gsm\ai\bots\PropellerBot.h">
       <Filter>src\sssf\gsm\ai\bots</Filter>
     </ClInclude>
   </ItemGroup>

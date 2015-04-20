@@ -11,7 +11,7 @@
 #include "sssf\game\Game.h"
 #include "sssf\graphics\GameGraphics.h"
 #include "sssf\gsm\ai\bots\PounceBot.h"
-#include "sssf\gsm\ai\bots\PropellorBot.h"
+#include "sssf\gsm\ai\bots\PropellerBot.h"
 #include "sssf\gsm\state\GameState.h"
 #include "sssf\gsm\world\TiledLayer.h"
 #include "sssf\gui\Cursor.h"
@@ -193,12 +193,12 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 	{
 		Bot *bot = (*botIterator);
 		PounceBot* pounceBot = dynamic_cast<PounceBot*>(bot);
-		PropellorBot* propellorBot = dynamic_cast<PropellorBot*>(bot);
+		PropellerBot* propellerBot = dynamic_cast<PropellerBot*>(bot);
 		if (pounceBot){
 			pounceBot->setSpriteType(spriteManager->getSpriteType(1));
 		}
-		else if (propellorBot){
-			propellorBot->setSpriteType(spriteManager->getSpriteType(2));
+		else if (propellerBot){
+			propellerBot->setSpriteType(spriteManager->getSpriteType(2));
 		}
 		botIterator++;
 	}

@@ -6,7 +6,7 @@
 #include "sssf\gsm\physics\Physics.h"
 #include "sssf\game\Game.h"
 
-class PropellorBot : public Bot
+class PropellerBot : public Bot
 {
 private:
 	unsigned int cyclesRemainingBeforeThinking;
@@ -15,13 +15,13 @@ private:
 	unsigned int maxVelocity;
 
 	// THIS PRIVATE CONSTRUCTOR IS ONLY USED FOR CLONING
-	PropellorBot(unsigned int initMin,
+	PropellerBot(unsigned int initMin,
 						unsigned int initMax, 
 						unsigned int initMaxVelocity);
 
 public:
-	PropellorBot();
-	~PropellorBot();
+	PropellerBot();
+	~PropellerBot();
 	void	think(Game *game);
 
 	// INLINED METHODS

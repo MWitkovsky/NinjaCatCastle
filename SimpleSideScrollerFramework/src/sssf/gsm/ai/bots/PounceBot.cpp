@@ -86,7 +86,7 @@ void PounceBot::think(Game *game)
 				float32 diffX = body->GetPosition().x - playerPos.x;
 				float32 diffY = body->GetPosition().y - playerPos.y;
 				if (diffX > -9.0f && diffX < 9.0f){
-					if (diffY > -2.0f && diffY < 2.0f){
+					if (diffY > -2.0f && diffY < 0.0f){
 						if (diffX > 0){
 							setCurrentState(L"JUMP_START_LEFT");
 						}
