@@ -12,6 +12,7 @@
 #include "sssf_VS\stdafx.h"
 #include "sssf\gsm\ai\Bot.h"
 #include "sssf\gsm\ai\bots\PounceBot.h"
+#include "sssf\gsm\ai\bots\PropellerBot.h"
 #include "sssf\gsm\physics\PhysicalProperties.h"
 #include "sssf\graphics\GameGraphics.h"
 #include "sssf\gsm\sprite\AnimatedSprite.h"
@@ -463,20 +464,27 @@ void SpriteManager::updateAnimations(Game *game){
 	botIterator = bots.begin();
 	while (botIterator != bots.end()){
 		Bot* genericBot = *botIterator;
-		if (genericBot->getBody()->GetLinearVelocity().y == 0){
-			if (genericBot->hasAirborneGuard()){
-				genericBot->setAirborneGuard(false);
+		PounceBot* pounceBot = dynamic_cast<PounceBot*>(*botIterator);
+		PropellerBot* propellerBot = dynamic_cast<PropellerBot*>(*botIterator);
+		//the propeller cat, since he is always airborne, needs his own state handling
+		if (!propellerBot){
+			if (genericBot->getBody()->GetLinearVelocity().y == 0){
+				if (genericBot->hasAirborneGuard()){
+					genericBot->setAirborneGuard(false);
+				}
+				else{
+					genericBot->setAirborne(false);
+					genericBot->setHit(false);
+				}
 			}
 			else{
-				genericBot->setAirborne(false);
-				genericBot->setHit(false);
+				genericBot->setAirborne(true);
 			}
 		}
 		else{
-			genericBot->setAirborne(true);
+			//propeller cat state logic goes here
 		}
 
-		PounceBot* pounceBot = dynamic_cast<PounceBot*>(*botIterator);
 		if (pounceBot){
 			wstring state = pounceBot->getCurrentState();
 			if (!pounceBot->isDead()){

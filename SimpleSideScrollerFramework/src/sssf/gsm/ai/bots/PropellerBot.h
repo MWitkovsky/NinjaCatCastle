@@ -10,9 +10,7 @@ class PropellerBot : public Bot
 {
 private:
 	unsigned int cyclesRemainingBeforeThinking;
-	unsigned int minCyclesBeforeThinking;
-	unsigned int maxCyclesBeforeThinking;
-	unsigned int maxVelocity;
+	b2Vec2 originalPosition = b2Vec2(0.0f, 0.0f);
 
 	// THIS PRIVATE CONSTRUCTOR IS ONLY USED FOR CLONING
 	PropellerBot(unsigned int initMin,
@@ -22,10 +20,13 @@ private:
 public:
 	PropellerBot();
 	~PropellerBot();
+	void	shoot(Game *game);
+	void	chooseFlyTrajectory();
 	void	think(Game *game);
 
 	// INLINED METHODS
+	void setOriginalPosition(b2Vec2 originalPosition){
+		this->originalPosition = originalPosition;
+	}
 	unsigned int getCyclesRemainingBeforeThinking()	{ return cyclesRemainingBeforeThinking; }
-	unsigned int getMinCyclesBeforeThinking()		{ return minCyclesBeforeThinking;		}
-	unsigned int getMaxCyclesBeforeThinking()		{ return maxCyclesBeforeThinking;		}
 };

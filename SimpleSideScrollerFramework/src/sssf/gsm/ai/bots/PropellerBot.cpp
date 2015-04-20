@@ -12,6 +12,14 @@ PropellerBot::PropellerBot()
 {
 }
 
+void PropellerBot::shoot(Game *game){
+
+}
+
+void PropellerBot::chooseFlyTrajectory(){
+
+}
+
 /*
 	think - called once per frame, this is where the bot performs its
 	decision-making. Note that we might not actually do any thinking each
@@ -21,12 +29,17 @@ void PropellerBot::think(Game *game)
 {
 	// EACH FRAME WE'LL TEST THIS BOT TO SEE IF WE NEED
 	// TO PICK A DIFFERENT DIRECTION TO FLOAT IN
-
-	if (cyclesRemainingBeforeThinking == 0)
-	{
-		GameStateManager *gsm = game->getGSM();
-	}
-	else{
-		cyclesRemainingBeforeThinking--;
+	if (!isDead()){
+		if (!isAttacking()){
+			chooseFlyTrajectory();
+		}
+		if (cyclesRemainingBeforeThinking == 0)
+		{
+			GameStateManager *gsm = game->getGSM();
+			b2Vec2 playerPos = gsm->getSpriteManager()->getPlayer()->getBody()->GetPosition();
+		}
+		else{
+			cyclesRemainingBeforeThinking--;
+		}
 	}
 }
