@@ -99,10 +99,4 @@ void BotRecycler::addMoreBots(list<Bot *> *botsNeededList, wstring botType, unsi
 {
 	// NOW MAKE THE BOTS
 	Bot* sampleBot = registeredBotTypes[botType];
-
-	for (unsigned int i = 0; i < numToAdd; i++)
-	{
-		Bot *botClone = sampleBot->clone();
-		botsNeededList->push_back(botClone);
-	}
 }

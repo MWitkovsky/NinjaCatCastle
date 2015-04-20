@@ -93,9 +93,6 @@
     <ClCompile Include="src\sssf\graphics\TextureManager.cpp">
       <Filter>src\sssf\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="src\sssf\gsm\ai\bots\RandomFloatingBot.cpp">
-      <Filter>src\sssf\gsm\ai\bots</Filter>
-    </ClCompile>
     <ClCompile Include="src\sssf\gsm\ai\BotRecycler.cpp">
       <Filter>src\sssf\gsm\ai</Filter>
     </ClCompile>
@@ -171,6 +168,9 @@
     <ClCompile Include="src\sssf\gsm\ai\bots\PounceBot.cpp">
       <Filter>src\sssf\gsm\ai\bots</Filter>
     </ClCompile>
+    <ClCompile Include="src\sssf\gsm\ai\bots\PropellorBot.cpp">
+      <Filter>src\sssf\gsm\ai\bots</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\sssf_VS\stdafx.h">
@@ -202,9 +202,6 @@
     </ClInclude>
     <ClInclude Include="src\sssf\graphics\TextureManager.h">
       <Filter>src\sssf\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\sssf\gsm\ai\bots\RandomFloatingBot.h">
-      <Filter>src\sssf\gsm\ai\bots</Filter>
     </ClInclude>
     <ClInclude Include="src\sssf\gsm\ai\Bot.h">
       <Filter>src\sssf\gsm\ai</Filter>
@@ -321,6 +318,9 @@
       <Filter>src\sssf\os</Filter>
     </ClInclude>
     <ClInclude Include="src\sssf\gsm\ai\bots\PounceBot.h">
+      <Filter>src\sssf\gsm\ai\bots</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sssf\gsm\ai\bots\PropellorBot.h">
       <Filter>src\sssf\gsm\ai\bots</Filter>
     </ClInclude>
   </ItemGroup>

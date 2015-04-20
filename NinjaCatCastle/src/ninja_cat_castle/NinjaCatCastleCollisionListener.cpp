@@ -4,7 +4,7 @@
 #include "sssf\gsm\sprite\AnimatedSprite.h"
 #include "ninja_cat_castle\NinjaCatCastle.h"
 #include "sssf\gsm\ai\bots\PounceBot.h"
-#include "sssf\gsm\ai\bots\RandomFloatingBot.h"
+#include "sssf\gsm\ai\bots\PropellorBot.h"
 
 void NinjaCatCastleCollisionListener::BeginContact(b2Contact* contact) {
 

@@ -10,7 +10,7 @@
 class PounceBot : public Bot
 {
 private:
-	unsigned int cyclesRemainingBeforeThinking = 200;
+	unsigned int cyclesRemainingBeforeThinking = 20;
 	unsigned int maxVelocity; 
 	unsigned int animationRandomizer;
 	float32 jumpVelocityX = 8.0f;
@@ -24,7 +24,6 @@ private:
 public:
 	PounceBot();
 	~PounceBot();
-	Bot*	clone();
 	void	resetThinkCycles();
 	void	Jump(boolean jumpRight);
 	void	think(Game *game);

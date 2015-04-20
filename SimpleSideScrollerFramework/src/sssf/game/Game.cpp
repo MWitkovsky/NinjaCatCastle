@@ -413,8 +413,11 @@ Game::Game()
 
 	//Creates the fmod sound system
 	FMOD::System_Create(&fmodSystem);
+	//default buffers is 1024 and 4, but this didn't work on my system for some reason.
+	//this does.
+	fmodSystem->setDSPBufferSize(1024, 8);
 	fmodSystem->init(32, FMOD_INIT_NORMAL, 0);
-	fmodSystem->setDSPBufferSize(0, 0);
+	
 }
 
 /*

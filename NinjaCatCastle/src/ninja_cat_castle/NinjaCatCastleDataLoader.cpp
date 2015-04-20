@@ -11,7 +11,7 @@
 #include "sssf\game\Game.h"
 #include "sssf\graphics\GameGraphics.h"
 #include "sssf\gsm\ai\bots\PounceBot.h"
-#include "sssf\gsm\ai\bots\RandomFloatingBot.h"
+#include "sssf\gsm\ai\bots\PropellorBot.h"
 #include "sssf\gsm\state\GameState.h"
 #include "sssf\gsm\world\TiledLayer.h"
 #include "sssf\gui\Cursor.h"
@@ -193,8 +193,12 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 	{
 		Bot *bot = (*botIterator);
 		PounceBot* pounceBot = dynamic_cast<PounceBot*>(bot);
+		PropellorBot* propellorBot = dynamic_cast<PropellorBot*>(bot);
 		if (pounceBot){
 			pounceBot->setSpriteType(spriteManager->getSpriteType(1));
+		}
+		else if (propellorBot){
+			propellorBot->setSpriteType(spriteManager->getSpriteType(2));
 		}
 		botIterator++;
 	}
@@ -206,44 +210,6 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 	//Actually not a bad way to handle this would be to check the file name of the level here and play
 	//the appropriate intro/song
 	game->setMusicChannel(game->playSongIntro(LEVEL_1_SONG_INTRO, game->getMusicChannel()));
-}
-
-void NinjaCatCastleDataLoader::makeRandomJumpingBot(Game *game, AnimatedSpriteType *randomJumpingBotType, float initX, float initY)
-{
-	SpriteManager *spriteManager = game->getGSM()->getSpriteManager();
-	Physics *physics = game->getGSM()->getPhysics();
-	PounceBot *bot = new PounceBot();
-	physics->addCollidableObject(bot);
-	b2Body *pp = bot->getBody();
-	/*pp->setPosition(initX, initY);
-	pp->setOriginalX(initX);
-	pp->setOriginalY(initY);
-	bot->setOriginalState(L"JUMPING");
-	pp->setAffectedByGravity(true);
-	bot->setSpriteType(randomJumpingBotType);
-	bot->setCurrentState(JUMPING);
-	bot->setAlpha(255);
-	spriteManager->addBot(bot);
-	bot->affixTightAABBBoundingVolume();*/
-}
-
-void NinjaCatCastleDataLoader::makeRandomFloatingBot(Game *game, AnimatedSpriteType *randomJumpingBotType, float initX, float initY)
-{
-	SpriteManager *spriteManager = game->getGSM()->getSpriteManager();
-	Physics *physics = game->getGSM()->getPhysics();
-	RandomFloatingBot *bot = new RandomFloatingBot(physics, 30, 120, 5);
-	physics->addCollidableObject(bot);
-	b2Body *pp = bot->getBody();
-	/*pp->setPosition(initX, initY);
-	pp->setOriginalX(initX);
-	pp->setOriginalY(initY);
-	pp->setAffectedByGravity(false);
-	bot->setSpriteType(randomJumpingBotType);
-	bot->setCurrentState(L"ATTACKING_DOWN");
-	bot->setOriginalState(L"ATTACKING_DOWN");
-	bot->setAlpha(255);
-	spriteManager->addBot(bot);
-	bot->affixTightAABBBoundingVolume();*/
 }
 
 /*

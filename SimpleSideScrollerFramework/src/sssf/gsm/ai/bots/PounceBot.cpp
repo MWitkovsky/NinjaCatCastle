@@ -10,17 +10,6 @@ PounceBot::PounceBot()
 }
 
 /*
-	clone - this method makes another RandomJumpingBot object, but does
-	not completely initialize it with similar data to this. Most of the 
-	object, like velocity and position, are left uninitialized.
-*/
-Bot* PounceBot::clone()
-{
-	PounceBot *botClone = new PounceBot();
-	return botClone;
-}
-
-/*
 	pickRandomCyclesInRange - a randomized method for determining when this bot
 	will think again. This method sets that value.
 */

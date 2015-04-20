@@ -597,6 +597,9 @@ bool TMXMapImporter::buildWorldFromInfo(Game *game)
 						pounceBot->setCurrentState(L"IDLE_LEFT");
 						game->getGSM()->getSpriteManager()->addBot(pounceBot);
 					}
+					else if (tiledLayerToAdd->getTile(row, col)->properties[spawn] == propellorBotID){
+
+					}
 					col++;
 				}
 				row++;
