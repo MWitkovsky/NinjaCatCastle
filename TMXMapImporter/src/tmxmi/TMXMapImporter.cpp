@@ -7,6 +7,7 @@
 #include "sssf\gsm\world\Tile.h"
 #include "sssf\gsm\state\GameStateManager.h"
 #include "sssf\gsm\ai\bots\PounceBot.h"
+#include "sssf\gsm\ai\bots\PropellerBot.h"
 #include "xmlfi\XMLFileImporter.h"
 #include "Box2D\Box2D.h"
 
@@ -597,7 +598,30 @@ bool TMXMapImporter::buildWorldFromInfo(Game *game)
 						game->getGSM()->getSpriteManager()->addBot(pounceBot);
 					}
 					else if (tiledLayerToAdd->getTile(row, col)->properties[spawn] == propellerBotID){
+						PropellerBot *propellerBot = new PropellerBot();
 
+						b2BodyDef propellerBotProps;
+						b2FixtureDef fixtureDef;
+						b2PolygonShape shape;
+
+						propellerBotProps.position.Set(col - 0.5f, tiledLayerToAdd->getRows() - row + 0.5f);
+						propellerBotProps.type = b2_dynamicBody;
+						propellerBotProps.fixedRotation = true;
+						propellerBotProps.gravityScale = 0.0f;
+						shape.SetAsBox(0.7f, 0.4f);
+						fixtureDef.shape = &shape;
+
+						propellerBot->setBody(game->getGSM()->getPhysics()->getWorld()->CreateBody(&propellerBotProps));
+						propellerBot->getBody()->CreateFixture(&fixtureDef);
+						propellerBot->getBody()->SetUserData(propellerBot);
+						propellerBot->getBody()->SetSleepingAllowed(false);
+						propellerBot->getBody()->SetLinearVelocity(b2Vec2(-0.5f, 0.0f));
+						propellerBot->setOriginalPosition(propellerBotProps.position);
+						propellerBot->setFacingRight(false);
+						propellerBot->setAirborne(true);
+						propellerBot->setAlpha(255);
+						propellerBot->setCurrentState(L"IDLE_LEFT");
+						game->getGSM()->getSpriteManager()->addBot(propellerBot);
 					}
 					col++;
 				}

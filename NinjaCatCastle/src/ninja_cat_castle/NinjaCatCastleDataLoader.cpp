@@ -198,7 +198,7 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 			pounceBot->setSpriteType(spriteManager->getSpriteType(1));
 		}
 		else if (propellerBot){
-			propellerBot->setSpriteType(spriteManager->getSpriteType(2));
+			propellerBot->setSpriteType(spriteManager->getSpriteType(1));
 		}
 		botIterator++;
 	}

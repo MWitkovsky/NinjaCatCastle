@@ -17,7 +17,36 @@ void PropellerBot::shoot(Game *game){
 }
 
 void PropellerBot::chooseFlyTrajectory(){
-
+	b2Vec2 currentPosition = body->GetPosition();
+	if (currentPosition.x <= (originalPosition.x - maxDistance)){
+		if (changeDirectionWait){
+			body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
+			changeDirectionWait--;
+		}
+		else{
+			body->SetLinearVelocity(b2Vec2(flyVelocity, 0.0f));
+			resetChangeDirectionWait();
+		}
+	}
+	else if (currentPosition.x >= originalPosition.x){
+		if (changeDirectionWait){
+			body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
+			changeDirectionWait--;
+		}
+		else{
+			body->SetLinearVelocity(b2Vec2(-flyVelocity, 0.0f));
+			resetChangeDirectionWait();
+		}
+	}
+	else{
+		if (body->GetLinearVelocity().x <= 0.0f){
+			body->SetLinearVelocity(b2Vec2(-flyVelocity, 0.0f));
+		}
+		else{
+			body->SetLinearVelocity(b2Vec2(flyVelocity, 0.0f));
+		}
+		
+	}
 }
 
 /*
@@ -42,4 +71,5 @@ void PropellerBot::think(Game *game)
 			cyclesRemainingBeforeThinking--;
 		}
 	}
+	animationCounter++;
 }

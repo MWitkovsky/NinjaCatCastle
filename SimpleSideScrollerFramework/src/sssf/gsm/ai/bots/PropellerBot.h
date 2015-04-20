@@ -9,8 +9,11 @@
 class PropellerBot : public Bot
 {
 private:
-	unsigned int cyclesRemainingBeforeThinking;
+	unsigned int cyclesRemainingBeforeThinking = 20;
+	unsigned int changeDirectionWait = 10;
 	b2Vec2 originalPosition = b2Vec2(0.0f, 0.0f);
+	float32 maxDistance = 3.0f;
+	float32 flyVelocity = 1.5f;
 
 	// THIS PRIVATE CONSTRUCTOR IS ONLY USED FOR CLONING
 	PropellerBot(unsigned int initMin,
@@ -27,6 +30,12 @@ public:
 	// INLINED METHODS
 	void setOriginalPosition(b2Vec2 originalPosition){
 		this->originalPosition = originalPosition;
+	}
+	void resetThinkCycles(){
+		cyclesRemainingBeforeThinking = 200;
+	}
+	void resetChangeDirectionWait(){
+		changeDirectionWait = 120;
 	}
 	unsigned int getCyclesRemainingBeforeThinking()	{ return cyclesRemainingBeforeThinking; }
 };

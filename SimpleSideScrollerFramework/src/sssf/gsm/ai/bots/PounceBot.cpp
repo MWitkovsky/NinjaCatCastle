@@ -10,15 +10,6 @@ PounceBot::PounceBot()
 }
 
 /*
-	pickRandomCyclesInRange - a randomized method for determining when this bot
-	will think again. This method sets that value.
-*/
-void PounceBot::resetThinkCycles()
-{
-	cyclesRemainingBeforeThinking = 200;
-}
-
-/*
 	pickRandomVelocity - calculates a random velocity vector for this
 	bot and initializes the appropriate instance variables.
 */
