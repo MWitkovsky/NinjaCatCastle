@@ -16,34 +16,55 @@ void PropellerBot::shoot(Game *game){
 
 }
 
+void PropellerBot::calculateBob(){
+	b2Vec2 currentPosition = body->GetPosition();
+	float32 currentVX = body->GetLinearVelocity().x;
+	float32 currentVY = body->GetLinearVelocity().y;
+	//init the movement first time
+	if (currentVY == 0.0f){
+		body->SetLinearVelocity(b2Vec2(currentVX, -bobVelocity));
+	}
+
+	else if (currentPosition.y <= (originalPosition.y - bobDistance)){
+		body->SetLinearVelocity(b2Vec2(currentVX, bobVelocity));
+	}
+	else if(currentPosition.y >= (originalPosition.y + bobDistance)){
+		body->SetLinearVelocity(b2Vec2(currentVX, -bobVelocity));
+	}
+	else{
+		body->SetLinearVelocity(b2Vec2(currentVX, currentVY));
+	}
+}
+
 void PropellerBot::chooseFlyTrajectory(){
 	b2Vec2 currentPosition = body->GetPosition();
+	float32 currentVY = body->GetLinearVelocity().y;
 	if (currentPosition.x <= (originalPosition.x - maxDistance)){
 		if (changeDirectionWait){
-			body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
+			body->SetLinearVelocity(b2Vec2(0.0f, currentVY));
 			changeDirectionWait--;
 		}
 		else{
-			body->SetLinearVelocity(b2Vec2(flyVelocity, 0.0f));
+			body->SetLinearVelocity(b2Vec2(flyVelocity, currentVY));
 			resetChangeDirectionWait();
 		}
 	}
 	else if (currentPosition.x >= originalPosition.x){
 		if (changeDirectionWait){
-			body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
+			body->SetLinearVelocity(b2Vec2(0.0f, currentVY));
 			changeDirectionWait--;
 		}
 		else{
-			body->SetLinearVelocity(b2Vec2(-flyVelocity, 0.0f));
+			body->SetLinearVelocity(b2Vec2(-flyVelocity, currentVY));
 			resetChangeDirectionWait();
 		}
 	}
 	else{
 		if (body->GetLinearVelocity().x <= 0.0f){
-			body->SetLinearVelocity(b2Vec2(-flyVelocity, 0.0f));
+			body->SetLinearVelocity(b2Vec2(-flyVelocity, currentVY));
 		}
 		else{
-			body->SetLinearVelocity(b2Vec2(flyVelocity, 0.0f));
+			body->SetLinearVelocity(b2Vec2(flyVelocity, currentVY));
 		}
 		
 	}
@@ -62,6 +83,7 @@ void PropellerBot::think(Game *game)
 		if (!isAttacking()){
 			chooseFlyTrajectory();
 		}
+		calculateBob();
 		if (cyclesRemainingBeforeThinking == 0)
 		{
 			GameStateManager *gsm = game->getGSM();

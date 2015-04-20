@@ -13,7 +13,9 @@ private:
 	unsigned int changeDirectionWait = 10;
 	b2Vec2 originalPosition = b2Vec2(0.0f, 0.0f);
 	float32 maxDistance = 3.0f;
+	float32 bobDistance = 0.2f;
 	float32 flyVelocity = 1.5f;
+	float32 bobVelocity = 1.0f;
 
 	// THIS PRIVATE CONSTRUCTOR IS ONLY USED FOR CLONING
 	PropellerBot(unsigned int initMin,
@@ -24,6 +26,7 @@ public:
 	PropellerBot();
 	~PropellerBot();
 	void	shoot(Game *game);
+	void	calculateBob();
 	void	chooseFlyTrajectory();
 	void	think(Game *game);
 
