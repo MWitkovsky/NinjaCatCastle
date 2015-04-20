@@ -307,6 +307,7 @@ void SpriteManager::unloadSprites(Game *game)
 		game->getGSM()->getPhysics()->getWorld()->DestroyBody(bodyToDelete);
 		bodyToDelete = temp;
 	}
+	bots.clear();
 }
 
 Bot* SpriteManager::removeBot(Bot *botToRemove)
