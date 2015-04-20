@@ -88,6 +88,9 @@ void NinjaCatCastleCollisionListener::respondToCollision(AnimatedSprite *player,
 		if (enemyState != L"DIE_LEFT"  && enemyState != L"DIE_RIGHT"
 			&& enemyState != L"HIT_LEFT" && enemyState != L"HIT_RIGHT"
 			&& !player->getInvincibilityFrames()){
+			Bot* bot = static_cast<Bot*>(enemy);
+			bot->setHitPlayer(true);
+
 			if (player->getHurtBox()){
 				player->setAttackFinished(true);
 				player->setAttacking(false);

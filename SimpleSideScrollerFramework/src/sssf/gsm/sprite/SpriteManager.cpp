@@ -482,19 +482,25 @@ void SpriteManager::updateAnimations(Game *game){
 			if (!pounceBot->isDead()){
 				if (state == L"HIT_LEFT" || state == L"HIT_RIGHT"){
 					if (pounceBot->getBody()->GetLinearVelocity().y == 0){
-						if (!pounceBot->wasHit()){
-							pounceBot->getBody()->SetSleepingAllowed(true);
+						if (!pounceBot->wasHit() || pounceBot->didHitPlayer()){
+							if (pounceBot->wasHit()){
+								pounceBot->getBody()->SetSleepingAllowed(true);
+							}
 							pounceBot->getBody()->DestroyFixture(pounceBot->getBody()->GetFixtureList());
 							b2FixtureDef fixtureDef;
 							b2PolygonShape shape;
 							shape.SetAsBox(0.7f, 0.4f);
 							fixtureDef.shape = &shape;
 							pounceBot->getBody()->CreateFixture(&fixtureDef);
-							pounceBot->getBody()->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
+							if (!pounceBot->didHitPlayer()){
+								pounceBot->setHitPlayer(false);
+								pounceBot->getBody()->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
+							}
+
 							if (state == L"HIT_LEFT"){
 								pounceBot->setCurrentState(L"DIE_LEFT");
 							}
-							else{
+							else if (state == L"HIT_RIGHT"){
 								pounceBot->setCurrentState(L"DIE_RIGHT");
 							}
 						}
