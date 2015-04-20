@@ -414,6 +414,7 @@ Game::Game()
 	//Creates the fmod sound system
 	FMOD::System_Create(&fmodSystem);
 	fmodSystem->init(32, FMOD_INIT_NORMAL, 0);
+	fmodSystem->setDSPBufferSize(0, 0);
 }
 
 /*
