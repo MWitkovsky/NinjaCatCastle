@@ -18,6 +18,14 @@
    </properties>
   </tile>
  </tileset>
+ <imagelayer name="Image Layer 1">
+  <image source="MetalBackground.jpg"/>
+  <properties>
+   <property name="collidable" value="false"/>
+   <property name="imageheight" value="1080"/>
+   <property name="imagewidth" value="1920"/>
+  </properties>
+ </imagelayer>
  <layer name="ForegroundPlatformLayer" width="50" height="30">
   <properties>
    <property name="collidable" value="true"/>

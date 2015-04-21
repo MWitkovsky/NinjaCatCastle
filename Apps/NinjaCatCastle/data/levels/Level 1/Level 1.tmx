@@ -18,7 +18,7 @@
    </properties>
   </tile>
  </tileset>
- <imagelayer name="bk" x="44" y="-86">
+ <imagelayer name="bk">
   <image source="MetalBackground.jpg"/>
   <properties>
    <property name="collidable" value="false"/>

@@ -61,6 +61,10 @@ bool NinjaCatCastleCollisionListener::ShouldCollide(b2Fixture* fixtureA, b2Fixtu
 			if (sprite1->wasHit() || sprite2->wasHit() || sprite1->isDead() || sprite2->isDead()){
 				return false;
 			}
+			else if ((sprite1->isProjectile() && fixtureB->IsSensor())
+				|| (sprite2->isProjectile() && fixtureA->IsSensor())){
+				return false;
+			}
 			else if (fixtureA->IsSensor() || fixtureB->IsSensor()){
 				return true;
 			}

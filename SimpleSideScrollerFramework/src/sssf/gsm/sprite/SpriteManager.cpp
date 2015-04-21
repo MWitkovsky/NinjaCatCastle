@@ -377,7 +377,9 @@ void SpriteManager::update(Game *game)
 		if (projectile->getBody()->GetLinearVelocity().x == 0.0f
 			|| projectile->getBody()->GetLinearVelocity().y == 0.0f
 			|| projectile->isMarkedForDeletion()){
-			game->getGSM()->getPhysics()->getWorld()->DestroyBody(projectile->getBody());
+			if (projectile->getBody()){
+				game->getGSM()->getPhysics()->getWorld()->DestroyBody(projectile->getBody());
+			}
 			if (projectile->isMarkedForDeletion()){
 				projectile->markForDeletion();
 			}
