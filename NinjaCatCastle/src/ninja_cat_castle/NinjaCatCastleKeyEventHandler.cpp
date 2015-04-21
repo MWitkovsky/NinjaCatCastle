@@ -232,6 +232,25 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 				player->decrementHP();
 			}
 
+			//Finally, level select cheats
+			if (input->isKeyDown(CTRL_KEY)){
+				if (input->isKeyDownForFirstTime(ONE_KEY)){
+					game->quitGame();
+					game->setCurrentLevelFileName(W_LEVEL_1_NAME);
+					game->startGame();
+				}
+				else if (input->isKeyDownForFirstTime(TWO_KEY)){
+					game->quitGame();
+					game->setCurrentLevelFileName(W_LEVEL_2_NAME);
+					game->startGame();
+				}
+				else if (input->isKeyDownForFirstTime(THREE_KEY)){
+					game->quitGame();
+					game->setCurrentLevelFileName(W_LEVEL_3_NAME);
+					game->startGame();
+				}
+			}
+
 			//for testing HP and death
 			/*if (input->isKeyDownForFirstTime(K_KEY)){
 				AnimatedSprite* player = gsm->getSpriteManager()->getPlayer();

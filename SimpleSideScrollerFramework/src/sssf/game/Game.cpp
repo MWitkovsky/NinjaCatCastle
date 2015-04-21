@@ -41,11 +41,17 @@ char* MAIN_MENU_SONG_INTRO;
 char* MAIN_MENU_SONG;
 char* LEVEL_1_SONG_INTRO;
 char* LEVEL_1_SONG;
+char* LEVEL_2_SONG_INTRO;
+char* LEVEL_2_SONG;
+char* LEVEL_3_SONG_INTRO;
+char* LEVEL_3_SONG;
 
 wstring W_LEVEL_1_DIR;
 wstring W_LEVEL_1_NAME;
 wstring W_LEVEL_2_DIR;
 wstring W_LEVEL_2_NAME;
+wstring W_LEVEL_3_DIR;
+wstring W_LEVEL_3_NAME;
 wstring W_INIT_FILE;
 wstring W_GUI_INIT_FILE;
 wstring W_LEVEL_1_PATH;
@@ -159,9 +165,24 @@ void Game::readLUA(const char* fileName){
 	LEVEL_1_SONG_INTRO = strcpy((char*)malloc(level_1_song_intro.length() + 1), level_1_song_intro.c_str());
 
 	LuaObject LEVEL_1_SONG_obj = luaPState->GetGlobal("LEVEL_1_SONG");
-	string levle_1_song = LEVEL_1_SONG_obj.GetString();
-	LEVEL_1_SONG = strcpy((char*)malloc(levle_1_song.length() + 1), levle_1_song.c_str());
+	string level_1_song = LEVEL_1_SONG_obj.GetString();
+	LEVEL_1_SONG = strcpy((char*)malloc(level_1_song.length() + 1), level_1_song.c_str());
 
+	LuaObject LEVEL_2_SONG_INTRO_obj = luaPState->GetGlobal("LEVEL_2_SONG_INTRO");
+	string level_2_song_intro = LEVEL_2_SONG_INTRO_obj.GetString();
+	LEVEL_2_SONG_INTRO = strcpy((char*)malloc(level_2_song_intro.length() + 1), level_2_song_intro.c_str());
+
+	LuaObject LEVEL_2_SONG_obj = luaPState->GetGlobal("LEVEL_2_SONG");
+	string level_2_song = LEVEL_2_SONG_obj.GetString();
+	LEVEL_2_SONG = strcpy((char*)malloc(level_2_song.length() + 1), level_2_song.c_str());
+
+	LuaObject LEVEL_3_SONG_INTRO_obj = luaPState->GetGlobal("LEVEL_3_SONG_INTRO");
+	string level_3_song_intro = LEVEL_3_SONG_INTRO_obj.GetString();
+	LEVEL_3_SONG_INTRO = strcpy((char*)malloc(level_3_song_intro.length() + 1), level_3_song_intro.c_str());
+
+	LuaObject LEVEL_3_SONG_obj = luaPState->GetGlobal("LEVEL_3_SONG");
+	string level_3_song = LEVEL_3_SONG_obj.GetString();
+	LEVEL_3_SONG = strcpy((char*)malloc(level_3_song.length() + 1), level_3_song.c_str());
 
 	LuaObject W_LEVEL_1_DIR_obj = luaPState->GetGlobal("W_LEVEL_1_DIR");
 	string w_level1_dir = W_LEVEL_1_DIR_obj.GetString();
@@ -182,6 +203,16 @@ void Game::readLUA(const char* fileName){
 	string w_level_2_name = W_LEVEL_2_NAME_obj.GetString();
 	wstring wW_LEVEL_2_NAME(w_level_2_name.begin(), w_level_2_name.end());
 	W_LEVEL_2_NAME = wW_LEVEL_2_NAME;
+
+	LuaObject W_LEVEL_3_DIR_obj = luaPState->GetGlobal("W_LEVEL_3_DIR");
+	string w_level_3_dir = W_LEVEL_3_DIR_obj.GetString();
+	wstring wW_LEVEL_3_DIR(w_level_3_dir.begin(), w_level_3_dir.end());
+	W_LEVEL_3_DIR = wW_LEVEL_3_DIR;
+
+	LuaObject W_LEVEL_3_NAME_obj = luaPState->GetGlobal("W_LEVEL_3_NAME");
+	string w_level_3_name = W_LEVEL_3_NAME_obj.GetString();
+	wstring wW_LEVEL_3_NAME(w_level_3_name.begin(), w_level_3_name.end());
+	W_LEVEL_3_NAME = wW_LEVEL_3_NAME;
 
 	LuaObject W_INIT_FILE_obj = luaPState->GetGlobal("W_INIT_FILE");
 	string w_init_file = W_INIT_FILE_obj.GetString();
@@ -561,6 +592,12 @@ void Game::processGameData()
 */
 void Game::quitGame()
 {
+	// Reset some player properties that may have changed
+	gsm->getSpriteManager()->getPlayer()->setLives(3);
+	while (gsm->getSpriteManager()->getPlayer()->getInvincibilityFrames()){
+		gsm->getSpriteManager()->getPlayer()->decrementInvincibilityFrames();
+	}
+
 	// CLEAN UP ALL THE WORLD TEXTURES
 	graphics->clearWorldTextures();
 	gsm->getSpriteManager()->unloadSprites(this);
@@ -606,11 +643,14 @@ void Game::startGame()
 	gsm->goToLoadLevel();	// NOTE THAT CURRENTLY THERE IS NO LEVEL FILE,
 	
 	// THAT'S ONE THING YOU'LL BE DOING
-	if (currentLevelFileName == L"SideScrollerMetalLevel.tmx"){
-		dataLoader->loadWorld(this, L"data/levels/SideScrollerMetal/", L"SideScrollerMetalLevel.tmx");
+	if (currentLevelFileName == W_LEVEL_1_NAME){
+		dataLoader->loadWorld(this, W_LEVEL_1_DIR, W_LEVEL_1_NAME);
 	}
-	else if (currentLevelFileName == L"SideScrollerDesertLevel.tmx"){
-		dataLoader->loadWorld(this, L"data/levels/SideScrollerDesert/", L"SideScrollerDesertLevel.tmx");
+	else if (currentLevelFileName == W_LEVEL_2_NAME){
+		dataLoader->loadWorld(this, W_LEVEL_2_DIR, W_LEVEL_2_NAME);
+	}
+	else if (currentLevelFileName == W_LEVEL_3_NAME){
+		dataLoader->loadWorld(this, W_LEVEL_3_DIR, W_LEVEL_3_NAME);
 	}
 }
 

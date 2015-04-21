@@ -209,8 +209,18 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 
 	//Actually not a bad way to handle this would be to check the file name of the level here and play
 	//the appropriate intro/song
-	introChannel = game->playSongIntro(LEVEL_1_SONG_INTRO, introChannel);
-	musicChannel = game->queueSong(LEVEL_1_SONG, musicChannel);
+	if (name == W_LEVEL_1_NAME){
+		introChannel = game->playSongIntro(LEVEL_1_SONG_INTRO, introChannel);
+		musicChannel = game->queueSong(LEVEL_1_SONG, musicChannel);
+	}
+	else if (name == W_LEVEL_2_NAME){
+		introChannel = game->playSongIntro(LEVEL_2_SONG_INTRO, introChannel);
+		musicChannel = game->queueSong(LEVEL_2_SONG, musicChannel);
+	}
+	else{
+		introChannel = game->playSongIntro(LEVEL_3_SONG_INTRO, introChannel);
+		musicChannel = game->queueSong(LEVEL_3_SONG, musicChannel);
+	}
 }
 
 /*

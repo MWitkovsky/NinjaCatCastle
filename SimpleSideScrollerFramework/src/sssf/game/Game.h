@@ -56,12 +56,18 @@ extern char*	MAIN_MENU_SONG_INTRO;
 extern char*	MAIN_MENU_SONG;
 extern char*	LEVEL_1_SONG_INTRO;
 extern char*	LEVEL_1_SONG;
+extern char*	LEVEL_2_SONG_INTRO;
+extern char*	LEVEL_2_SONG;
+extern char*	LEVEL_3_SONG_INTRO;
+extern char*	LEVEL_3_SONG;
 
 // HERE IS THE NinjaCatCastle GAME SETUP/INIT FILE. EVERYTHING WOULD START FROM HERE
 extern wstring	W_LEVEL_1_DIR;
 extern wstring	W_LEVEL_1_NAME;
 extern wstring	W_LEVEL_2_DIR;
 extern wstring	W_LEVEL_2_NAME;
+extern wstring	W_LEVEL_3_DIR;
+extern wstring	W_LEVEL_3_NAME;
 extern wstring	W_INIT_FILE;
 extern wstring	W_GUI_INIT_FILE;
 extern wstring	W_LEVEL_1_PATH;
@@ -144,11 +150,15 @@ const unsigned int T_KEY = (unsigned int)'T';
 const unsigned int K_KEY = (unsigned int)'K';
 const unsigned int J_KEY = (unsigned int)'J';
 const unsigned int H_KEY = (unsigned int)'H';
+const unsigned int ONE_KEY = (unsigned int)'1';
+const unsigned int TWO_KEY = (unsigned int)'2';
+const unsigned int THREE_KEY = (unsigned int)'3';
 const unsigned int UP_KEY = VK_UP;
 const unsigned int DOWN_KEY = VK_DOWN;
 const unsigned int LEFT_KEY = VK_LEFT;
 const unsigned int RIGHT_KEY = VK_RIGHT;
 const unsigned int SPACE_KEY = VK_SPACE;
+const unsigned int CTRL_KEY = VK_CONTROL;
 
 class Game
 {

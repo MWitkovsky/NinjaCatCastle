@@ -55,7 +55,6 @@ void NinjaCatCastleButtonEventHandler::handleButtonEvents(Game *game,
 	// SO LET'S UNLOAD THE LEVEL AND RETURN TO THE MAIN MENU
 	else if (command.compare(W_QUIT_COMMAND) == 0)
 	{
-		game->getGSM()->getSpriteManager()->getPlayer()->setLives(3);
 		introChannel = game->playSongIntro(MAIN_MENU_SONG_INTRO, introChannel);
 		musicChannel = game->queueSong(MAIN_MENU_SONG, musicChannel);
 		game->quitGame();
