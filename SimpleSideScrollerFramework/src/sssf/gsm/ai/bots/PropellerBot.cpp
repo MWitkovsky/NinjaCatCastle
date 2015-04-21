@@ -13,7 +13,37 @@ PropellerBot::PropellerBot()
 }
 
 void PropellerBot::shoot(Game *game){
+	AnimatedSprite *projectile = new AnimatedSprite();
+	projectile->setSpriteType(game->getGSM()->getSpriteManager()->getSpriteType(2));
+	projectile->setCurrentState(L"THROW");
+	projectile->setAlpha(255);
 
+	b2BodyDef projectileProps;
+	b2FixtureDef fixtureDef;
+	b2PolygonShape shape;
+
+	projectileProps.position.Set(body->GetPosition().x, body->GetPosition().y);
+	projectileProps.type = b2_dynamicBody;
+	projectileProps.fixedRotation = true;
+	projectileProps.gravityScale = 0.0f;
+
+	shape.SetAsBox(0.125f, 0.125f);
+	fixtureDef.shape = &shape;
+	fixtureDef.isSensor = true;
+
+	projectile->setBody(game->getGSM()->getPhysics()->getWorld()->CreateBody(&projectileProps));
+	projectile->getBody()->CreateFixture(&fixtureDef);
+	projectile->getBody()->SetUserData(projectile);
+	projectile->getBody()->SetSleepingAllowed(false);
+
+	if (isFacingRight()){
+		projectile->getBody()->SetLinearVelocity(b2Vec2(projectileVelocity.x, -projectileVelocity.y));
+	}
+	else{
+		projectile->getBody()->SetLinearVelocity(b2Vec2(-projectileVelocity.x, -projectileVelocity.y));
+	}
+
+	game->getGSM()->getSpriteManager()->addProjectile(projectile);
 }
 
 void PropellerBot::calculateBob(){
@@ -45,6 +75,7 @@ void PropellerBot::chooseFlyTrajectory(){
 			changeDirectionWait--;
 		}
 		else{
+			facingRight = true;
 			body->SetLinearVelocity(b2Vec2(flyVelocity, currentVY));
 			resetChangeDirectionWait();
 		}
@@ -55,6 +86,7 @@ void PropellerBot::chooseFlyTrajectory(){
 			changeDirectionWait--;
 		}
 		else{
+			facingRight = false;
 			body->SetLinearVelocity(b2Vec2(-flyVelocity, currentVY));
 			resetChangeDirectionWait();
 		}
@@ -79,18 +111,41 @@ void PropellerBot::think(Game *game)
 {
 	// EACH FRAME WE'LL TEST THIS BOT TO SEE IF WE NEED
 	// TO PICK A DIFFERENT DIRECTION TO FLOAT IN
-	if (!isDead()){
+	if (!isDead() && !wasHit()){
+		//movement logic
 		if (!isAttacking()){
 			chooseFlyTrajectory();
 		}
 		calculateBob();
-		if (cyclesRemainingBeforeThinking == 0)
+
+		//attack logic
+		if (cyclesRemainingBeforeThinking)
 		{
-			GameStateManager *gsm = game->getGSM();
-			b2Vec2 playerPos = gsm->getSpriteManager()->getPlayer()->getBody()->GetPosition();
+			cyclesRemainingBeforeThinking--;
 		}
 		else{
-			cyclesRemainingBeforeThinking--;
+			GameStateManager *gsm = game->getGSM();
+			b2Vec2 playerPos = gsm->getSpriteManager()->getPlayer()->getBody()->GetPosition();
+			float32 diffX = body->GetPosition().x - playerPos.x;
+			float32 diffY = body->GetPosition().y - playerPos.y;
+			if (facingRight){
+				if (diffX > -1.0f && diffX < 3.0f){
+					if (diffY > 0.0f && diffY < 12.0f){
+						setCurrentState(L"JUMPING_RIGHT");
+						shoot(game);
+						resetThinkCycles();
+					}
+				}
+			}
+			else{
+				if (diffX > -3.0f && diffX < 1.0f){
+					if (diffY > 0.0f && diffY < 12.0f){
+						setCurrentState(L"JUMPING_LEFT");
+						shoot(game);
+						resetThinkCycles();
+					}
+				}
+			}
 		}
 	}
 	animationCounter++;

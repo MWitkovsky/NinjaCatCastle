@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<sprite_type>
+ <width>16</width>
+ <height>16</height>
+ <images_list>
+  <image_file id="1" file_name="shuriken0001.png"/>
+  <image_file id="2" file_name="shuriken0002.png"/>
+ </images_list>
+ <animations_list>
+ <animation_state>
+ <state>THROW</state>
+   <animation_sequence>
+    <pose image_id="1" duration="3"/>
+	<pose image_id="2" duration="3"/>
+   </animation_sequence>
+ </animation_state>
+ </animations_list>  
+</sprite_type>

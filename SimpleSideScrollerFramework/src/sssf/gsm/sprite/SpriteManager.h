@@ -30,6 +30,7 @@ private:
 	// THESE ARE THE BOTS IN THE GAME, LIKE ENEMIES, ROCKETS, OR ANYTHING
 	// THAT MOVES AROUND AND IS NOT THE PLAYER
 	list<Bot*> bots;
+	list<AnimatedSprite*> projectiles;
 
 	// AND THIS IS THE PLAYER. AS-IS, WE ONLY ALLOW FOR ONE PLAYER AT A TIME
 	AnimatedSprite player;
@@ -50,12 +51,14 @@ public:
 	AnimatedSprite*			getPlayer()				{ return &player;			}
 	list<Bot*>::iterator	getBotsIterator()		{ return bots.begin();		}
 	list<Bot*>::iterator	getEndOfBotsIterator()	{ return bots.end();		}
+	list<AnimatedSprite*>	getProjectiles()		{ return projectiles;		}
 
 	float					getQuadtreeNodeX(unsigned int index);
 	float					getQuadtreeNodeY(unsigned int index);
 
 	// METHODS DEFINED IN SpriteManager.cpp
 	void				addBot(Bot *botToAdd);
+	void				addProjectile(AnimatedSprite *projectileToAdd);
 	void				addSpriteItemsToRenderList(Game *game);
 	void				box2DDebugRender(Game *game, b2Body *body, RenderList *renderList, Viewport *viewport, AnimatedSprite *sprite);
 	void				renderVisibleSprite(Game *game, AnimatedSprite *sprite, RenderList *renderList, Viewport *viewport);

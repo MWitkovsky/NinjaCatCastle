@@ -59,6 +59,15 @@ void SpriteManager::addSpriteToRenderList(Game *game, AnimatedSprite *sprite,
 				spriteType->getTextureWidth(),
 				spriteType->getTextureHeight());
 		}
+		else if(sprite->getSpriteType()->getSpriteTypeID() == 2){ //SHURIKEN OFFSETS
+			renderList->addRenderItem(sprite->getCurrentImageID(),
+				(int)x - viewport->getViewportX()+48,
+				(int)y - viewport->getViewportY()+48,
+				0,
+				sprite->getAlpha(),
+				spriteType->getTextureWidth(),
+				spriteType->getTextureHeight());
+		}
 		else{
 			renderList->addRenderItem(sprite->getCurrentImageID(),
 				(int)x - viewport->getViewportX(),
@@ -115,9 +124,17 @@ void SpriteManager::addSpriteItemsToRenderList(	Game *game)
 		botIterator = bots.begin();
 		while (botIterator != bots.end())
 		{			
-			Bot *bot = (*botIterator);
+			Bot *bot = *botIterator;
 			addSpriteToRenderList(game, bot, renderList, viewport);
 			botIterator++;
+		}
+
+		list<AnimatedSprite*>::iterator projectileIterator;
+		projectileIterator = projectiles.begin();
+		while (projectileIterator != projectiles.end()){
+			AnimatedSprite *projectile = *projectileIterator;
+			addSpriteToRenderList(game, projectile, renderList, viewport);
+			projectileIterator++;
 		}
 
 		//Debugging Box2D
@@ -240,6 +257,10 @@ void SpriteManager::addBot(Bot *botToAdd)
 	bots.push_back(botToAdd);
 }
 
+void SpriteManager::addProjectile(AnimatedSprite *projectileToAdd){
+	projectiles.push_back(projectileToAdd);
+}
+
 /*
 	addSpriteType - This method is for adding a new sprite
 	type. Note that one sprite type can have many sprites. For
@@ -344,6 +365,14 @@ void SpriteManager::update(Game *game)
 		bot->think(game);
 		bot->updateSprite();
 		botIterator++;
+	}
+
+	list<AnimatedSprite*>::iterator projectileIterator;
+	projectileIterator = projectiles.begin();
+	while (projectileIterator != projectiles.end()){
+		AnimatedSprite *projectile = *projectileIterator;
+		projectile->updateSprite();
+		projectileIterator++;
 	}
 
 	//legacy
