@@ -21,6 +21,8 @@
     <ClCompile Include="src\sssf\graphics\RenderList.cpp" />
     <ClCompile Include="src\sssf\graphics\TextureManager.cpp" />
     <ClCompile Include="src\sssf\gsm\ai\BotRecycler.cpp" />
+    <ClCompile Include="src\sssf\gsm\ai\bots\ArmorBot.cpp" />
+    <ClCompile Include="src\sssf\gsm\ai\bots\BombBot.cpp" />
     <ClCompile Include="src\sssf\gsm\ai\bots\PropellerBot.cpp" />
     <ClCompile Include="src\sssf\gsm\ai\bots\PounceBot.cpp" />
     <ClCompile Include="src\sssf\gsm\physics\AABB.cpp" />
@@ -59,6 +61,8 @@
     <ClInclude Include="src\sssf\graphics\TextureManager.h" />
     <ClInclude Include="src\sssf\gsm\ai\Bot.h" />
     <ClInclude Include="src\sssf\gsm\ai\BotRecycler.h" />
+    <ClInclude Include="src\sssf\gsm\ai\bots\ArmorBot.h" />
+    <ClInclude Include="src\sssf\gsm\ai\bots\BombBot.h" />
     <ClInclude Include="src\sssf\gsm\ai\bots\PropellerBot.h" />
     <ClInclude Include="src\sssf\gsm\ai\bots\PounceBot.h" />
     <ClInclude Include="src\sssf\gsm\physics\AABB.h" />

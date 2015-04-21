@@ -374,8 +374,8 @@ void NinjaCatCastleDataLoader::initMainMenu(GameGUI *gui, DirectXTextureManager 
 	// - INIT THE HELP BUTTON
 	buttonToAdd->initButton(normalTextureID,
 		mouseOverTextureID,
-		START_BUTTON_X + 300,
-		START_BUTTON_Y + 100,
+		START_BUTTON_X + 415,
+		START_BUTTON_Y + 650,
 		0,
 		255,
 		219,

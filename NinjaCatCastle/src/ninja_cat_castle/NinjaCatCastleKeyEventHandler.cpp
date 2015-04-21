@@ -322,8 +322,8 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 			//IF PLAYER IS FACING RIGHT, VIEWPORT SHOULD BE MORE RIGHT
 			//ELSE, MORE LEFT
 			if (player->isFacingRight()){
-				if (pp->GetPosition().x*METER_TO_PIXEL_SCALE > viewportX - 240){
-					diff = (pp->GetPosition().x*METER_TO_PIXEL_SCALE - viewportX + 240) / 7;
+				if (pp->GetPosition().x*METER_TO_PIXEL_SCALE > viewportX - 300){
+					diff = (pp->GetPosition().x*METER_TO_PIXEL_SCALE - viewportX + 300) / 7;
 					if (diff > MAX_VIEWPORT_AXIS_VELOCITY){
 						viewportVx += MAX_VIEWPORT_AXIS_VELOCITY;
 					}
@@ -331,8 +331,8 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 						viewportVx += diff;
 					}
 				}
-				else if (pp->GetPosition().x*METER_TO_PIXEL_SCALE < viewportX - 240){
-					diff = (viewportX - pp->GetPosition().x*METER_TO_PIXEL_SCALE - 240) / 7;
+				else if (pp->GetPosition().x*METER_TO_PIXEL_SCALE < viewportX - 300){
+					diff = (viewportX - pp->GetPosition().x*METER_TO_PIXEL_SCALE - 300) / 7;
 					if (diff > MAX_VIEWPORT_AXIS_VELOCITY){
 						viewportVx -= MAX_VIEWPORT_AXIS_VELOCITY;
 					}
@@ -342,8 +342,8 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 				}
 			}
 			else{
-				if (pp->GetPosition().x*METER_TO_PIXEL_SCALE > viewportX){
-					diff = (pp->GetPosition().x*METER_TO_PIXEL_SCALE - viewportX) / 7;
+				if (pp->GetPosition().x*METER_TO_PIXEL_SCALE > viewportX + 200){
+					diff = (pp->GetPosition().x*METER_TO_PIXEL_SCALE - viewportX - 200) / 7;
 					if (diff > MAX_VIEWPORT_AXIS_VELOCITY){
 						viewportVx += MAX_VIEWPORT_AXIS_VELOCITY;
 					}
@@ -351,8 +351,8 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 						viewportVx += diff;
 					}
 				}
-				else if (pp->GetPosition().x*METER_TO_PIXEL_SCALE < viewportX){
-					diff = (viewportX - pp->GetPosition().x*METER_TO_PIXEL_SCALE) / 7;
+				else if (pp->GetPosition().x*METER_TO_PIXEL_SCALE < viewportX + 200){
+					diff = (viewportX - pp->GetPosition().x*METER_TO_PIXEL_SCALE + 200) / 7;
 					if (diff > MAX_VIEWPORT_AXIS_VELOCITY){
 						viewportVx -= MAX_VIEWPORT_AXIS_VELOCITY;
 					}
@@ -363,8 +363,8 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 			}
 			
 
-			if ((height - (pp->GetPosition().y*METER_TO_PIXEL_SCALE)) < viewportY){
-				diff = (viewportY - (height - (pp->GetPosition().y*METER_TO_PIXEL_SCALE))) / 7;
+			if ((height - (pp->GetPosition().y*METER_TO_PIXEL_SCALE)) - 50 < viewportY){
+				diff = (viewportY - (height - (pp->GetPosition().y*METER_TO_PIXEL_SCALE)) + 50) / 7;
 				if (diff > MAX_VIEWPORT_AXIS_VELOCITY){
 					viewportVy -= MAX_VIEWPORT_AXIS_VELOCITY;
 				}
@@ -372,8 +372,8 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 					viewportVy -= diff;
 				}
 			}
-			else if ((height - (pp->GetPosition().y*METER_TO_PIXEL_SCALE)) > viewportY){
-				diff = ((height - (pp->GetPosition().y*METER_TO_PIXEL_SCALE)) - viewportY) / 7;
+			else if ((height - (pp->GetPosition().y*METER_TO_PIXEL_SCALE) - 50) > viewportY){
+				diff = ((height - (pp->GetPosition().y*METER_TO_PIXEL_SCALE) - 50) - viewportY) / 7;
 				if (diff > MAX_VIEWPORT_AXIS_VELOCITY){
 					viewportVy += MAX_VIEWPORT_AXIS_VELOCITY;
 				}
@@ -392,10 +392,12 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 	// THIS SPEEDS UP OUR GAME LOOP AND THUS THE GAME, NOTE THAT WE COULD ALTERNATIVELY SCALE
 	// DOWN THE GAME LOGIC (LIKE ALL VELOCITIES) AS WE SPEED UP THE GAME. THAT COULD PROVIDE
 	// A BETTER PLAYER EXPERIENCE
-	if (input->isKeyDown(VK_HOME) && (fps < MAX_FPS))
+
+	//Why is this even a thing..?
+	/*if (input->isKeyDown(VK_HOME) && (fps < MAX_FPS))
 		timer->setTargetFPS(fps + FPS_INC);
 
 	// THIS SLOWS DOWN OUR GAME LOOP, BUT WILL NOT GO BELOW 5 FRAMES PER SECOND
 	else if (input->isKeyDown(VK_END) && (fps > MIN_FPS))
-		timer->setTargetFPS(fps - FPS_INC);
+		timer->setTargetFPS(fps - FPS_INC);*/
 }

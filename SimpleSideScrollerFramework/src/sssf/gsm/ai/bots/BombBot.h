@@ -7,22 +7,19 @@
 #include "sssf\game\Game.h"
 #include "Box2D\Box2D.h"
 
-class PounceBot : public Bot
+class BombBot : public Bot
 {
 private:
 	unsigned int cyclesRemainingBeforeThinking = 10;
-	float32 jumpVelocityX = 8.0f;
-	float32 jumpVelocityY = 7.0f;
 
 	// THIS PRIVATE CONSTRUCTOR IS ONLY USED FOR CLONING
-	PounceBot(unsigned int initMin,
-						unsigned int initMax, 
-						unsigned int initMaxVelocity);
+	BombBot(unsigned int initMin,
+		unsigned int initMax,
+		unsigned int initMaxVelocity);
 
 public:
-	PounceBot();
-	~PounceBot();
-	void	Jump(boolean jumpRight);
+	BombBot();
+	~BombBot();
 	void	think(Game *game);
 
 	// INLINED METHODS

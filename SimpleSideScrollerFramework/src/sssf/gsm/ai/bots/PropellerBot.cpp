@@ -131,20 +131,26 @@ void PropellerBot::think(Game *game)
 			float32 diffY = body->GetPosition().y - playerPos.y;
 			if (facingRight){
 				if (diffX > -1.0f && diffX < 3.0f){
-					if (diffY > 0.0f && diffY < 12.0f){
+					if (diffY > 0.0f && diffY < maxSeekRange){
 						setCurrentState(L"JUMPING_RIGHT");
 						shoot(game);
 						resetThinkCycles();
 					}
 				}
+				else{
+					setCurrentState(L"IDLE_RIGHT");
+				}
 			}
 			else{
 				if (diffX > -3.0f && diffX < 1.0f){
-					if (diffY > 0.0f && diffY < 12.0f){
+					if (diffY > 0.0f && diffY < maxSeekRange){
 						setCurrentState(L"JUMPING_LEFT");
 						shoot(game);
 						resetThinkCycles();
 					}
+				}
+				else{
+					setCurrentState(L"IDLE_LEFT");
 				}
 			}
 		}

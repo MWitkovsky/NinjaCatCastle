@@ -9,10 +9,6 @@ PounceBot::PounceBot()
 	resetThinkCycles();
 }
 
-/*
-	pickRandomVelocity - calculates a random velocity vector for this
-	bot and initializes the appropriate instance variables.
-*/
 void PounceBot::Jump(boolean jumpRight)
 {
 	b2PolygonShape boxShape;
