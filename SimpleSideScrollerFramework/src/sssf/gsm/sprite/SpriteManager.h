@@ -66,7 +66,6 @@ public:
 	void				addSpriteToRenderList(Game *game, AnimatedSprite *sprite, RenderList *renderList, Viewport *viewport);
 	void				clearSprites();
 	AnimatedSpriteType* getSpriteType(unsigned int typeIndex);
-	Bot*				removeBot(Bot *botToRemove);
 	void				unloadSprites(Game *game);
 	unsigned int		getNumberOfBots();
 	unsigned int		getNumberOfBotsInNode(int node);

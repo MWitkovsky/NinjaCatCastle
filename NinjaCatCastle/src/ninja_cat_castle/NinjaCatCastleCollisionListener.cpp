@@ -88,8 +88,16 @@ void NinjaCatCastleCollisionListener::respondToCollision(AnimatedSprite *player,
 		if (enemyState != L"DIE_LEFT"  && enemyState != L"DIE_RIGHT"
 			&& enemyState != L"HIT_LEFT" && enemyState != L"HIT_RIGHT"
 			&& !player->getInvincibilityFrames()){
-			Bot* bot = static_cast<Bot*>(enemy);
-			bot->setHitPlayer(true);
+			//Marks player to send in the hit arc backwards
+			player->setIsProjectile(true);
+
+			if (!enemy->isProjectile()){
+				Bot* bot = static_cast<Bot*>(enemy);
+				bot->setHitPlayer(true);
+			}
+			else{
+				enemy->markForDeletion();
+			}
 
 			if (player->getHurtBox()){
 				player->setAttackFinished(true);
@@ -97,11 +105,9 @@ void NinjaCatCastleCollisionListener::respondToCollision(AnimatedSprite *player,
 			}
 			if (player->isFacingRight()){
 				player->setCurrentState(L"HIT_LEFT");
-				player->getBody()->SetLinearVelocity(b2Vec2(-3.0f, 8.0f));
 			}
 			else{
 				player->setCurrentState(L"HIT_RIGHT");
-				player->getBody()->SetLinearVelocity(b2Vec2(3.0f, 8.0f));
 			}
 			player->decrementHP();
 			player->setHit(true);

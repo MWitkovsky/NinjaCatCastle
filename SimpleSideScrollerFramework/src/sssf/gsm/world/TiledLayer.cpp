@@ -104,7 +104,7 @@ void TiledLayer::addRenderItemsToRenderList(RenderList *renderList,
 
 	// rows - 1 IS THE LARGEST ROW, SO CLAMP THERE
 	int endRow = calculateViewportEndRow(	viewportY, 
-											viewportHeight);
+											viewportHeight + 64);
 	if (endRow >= rows)
 		endRow = rows - 1;
 

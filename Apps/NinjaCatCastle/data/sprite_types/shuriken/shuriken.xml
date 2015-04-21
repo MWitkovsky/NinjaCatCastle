@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <sprite_type>
- <width>16</width>
- <height>16</height>
+ <width>64</width>
+ <height>32</height>
  <images_list>
   <image_file id="1" file_name="shuriken0001.png"/>
   <image_file id="2" file_name="shuriken0002.png"/>

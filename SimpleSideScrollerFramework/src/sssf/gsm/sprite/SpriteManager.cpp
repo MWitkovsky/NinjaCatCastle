@@ -41,6 +41,11 @@ void SpriteManager::addSpriteToRenderList(Game *game, AnimatedSprite *sprite,
 	float32 y = (game->getGSM()->getWorld()->getWorldHeight()) - (pp->GetPosition().y*meterToPixelScale);
 	// IS THE SPRITE VIEWABLE?
 	if (viewport->areWorldCoordinatesInViewport(	
+									x+16,
+									y,
+									spriteType->getTextureWidth(),
+									spriteType->getTextureHeight())
+									|| viewport->areWorldCoordinatesInViewport(
 									x,
 									y,
 									spriteType->getTextureWidth(),
@@ -61,8 +66,8 @@ void SpriteManager::addSpriteToRenderList(Game *game, AnimatedSprite *sprite,
 		}
 		else if(sprite->getSpriteType()->getSpriteTypeID() == 2){ //SHURIKEN OFFSETS
 			renderList->addRenderItem(sprite->getCurrentImageID(),
-				(int)x - viewport->getViewportX()+48,
-				(int)y - viewport->getViewportY()+48,
+				(int)x - viewport->getViewportX()+64,
+				(int)y - viewport->getViewportY()+64,
 				0,
 				sprite->getAlpha(),
 				spriteType->getTextureWidth(),
@@ -116,6 +121,13 @@ void SpriteManager::addSpriteItemsToRenderList(	Game *game)
 		RenderList *renderList = graphics->getWorldRenderList();
 		Viewport *viewport = gui->getViewport();
 
+		//Debugging Box2D
+		/*b2Body* bodies = game->getGSM()->getPhysics()->getWorld()->GetBodyList();
+		while (bodies){
+			box2DDebugRender(game, bodies, renderList, viewport, &player);
+			bodies = bodies->GetNext();
+		}*/
+
 		// ADD THE PLAYER SPRITE
 		addSpriteToRenderList(game, &player, renderList, viewport);
 
@@ -137,12 +149,7 @@ void SpriteManager::addSpriteItemsToRenderList(	Game *game)
 			projectileIterator++;
 		}
 
-		//Debugging Box2D
-		/*b2Body* list = game->getGSM()->getPhysics()->getWorld()->GetBodyList();
-		while(list){
-			box2DDebugRender(game, list, renderList, viewport, &player);
-			list = list->GetNext();
-		}*/
+		
 	}
 }
 
@@ -330,12 +337,7 @@ void SpriteManager::unloadSprites(Game *game)
 		bodyToDelete = temp;
 	}
 	bots.clear();
-}
-
-Bot* SpriteManager::removeBot(Bot *botToRemove)
-{
-	return NULL;
-	// @TODO - WE'LL DO THIS LATER WHEN WE LEARN MORE ABOUT MEMORY MANAGEMENT
+	projectiles.clear();
 }
 
 unsigned int SpriteManager::getNumberOfBots(){
@@ -372,11 +374,16 @@ void SpriteManager::update(Game *game)
 	while (projectileIterator != projectiles.end()){
 		AnimatedSprite *projectile = *projectileIterator;
 		projectile->updateSprite();
+		if (projectile->getBody()->GetLinearVelocity().x == 0.0f
+			|| projectile->getBody()->GetLinearVelocity().y == 0.0f
+			|| projectile->isMarkedForDeletion()){
+			game->getGSM()->getPhysics()->getWorld()->DestroyBody(projectile->getBody());
+			if (projectile->isMarkedForDeletion()){
+				projectile->markForDeletion();
+			}
+		}
 		projectileIterator++;
 	}
-
-	//legacy
-	//checkForCollisions(game, &player);
 }
 
 void SpriteManager::updateAnimations(Game *game){
@@ -400,7 +407,18 @@ void SpriteManager::updateAnimations(Game *game){
 
 	//ANIMATION STUFF
 	if (!player.isAttacking()){
-		if (velocityY > 0){
+		if (player.isProjectile()){
+			player.setIsProjectile(false);
+			if (player.isFacingRight()){
+				player.setCurrentState(L"HIT_LEFT");
+				player.getBody()->SetLinearVelocity(b2Vec2(-3.0f, 8.0f));
+			}
+			else{
+				player.setCurrentState(L"HIT_RIGHT");
+				player.getBody()->SetLinearVelocity(b2Vec2(3.0f, 8.0f));
+			}
+		}
+		else if (velocityY > 0){
 			if (state == L"WALK_RIGHT" || state == L"IDLE_RIGHT" || state == L"JUMPING_ASCEND_RIGHT"
 				|| state == L"ATTACK_RIGHT" || state == L"ATTACK_RIGHT_2"){
 				player.setCurrentState(L"JUMPING_ASCEND_RIGHT");
@@ -582,42 +600,6 @@ void SpriteManager::updateAnimations(Game *game){
 		}
 		botIterator++;
 	}
-
-	//LEGACY FLICKER CODE FROM HOMEWORK 3
-	/*if (player.getHP() != 10){
-		if (player.getHP() == 0){
-			player.setAlpha(255);
-			if (player.getVisibleFrames() == 0){
-				player.setVisibleFrames(10);
-				if (player.getLives() > 1){
-					player.decrementLives();
-					game->quitGame();
-					game->getGSM()->goToLoadLevel();
-					game->startGame();
-				}
-				else{
-					player.setLives(3);
-					game->quitGame();
-				}
-			}
-			else{
-				player.decrementVisibleFrames();
-			}
-		}
-		else{
-			if (player.getVisibleFrames() <= 0){
-				player.setAlpha(0);
-				player.setVisibleFrames(player.getHP());
-			}
-			else{
-				player.setAlpha(255);
-				player.decrementVisibleFrames();
-			}
-		}
-	}
-	else{
-		player.setAlpha(255);
-	}*/
 
 	player.updateSprite();
 }

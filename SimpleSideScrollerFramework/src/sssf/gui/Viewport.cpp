@@ -96,7 +96,7 @@ bool Viewport::areWorldCoordinatesInViewport(	float x,
 		return false;
 
 	// IS IT OFF-SCREEN ABOVE THE VIEWPORT?
-	else if	((y + height) <= viewportY)
+	else if	((y + height) <= viewportY - 32)
 		return false;
 
 	// IS IT OFF-SCREEN TO THE RIGHT OF THE VIEWPORT?
@@ -104,7 +104,7 @@ bool Viewport::areWorldCoordinatesInViewport(	float x,
 		return false;
 
 	// IS IT OFF-SCREEN BELOW THE VIEWPORT?
-	else if (y >= (viewportY + viewportHeight))
+	else if (y >= (viewportY + viewportHeight + 128))
 		return false;
 
 	// IT MUST BE AT LEAST PARTIALLY IN THE VIEWPORT

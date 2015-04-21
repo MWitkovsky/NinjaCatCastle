@@ -56,7 +56,8 @@ void NinjaCatCastleButtonEventHandler::handleButtonEvents(Game *game,
 	else if (command.compare(W_QUIT_COMMAND) == 0)
 	{
 		game->getGSM()->getSpriteManager()->getPlayer()->setLives(3);
-		game->setMusicChannel(game->playSongIntro(MAIN_MENU_SONG_INTRO, game->getMusicChannel()));
+		introChannel = game->playSongIntro(MAIN_MENU_SONG_INTRO, introChannel);
+		musicChannel = game->queueSong(MAIN_MENU_SONG, musicChannel);
 		game->quitGame();
 	}
 }

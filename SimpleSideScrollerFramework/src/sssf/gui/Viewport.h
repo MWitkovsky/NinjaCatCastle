@@ -61,7 +61,7 @@ public:
 	void setViewportOffsetX(int initViewportOffsetX)	
 	{ viewportOffsetX = initViewportOffsetX;}
 	void setViewportOffsetY(int initViewportOffsetY)	
-	{ viewportOffsetY = initViewportOffsetY;
+	{ viewportOffsetY = initViewportOffsetY = 0;
 	  normalOffsetY = viewportOffsetY;
 	}
 	void setToggleOffsetY(int initToggleOffsetY)

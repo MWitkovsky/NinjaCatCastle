@@ -17,6 +17,7 @@ void PropellerBot::shoot(Game *game){
 	projectile->setSpriteType(game->getGSM()->getSpriteManager()->getSpriteType(2));
 	projectile->setCurrentState(L"THROW");
 	projectile->setAlpha(255);
+	projectile->setIsProjectile(true);
 
 	b2BodyDef projectileProps;
 	b2FixtureDef fixtureDef;
@@ -26,10 +27,10 @@ void PropellerBot::shoot(Game *game){
 	projectileProps.type = b2_dynamicBody;
 	projectileProps.fixedRotation = true;
 	projectileProps.gravityScale = 0.0f;
+	projectileProps.bullet = true;
 
-	shape.SetAsBox(0.125f, 0.125f);
+	shape.SetAsBox(0.15625f, 0.171875f);
 	fixtureDef.shape = &shape;
-	fixtureDef.isSensor = true;
 
 	projectile->setBody(game->getGSM()->getPhysics()->getWorld()->CreateBody(&projectileProps));
 	projectile->getBody()->CreateFixture(&fixtureDef);

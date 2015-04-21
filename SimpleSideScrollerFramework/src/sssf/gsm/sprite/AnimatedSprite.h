@@ -42,6 +42,7 @@ protected:
 
 	// Player Specific values
 	boolean player = false;
+	boolean projectile = false;
 	boolean controllable = true;
 	boolean jump = false;
 	boolean facingRight = false;
@@ -50,6 +51,7 @@ protected:
 	boolean airborneGuard = false;
 	boolean attackFinished = false;
 	boolean attacking = false;
+	boolean toBeDeleted = false;
 
 	int HP = 3;
 	int visibleFrames = HP;
@@ -80,6 +82,8 @@ public:
 	boolean				isAttacking()		{ return attacking; }
 	boolean				isPlayer()			{ return player; }
 	boolean				isDead()			{ return (currentState == L"DIE_LEFT" || currentState == L"DIE_RIGHT"); }
+	boolean				isProjectile()		{ return projectile; }
+	boolean				isMarkedForDeletion()	{ return toBeDeleted; }
 
 	//"Airborne Guard" is for making sure animations don't break as currently they're handled by
 	//checking if velocity is zero. In any given arc, the velocity is zero twice, once at the peak
@@ -168,6 +172,12 @@ public:
 	}
 	void setAirborneGuard(boolean airborneGuard){
 		this->airborneGuard = airborneGuard;
+	}
+	void setIsProjectile(boolean projectile){
+		this->projectile = projectile;
+	}
+	void markForDeletion(){
+		toBeDeleted = !toBeDeleted;
 	}
 
 	// METHODS DEFINED IN AnimatedSprite.cpp
