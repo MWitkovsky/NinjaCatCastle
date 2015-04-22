@@ -24,6 +24,7 @@
 #include "sssf\input\GameInput.h"
 #include "sssf\timer\GameTimer.h"
 #include "sssf\platforms\Windows\WindowsTimer.h"
+#include "sssf\gui\Viewport.h"
 #include "Box2D\Box2D.h"
 
 /*
@@ -291,7 +292,7 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 		float viewportX = viewport->getViewportX() - viewport->getViewportOffsetX() + viewport->getViewportWidth() / 2.0f;
 		float viewportY = viewport->getViewportY() - viewport->getViewportOffsetY() + viewport->getViewportHeight() / 2.0f;
 		//We're removing the ability to move the viewport manually.
-		/*if (input->isKeyDown(UP_KEY))
+		if (input->isKeyDown(UP_KEY))
 		{
 			viewportVy -= MAX_VIEWPORT_AXIS_VELOCITY;
 			viewportMoved = true;
@@ -310,7 +311,7 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 		{
 			viewportVx += MAX_VIEWPORT_AXIS_VELOCITY;
 			viewportMoved = true;
-		}*/
+		}
 		Viewport *viewport = game->getGUI()->getViewport();
 		if (viewportMoved){
 			viewport->moveViewport((int)floor(viewportVx + 0.5f), (int)floor(viewportVy + 0.5f), game->getGSM()->getWorld()->getWorldWidth(), game->getGSM()->getWorld()->getWorldHeight());

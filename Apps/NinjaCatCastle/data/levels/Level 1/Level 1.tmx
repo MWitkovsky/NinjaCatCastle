@@ -26,6 +26,14 @@
    <property name="imagewidth" value="1024"/>
   </properties>
  </imagelayer>
+ <imagelayer name="house" x="10623" y="893">
+  <image source="house1.png"/>
+  <properties>
+   <property name="collidable" value="false"/>
+   <property name="imageheight" value="4480"/>
+   <property name="imagewidth" value="12800"/>
+  </properties>
+ </imagelayer>
  <layer name="ForegroundPlatformLayer" width="200" height="70">
   <properties>
    <property name="collidable" value="true"/>
@@ -14033,12 +14041,4 @@
    <tile gid="14"/>
   </data>
  </layer>
- <imagelayer name="house" x="10623" y="893">
-  <image source="house1.png"/>
-  <properties>
-   <property name="collidable" value="false"/>
-   <property name="imageheight" value="960"/>
-   <property name="imagewidth" value="320"/>
-  </properties>
- </imagelayer>
 </map>
