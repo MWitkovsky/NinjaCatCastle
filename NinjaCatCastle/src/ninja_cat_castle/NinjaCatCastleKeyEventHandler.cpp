@@ -233,25 +233,6 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 				player->decrementHP();
 			}
 
-			//Finally, level select cheats
-			if (input->isKeyDown(CTRL_KEY)){
-				if (input->isKeyDownForFirstTime(ONE_KEY)){
-					game->quitGame();
-					game->setCurrentLevelFileName(W_LEVEL_1_NAME);
-					game->startGame();
-				}
-				else if (input->isKeyDownForFirstTime(TWO_KEY)){
-					game->quitGame();
-					game->setCurrentLevelFileName(W_LEVEL_2_NAME);
-					game->startGame();
-				}
-				else if (input->isKeyDownForFirstTime(THREE_KEY)){
-					game->quitGame();
-					game->setCurrentLevelFileName(W_LEVEL_3_NAME);
-					game->startGame();
-				}
-			}
-
 			//for testing HP and death
 			/*if (input->isKeyDownForFirstTime(K_KEY)){
 				AnimatedSprite* player = gsm->getSpriteManager()->getPlayer();
@@ -268,19 +249,25 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 			}*/
 
 		}
-		if (input->isKeyDownForFirstTime(G_KEY))
-		{
-			viewport->toggleDebugView();
-			game->getGraphics()->toggleDebugTextShouldBeRendered();
+		//Finally, level select cheats
+		if (input->isKeyDown(CTRL_KEY)){
+			if (input->isKeyDownForFirstTime(ONE_KEY)){
+				game->quitGame();
+				game->setCurrentLevelFileName(W_LEVEL_1_NAME);
+				game->startGame();
+			}
+			else if (input->isKeyDownForFirstTime(TWO_KEY)){
+				game->quitGame();
+				game->setCurrentLevelFileName(W_LEVEL_2_NAME);
+				game->startGame();
+			}
+			else if (input->isKeyDownForFirstTime(THREE_KEY)){
+				game->quitGame();
+				game->setCurrentLevelFileName(W_LEVEL_3_NAME);
+				game->startGame();
+			}
 		}
-		if (input->isKeyDownForFirstTime(P_KEY))
-		{
-			gsm->getPhysics()->togglePhysics();
-		}
-		if (input->isKeyDownForFirstTime(T_KEY))
-		{
-			gsm->getPhysics()->activateForSingleUpdate();
-		}
+
 		// NOW SET THE ACTUAL PLAYER VELOCITY
 		pp->SetLinearVelocity(b2Vec2(vX, vY));
 
@@ -292,7 +279,7 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 		float viewportX = viewport->getViewportX() - viewport->getViewportOffsetX() + viewport->getViewportWidth() / 2.0f;
 		float viewportY = viewport->getViewportY() - viewport->getViewportOffsetY() + viewport->getViewportHeight() / 2.0f;
 		//We're removing the ability to move the viewport manually.
-		if (input->isKeyDown(UP_KEY))
+		/*if (input->isKeyDown(UP_KEY))
 		{
 			viewportVy -= MAX_VIEWPORT_AXIS_VELOCITY;
 			viewportMoved = true;
@@ -311,7 +298,7 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 		{
 			viewportVx += MAX_VIEWPORT_AXIS_VELOCITY;
 			viewportMoved = true;
-		}
+		}*/
 		Viewport *viewport = game->getGUI()->getViewport();
 		if (viewportMoved){
 			viewport->moveViewport((int)floor(viewportVx + 0.5f), (int)floor(viewportVy + 0.5f), game->getGSM()->getWorld()->getWorldWidth(), game->getGSM()->getWorld()->getWorldHeight());

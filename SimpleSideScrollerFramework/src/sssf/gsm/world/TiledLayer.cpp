@@ -27,6 +27,8 @@ TiledLayer::TiledLayer(	int initColumns,
 						int initRows,
 						int initTileWidth, 
 						int initTileHeight,
+						int initXOffset,
+						int initYOffset,
 						int initZ,
 						bool initCollidableTiles,
 						int initWorldWidth,
@@ -36,6 +38,8 @@ TiledLayer::TiledLayer(	int initColumns,
 			initRows,
 			initTileWidth,
 			initTileHeight,
+			initXOffset,
+			initYOffset,
 			initZ,
 			initCollidableTiles,
 			initWorldWidth,
@@ -121,8 +125,8 @@ void TiledLayer::addRenderItemsToRenderList(RenderList *renderList,
 		{
 			Tile *tileToAdd = getTile(i,j);
 
-			parallaxTileX = (int)((j * tileWidth) - (viewportX * (((float)(layerWidth-viewportWidth))/((float)(worldWidth-viewportWidth)))));
-			parallaxTileY = (int)((i * tileHeight) - (viewportY * (((float)(layerHeight-viewportHeight))/((float)(worldHeight-viewportHeight)))));
+			parallaxTileX = (int)tileToAdd->xOffset + ((j * tileWidth) - (viewportX * (((float)(layerWidth-viewportWidth))/((float)(worldWidth-viewportWidth)))));
+			parallaxTileY = (int)tileToAdd->yOffset + ((i * tileHeight) - (viewportY * (((float)(layerHeight - viewportHeight)) / ((float)(worldHeight - viewportHeight)))));
 
 			// APPLY PARALLAX SCROLLING TO THE COORDINATES
 			renderList->addRenderItem(	tileToAdd->textureID,
@@ -261,6 +265,8 @@ void TiledLayer::init(int initColumns,
 						int initRows,
 						int initTileWidth, 
 						int initTileHeight,
+						int initXOffset,
+						int initYOffset,
 						int initZ,
 						bool initCollidableTiles,
 						int initWorldWidth,
@@ -272,6 +278,8 @@ void TiledLayer::init(int initColumns,
 	tileHeight = initTileHeight;
 	worldWidth = initWorldWidth;
 	worldHeight = initWorldHeight;
+	xOffset = initXOffset;
+	yOffset = initYOffset;
 	z = initZ;
 	collidableTiles = initCollidableTiles;
 	tileLayout = new vector<Tile*>();

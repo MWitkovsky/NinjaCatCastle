@@ -16,5 +16,8 @@ class Tile
 public:
 	int textureID;
 	bool collidable;
+	bool wallOnly;
+	int xOffset = 0;
+	int yOffset = 0;
 	unordered_map<string, string> properties;
 };

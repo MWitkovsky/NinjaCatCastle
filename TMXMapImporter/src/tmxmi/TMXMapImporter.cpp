@@ -136,12 +136,19 @@ void TMXMapImporter::loadImageLayerInfo(const TiXmlNode *node)
 				{
 					imageLayerInfo.imagewidth = extractIntAtt(grandchildNode->ToElement(), VALUE_ATT);
 				}
+				else if (strcmp(att.c_str(), X_ELEMENT.c_str()) == 0){
+					imageLayerInfo.x = extractIntAtt(grandchildNode->ToElement(), VALUE_ATT);
+				}
+				else if (strcmp(att.c_str(), Y_ELEMENT.c_str()) == 0){
+					imageLayerInfo.y = extractIntAtt(grandchildNode->ToElement(), VALUE_ATT);
+				}
 				else { // This is a custom property
 					imageLayerInfo.properties[att] = grandchildElement->Attribute(VALUE_ATT.c_str());
 				}
 				grandchildNode = grandchildNode->NextSibling();
 			}
 		}
+		
 	}
 	// OK, NOW LOAD THE LAYER
 	imageLayerInfos[imageLayerInfo.name] = imageLayerInfo;
@@ -331,6 +338,8 @@ bool TMXMapImporter::buildWorldFromInfo(Game *game)
 				1,
 				ili.imagewidth,
 				ili.imageheight,
+				ili.x,
+				ili.y,
 				0,
 				ili.collidable,
 				largestLayerWidth,
@@ -339,6 +348,8 @@ bool TMXMapImporter::buildWorldFromInfo(Game *game)
 
 			Tile *imageTile = new Tile();
 			imageTile->collidable = ili.collidable;
+			imageTile->xOffset = ili.x;
+			imageTile->yOffset = ili.y;
 			wstring imageSourceW(ili.imageSource.begin(), ili.imageSource.end());
 			imageTile->textureID = worldTextureManager->loadTexture(dir + imageSourceW);
 			imageLayerToAdd->addTile(imageTile);
@@ -358,6 +369,8 @@ bool TMXMapImporter::buildWorldFromInfo(Game *game)
 															tli.height,
 															tli.tileSetInfo->tilewidth,
 															tli.tileSetInfo->tileheight,
+															0,
+															0,
 															0,
 															tli.collidable,
 															largestLayerWidth,
@@ -426,7 +439,8 @@ bool TMXMapImporter::buildWorldFromInfo(Game *game)
 			int collidableCount = 0;
 			while (row < tiledLayerToAdd->getRows()){
 				while (col < tiledLayerToAdd->getColumns()){
-					if (tiledLayerToAdd->getTile(row, col)->collidable){
+					if (tiledLayerToAdd->getTile(row, col)->collidable
+						&& tiledLayerToAdd->getTile(row, col)->properties["collidable"] != "verticalOnly"){
 						collidableCount++;
 					}
 					else{
@@ -457,12 +471,15 @@ bool TMXMapImporter::buildWorldFromInfo(Game *game)
 			//A consequence of this is actually that we can't have any singular tiles not connected to any other
 			//That is, a tile MUST touch at least one other to exist. A single collidable tile should probably never exist anyway.
 			//The fix is really messy, so let's see if we can avoid that for now.
+
+			//note that the body is placed 0.1f lower than it should be, this is so it lies slightly below the horizontal tiles
 			collidableCount = 0;
 			row = 0;
 			col = 0;
 			while (col < tiledLayerToAdd->getColumns()){
 				while (row < tiledLayerToAdd->getRows()){
-					if (tiledLayerToAdd->getTile(row, col)->collidable){
+					if (tiledLayerToAdd->getTile(row, col)->collidable
+						&& tiledLayerToAdd->getTile(row, col)->properties["collidable"] != "horizontalOnly"){
 						collidableCount++;
 					}
 					else{

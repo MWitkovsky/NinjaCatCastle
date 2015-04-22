@@ -30,6 +30,8 @@ static const string		LAYER_ELEMENT			= "layer";
 static const string		DATA_ELEMENT			= "data";
 static const string		PROPERTIES_ELEMENT		= "properties";
 static const string		PROPERTY_ELEMENT		= "property";
+static const string		X_ELEMENT				= "xOffset";
+static const string		Y_ELEMENT				= "yOffset";
 static const string		COLLIDABLE_ATT			= "collidable";
 static const string		PLAYER_ATT				= "player";
 static const string		VALUE_ATT				= "value";
@@ -75,6 +77,8 @@ struct ImageLayerInfo {
 	string imageSource;
 	uint16_t imagewidth;
 	uint16_t imageheight;
+	int x = 0;
+	int y = 0;
 	bool collidable;
 	unordered_map<string, string> properties;
 };

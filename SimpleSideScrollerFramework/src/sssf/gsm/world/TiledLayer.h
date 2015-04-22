@@ -35,6 +35,8 @@ protected:
 	int tileHeight;
 	int layerWidth;
 	int layerHeight;
+	int xOffset;
+	int yOffset;
 	int z;
 	// NOTE: z IS HERE IN CASE WE WANT TO LAYER SPRITES
 	// IN FRONT OF OR BEHIND LAYERS IN A GAME WORLD
@@ -58,6 +60,7 @@ public:
 	// METHODS DEFINED IN TiledLayer.cpp
 	TiledLayer(	int initColumns,	int initRows, 
 				int initTileWidth,	int initTileHeight, 
+				int xOffset,		int yOffset,
 				int initZ, 
 				bool initCollidableTiles, 
 				int initWorldWidth, int initWorldHeight);
@@ -73,6 +76,7 @@ public:
 	Tile*	getTile(int row, int column);
 	void	init(	int initColumns,	int initRows, 
 					int initTileWidth,	int initTileHeight, 
+					int xOffset, int yOffset,
 					int initZ, 
 					bool collidableTiles, 
 					int worldWidth, int worldHeight);

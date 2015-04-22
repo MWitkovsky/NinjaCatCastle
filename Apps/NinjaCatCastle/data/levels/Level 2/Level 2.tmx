@@ -18,12 +18,22 @@
    </properties>
   </tile>
  </tileset>
+ <imagelayer name="Image Layer 2" x="-9001">
+  <image source="dummy.png"/>
+  <properties>
+   <property name="collidable" value="false"/>
+   <property name="imageheight" value="1080"/>
+   <property name="imagewidth" value="1980"/>
+   <property name="xOffset" value="-9001"/>
+  </properties>
+ </imagelayer>
  <imagelayer name="Image Layer 1">
   <image source="MetalBackground.jpg"/>
   <properties>
    <property name="collidable" value="false"/>
    <property name="imageheight" value="1080"/>
-   <property name="imagewidth" value="1920"/>
+   <property name="imagewidth" value="1980"/>
+   <property name="xOffset" value="0"/>
   </properties>
  </imagelayer>
  <layer name="ForegroundPlatformLayer" width="50" height="30">
