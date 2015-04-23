@@ -59,21 +59,20 @@ protected:
 	boolean waitFrame = false;
 
 	int lives = 3;
+	int treats = 0;
 	
 
 public:
 	// INLINED ACCESSOR METHODS
+	unsigned int		getFrameIndex()		{ return frameIndex; }
 	int					getAlpha()			{ return alpha;				}
-	wstring				getCurrentState()	{ return currentState;		}
-	unsigned int		getFrameIndex()		{ return frameIndex;		}
-	AnimatedSpriteType*	getSpriteType()		{ return spriteType;		}
-	boolean				wasJump()			{ return jump; }
 	int					getHP()				{ return HP; }
 	int					getVisibleFrames()  { return visibleFrames; }
 	int					getInvincibilityFrames()  { return invincibilityFrames; }
-	boolean				isControllable()	{ return controllable; }
-	wstring				getOriginalState()  { return originalState; }
 	int					getLives()			{ return lives; }
+	int					getTreats()			{ return treats; }
+	boolean				wasJump()			{ return jump; }
+	boolean				isControllable()	{ return controllable; }
 	boolean				isFacingRight()		{ return facingRight; }
 	boolean				wasHit()			{ return hit; }
 	boolean				isAirborne()		{ return airborne; }
@@ -84,6 +83,9 @@ public:
 	boolean				isDead()			{ return (currentState == L"DIE_LEFT" || currentState == L"DIE_RIGHT"); }
 	boolean				isProjectile()		{ return projectile; }
 	boolean				isMarkedForDeletion()	{ return toBeDeleted; }
+	wstring				getCurrentState()	{ return currentState; }
+	wstring				getOriginalState()  { return originalState; }
+	AnimatedSpriteType*	getSpriteType()		{ return spriteType; }
 
 	//"Airborne Guard" is for making sure animations don't break as currently they're handled by
 	//checking if velocity is zero. In any given arc, the velocity is zero twice, once at the peak
@@ -187,4 +189,5 @@ public:
 	unsigned int getCurrentImageID();
 	void setCurrentState(wstring newState);
 	void updateSprite();
+	void collectTreat();
 };

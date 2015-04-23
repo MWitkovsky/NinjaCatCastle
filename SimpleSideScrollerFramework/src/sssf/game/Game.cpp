@@ -32,8 +32,20 @@ float PLAYER_MELEE_RANGE;
 int MIN_FPS;
 int	MAX_FPS;
 int	FPS_INC;
+int	LIVES_LABEL_X;
+int	LIVES_LABEL_Y;
+int	LIVES_COUNTER_X;
+int	LIVES_COUNTER_Y;
+int	TREATS_LABEL_X;
+int	TREATS_LABEL_Y;
+int	TREATS_COUNTER_X;
+int	TREATS_COUNTER_Y;
 int	START_BUTTON_X;
 int	START_BUTTON_Y;
+int LIVES_HEAD_X;
+int LIVES_HEAD_Y;
+int	TREAT_ICON_X;
+int	TREAT_ICON_Y;
 int	METER_TO_PIXEL_SCALE;
 
 char* SPLASH_JINGLE;
@@ -93,6 +105,7 @@ wstring	W_EXIT_IMAGE_MO_PATH;
 wstring	W_QUIT_IMAGE_PATH;
 wstring	W_QUIT_IMAGE_MO_PATH;
 wstring	W_LIVES_HEAD_PATH;
+wstring	W_TREAT_ICON_PATH;
 
 wstring	SPRITE_TYPES_DIR;
 wstring	SPRITE_TYPES_LIST;
@@ -137,11 +150,47 @@ void Game::readLUA(const char* fileName){
 	LuaObject FPS_INC_obj = luaPState->GetGlobal("FPS_INC");
 	FPS_INC = FPS_INC_obj.GetInteger();
 
+	LuaObject LIVES_LABEL_X_obj = luaPState->GetGlobal("LIVES_LABEL_X");
+	LIVES_LABEL_X = LIVES_LABEL_X_obj.GetInteger();
+
+	LuaObject LIVES_LABEL_Y_obj = luaPState->GetGlobal("LIVES_LABEL_Y");
+	LIVES_LABEL_Y = LIVES_LABEL_Y_obj.GetInteger();
+
+	LuaObject LIVES_COUNTER_X_obj = luaPState->GetGlobal("LIVES_COUNTER_X");
+	LIVES_COUNTER_X = LIVES_COUNTER_X_obj.GetInteger();
+
+	LuaObject LIVES_COUNTER_Y_obj = luaPState->GetGlobal("LIVES_COUNTER_Y");
+	LIVES_COUNTER_Y = LIVES_COUNTER_Y_obj.GetInteger();
+
+	LuaObject TREATS_LABEL_X_obj = luaPState->GetGlobal("TREATS_LABEL_X");
+	TREATS_LABEL_X = TREATS_LABEL_X_obj.GetInteger();
+
+	LuaObject TREATS_LABEL_Y_obj = luaPState->GetGlobal("TREATS_LABEL_Y");
+	TREATS_LABEL_Y = TREATS_LABEL_Y_obj.GetInteger();
+
+	LuaObject TREATS_COUNTER_X_obj = luaPState->GetGlobal("TREATS_COUNTER_X");
+	TREATS_COUNTER_X = TREATS_COUNTER_X_obj.GetInteger();
+
+	LuaObject TREATS_COUNTER_Y_obj = luaPState->GetGlobal("TREATS_COUNTER_Y");
+	TREATS_COUNTER_Y = TREATS_COUNTER_Y_obj.GetInteger();
+
 	LuaObject START_BUTTON_X_obj = luaPState->GetGlobal("START_BUTTON_X");
 	START_BUTTON_X = START_BUTTON_X_obj.GetInteger();
 
 	LuaObject START_BUTTON_Y_obj = luaPState->GetGlobal("START_BUTTON_Y");
 	START_BUTTON_Y = START_BUTTON_Y_obj.GetInteger();
+
+	LuaObject LIVES_HEAD_X_obj = luaPState->GetGlobal("LIVES_HEAD_X");
+	LIVES_HEAD_X = LIVES_HEAD_X_obj.GetInteger();
+
+	LuaObject LIVES_HEAD_Y_obj = luaPState->GetGlobal("LIVES_HEAD_Y");
+	LIVES_HEAD_Y = LIVES_HEAD_Y_obj.GetInteger();
+
+	LuaObject TREAT_ICON_X_obj = luaPState->GetGlobal("TREAT_ICON_X");
+	TREAT_ICON_X = TREAT_ICON_X_obj.GetInteger();
+
+	LuaObject TREAT_ICON_Y_obj = luaPState->GetGlobal("TREAT_ICON_Y");
+	TREAT_ICON_Y = TREAT_ICON_Y_obj.GetInteger();
 
 	LuaObject METER_TO_PIXEL_SCALE_obj = luaPState->GetGlobal("METER_TO_PIXEL_SCALE");
 	METER_TO_PIXEL_SCALE = METER_TO_PIXEL_SCALE_obj.GetInteger();
@@ -403,6 +452,11 @@ void Game::readLUA(const char* fileName){
 	string w_lives_head_path = W_LIVES_HEAD_PATH_obj.GetString();
 	wstring wW_LIVES_HEAD_PATH(w_lives_head_path.begin(), w_lives_head_path.end());
 	W_LIVES_HEAD_PATH = wW_LIVES_HEAD_PATH;
+
+	LuaObject W_TREAT_ICON_PATH_obj = luaPState->GetGlobal("W_TREAT_ICON_PATH");
+	string w_treat_icon_path = W_TREAT_ICON_PATH_obj.GetString();
+	wstring wW_TREAT_ICON_PATH(w_treat_icon_path.begin(), w_treat_icon_path.end());
+	W_TREAT_ICON_PATH = wW_TREAT_ICON_PATH;
 
 	LuaObject SPRITE_TYPES_DIR_obj = luaPState->GetGlobal("SPRITE_TYPES_DIR");
 	string w_sprite_types_path = SPRITE_TYPES_DIR_obj.GetString();

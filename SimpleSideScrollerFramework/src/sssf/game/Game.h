@@ -50,7 +50,7 @@ static const float PI = 3.1415926535897932384626433f;
 //File that all the following values are loaded from
 static const char*		W_LUA_FILE = "data/NinjaCatCastle.lua";
 
-//these should be moved to LUA when we get the chance~
+//FMOD and sound stuff
 extern char*	SPLASH_JINGLE;
 extern char*	MAIN_MENU_SONG_INTRO;
 extern char*	MAIN_MENU_SONG;
@@ -89,7 +89,7 @@ extern wstring	W_COLOR_KEY_RED;
 extern wstring	W_COLOR_KEY_GREEN;
 extern wstring	W_COLOR_KEY_BLUE;
 
-// CONSTANTS FOR ARTWORK - NOTE, THIS SHOULD REALLY BE LOADED FROM A FILE
+// CONSTANTS FOR ARTWORK
 extern wstring	W_GO_TO_MM_COMMAND;
 extern wstring	W_START_COMMAND;
 extern wstring	W_HELP_COMMAND;
@@ -112,6 +112,7 @@ extern wstring	W_EXIT_IMAGE_MO_PATH;
 extern wstring	W_QUIT_IMAGE_PATH;
 extern wstring	W_QUIT_IMAGE_MO_PATH;
 extern wstring	W_LIVES_HEAD_PATH;
+extern wstring	W_TREAT_ICON_PATH;
 
 // FOR OUR SPRITE
 // ...kind of neglected to bother listing them all here. oops.
@@ -128,10 +129,25 @@ extern float		PLAYER_MELEE_RANGE;
 extern int			MIN_FPS;
 extern int			MAX_FPS;
 extern int			FPS_INC;
+
+//Text coordinates
+extern int			LIVES_LABEL_X;
+extern int			LIVES_LABEL_Y;
+extern int			LIVES_COUNTER_X;
+extern int			LIVES_COUNTER_Y;
+extern int			TREATS_LABEL_X;
+extern int			TREATS_LABEL_Y;
+extern int			TREATS_COUNTER_X;
+extern int			TREATS_COUNTER_Y;
+
 //TODO: put all other button positions below here..
 extern int			START_BUTTON_X;
 extern int			START_BUTTON_Y;
 extern int			METER_TO_PIXEL_SCALE;
+extern int			LIVES_HEAD_X;
+extern int			LIVES_HEAD_Y;
+extern int			TREAT_ICON_X;
+extern int			TREAT_ICON_Y;
 
 //FMod Stuff
 extern FMOD::System*		fmodSystem; //handle to FMOD engine

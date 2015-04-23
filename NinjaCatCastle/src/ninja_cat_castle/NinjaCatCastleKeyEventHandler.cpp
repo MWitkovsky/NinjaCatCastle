@@ -219,7 +219,7 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 			}
 
 			//Hit testing
-			if (input->isKeyDownForFirstTime(H_KEY)){
+			/*if (input->isKeyDownForFirstTime(H_KEY)){
 				if (player->isFacingRight()){
 					player->setCurrentState(L"HIT_LEFT");
 					vX = -3.0f;
@@ -231,22 +231,14 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 				vY = 8.0f;
 				player->setHit(true);
 				player->decrementHP();
-			}
-
-			//for testing HP and death
-			/*if (input->isKeyDownForFirstTime(K_KEY)){
-				AnimatedSprite* player = gsm->getSpriteManager()->getPlayer();
-				if (player->getHP() != 1){
-					player->decrementHP();
-				}
-				else{
-					player->decrementHP();
-					player->toggleControllable();
-					vX = 0.0f;
-					player->setCurrentState(L"DIE");
-					player->setVisibleFrames(100);
-				}
 			}*/
+
+			//for testing collecting treats and 1-ups
+			if (input->isKeyDownForFirstTime(H_KEY)){
+				for (int i = 0; i < 10; i++){
+					gsm->getSpriteManager()->getPlayer()->collectTreat();
+				}
+			}
 
 		}
 		//Finally, level select cheats

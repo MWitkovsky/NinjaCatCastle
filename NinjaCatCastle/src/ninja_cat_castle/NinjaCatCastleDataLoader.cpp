@@ -497,9 +497,21 @@ void NinjaCatCastleDataLoader::initInGameGUI(GameGUI *gui, DirectXTextureManager
 
 	//Add the lives counter head graphic
 	OverlayImage *overlayImageToAdd = new OverlayImage();
-	overlayImageToAdd->x = 900;
-	overlayImageToAdd->y = 725;
+	overlayImageToAdd->x = LIVES_HEAD_X;
+	overlayImageToAdd->y = LIVES_HEAD_Y;
 	overlayImageToAdd->imageID = guiTextureManager->loadTexture(W_LIVES_HEAD_PATH);
+	overlayImageToAdd->height = 32;
+	overlayImageToAdd->width = 32;
+	overlayImageToAdd->alpha = 255;
+	overlayImageToAdd->z = 0;
+
+	inGameGUI->addOverlayImage(overlayImageToAdd);
+
+	//Add the treats counter graphic
+	overlayImageToAdd = new OverlayImage();
+	overlayImageToAdd->x = TREAT_ICON_X;
+	overlayImageToAdd->y = TREAT_ICON_Y;
+	overlayImageToAdd->imageID = guiTextureManager->loadTexture(W_TREAT_ICON_PATH);
 	overlayImageToAdd->height = 32;
 	overlayImageToAdd->width = 32;
 	overlayImageToAdd->alpha = 255;

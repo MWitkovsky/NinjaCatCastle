@@ -202,3 +202,12 @@ void AnimatedSprite::updateSprite()
 	if (animationCounter >= duration)
 		changeFrame();
 }
+
+void AnimatedSprite::collectTreat(){
+	treats++;
+	if (treats == 100){
+		lives++;
+		treats = 0;
+		//Play sound here. Either a special sound effect like Mario or even a whole jingle like Sonic.
+	}
+}
