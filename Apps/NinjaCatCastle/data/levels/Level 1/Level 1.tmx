@@ -28,7 +28,7 @@
    </properties>
   </tile>
  </tileset>
- <imagelayer name="bk">
+ <imagelayer name="bk" x="-94" y="-4">
   <image source="moving_bk1.png"/>
   <properties>
    <property name="collidable" value="false"/>
@@ -36,7 +36,7 @@
    <property name="imagewidth" value="1024"/>
   </properties>
  </imagelayer>
- <imagelayer name="house" x="10623" y="893">
+ <imagelayer name="house" x="10623" y="893" visible="0">
   <image source="house1.png"/>
   <properties>
    <property name="collidable" value="false"/>
@@ -2816,23 +2816,23 @@
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
-   <tile gid="31"/>
-   <tile gid="32"/>
-   <tile gid="32"/>
-   <tile gid="32"/>
-   <tile gid="32"/>
-   <tile gid="32"/>
-   <tile gid="32"/>
-   <tile gid="32"/>
-   <tile gid="32"/>
-   <tile gid="32"/>
-   <tile gid="32"/>
-   <tile gid="32"/>
-   <tile gid="32"/>
-   <tile gid="32"/>
-   <tile gid="32"/>
-   <tile gid="32"/>
-   <tile gid="33"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
