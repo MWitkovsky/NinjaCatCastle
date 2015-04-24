@@ -536,7 +536,7 @@ bool TMXMapImporter::buildWorldFromInfo(Game *game)
 						//The octagonal shape gives a more natural curve to the hitbox, leading to less frustration.
 						//Also gives a nice little push forward if you fall of a ledge.
 						float32 width = 0.60f;
-						float32 height = 1.0f;
+						float32 height = 0.8f;
 						float32 edgeWidth = 0.1f;
 						float32 edgeHeight = 0.2f;
 						b2Vec2 vertices[8];

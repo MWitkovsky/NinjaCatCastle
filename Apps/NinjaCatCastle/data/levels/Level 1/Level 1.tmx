@@ -36,7 +36,15 @@
    <property name="imagewidth" value="1024"/>
   </properties>
  </imagelayer>
- <imagelayer name="house" x="10623" y="893" visible="0">
+ <imagelayer name="Image Layer 3">
+  <image source="dummy.png"/>
+  <properties>
+   <property name="imageheight" value="1"/>
+   <property name="imagewidth" value="1"/>
+   <property name="offsetX" value="-9001"/>
+  </properties>
+ </imagelayer>
+ <imagelayer name="house" x="10623" y="893">
   <image source="house1.png"/>
   <properties>
    <property name="collidable" value="false"/>
