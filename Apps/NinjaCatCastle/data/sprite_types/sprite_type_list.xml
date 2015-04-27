@@ -3,5 +3,6 @@
   <sprite_type>main_character_colored</sprite_type>
   <sprite_type>pouncecat</sprite_type>
   <sprite_type>shuriken</sprite_type>
-  <sprite_type>main_character</sprite_type>
+  <sprite_type>propellercat</sprite_type>
+  <sprite_type>arrow</sprite_type>
 </sprite_type_list>

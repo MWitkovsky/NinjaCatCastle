@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<sprite_type>
+ <width>128</width>
+ <height>128</height>
+ <images_list>
+  <image_file id="1" file_name="coptercat_IDLE_LEFT/coptercat_IDLE_LEFT0001.png"/>
+  <image_file id="2" file_name="coptercat_IDLE_LEFT/coptercat_IDLE_LEFT0002.png"/>
+  <image_file id="3" file_name="coptercat_IDLE_RIGHT/coptercat_IDLE_RIGHT0001.png"/>
+  <image_file id="4" file_name="coptercat_IDLE_RIGHT/coptercat_IDLE_RIGHT0002.png"/>
+  <image_file id="5" file_name="coptercat_SHOOT_LEFT/coptercat_SHOOT_LEFT0001.png"/>
+  <image_file id="6" file_name="coptercat_SHOOT_LEFT/coptercat_SHOOT_LEFT0002.png"/>
+  <image_file id="7" file_name="coptercat_SHOOT_LEFT/coptercat_SHOOT_LEFT0003.png"/>
+  <image_file id="8" file_name="coptercat_SHOOT_LEFT/coptercat_SHOOT_LEFT0004.png"/>
+  <image_file id="9" file_name="coptercat_SHOOT_LEFT/coptercat_SHOOT_LEFT0005.png"/>
+  <image_file id="10" file_name="coptercat_SHOOT_LEFT/coptercat_SHOOT_LEFT0006.png"/>
+  <image_file id="11" file_name="coptercat_SHOOT_LEFT/coptercat_SHOOT_LEFT0007.png"/>
+  <image_file id="12" file_name="coptercat_SHOOT_RIGHT/coptercat_SHOOT_RIGHT0001.png"/>
+  <image_file id="13" file_name="coptercat_SHOOT_RIGHT/coptercat_SHOOT_RIGHT0002.png"/>
+  <image_file id="14" file_name="coptercat_SHOOT_RIGHT/coptercat_SHOOT_RIGHT0003.png"/>
+  <image_file id="15" file_name="coptercat_SHOOT_RIGHT/coptercat_SHOOT_RIGHT0004.png"/>
+  <image_file id="16" file_name="coptercat_SHOOT_RIGHT/coptercat_SHOOT_RIGHT0005.png"/>
+  <image_file id="17" file_name="coptercat_SHOOT_RIGHT/coptercat_SHOOT_RIGHT0006.png"/>
+  <image_file id="18" file_name="coptercat_SHOOT_RIGHT/coptercat_SHOOT_RIGHT0007.png"/>
+  <image_file id="19" file_name="coptercat_HIT_LEFT/coptercat_HIT_LEFT0001.png"/>
+  <image_file id="20" file_name="coptercat_HIT_LEFT/coptercat_HIT_LEFT0002.png"/>
+  <image_file id="21" file_name="coptercat_HIT_LEFT/coptercat_HIT_LEFT0003.png"/>
+  <image_file id="22" file_name="coptercat_HIT_LEFT/coptercat_HIT_LEFT0004.png"/>
+  <image_file id="23" file_name="coptercat_HIT_RIGHT/coptercat_HIT_RIGHT0001.png"/>
+  <image_file id="24" file_name="coptercat_HIT_RIGHT/coptercat_HIT_RIGHT0002.png"/>
+  <image_file id="25" file_name="coptercat_HIT_RIGHT/coptercat_HIT_RIGHT0003.png"/>
+  <image_file id="26" file_name="coptercat_HIT_RIGHT/coptercat_HIT_RIGHT0004.png"/>
+ </images_list>
+ <animations_list>
+ <animation_state>
+ <state>IDLE_LEFT</state>
+   <animation_sequence>
+    <pose image_id="1" duration="8"/>
+    <pose image_id="2" duration="8"/>
+   </animation_sequence>
+ </animation_state>
+ <animation_state>
+ <state>IDLE_RIGHT</state>
+   <animation_sequence>
+    <pose image_id="3" duration="8"/>
+    <pose image_id="4" duration="8"/>
+   </animation_sequence>
+ </animation_state>
+   <animation_state>
+ <state>SHOOT_LEFT</state>
+   <animation_sequence>
+    <pose image_id="5" duration="8"/>
+    <pose image_id="6" duration="8"/>
+    <pose image_id="7" duration="8"/>
+    <pose image_id="9" duration="8"/>
+   </animation_sequence>
+ </animation_state>
+   <animation_state>
+ <state>SHOOT_RIGHT</state>
+   <animation_sequence>
+    <pose image_id="12" duration="8"/>
+    <pose image_id="13" duration="8"/>
+    <pose image_id="14" duration="8"/>
+    <pose image_id="16" duration="8"/>
+   </animation_sequence>
+ </animation_state>
+      <animation_state>
+ <state>HIT_LEFT</state>
+   <animation_sequence>
+    <pose image_id="19" duration="4"/>
+	<pose image_id="20" duration="4"/>
+	<pose image_id="21" duration="4"/>
+	<pose image_id="22" duration="4"/>
+   </animation_sequence>
+ </animation_state>
+      <animation_state>
+ <state>HIT_RIGHT</state>
+   <animation_sequence>
+    <pose image_id="23" duration="4"/>
+	<pose image_id="24" duration="4"/>
+	<pose image_id="25" duration="4"/>
+	<pose image_id="26" duration="4"/>
+   </animation_sequence>
+ </animation_state>
+   <animation_state>
+ <state>DIE_LEFT</state>
+   <animation_sequence>
+   </animation_sequence>
+ </animation_state>
+    <animation_state>
+ <state>DIE_RIGHT</state>
+   <animation_sequence>
+   </animation_sequence>
+ </animation_state>
+ </animations_list>  
+</sprite_type>

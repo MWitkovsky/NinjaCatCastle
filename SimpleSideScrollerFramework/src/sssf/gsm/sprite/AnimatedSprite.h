@@ -11,6 +11,7 @@
 
 #pragma once
 #include "sssf_VS\stdafx.h"
+#include "sssf\game\Game.h"
 #include "sssf\gsm\physics\CollidableObject.h"
 #include "sssf\gsm\physics\PhysicalProperties.h"
 #include "sssf\gsm\sprite\AnimatedSpriteType.h"
@@ -185,9 +186,9 @@ public:
 	// METHODS DEFINED IN AnimatedSprite.cpp
 	AnimatedSprite();
 	~AnimatedSprite();
-	void changeFrame();
+	void changeFrame(Game *game);
 	unsigned int getCurrentImageID();
 	void setCurrentState(wstring newState);
-	void updateSprite();
+	void updateSprite(Game *game);
 	void collectTreat();
 };

@@ -14,8 +14,7 @@ PropellerBot::PropellerBot()
 
 void PropellerBot::shoot(Game *game){
 	AnimatedSprite *projectile = new AnimatedSprite();
-	projectile->setSpriteType(game->getGSM()->getSpriteManager()->getSpriteType(2));
-	projectile->setCurrentState(L"THROW");
+	projectile->setSpriteType(game->getGSM()->getSpriteManager()->getSpriteType(4));
 	projectile->setAlpha(255);
 	projectile->setIsProjectile(true);
 
@@ -40,9 +39,13 @@ void PropellerBot::shoot(Game *game){
 
 	if (isFacingRight()){
 		projectile->getBody()->SetLinearVelocity(b2Vec2(projectileVelocity.x, -projectileVelocity.y));
+		projectile->setCurrentState(L"RIGHT");
+		setCurrentState(L"IDLE_RIGHT");
 	}
 	else{
 		projectile->getBody()->SetLinearVelocity(b2Vec2(-projectileVelocity.x, -projectileVelocity.y));
+		projectile->setCurrentState(L"LEFT");
+		setCurrentState(L"IDLE_LEFT");
 	}
 
 	game->getGSM()->getSpriteManager()->addProjectile(projectile);
@@ -133,8 +136,8 @@ void PropellerBot::think(Game *game)
 			if (facingRight){
 				if (diffX > -1.0f && diffX < 3.0f){
 					if (diffY > 0.0f && diffY < maxSeekRange){
-						setCurrentState(L"JUMPING_RIGHT");
-						shoot(game);
+						setCurrentState(L"SHOOT_RIGHT");
+						//shoot(game);
 						resetThinkCycles();
 					}
 				}
@@ -145,8 +148,8 @@ void PropellerBot::think(Game *game)
 			else{
 				if (diffX > -3.0f && diffX < 1.0f){
 					if (diffY > 0.0f && diffY < maxSeekRange){
-						setCurrentState(L"JUMPING_LEFT");
-						shoot(game);
+						setCurrentState(L"SHOOT_LEFT");
+						//shoot(game);
 						resetThinkCycles();
 					}
 				}

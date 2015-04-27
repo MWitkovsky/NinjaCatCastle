@@ -36,7 +36,7 @@
    <property name="imagewidth" value="1024"/>
   </properties>
  </imagelayer>
- <imagelayer name="Image Layer 3">
+ <imagelayer name="Image Layer 3" x="1">
   <image source="dummy.png"/>
   <properties>
    <property name="imageheight" value="1"/>
@@ -11679,11 +11679,11 @@
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
+   <tile gid="53"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
-   <tile gid="1"/>
-   <tile gid="1"/>
+   <tile gid="53"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
@@ -12873,10 +12873,10 @@
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
+   <tile gid="52"/>
    <tile gid="1"/>
    <tile gid="1"/>
-   <tile gid="1"/>
-   <tile gid="1"/>
+   <tile gid="52"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="14"/>

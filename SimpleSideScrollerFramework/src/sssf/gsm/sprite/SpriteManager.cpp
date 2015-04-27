@@ -145,7 +145,9 @@ void SpriteManager::addSpriteItemsToRenderList(	Game *game)
 		projectileIterator = projectiles.begin();
 		while (projectileIterator != projectiles.end()){
 			AnimatedSprite *projectile = *projectileIterator;
-			addSpriteToRenderList(game, projectile, renderList, viewport);
+			if (projectile->getBody()){
+				addSpriteToRenderList(game, projectile, renderList, viewport);
+			}
 			projectileIterator++;
 		}
 
@@ -365,7 +367,7 @@ void SpriteManager::update(Game *game)
 	{
 		Bot *bot = (*botIterator);
 		bot->think(game);
-		bot->updateSprite();
+		bot->updateSprite(game);
 		botIterator++;
 	}
 
@@ -373,17 +375,23 @@ void SpriteManager::update(Game *game)
 	projectileIterator = projectiles.begin();
 	while (projectileIterator != projectiles.end()){
 		AnimatedSprite *projectile = *projectileIterator;
-		projectile->updateSprite();
-		if (projectile->getBody()->GetLinearVelocity().x == 0.0f
-			|| projectile->getBody()->GetLinearVelocity().y == 0.0f
-			|| projectile->isMarkedForDeletion()){
-			if (projectile->getBody()){
-				game->getGSM()->getPhysics()->getWorld()->DestroyBody(projectile->getBody());
-			}
-			if (projectile->isMarkedForDeletion()){
-				projectile->markForDeletion();
+		if (projectile->isProjectile()){
+			projectile->updateSprite(game);
+
+			if (projectile->getBody()->GetLinearVelocity().x == 0.0f
+				|| projectile->getBody()->GetLinearVelocity().y == 0.0f
+				|| projectile->isMarkedForDeletion()){
+				if (projectile->getBody()){
+					game->getGSM()->getPhysics()->getWorld()->DestroyBody(projectile->getBody());
+					projectile->setIsProjectile(false);
+					projectile->setBody(NULL);
+				}
+				if (projectile->isMarkedForDeletion()){
+					projectile->markForDeletion();
+				}
 			}
 		}
+			
 		projectileIterator++;
 	}
 }
@@ -603,5 +611,5 @@ void SpriteManager::updateAnimations(Game *game){
 		botIterator++;
 	}
 
-	player.updateSprite();
+	player.updateSprite(game);
 }

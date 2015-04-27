@@ -12,6 +12,7 @@
 #include "sssf\gsm\physics\PhysicalProperties.h"
 #include "sssf\gsm\sprite\AnimatedSprite.h"
 #include "sssf\gsm\sprite\AnimatedSpriteType.h"
+#include "sssf\gsm\ai\bots\PropellerBot.h"
 
 /*
 	AnimatedSprite - Default constructor, just sets everything to 0.
@@ -36,7 +37,7 @@ AnimatedSprite::~AnimatedSprite()
 	changeFrame - This method allows for the changing of an image in an 
 	animation sequence for a given animation state.
 */
-void AnimatedSprite::changeFrame()
+void AnimatedSprite::changeFrame(Game *game)
 {
 	// RESET THE COUNTER
 	animationCounter = 0;
@@ -49,7 +50,7 @@ void AnimatedSprite::changeFrame()
 
 	if (frameIndex == spriteType->getSequenceSize(currentState)){
 		if (!wasHit() && !isDead()){
-			//THIS IS ALL PLAYER ANIMATION STUFF THAT IS RELIANT
+			//THIS IS ALL ANIMATION STUFF THAT IS RELIANT
 			//ON THE END OF AN ANIMATION (Example: When attack ends, set to idle state)
 			if (currentState == L"JUMPING_ARC_RIGHT"){
 				setCurrentState(L"JUMPING_DESCEND_RIGHT");
@@ -147,6 +148,9 @@ void AnimatedSprite::changeFrame()
 			else if (currentState == L"JUMP_START_RIGHT"){
 				setCurrentState(L"JUMPING_RIGHT");
 			}
+			else if (currentState == L"SHOOT_LEFT" || currentState == L"SHOOT_RIGHT"){
+				static_cast<PropellerBot*>(this)->shoot(game);
+			}
 			else{
 				frameIndex = 0;
 			}
@@ -192,7 +196,7 @@ void AnimatedSprite::setCurrentState(wstring newState)
 	the animation speed. It also updates the sprite location
 	per the current velocity.
 */
-void AnimatedSprite::updateSprite()
+void AnimatedSprite::updateSprite(Game *game)
 {
 	unsigned int duration = spriteType->getDuration(currentState, frameIndex);
 	animationCounter++;
@@ -200,7 +204,7 @@ void AnimatedSprite::updateSprite()
 	// WE ONLY CHANGE THE ANIMATION FRAME INDEX WHEN THE
 	// ANIMATION COUNTER HAS REACHED THE DURATION
 	if (animationCounter >= duration)
-		changeFrame();
+		changeFrame(game);
 }
 
 void AnimatedSprite::collectTreat(){

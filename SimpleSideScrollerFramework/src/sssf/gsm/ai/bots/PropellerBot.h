@@ -17,7 +17,7 @@ private:
 	float32 flyVelocity = 1.5f;
 	float32 bobVelocity = 0.75f;
 	float32 maxSeekRange = 6.0f;
-	b2Vec2	projectileVelocity = b2Vec2(1.0f, 10.0f);
+	b2Vec2	projectileVelocity = b2Vec2(5.0f, 10.0f);
 
 	// THIS PRIVATE CONSTRUCTOR IS ONLY USED FOR CLONING
 	PropellerBot(unsigned int initMin,
