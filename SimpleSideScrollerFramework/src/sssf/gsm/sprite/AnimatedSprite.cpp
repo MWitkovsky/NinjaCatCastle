@@ -143,9 +143,11 @@ void AnimatedSprite::changeFrame(Game *game)
 				}
 			}
 			else if (currentState == L"JUMP_START_LEFT"){
+				game->playSound(SOUND_CAT_POUNCE);
 				setCurrentState(L"JUMPING_LEFT");
 			}
 			else if (currentState == L"JUMP_START_RIGHT"){
+				game->playSound(SOUND_CAT_POUNCE);
 				setCurrentState(L"JUMPING_RIGHT");
 			}
 			else if (currentState == L"SHOOT_LEFT" || currentState == L"SHOOT_RIGHT"){

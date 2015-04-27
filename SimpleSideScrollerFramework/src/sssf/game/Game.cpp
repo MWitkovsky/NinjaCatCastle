@@ -246,6 +246,54 @@ void Game::readLUA(const char* fileName){
 	string level_3_song = LEVEL_3_SONG_obj.GetString();
 	LEVEL_3_SONG = strcpy((char*)malloc(level_3_song.length() + 1), level_3_song.c_str());
 
+	LuaObject SOUND_ARROWSHOT_obj = luaPState->GetGlobal("SOUND_ARROWSHOT");
+	string sound_arrowshot = SOUND_ARROWSHOT_obj.GetString();
+	SOUND_ARROWSHOT = strcpy((char*)malloc(sound_arrowshot.length() + 1), sound_arrowshot.c_str());
+
+	LuaObject SOUND_BOMB_EXPLOSION1_obj = luaPState->GetGlobal("SOUND_BOMB_EXPLOSION1");
+	string sound_bomb_explosion1 = SOUND_BOMB_EXPLOSION1_obj.GetString();
+	SOUND_BOMB_EXPLOSION1 = strcpy((char*)malloc(sound_bomb_explosion1.length() + 1), sound_bomb_explosion1.c_str());
+
+	LuaObject SOUND_BOMB_EXPLOSION2_obj = luaPState->GetGlobal("SOUND_BOMB_EXPLOSION2");
+	string sound_bomb_explosion2 = SOUND_BOMB_EXPLOSION1_obj.GetString();
+	SOUND_BOMB_EXPLOSION2 = strcpy((char*)malloc(sound_bomb_explosion2.length() + 1), sound_bomb_explosion2.c_str());
+
+	LuaObject SOUND_CAT_POUNCE_obj = luaPState->GetGlobal("SOUND_CAT_POUNCE");
+	string sound_cat_pounce = SOUND_CAT_POUNCE_obj.GetString();
+	SOUND_CAT_POUNCE = strcpy((char*)malloc(sound_cat_pounce.length() + 1), sound_cat_pounce.c_str());
+
+	LuaObject SOUND_PROPELLER_obj = luaPState->GetGlobal("SOUND_PROPELLER");
+	string sound_propeller = SOUND_PROPELLER_obj.GetString();
+	SOUND_PROPELLER = strcpy((char*)malloc(sound_propeller.length() + 1), sound_propeller.c_str());
+
+	LuaObject SOUND_HIT_obj = luaPState->GetGlobal("SOUND_HIT");
+	string sound_hit = SOUND_HIT_obj.GetString();
+	SOUND_HIT = strcpy((char*)malloc(sound_hit.length() + 1), sound_hit.c_str());
+
+	LuaObject SOUND_HIT2_obj = luaPState->GetGlobal("SOUND_HIT2");
+	string sound_hit2 = SOUND_HIT_obj.GetString();
+	SOUND_HIT2 = strcpy((char*)malloc(sound_hit2.length() + 1), sound_hit2.c_str());
+
+	LuaObject SOUND_MC_DEATH_obj = luaPState->GetGlobal("SOUND_MC_DEATH");
+	string sound_mc_death = SOUND_MC_DEATH_obj.GetString();
+	SOUND_MC_DEATH = strcpy((char*)malloc(sound_mc_death.length() + 1), sound_mc_death.c_str());
+
+	LuaObject SOUND_MC_JUMP_obj = luaPState->GetGlobal("SOUND_MC_JUMP");
+	string sound_mc_jump = SOUND_MC_JUMP_obj.GetString();
+	SOUND_MC_JUMP = strcpy((char*)malloc(sound_mc_jump.length() + 1), sound_mc_jump.c_str());
+
+	LuaObject SOUND_SLASH1_obj = luaPState->GetGlobal("SOUND_SLASH1");
+	string sound_slash1 = SOUND_SLASH1_obj.GetString();
+	SOUND_SLASH1 = strcpy((char*)malloc(sound_slash1.length() + 1), sound_slash1.c_str());
+
+	LuaObject SOUND_SLASH2_obj = luaPState->GetGlobal("SOUND_SLASH2");
+	string sound_slash2 = SOUND_SLASH2_obj.GetString();
+	SOUND_SLASH2 = strcpy((char*)malloc(sound_slash2.length() + 1), sound_slash2.c_str());
+
+	LuaObject SOUND_BIGSLASH_obj = luaPState->GetGlobal("SOUND_BIGSLASH");
+	string sound_bigslash = SOUND_BIGSLASH_obj.GetString();
+	SOUND_BIGSLASH = strcpy((char*)malloc(sound_bigslash.length() + 1), sound_bigslash.c_str());
+
 	LuaObject W_LEVEL_1_DIR_obj = luaPState->GetGlobal("W_LEVEL_1_DIR");
 	string w_level1_dir = W_LEVEL_1_DIR_obj.GetString();
 	wstring wW_LEVEL_1_DIR(w_level1_dir.begin(), w_level1_dir.end());

@@ -144,6 +144,7 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 						vY = JUMP_SPEED;
 						player->setWasJump(true);
 						player->setAirborne(true);
+						game->playSound(SOUND_MC_JUMP);
 					}
 				}
 			}
@@ -185,6 +186,7 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 								player->setCurrentState(L"ATTACK_LEFT_2");
 							}
 						}
+						game->playSound(SOUND_SLASH2);
 					}
 					else if (state == L"ATTACK_RIGHT_2" || state == L"ATTACK_LEFT_2"){
 						if (dPressed && !aPressed){
@@ -203,12 +205,15 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 								player->setCurrentState(L"ATTACK_LEFT");
 							}
 						}
+						game->playSound(SOUND_SLASH1);
 					}
 					else if (player->isFacingRight()){
 						player->setCurrentState(L"ATTACK_RIGHT");
+						game->playSound(SOUND_SLASH1);
 					}
 					else{
 						player->setCurrentState(L"ATTACK_LEFT");
+						game->playSound(SOUND_SLASH1);
 					}
 
 					if (!player->getHurtBox()->IsActive()){

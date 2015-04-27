@@ -427,6 +427,7 @@ void SpriteManager::updateAnimations(Game *game){
 				player.setCurrentState(L"HIT_RIGHT");
 				player.getBody()->SetLinearVelocity(b2Vec2(3.0f, 8.0f));
 			}
+			game->playSound(SOUND_HIT2);
 		}
 		else if (velocityY > 0){
 			if (state == L"WALK_RIGHT" || state == L"IDLE_RIGHT" || state == L"JUMPING_ASCEND_RIGHT"
@@ -461,19 +462,25 @@ void SpriteManager::updateAnimations(Game *game){
 					if (state == L"HIT_LEFT"){
 						player.setCurrentState(L"DIE_RIGHT");
 						player.setControllable(false);
+						musicChannel->stop();
+						game->playSound(SOUND_MC_DEATH);
 					}
 					else{
 						player.setCurrentState(L"DIE_LEFT");
 						player.setControllable(false);
+						musicChannel->stop();
+						game->playSound(SOUND_MC_DEATH);
 					}
 				}
 				else if (state == L"JUMPING_DESCEND_LEFT" || state == L"HIT_RIGHT"
 					|| state == L"ATTACK_LEFT" || state == L"ATTACK_LEFT_2"){
 					player.setCurrentState(L"LAND_LEFT");
+					game->playSound(SOUND_MC_JUMP);
 				}
 				else if (player.getCurrentState() == L"JUMPING_DESCEND_RIGHT" || state == L"HIT_LEFT"
 					|| state == L"ATTACK_RIGHT" || state == L"ATTACK_RIGHT_2"){
 					player.setCurrentState(L"LAND_RIGHT");
+					game->playSound(SOUND_MC_JUMP);
 				}
 			}
 		}
@@ -541,7 +548,10 @@ void SpriteManager::updateAnimations(Game *game){
 		else{
 			//propeller cat state logic goes here
 		}
-
+		if (genericBot->shouldPlayHitSound()){
+			game->playSound(SOUND_HIT);
+			genericBot->setPlayHitSound(false);
+		}
 		if (pounceBot){
 			wstring state = pounceBot->getCurrentState();
 			if (!pounceBot->isDead()){

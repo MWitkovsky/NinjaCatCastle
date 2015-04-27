@@ -53,6 +53,7 @@ protected:
 	boolean attackFinished = false;
 	boolean attacking = false;
 	boolean toBeDeleted = false;
+	boolean playHitSound = false;
 
 	int HP = 3;
 	int visibleFrames = HP;
@@ -84,6 +85,7 @@ public:
 	boolean				isDead()			{ return (currentState == L"DIE_LEFT" || currentState == L"DIE_RIGHT"); }
 	boolean				isProjectile()		{ return projectile; }
 	boolean				isMarkedForDeletion()	{ return toBeDeleted; }
+	boolean				shouldPlayHitSound()	{ return playHitSound; }
 	wstring				getCurrentState()	{ return currentState; }
 	wstring				getOriginalState()  { return originalState; }
 	AnimatedSpriteType*	getSpriteType()		{ return spriteType; }
@@ -181,6 +183,9 @@ public:
 	}
 	void markForDeletion(){
 		toBeDeleted = !toBeDeleted;
+	}
+	void setPlayHitSound(boolean playHitSound){
+		this->playHitSound = playHitSound;
 	}
 
 	// METHODS DEFINED IN AnimatedSprite.cpp

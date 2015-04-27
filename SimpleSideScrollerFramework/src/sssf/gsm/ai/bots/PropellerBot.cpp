@@ -49,6 +49,7 @@ void PropellerBot::shoot(Game *game){
 	}
 
 	game->getGSM()->getSpriteManager()->addProjectile(projectile);
+	game->playSound(SOUND_ARROWSHOT);
 }
 
 void PropellerBot::calculateBob(){

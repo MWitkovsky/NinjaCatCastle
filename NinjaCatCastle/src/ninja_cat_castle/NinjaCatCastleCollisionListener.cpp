@@ -137,5 +137,6 @@ void NinjaCatCastleCollisionListener::respondToCollision(AnimatedSprite *player,
 			}
 		}
 		enemy->setHit(true);
+		enemy->setPlayHitSound(true);
 	}
 }
