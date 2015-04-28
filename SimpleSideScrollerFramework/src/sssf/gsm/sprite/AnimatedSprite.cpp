@@ -157,6 +157,26 @@ void AnimatedSprite::changeFrame(Game *game)
 				frameIndex = 0;
 			}
 		}
+		else if (dynamic_cast<PropellerBot*>(this)){
+			if (currentState == L"HIT_LEFT" || currentState == L"HIT_RIGHT"){
+				frameIndex = 0;
+			}
+			else{
+				frameIndex = frameIndex -= 2;
+			}
+		}
+		else if (isPlayer() && isDead()){
+			decrementLives();
+			if (lives != 0){
+				game->quitGame();
+				game->startGame();
+			}
+			else{
+				game->quitGame();
+				introChannel = game->playSongIntro(MAIN_MENU_SONG_INTRO, introChannel);
+				musicChannel = game->queueSong(MAIN_MENU_SONG, musicChannel);
+			}
+		}
 		else{
 			frameIndex = frameIndex -= 2;
 		}

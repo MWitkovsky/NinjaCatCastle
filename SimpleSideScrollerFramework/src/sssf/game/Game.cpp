@@ -127,6 +127,8 @@ FMOD::System*		fmodSystem; //handle to FMOD engine
 FMOD::Channel*		musicChannel;
 FMOD::Channel*		introChannel; //needed for seamless looping
 
+boolean	musicEnabled = true;
+
 //ALL GLOBAL SCOPE VARIABLES ARE LOADED HERE FROM THE LUA FILE IN THE DATA DIRECTORY
 void Game::readLUA(const char* fileName){
 	//LUA STUFF WOO
@@ -708,7 +710,9 @@ void Game::processGameData()
 void Game::quitGame()
 {
 	// Reset some player properties that may have changed
-	gsm->getSpriteManager()->getPlayer()->setLives(3);
+	if (gsm->getSpriteManager()->getPlayer()->getLives() == 0){
+		gsm->getSpriteManager()->getPlayer()->setLives(3);
+	}
 	while (gsm->getSpriteManager()->getPlayer()->getInvincibilityFrames()){
 		gsm->getSpriteManager()->getPlayer()->decrementInvincibilityFrames();
 	}
@@ -795,49 +799,55 @@ void Game::processMusicLogic(){
 //separate sound files for this to work)
 //Logic for playing the main song after the intro is handled by the method processMusicLogic() right above.
 FMOD::Channel* Game::playSongIntro(const char* song, FMOD::Channel* songChannel){
-	songChannel->stop(); //stops song currently playing in the music channel
+	if (musicEnabled){
+		songChannel->stop(); //stops song currently playing in the music channel
 
-	FMOD::Sound* newSong = 0;
-	FMOD::Channel* newChannel = 0;
+		FMOD::Sound* newSong = 0;
+		FMOD::Channel* newChannel = 0;
 
-	fmodSystem->createSound(song, FMOD_DEFAULT, 0, &newSong);
-	newSong->setMode(FMOD_LOOP_OFF); //doesn't loop
+		fmodSystem->createSound(song, FMOD_DEFAULT, 0, &newSong);
+		newSong->setMode(FMOD_LOOP_OFF); //doesn't loop
 
-	fmodSystem->playSound(newSong, 0, false, &newChannel); //plays sound in newChannel
-	return newChannel; //returns newChannel
+		fmodSystem->playSound(newSong, 0, false, &newChannel); //plays sound in newChannel
+		return newChannel; //returns newChannel
+	}
 }
 
 //Queues a song for play to produce a (hopefully) gapless transition
 //This also simplifies the music logic so it automatically plays the queued song
 //as soon as the intro is done playing
 FMOD::Channel* Game::queueSong(const char* song, FMOD::Channel* songChannel){
-	songChannel->stop(); //stops song currently playing in the music channel
+	if (musicEnabled){
+		songChannel->stop(); //stops song currently playing in the music channel
 
-	FMOD::Sound* newSong = 0;
-	FMOD::Channel* newChannel = 0;
+		FMOD::Sound* newSong = 0;
+		FMOD::Channel* newChannel = 0;
 
-	fmodSystem->createStream(song, FMOD_DEFAULT, 0, &newSong);
-	newSong->setMode(FMOD_LOOP_NORMAL); //loops
+		fmodSystem->createStream(song, FMOD_DEFAULT, 0, &newSong);
+		newSong->setMode(FMOD_LOOP_NORMAL); //loops
 
-	fmodSystem->playSound(newSong, 0, false, &newChannel); //plays sound in newChannel
-	newChannel->setPaused(true);
+		fmodSystem->playSound(newSong, 0, false, &newChannel); //plays sound in newChannel
+		newChannel->setPaused(true);
 
-	return newChannel; //returns newChannel
+		return newChannel; //returns newChannel
+	}
 }
 
 //Plays a song in the specified channel that doesn't have an intro.
 FMOD::Channel* Game::playSongNoIntro(const char* song, FMOD::Channel* songChannel){
-	musicChannel->stop(); //stops song currently playing in the music channel
-	introChannel->stop();
+	if (musicEnabled){
+		musicChannel->stop(); //stops song currently playing in the music channel
+		introChannel->stop();
 
-	FMOD::Sound* newSong = 0;
-	FMOD::Channel* newChannel = 0;
+		FMOD::Sound* newSong = 0;
+		FMOD::Channel* newChannel = 0;
 
-	fmodSystem->createStream(song, FMOD_DEFAULT, 0, &newSong);
-	newSong->setMode(FMOD_LOOP_NORMAL); //loops
+		fmodSystem->createStream(song, FMOD_DEFAULT, 0, &newSong);
+		newSong->setMode(FMOD_LOOP_NORMAL); //loops
 
-	fmodSystem->playSound(newSong, 0, false, &newChannel); //plays sound in newChannel
-	return newChannel; //returns newChannel
+		fmodSystem->playSound(newSong, 0, false, &newChannel); //plays sound in newChannel
+		return newChannel; //returns newChannel
+	}
 }
 
 //Plays a sound in first available channel

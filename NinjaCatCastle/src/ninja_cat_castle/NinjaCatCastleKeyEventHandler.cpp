@@ -263,6 +263,14 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 				game->setCurrentLevelFileName(W_LEVEL_3_NAME);
 				game->startGame();
 			}
+			else if (input->isKeyDownForFirstTime(I_KEY)){
+				if (game->getGSM()->getSpriteManager()->getPlayer()->getInvincibilityFrames()){
+					game->getGSM()->getSpriteManager()->getPlayer()->setInvincibilityFrames(0);
+				}
+				else{
+					game->getGSM()->getSpriteManager()->getPlayer()->setInvincibilityFrames(999999);
+				}
+			}
 		}
 
 		// NOW SET THE ACTUAL PLAYER VELOCITY
@@ -307,8 +315,8 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 			//IF PLAYER IS FACING RIGHT, VIEWPORT SHOULD BE MORE RIGHT
 			//ELSE, MORE LEFT
 			if (player->isFacingRight()){
-				if (pp->GetPosition().x*METER_TO_PIXEL_SCALE > viewportX - 300){
-					diff = (pp->GetPosition().x*METER_TO_PIXEL_SCALE - viewportX + 300) / 7;
+				if (pp->GetPosition().x*METER_TO_PIXEL_SCALE > viewportX - 250){
+					diff = (pp->GetPosition().x*METER_TO_PIXEL_SCALE - viewportX + 250) / 7;
 					if (diff > MAX_VIEWPORT_AXIS_VELOCITY){
 						viewportVx += MAX_VIEWPORT_AXIS_VELOCITY;
 					}
@@ -316,8 +324,8 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 						viewportVx += diff;
 					}
 				}
-				else if (pp->GetPosition().x*METER_TO_PIXEL_SCALE < viewportX - 300){
-					diff = (viewportX - pp->GetPosition().x*METER_TO_PIXEL_SCALE - 300) / 7;
+				else if (pp->GetPosition().x*METER_TO_PIXEL_SCALE < viewportX - 250){
+					diff = (viewportX - pp->GetPosition().x*METER_TO_PIXEL_SCALE - 250) / 7;
 					if (diff > MAX_VIEWPORT_AXIS_VELOCITY){
 						viewportVx -= MAX_VIEWPORT_AXIS_VELOCITY;
 					}
@@ -327,8 +335,8 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 				}
 			}
 			else{
-				if (pp->GetPosition().x*METER_TO_PIXEL_SCALE > viewportX + 200){
-					diff = (pp->GetPosition().x*METER_TO_PIXEL_SCALE - viewportX - 200) / 7;
+				if (pp->GetPosition().x*METER_TO_PIXEL_SCALE > viewportX + 150){
+					diff = (pp->GetPosition().x*METER_TO_PIXEL_SCALE - viewportX - 150) / 7;
 					if (diff > MAX_VIEWPORT_AXIS_VELOCITY){
 						viewportVx += MAX_VIEWPORT_AXIS_VELOCITY;
 					}
@@ -336,8 +344,8 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 						viewportVx += diff;
 					}
 				}
-				else if (pp->GetPosition().x*METER_TO_PIXEL_SCALE < viewportX + 200){
-					diff = (viewportX - pp->GetPosition().x*METER_TO_PIXEL_SCALE + 200) / 7;
+				else if (pp->GetPosition().x*METER_TO_PIXEL_SCALE < viewportX + 150){
+					diff = (viewportX - pp->GetPosition().x*METER_TO_PIXEL_SCALE + 150) / 7;
 					if (diff > MAX_VIEWPORT_AXIS_VELOCITY){
 						viewportVx -= MAX_VIEWPORT_AXIS_VELOCITY;
 					}

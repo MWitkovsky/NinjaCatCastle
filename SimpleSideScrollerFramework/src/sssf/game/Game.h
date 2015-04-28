@@ -179,6 +179,7 @@ const unsigned int T_KEY = (unsigned int)'T';
 const unsigned int K_KEY = (unsigned int)'K';
 const unsigned int J_KEY = (unsigned int)'J';
 const unsigned int H_KEY = (unsigned int)'H';
+const unsigned int I_KEY = (unsigned int)'I';
 const unsigned int ONE_KEY = (unsigned int)'1';
 const unsigned int TWO_KEY = (unsigned int)'2';
 const unsigned int THREE_KEY = (unsigned int)'3';

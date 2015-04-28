@@ -415,6 +415,24 @@ void SpriteManager::updateAnimations(Game *game){
 		player.setAirborne(true);
 	}
 
+	//Checking if level is completed
+	if (player.getBody()->GetPosition().x * 64 > game->getGSM()->getWorld()->getWorldWidth()){
+		if (game->getCurrentLevelFileName() == W_LEVEL_1_NAME){
+			game->quitGame();
+			game->setCurrentLevelFileName(W_LEVEL_2_NAME);
+			game->startGame();
+		}
+		else if (game->getCurrentLevelFileName() == W_LEVEL_2_NAME){
+			game->quitGame();
+			game->setCurrentLevelFileName(W_LEVEL_3_NAME);
+			game->startGame();
+		}
+		else{
+			player.setLives(3);
+			game->quitGame();
+		}
+	}
+
 	//ANIMATION STUFF
 	if (!player.isAttacking()){
 		if (player.isProjectile()){
@@ -547,6 +565,40 @@ void SpriteManager::updateAnimations(Game *game){
 		}
 		else{
 			//propeller cat state logic goes here
+			if (propellerBot->getBody()->GetGravityScale() == 1.0f){
+				if (propellerBot->getBody()->GetLinearVelocity().y == 0){
+					if (propellerBot->hasAirborneGuard()){
+						propellerBot->setAirborneGuard(false);
+					}
+					else{
+						propellerBot->setAirborne(false);
+						propellerBot->setHit(false);
+					}
+				}
+				else{
+					propellerBot->setAirborne(true);
+				}
+
+				if (!propellerBot->wasHit()){
+					propellerBot->getBody()->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
+					if (propellerBot->getCurrentState() == L"HIT_LEFT"){
+						propellerBot->setCurrentState(L"DIE_LEFT");
+						game->playSound(SOUND_BOMB_EXPLOSION1);
+						game->playSound(SOUND_BOMB_EXPLOSION2);
+					}
+					else if (propellerBot->getCurrentState() == L"HIT_RIGHT"){
+						propellerBot->setCurrentState(L"DIE_RIGHT");
+						game->playSound(SOUND_BOMB_EXPLOSION1);
+						game->playSound(SOUND_BOMB_EXPLOSION2);
+					}
+				}
+			}
+			else if (propellerBot->getBody()->GetLinearVelocity().x > 0.0f){
+				propellerBot->setFacingRight(true);
+			}
+			else{
+				propellerBot->setFacingRight(false);
+			}
 		}
 		if (genericBot->shouldPlayHitSound()){
 			game->playSound(SOUND_HIT);

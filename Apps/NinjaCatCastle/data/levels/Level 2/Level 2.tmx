@@ -28,13 +28,14 @@
    </properties>
   </tile>
  </tileset>
- <imagelayer name="Image Layer 1">
+ <imagelayer name="Image Layer 1" y="64">
   <image source="moving_bk2.png"/>
   <properties>
    <property name="collidable" value="false"/>
    <property name="imageheight" value="1080"/>
    <property name="imagewidth" value="1980"/>
    <property name="xOffset" value="0"/>
+   <property name="yOffset" value="0"/>
   </properties>
  </imagelayer>
  <imagelayer name="house1" x="160" y="630">

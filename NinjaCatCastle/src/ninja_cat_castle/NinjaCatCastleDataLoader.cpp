@@ -172,9 +172,6 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 	PoseurSpriteTypesImporter psti;
 	psti.loadSpriteTypes(game, SPRITE_TYPES_DIR, SPRITE_TYPES_LIST);
 
-
-	game->getGUI()->getViewport()->setViewportY(900);
-
 	// LET'S MAKE A PLAYER SPRITE
 	// @TODO - IT WOULD BE BETTER TO LOAD THIS STUFF FROM A FILE
 	GameStateManager *gsm = game->getGSM();
@@ -203,6 +200,8 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 		botIterator++;
 	}
 
+	game->getGUI()->getViewport()->setToggleOffsetY(0);
+
 	//This shoulnd't actually be here because the song should start playing AFTER the level is loaded,
 	//but you can just shift this next call to the place where the level is done loading so the music
 	//plays when the player first sees the field. This is just an example of how the logic works :D
@@ -212,14 +211,20 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 	if (name == W_LEVEL_1_NAME){
 		introChannel = game->playSongIntro(LEVEL_1_SONG_INTRO, introChannel);
 		musicChannel = game->queueSong(LEVEL_1_SONG, musicChannel);
+		game->getGUI()->getViewport()->setViewportY(1500);
+		game->getGUI()->getViewport()->setViewportX(0);
 	}
 	else if (name == W_LEVEL_2_NAME){
 		introChannel = game->playSongIntro(LEVEL_2_SONG_INTRO, introChannel);
 		musicChannel = game->queueSong(LEVEL_2_SONG, musicChannel);
+		game->getGUI()->getViewport()->setViewportY(900);
+		game->getGUI()->getViewport()->setViewportX(0);
 	}
 	else{
 		introChannel = game->playSongIntro(LEVEL_3_SONG_INTRO, introChannel);
 		musicChannel = game->queueSong(LEVEL_3_SONG, musicChannel);
+		game->getGUI()->getViewport()->setViewportY(7000);
+		game->getGUI()->getViewport()->setViewportX(0);
 	}
 }
 

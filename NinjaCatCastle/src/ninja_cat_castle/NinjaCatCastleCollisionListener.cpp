@@ -138,5 +138,6 @@ void NinjaCatCastleCollisionListener::respondToCollision(AnimatedSprite *player,
 		}
 		enemy->setHit(true);
 		enemy->setPlayHitSound(true);
+		enemy->getBody()->SetGravityScale(1.0f);
 	}
 }

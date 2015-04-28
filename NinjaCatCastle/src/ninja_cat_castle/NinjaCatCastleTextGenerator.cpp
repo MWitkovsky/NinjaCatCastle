@@ -21,10 +21,6 @@
 static const wstring	W_MOUSE_COORDS_TEXT = L"Mouse: (";
 static const int		W_TEXT_X = 200;
 static const int		W_TEXT_Y = 10;
-//static const int		LIVES_COUNTER_X = LIVES_LABEL_X + 35;
-//static const int		LIVES_COUNTER_Y = LIVES_LABEL_Y + 35;
-//static const int		TREATS_COUNTER_X = TREATS_LABEL_X + 35;
-//static const int		TREATS_COUNTER_Y = TREATS_LABEL_Y + 35;
 
 void NinjaCatCastleTextGenerator::appendMouseCoords(Game *game)
 {

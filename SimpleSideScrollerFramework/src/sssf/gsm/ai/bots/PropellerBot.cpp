@@ -138,7 +138,6 @@ void PropellerBot::think(Game *game)
 				if (diffX > -1.0f && diffX < 3.0f){
 					if (diffY > 0.0f && diffY < maxSeekRange){
 						setCurrentState(L"SHOOT_RIGHT");
-						//shoot(game);
 						resetThinkCycles();
 					}
 				}
@@ -150,7 +149,6 @@ void PropellerBot::think(Game *game)
 				if (diffX > -3.0f && diffX < 1.0f){
 					if (diffY > 0.0f && diffY < maxSeekRange){
 						setCurrentState(L"SHOOT_LEFT");
-						//shoot(game);
 						resetThinkCycles();
 					}
 				}

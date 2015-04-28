@@ -187,6 +187,10 @@ public:
 	void setPlayHitSound(boolean playHitSound){
 		this->playHitSound = playHitSound;
 	}
+	//For testing!
+	void setInvincibilityFrames(int invincibilityFrames){
+		this->invincibilityFrames = invincibilityFrames;
+	}
 
 	// METHODS DEFINED IN AnimatedSprite.cpp
 	AnimatedSprite();

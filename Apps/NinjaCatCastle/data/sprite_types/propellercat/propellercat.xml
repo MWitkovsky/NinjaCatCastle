@@ -29,6 +29,39 @@
   <image_file id="24" file_name="coptercat_HIT_RIGHT/coptercat_HIT_RIGHT0002.png"/>
   <image_file id="25" file_name="coptercat_HIT_RIGHT/coptercat_HIT_RIGHT0003.png"/>
   <image_file id="26" file_name="coptercat_HIT_RIGHT/coptercat_HIT_RIGHT0004.png"/>
+  <image_file id="27" file_name="coptercat_DIE_LEFT/coptercat_DIE_LEFT0001.png"/>
+  <image_file id="28" file_name="coptercat_DIE_LEFT/coptercat_DIE_LEFT0002.png"/>
+  <image_file id="29" file_name="coptercat_DIE_LEFT/coptercat_DIE_LEFT0003.png"/>
+  <image_file id="30" file_name="coptercat_DIE_LEFT/coptercat_DIE_LEFT0004.png"/>
+  <image_file id="31" file_name="coptercat_DIE_LEFT/coptercat_DIE_LEFT0005.png"/>
+  <image_file id="32" file_name="coptercat_DIE_LEFT/coptercat_DIE_LEFT0006.png"/>
+  <image_file id="33" file_name="coptercat_DIE_LEFT/coptercat_DIE_LEFT0007.png"/>
+  <image_file id="34" file_name="coptercat_DIE_LEFT/coptercat_DIE_LEFT0008.png"/>
+  <image_file id="35" file_name="coptercat_DIE_LEFT/coptercat_DIE_LEFT0009.png"/>
+  <image_file id="36" file_name="coptercat_DIE_LEFT/coptercat_DIE_LEFT0010.png"/>
+  <image_file id="37" file_name="coptercat_DIE_LEFT/coptercat_DIE_LEFT0011.png"/>
+  <image_file id="38" file_name="coptercat_DIE_LEFT/coptercat_DIE_LEFT0012.png"/>
+  <image_file id="39" file_name="coptercat_DIE_LEFT/coptercat_DIE_LEFT0013.png"/>
+  <image_file id="40" file_name="coptercat_DIE_LEFT/coptercat_DIE_LEFT0014.png"/>
+  <image_file id="41" file_name="coptercat_DIE_LEFT/coptercat_DIE_LEFT0015.png"/>
+  <image_file id="42" file_name="coptercat_DIE_LEFT/coptercat_DIE_LEFT0016.png"/>
+  <image_file id="43" file_name="coptercat_DIE_LEFT/coptercat_DIE_LEFT0017.png"/>
+  <image_file id="44" file_name="coptercat_DIE_LEFT/coptercat_DIE_LEFT0018.png"/>
+  <image_file id="45" file_name="coptercat_DIE_LEFT/coptercat_DIE_LEFT0019.png"/>
+  <image_file id="46" file_name="coptercat_DIE_LEFT/coptercat_DIE_LEFT0020.png"/>
+  <image_file id="47" file_name="coptercat_DIE_LEFT/coptercat_DIE_LEFT0021.png"/>
+  <image_file id="48" file_name="coptercat_DIE_LEFT/coptercat_DIE_LEFT0022.png"/>
+  <image_file id="49" file_name="coptercat_DIE_LEFT/coptercat_DIE_LEFT0023.png"/>
+  <image_file id="50" file_name="coptercat_DIE_LEFT/coptercat_DIE_LEFT0024.png"/>
+  <image_file id="51" file_name="coptercat_DIE_LEFT/coptercat_DIE_LEFT0025.png"/>
+  <image_file id="52" file_name="coptercat_DIE_LEFT/coptercat_DIE_LEFT0026.png"/>
+  <image_file id="53" file_name="coptercat_DIE_LEFT/coptercat_DIE_LEFT0027.png"/>
+  <image_file id="54" file_name="coptercat_DIE_LEFT/coptercat_DIE_LEFT0028.png"/>
+  <image_file id="55" file_name="coptercat_DIE_LEFT/coptercat_DIE_LEFT0029.png"/>
+  <image_file id="56" file_name="coptercat_DIE_RIGHT/coptercat_DIE_RIGHT0001.png"/>
+  <image_file id="57" file_name="coptercat_DIE_RIGHT/coptercat_DIE_RIGHT0002.png"/>
+  <image_file id="58" file_name="coptercat_DIE_RIGHT/coptercat_DIE_RIGHT0003.png"/>
+  <image_file id="59" file_name="coptercat_DIE_RIGHT/coptercat_DIE_RIGHT0004.png"/>
  </images_list>
  <animations_list>
  <animation_state>
@@ -63,32 +96,90 @@
     <pose image_id="16" duration="8"/>
    </animation_sequence>
  </animation_state>
-      <animation_state>
- <state>HIT_LEFT</state>
-   <animation_sequence>
-    <pose image_id="19" duration="4"/>
-	<pose image_id="20" duration="4"/>
-	<pose image_id="21" duration="4"/>
-	<pose image_id="22" duration="4"/>
-   </animation_sequence>
- </animation_state>
-      <animation_state>
+ <animation_state>
  <state>HIT_RIGHT</state>
    <animation_sequence>
-    <pose image_id="23" duration="4"/>
-	<pose image_id="24" duration="4"/>
-	<pose image_id="25" duration="4"/>
-	<pose image_id="26" duration="4"/>
+    <pose image_id="19" duration="8"/>
+	<pose image_id="20" duration="8"/>
+	<pose image_id="21" duration="8"/>
+	<pose image_id="22" duration="8"/>
+   </animation_sequence>
+ </animation_state>
+ <animation_state>
+ <state>HIT_LEFT</state>
+   <animation_sequence>
+    <pose image_id="23" duration="8"/>
+	<pose image_id="24" duration="8"/>
+	<pose image_id="25" duration="8"/>
+	<pose image_id="26" duration="8"/>
    </animation_sequence>
  </animation_state>
    <animation_state>
  <state>DIE_LEFT</state>
    <animation_sequence>
+    <pose image_id="27" duration="2"/>
+	<pose image_id="28" duration="2"/>
+	<pose image_id="29" duration="2"/>
+	<pose image_id="30" duration="2"/>
+	<pose image_id="31" duration="3"/>
+	<pose image_id="32" duration="3"/>
+	<pose image_id="33" duration="3"/>
+	<pose image_id="34" duration="3"/>
+	<pose image_id="35" duration="3"/>
+	<pose image_id="36" duration="3"/>
+	<pose image_id="37" duration="3"/>
+	<pose image_id="38" duration="3"/>
+	<pose image_id="39" duration="3"/>
+	<pose image_id="40" duration="3"/>
+	<pose image_id="41" duration="3"/>
+	<pose image_id="42" duration="3"/>
+	<pose image_id="43" duration="3"/>
+	<pose image_id="44" duration="3"/>
+	<pose image_id="45" duration="3"/>
+	<pose image_id="46" duration="3"/>
+	<pose image_id="47" duration="3"/>
+	<pose image_id="48" duration="3"/>
+	<pose image_id="49" duration="3"/>
+	<pose image_id="50" duration="3"/>
+	<pose image_id="51" duration="3"/>
+	<pose image_id="52" duration="3"/>
+	<pose image_id="53" duration="3"/>
+	<pose image_id="54" duration="3"/>
+	<pose image_id="55" duration="3"/>
    </animation_sequence>
  </animation_state>
     <animation_state>
  <state>DIE_RIGHT</state>
    <animation_sequence>
+    <pose image_id="56" duration="2"/>
+	<pose image_id="57" duration="2"/>
+	<pose image_id="58" duration="2"/>
+	<pose image_id="59" duration="2"/>
+	<pose image_id="31" duration="3"/>
+	<pose image_id="32" duration="3"/>
+	<pose image_id="33" duration="3"/>
+	<pose image_id="34" duration="3"/>
+	<pose image_id="35" duration="3"/>
+	<pose image_id="36" duration="3"/>
+	<pose image_id="37" duration="3"/>
+	<pose image_id="38" duration="3"/>
+	<pose image_id="39" duration="3"/>
+	<pose image_id="40" duration="3"/>
+	<pose image_id="41" duration="3"/>
+	<pose image_id="42" duration="3"/>
+	<pose image_id="43" duration="3"/>
+	<pose image_id="44" duration="3"/>
+	<pose image_id="45" duration="3"/>
+	<pose image_id="46" duration="3"/>
+	<pose image_id="47" duration="3"/>
+	<pose image_id="48" duration="3"/>
+	<pose image_id="49" duration="3"/>
+	<pose image_id="50" duration="3"/>
+	<pose image_id="51" duration="3"/>
+	<pose image_id="52" duration="3"/>
+	<pose image_id="53" duration="3"/>
+	<pose image_id="54" duration="3"/>
+	<pose image_id="55" duration="3"/>
    </animation_sequence>
  </animation_state>
  </animations_list>  
