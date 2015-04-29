@@ -448,7 +448,7 @@ void NinjaCatCastleKeyEventHandler::handleShurikenThrow(Game *game, int throwCod
 		projectileProps.bullet = true;
 
 		// dimension/64/2 = float values here, NOT MAGIC NUMBERS I SWEAR
-		shape.SetAsBox(0.15625f, 0.171875f);
+		shape.SetAsBox(0.2f, 0.2f);
 		fixtureDef.shape = &shape;
 
 		projectile->setBody(game->getGSM()->getPhysics()->getWorld()->CreateBody(&projectileProps));
