@@ -13,6 +13,7 @@
 #include "sssf\gsm\ai\bots\PounceBot.h"
 #include "sssf\gsm\ai\bots\PropellerBot.h"
 #include "sssf\gsm\ai\bots\BombBot.h"
+#include "sssf\gsm\ai\bots\Pickup.h"
 #include "sssf\gsm\state\GameState.h"
 #include "sssf\gsm\world\TiledLayer.h"
 #include "sssf\gui\Cursor.h"
@@ -193,7 +194,16 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 		PounceBot* pounceBot = dynamic_cast<PounceBot*>(bot);
 		PropellerBot* propellerBot = dynamic_cast<PropellerBot*>(bot);
 		BombBot* bombBot = dynamic_cast<BombBot*>(bot);
-		if (pounceBot){
+		Pickup* pickup = dynamic_cast<Pickup*>(bot);
+		if (pickup){
+			if (pickup->isHealth()){
+				pickup->setSpriteType(spriteManager->getSpriteType(7));
+			}
+			else{
+				pickup->setSpriteType(spriteManager->getSpriteType(8));
+			}
+		}
+		else if (pounceBot){
 			pounceBot->setSpriteType(spriteManager->getSpriteType(1));
 		}
 		else if (propellerBot){
@@ -202,10 +212,21 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 		else if (bombBot){
 			bombBot->setSpriteType(spriteManager->getSpriteType(5));
 		}
+
 		botIterator++;
 	}
 
+	//Setting up the health UI because it seems impossible to actually edit the UI images on the fly...
+	AnimatedSprite** hpui = gsm->getSpriteManager()->getHPUI();
+	for (int i = 0; i < 3; i++){
+		hpui[i] = new AnimatedSprite();
+		hpui[i]->setSpriteType(gsm->getSpriteManager()->getSpriteType(5));
+		hpui[i]->setCurrentState(L"FULL");
+		hpui[i]->setAlpha(255);
+	}
+
 	game->getGUI()->getViewport()->setToggleOffsetY(0);
+	player->setShurikenCount(20);
 
 	//This shoulnd't actually be here because the song should start playing AFTER the level is loaded,
 	//but you can just shift this next call to the place where the level is done loading so the music
@@ -492,7 +513,7 @@ void NinjaCatCastleDataLoader::initInGameGUI(GameGUI *gui, DirectXTextureManager
 	unsigned int mouseOverTextureID = guiTextureManager->loadTexture(W_QUIT_IMAGE_MO_PATH);
 
 	// INIT THE QUIT BUTTON
-	Button *buttonToAdd = new Button();
+	/*Button *buttonToAdd = new Button();
 	buttonToAdd->initButton(normalTextureID, 
 							mouseOverTextureID,
 							0,
@@ -503,7 +524,7 @@ void NinjaCatCastleDataLoader::initInGameGUI(GameGUI *gui, DirectXTextureManager
 							62,
 							false,
 							W_QUIT_COMMAND);
-	inGameGUI->addButton(buttonToAdd);
+	inGameGUI->addButton(buttonToAdd);*/
 
 	//Add the lives counter head graphic
 	OverlayImage *overlayImageToAdd = new OverlayImage();

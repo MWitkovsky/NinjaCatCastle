@@ -37,15 +37,25 @@ void PropellerBot::shoot(Game *game){
 	projectile->getBody()->SetUserData(projectile);
 	projectile->getBody()->SetSleepingAllowed(false);
 
-	if (isFacingRight()){
+	if (currentState == L"SHOOT_RIGHT"){
 		projectile->getBody()->SetLinearVelocity(b2Vec2(projectileVelocity.x, -projectileVelocity.y));
 		projectile->setCurrentState(L"RIGHT");
-		setCurrentState(L"IDLE_RIGHT");
+		if (body->GetLinearVelocity().x > 0.0f){
+			setCurrentState(L"IDLE_RIGHT");
+		}
+		else{
+			setCurrentState(L"IDLE_LEFT");
+		}
 	}
 	else{
 		projectile->getBody()->SetLinearVelocity(b2Vec2(-projectileVelocity.x, -projectileVelocity.y));
 		projectile->setCurrentState(L"LEFT");
-		setCurrentState(L"IDLE_LEFT");
+		if (body->GetLinearVelocity().x > 0.0f){
+			setCurrentState(L"IDLE_RIGHT");
+		}
+		else{
+			setCurrentState(L"IDLE_LEFT");
+		}
 	}
 
 	game->getGSM()->getSpriteManager()->addProjectile(projectile);
@@ -127,6 +137,14 @@ void PropellerBot::think(Game *game)
 		//attack logic
 		if (cyclesRemainingBeforeThinking)
 		{
+			if (currentState != L"SHOOT_RIGHT" &&  currentState != L"SHOOT_LEFT"){
+				if (body->GetLinearVelocity().x > 0.0f){
+					setCurrentState(L"IDLE_RIGHT");
+				}
+				else{
+					setCurrentState(L"IDLE_LEFT");
+				}
+			}
 			cyclesRemainingBeforeThinking--;
 		}
 		else{
@@ -134,26 +152,15 @@ void PropellerBot::think(Game *game)
 			b2Vec2 playerPos = gsm->getSpriteManager()->getPlayer()->getBody()->GetPosition();
 			float32 diffX = body->GetPosition().x - playerPos.x;
 			float32 diffY = body->GetPosition().y - playerPos.y;
-			if (facingRight){
-				if (diffX > -1.0f && diffX < 3.0f){
-					if (diffY > 0.0f && diffY < maxSeekRange){
+			if (diffX > -3.0f && diffX < 3.0f){
+				if (diffY > 0.0f && diffY < maxSeekRange){
+					if (diffX < 0.0f){
 						setCurrentState(L"SHOOT_RIGHT");
-						resetThinkCycles();
 					}
-				}
-				else{
-					setCurrentState(L"IDLE_RIGHT");
-				}
-			}
-			else{
-				if (diffX > -3.0f && diffX < 1.0f){
-					if (diffY > 0.0f && diffY < maxSeekRange){
+					else{
 						setCurrentState(L"SHOOT_LEFT");
-						resetThinkCycles();
 					}
-				}
-				else{
-					setCurrentState(L"IDLE_LEFT");
+					resetThinkCycles();
 				}
 			}
 		}

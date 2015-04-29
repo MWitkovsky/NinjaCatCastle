@@ -41,6 +41,9 @@ static const string		spawn					= "spawn";
 static const string		playerID				= "player";
 static const string		pounceBotID				= "pounceCat";
 static const string		propellerBotID			= "propellerCat";
+static const string		bombBotID				= "bombCat";
+static const string		healthPickupID			= "health";
+static const string		treatID					= "treat";
 
 using std::unordered_map;
 

@@ -31,6 +31,7 @@ private:
 	// THAT MOVES AROUND AND IS NOT THE PLAYER
 	list<Bot*> bots;
 	list<AnimatedSprite*> projectiles;
+	AnimatedSprite* hpui[3];
 
 	// AND THIS IS THE PLAYER. AS-IS, WE ONLY ALLOW FOR ONE PLAYER AT A TIME
 	AnimatedSprite player;
@@ -52,6 +53,7 @@ public:
 	list<Bot*>::iterator	getBotsIterator()		{ return bots.begin();		}
 	list<Bot*>::iterator	getEndOfBotsIterator()	{ return bots.end();		}
 	list<AnimatedSprite*>	getProjectiles()		{ return projectiles;		}
+	AnimatedSprite**		getHPUI()				{ return hpui; }
 
 	float					getQuadtreeNodeX(unsigned int index);
 	float					getQuadtreeNodeY(unsigned int index);
