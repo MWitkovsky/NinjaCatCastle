@@ -28,7 +28,7 @@
    </properties>
   </tile>
  </tileset>
- <imagelayer name="bk" x="-94" y="-4">
+ <imagelayer name="bk" x="-162" y="191">
   <image source="moving_bk1.png"/>
   <properties>
    <property name="collidable" value="false"/>
@@ -44,14 +44,24 @@
    <property name="offsetX" value="-9001"/>
   </properties>
  </imagelayer>
- <imagelayer name="house" x="10623" y="893">
+ <imagelayer name="house1" x="10500" y="1000">
   <image source="house1.png"/>
   <properties>
    <property name="collidable" value="false"/>
    <property name="imageheight" value="4480"/>
    <property name="imagewidth" value="12800"/>
-   <property name="xOffset" value="10623"/>
-   <property name="yOffset" value="893"/>
+   <property name="xOffset" value="10500"/>
+   <property name="yOffset" value="1000"/>
+  </properties>
+ </imagelayer>
+ <imagelayer name="house2" x="11500" y="1000">
+  <image source="house1.png"/>
+  <properties>
+   <property name="collidable" value="false"/>
+   <property name="imageheight" value="4480"/>
+   <property name="imagewidth" value="12800"/>
+   <property name="xOffset" value="11500"/>
+   <property name="yOffset" value="1000"/>
   </properties>
  </imagelayer>
  <layer name="ForegroundPlatformLayer" width="200" height="70">
@@ -3223,34 +3233,34 @@
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
+   <tile gid="31"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="33"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
-   <tile gid="1"/>
-   <tile gid="1"/>
-   <tile gid="1"/>
-   <tile gid="1"/>
-   <tile gid="1"/>
-   <tile gid="1"/>
-   <tile gid="1"/>
-   <tile gid="1"/>
-   <tile gid="1"/>
-   <tile gid="1"/>
-   <tile gid="1"/>
-   <tile gid="1"/>
-   <tile gid="1"/>
-   <tile gid="1"/>
-   <tile gid="1"/>
-   <tile gid="1"/>
-   <tile gid="1"/>
-   <tile gid="1"/>
-   <tile gid="1"/>
-   <tile gid="1"/>
-   <tile gid="1"/>
-   <tile gid="1"/>
-   <tile gid="1"/>
-   <tile gid="1"/>
-   <tile gid="1"/>
+   <tile gid="31"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="33"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
@@ -14061,4 +14071,14 @@
    <tile gid="14"/>
   </data>
  </layer>
+ <imagelayer name="wood1" x="50" y="2300">
+  <image source="wood.png"/>
+  <properties>
+   <property name="collidable" value="false"/>
+   <property name="imageheight" value="4480"/>
+   <property name="imagewidth" value="12800"/>
+   <property name="xOffset" value="50"/>
+   <property name="yOffset" value="2300"/>
+  </properties>
+ </imagelayer>
 </map>
