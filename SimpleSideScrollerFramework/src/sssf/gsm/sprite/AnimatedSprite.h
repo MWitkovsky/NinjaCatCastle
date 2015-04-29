@@ -41,7 +41,6 @@ protected:
 	// USED TO ITERATE THROUGH THE CURRENT ANIMATION SEQUENCE
 	unsigned int animationCounter;
 
-	// Player Specific values
 	boolean player = false;
 	boolean projectile = false;
 	boolean controllable = true;
@@ -55,12 +54,14 @@ protected:
 	boolean toBeDeleted = false;
 	boolean playHitSound = false;
 
+	// Player Specific values
 	int HP = 3;
 	int visibleFrames = HP;
 	int invincibilityFrames = 0;
 	boolean waitFrame = false;
 
 	int lives = 3;
+	int shuriken = 10;
 	int treats = 0;
 	
 
@@ -72,6 +73,7 @@ public:
 	int					getVisibleFrames()  { return visibleFrames; }
 	int					getInvincibilityFrames()  { return invincibilityFrames; }
 	int					getLives()			{ return lives; }
+	int					getShuriken()		{ return shuriken; }
 	int					getTreats()			{ return treats; }
 	boolean				wasJump()			{ return jump; }
 	boolean				isControllable()	{ return controllable; }
@@ -83,6 +85,7 @@ public:
 	boolean				isAttacking()		{ return attacking; }
 	boolean				isPlayer()			{ return player; }
 	boolean				isDead()			{ return (currentState == L"DIE_LEFT" || currentState == L"DIE_RIGHT"); }
+	boolean				isThrowing()		{ return (currentState == L"THROW_LEFT" || currentState == L"THROW_RIGHT"); }
 	boolean				isProjectile()		{ return projectile; }
 	boolean				isMarkedForDeletion()	{ return toBeDeleted; }
 	boolean				shouldPlayHitSound()	{ return playHitSound; }
@@ -186,6 +189,12 @@ public:
 	}
 	void setPlayHitSound(boolean playHitSound){
 		this->playHitSound = playHitSound;
+	}
+	void decrementShurikenCount(){
+		shuriken--;
+	}
+	void setShurikenCount(int shuriken){
+		this->shuriken = shuriken;
 	}
 	//For testing!
 	void setInvincibilityFrames(int invincibilityFrames){

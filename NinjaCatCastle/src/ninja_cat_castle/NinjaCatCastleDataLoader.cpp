@@ -12,6 +12,7 @@
 #include "sssf\graphics\GameGraphics.h"
 #include "sssf\gsm\ai\bots\PounceBot.h"
 #include "sssf\gsm\ai\bots\PropellerBot.h"
+#include "sssf\gsm\ai\bots\BombBot.h"
 #include "sssf\gsm\state\GameState.h"
 #include "sssf\gsm\world\TiledLayer.h"
 #include "sssf\gui\Cursor.h"
@@ -191,11 +192,15 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 		Bot *bot = (*botIterator);
 		PounceBot* pounceBot = dynamic_cast<PounceBot*>(bot);
 		PropellerBot* propellerBot = dynamic_cast<PropellerBot*>(bot);
+		BombBot* bombBot = dynamic_cast<BombBot*>(bot);
 		if (pounceBot){
 			pounceBot->setSpriteType(spriteManager->getSpriteType(1));
 		}
 		else if (propellerBot){
 			propellerBot->setSpriteType(spriteManager->getSpriteType(3));
+		}
+		else if (bombBot){
+			bombBot->setSpriteType(spriteManager->getSpriteType(5));
 		}
 		botIterator++;
 	}
@@ -505,6 +510,18 @@ void NinjaCatCastleDataLoader::initInGameGUI(GameGUI *gui, DirectXTextureManager
 	overlayImageToAdd->x = LIVES_HEAD_X;
 	overlayImageToAdd->y = LIVES_HEAD_Y;
 	overlayImageToAdd->imageID = guiTextureManager->loadTexture(W_LIVES_HEAD_PATH);
+	overlayImageToAdd->height = 32;
+	overlayImageToAdd->width = 32;
+	overlayImageToAdd->alpha = 255;
+	overlayImageToAdd->z = 0;
+
+	inGameGUI->addOverlayImage(overlayImageToAdd);
+
+	//Add the shuriken counter graphic
+	overlayImageToAdd = new OverlayImage();
+	overlayImageToAdd->x = SHURIKEN_ICON_X;
+	overlayImageToAdd->y = SHURIKEN_ICON_Y;
+	overlayImageToAdd->imageID = guiTextureManager->loadTexture(W_SHURIKEN_ICON_PATH);
 	overlayImageToAdd->height = 32;
 	overlayImageToAdd->width = 32;
 	overlayImageToAdd->alpha = 255;

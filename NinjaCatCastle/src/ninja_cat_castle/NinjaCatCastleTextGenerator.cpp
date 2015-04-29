@@ -42,6 +42,13 @@ void NinjaCatCastleTextGenerator::appendLivesCounter(Game *game){
 	livesCounter.append(wss.str());
 }
 
+void NinjaCatCastleTextGenerator::appendShurikenCounter(Game *game){
+	wstringstream wss;
+	wss << L"x ";
+	wss << game->getGSM()->getSpriteManager()->getPlayer()->getShuriken();
+	shurikenCounter.append(wss.str());
+}
+
 void NinjaCatCastleTextGenerator::appendTreatsCounter(Game *game){
 	wstringstream wss;
 	wss << L"x ";
@@ -60,12 +67,15 @@ void NinjaCatCastleTextGenerator::initText(Game *game)
 	// FIRST UPDATE THE TEXT THIS GENERATOR IS USING
 	//appendMouseCoords(game);
 	appendLivesCounter(game);
+	appendShurikenCounter(game);
 	appendTreatsCounter(game);
 
 	// AND THEN HAND IT TO THE TEXT MANAGER, SPECIFYING WHERE IT SHOULD BE RENDERED
 	GameText *text = game->getText();
 	text->addText(&livesLabel, LIVES_LABEL_X, LIVES_LABEL_Y, game->getGraphics()->getScreenWidth(), game->getGraphics()->getScreenHeight());
 	text->addText(&livesCounter, LIVES_COUNTER_X, LIVES_COUNTER_Y, game->getGraphics()->getScreenWidth(), game->getGraphics()->getScreenHeight());
+	text->addText(&shurikenLabel, SHURIKEN_LABEL_X, SHURIKEN_LABEL_Y, game->getGraphics()->getScreenWidth(), game->getGraphics()->getScreenHeight());
+	text->addText(&shurikenCounter, SHURIKEN_COUNTER_X, SHURIKEN_COUNTER_Y, game->getGraphics()->getScreenWidth(), game->getGraphics()->getScreenHeight());
 	text->addText(&treatsLabel, TREATS_LABEL_X, TREATS_LABEL_Y, game->getGraphics()->getScreenWidth(), game->getGraphics()->getScreenHeight());
 	text->addText(&treatsCounter, TREATS_COUNTER_X, TREATS_COUNTER_Y, game->getGraphics()->getScreenWidth(), game->getGraphics()->getScreenHeight());
 }
@@ -81,7 +91,9 @@ void NinjaCatCastleTextGenerator::updateText(Game *game)
 	// SIMPLY CLEAR IT OUT OF OLD CHARACTER DATA AND FILL IT IN WITH
 	// WHAT WE WANT.
 	livesCounter.clear();
+	shurikenCounter.clear();
 	treatsCounter.clear();
 	appendLivesCounter(game);
+	appendShurikenCounter(game);
 	appendTreatsCounter(game);
 }

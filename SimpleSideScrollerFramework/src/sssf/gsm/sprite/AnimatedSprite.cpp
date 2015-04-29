@@ -58,6 +58,80 @@ void AnimatedSprite::changeFrame(Game *game)
 			else if (currentState == L"JUMPING_ARC_LEFT"){
 				setCurrentState(L"JUMPING_DESCEND_LEFT");
 			}
+			else if (currentState == L"THROW_LEFT" || currentState == L"THROW_RIGHT"){
+				float32 vY = body->GetLinearVelocity().y;
+				float32 vX = body->GetLinearVelocity().x;
+				if (vY == 0){
+					if (airborneGuard){
+						airborneGuard = false;
+					}
+					else{
+						setAirborne(false);
+						if (vX > 0){
+							setCurrentState(L"WALK_RIGHT");
+						}
+						else if (vX < 0){
+							setCurrentState(L"WALK_LEFT");
+						}
+						else{
+							if (currentState == L"THROW_RIGHT"){
+								setCurrentState(L"IDLE_RIGHT");
+							}
+							else{
+								setCurrentState(L"IDLE_LEFT");
+							}
+						}
+					}
+				}
+				else if (vY < 0){
+					if (vX > 0){
+						setCurrentState(L"JUMPING_DESCEND_RIGHT");
+					}
+					else if (vX < 0){
+						setCurrentState(L"JUMPING_DESCEND_LEFT");
+					}
+					else{
+						if (currentState == L"THROW_RIGHT"){
+							setCurrentState(L"JUMPING_DESCEND_RIGHT");
+						}
+						else{
+							setCurrentState(L"JUMPING_DESCEND_LEFT");
+						}
+					}
+				}
+				else if (vY > 0){
+					if (vX > 0){
+						setCurrentState(L"JUMPING_ASCEND_RIGHT");
+					}
+					else if (vX < 0){
+						setCurrentState(L"JUMPING_ASCEND_LEFT");
+					}
+					else{
+						if (currentState == L"THROW_RIGHT"){
+							setCurrentState(L"JUMPING_ASCEND_RIGHT");
+						}
+						else{
+							setCurrentState(L"JUMPING_ASCEND_LEFT");
+						}
+					}
+				}
+				else{
+					if (vX > 0){
+						setCurrentState(L"JUMPING_ARC_RIGHT");
+					}
+					else if (vX < 0){
+						setCurrentState(L"JUMPING_ARC_LEFT");
+					}
+					else{
+						if (currentState == L"THROW_RIGHT"){
+							setCurrentState(L"JUMPING_ARC_RIGHT");
+						}
+						else{
+							setCurrentState(L"JUMPING_ARC_LEFT");
+						}
+					}
+				}
+			}
 			else if (attacking){
 				attackFinished = true;
 				waitFrame = true;

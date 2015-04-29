@@ -625,7 +625,7 @@ bool TMXMapImporter::buildWorldFromInfo(Game *game)
 						propellerBotProps.type = b2_dynamicBody;
 						propellerBotProps.fixedRotation = true;
 						propellerBotProps.gravityScale = 0.0f;
-						shape.SetAsBox(0.7f, 0.4f);
+						shape.SetAsBox(0.5f, 0.5f);
 						fixtureDef.shape = &shape;
 
 						propellerBot->setBody(game->getGSM()->getPhysics()->getWorld()->CreateBody(&propellerBotProps));

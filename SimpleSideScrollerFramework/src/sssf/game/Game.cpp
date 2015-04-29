@@ -36,6 +36,10 @@ int	LIVES_LABEL_X;
 int	LIVES_LABEL_Y;
 int	LIVES_COUNTER_X;
 int	LIVES_COUNTER_Y;
+int	SHURIKEN_LABEL_X;
+int	SHURIKEN_LABEL_Y;
+int SHURIKEN_COUNTER_X;
+int	SHURIKEN_COUNTER_Y;
 int	TREATS_LABEL_X;
 int	TREATS_LABEL_Y;
 int	TREATS_COUNTER_X;
@@ -44,6 +48,8 @@ int	START_BUTTON_X;
 int	START_BUTTON_Y;
 int LIVES_HEAD_X;
 int LIVES_HEAD_Y;
+int	SHURIKEN_ICON_X;
+int	SHURIKEN_ICON_Y;
 int	TREAT_ICON_X;
 int	TREAT_ICON_Y;
 int	METER_TO_PIXEL_SCALE;
@@ -57,6 +63,7 @@ char* LEVEL_2_SONG_INTRO;
 char* LEVEL_2_SONG;
 char* LEVEL_3_SONG_INTRO;
 char* LEVEL_3_SONG;
+char* LEVEL_COMPLETE_JINGLE;
 
 char*	SOUND_ARROWSHOT;
 char*	SOUND_BOMB_EXPLOSION1;
@@ -118,6 +125,7 @@ wstring	W_EXIT_IMAGE_MO_PATH;
 wstring	W_QUIT_IMAGE_PATH;
 wstring	W_QUIT_IMAGE_MO_PATH;
 wstring	W_LIVES_HEAD_PATH;
+wstring	W_SHURIKEN_ICON_PATH;
 wstring	W_TREAT_ICON_PATH;
 
 wstring	SPRITE_TYPES_DIR;
@@ -126,8 +134,6 @@ wstring	SPRITE_TYPES_LIST;
 FMOD::System*		fmodSystem; //handle to FMOD engine
 FMOD::Channel*		musicChannel;
 FMOD::Channel*		introChannel; //needed for seamless looping
-
-boolean	musicEnabled = true;
 
 //ALL GLOBAL SCOPE VARIABLES ARE LOADED HERE FROM THE LUA FILE IN THE DATA DIRECTORY
 void Game::readLUA(const char* fileName){
@@ -177,6 +183,18 @@ void Game::readLUA(const char* fileName){
 	LuaObject LIVES_COUNTER_Y_obj = luaPState->GetGlobal("LIVES_COUNTER_Y");
 	LIVES_COUNTER_Y = LIVES_COUNTER_Y_obj.GetInteger();
 
+	LuaObject SHURIKEN_LABEL_X_obj = luaPState->GetGlobal("SHURIKEN_LABEL_X");
+	SHURIKEN_LABEL_X = SHURIKEN_LABEL_X_obj.GetInteger();
+
+	LuaObject SHURIKEN_LABEL_Y_obj = luaPState->GetGlobal("SHURIKEN_LABEL_Y");
+	SHURIKEN_LABEL_Y = SHURIKEN_LABEL_Y_obj.GetInteger();
+
+	LuaObject SHURIKEN_COUNTER_X_obj = luaPState->GetGlobal("SHURIKEN_COUNTER_X");
+	SHURIKEN_COUNTER_X = SHURIKEN_COUNTER_X_obj.GetInteger();
+
+	LuaObject SHURIKEN_COUNTER_Y_obj = luaPState->GetGlobal("SHURIKEN_COUNTER_Y");
+	SHURIKEN_COUNTER_Y = SHURIKEN_COUNTER_Y_obj.GetInteger();
+
 	LuaObject TREATS_LABEL_X_obj = luaPState->GetGlobal("TREATS_LABEL_X");
 	TREATS_LABEL_X = TREATS_LABEL_X_obj.GetInteger();
 
@@ -201,6 +219,12 @@ void Game::readLUA(const char* fileName){
 	LuaObject LIVES_HEAD_Y_obj = luaPState->GetGlobal("LIVES_HEAD_Y");
 	LIVES_HEAD_Y = LIVES_HEAD_Y_obj.GetInteger();
 
+	LuaObject SHURIKEN_ICON_X_obj = luaPState->GetGlobal("SHURIKEN_ICON_X");
+	SHURIKEN_ICON_X = SHURIKEN_ICON_X_obj.GetInteger();
+
+	LuaObject SHURIKEN_ICON_Y_obj = luaPState->GetGlobal("SHURIKEN_ICON_Y");
+	SHURIKEN_ICON_Y = SHURIKEN_ICON_Y_obj.GetInteger();
+
 	LuaObject TREAT_ICON_X_obj = luaPState->GetGlobal("TREAT_ICON_X");
 	TREAT_ICON_X = TREAT_ICON_X_obj.GetInteger();
 
@@ -210,8 +234,7 @@ void Game::readLUA(const char* fileName){
 	LuaObject METER_TO_PIXEL_SCALE_obj = luaPState->GetGlobal("METER_TO_PIXEL_SCALE");
 	METER_TO_PIXEL_SCALE = METER_TO_PIXEL_SCALE_obj.GetInteger();
 
-
-
+	//MUSIC AND SOUNDS//
 	LuaObject SPLASH_JINGLE_obj = luaPState->GetGlobal("SPLASH_JINGLE");
 	string splash_jingle = SPLASH_JINGLE_obj.GetString();
 	SPLASH_JINGLE = strcpy((char*)malloc(splash_jingle.length() + 1), splash_jingle.c_str());
@@ -247,6 +270,10 @@ void Game::readLUA(const char* fileName){
 	LuaObject LEVEL_3_SONG_obj = luaPState->GetGlobal("LEVEL_3_SONG");
 	string level_3_song = LEVEL_3_SONG_obj.GetString();
 	LEVEL_3_SONG = strcpy((char*)malloc(level_3_song.length() + 1), level_3_song.c_str());
+
+	LuaObject LEVEL_COMPLETE_JINGLE_obj = luaPState->GetGlobal("LEVEL_COMPLETE_JINGLE");
+	string level_complete_jingle = LEVEL_COMPLETE_JINGLE_obj.GetString();
+	LEVEL_COMPLETE_JINGLE = strcpy((char*)malloc(level_complete_jingle.length() + 1), level_complete_jingle.c_str());
 
 	LuaObject SOUND_ARROWSHOT_obj = luaPState->GetGlobal("SOUND_ARROWSHOT");
 	string sound_arrowshot = SOUND_ARROWSHOT_obj.GetString();
@@ -516,6 +543,11 @@ void Game::readLUA(const char* fileName){
 	wstring wW_LIVES_HEAD_PATH(w_lives_head_path.begin(), w_lives_head_path.end());
 	W_LIVES_HEAD_PATH = wW_LIVES_HEAD_PATH;
 
+	LuaObject W_SHURIKEN_ICON_PATH_obj = luaPState->GetGlobal("W_SHURIKEN_ICON_PATH");
+	string w_shuriken_icon_path = W_SHURIKEN_ICON_PATH_obj.GetString();
+	wstring wW_SHURIKEN_ICON_PATH(w_shuriken_icon_path.begin(), w_shuriken_icon_path.end());
+	W_SHURIKEN_ICON_PATH = wW_SHURIKEN_ICON_PATH;
+
 	LuaObject W_TREAT_ICON_PATH_obj = luaPState->GetGlobal("W_TREAT_ICON_PATH");
 	string w_treat_icon_path = W_TREAT_ICON_PATH_obj.GetString();
 	wstring wW_TREAT_ICON_PATH(w_treat_icon_path.begin(), w_treat_icon_path.end());
@@ -777,21 +809,45 @@ void Game::startGame()
 //This will 99.9%-100% of the time be used to define what song
 //to play after an intro to a song ends
 void Game::processMusicLogic(){
-	GameState gs = gsm->getCurrentGameState();
-	if (gs == GS_MAIN_MENU || gs == GS_HELP_SCREEN || gs == GS_ABOUT_SCREEN){
-		bool isMusicPlaying = false;
-		introChannel->isPlaying(&isMusicPlaying);
-		if (!isMusicPlaying){
-			musicChannel->setPaused(false);
+	if (musicEnabled){
+		GameState gs = gsm->getCurrentGameState();
+		if (gs == GS_MAIN_MENU || gs == GS_HELP_SCREEN || gs == GS_ABOUT_SCREEN || gs == GS_GAME_IN_PROGRESS){
+			bool isMusicPlaying = false;
+			introChannel->isPlaying(&isMusicPlaying);
+			if (!isMusicPlaying){
+				musicChannel->setPaused(false);
+			}
 		}
 	}
-	else if (gs == GS_GAME_IN_PROGRESS){
-		bool isMusicPlaying = false;
-		introChannel->isPlaying(&isMusicPlaying);
-		if (!isMusicPlaying){
-			musicChannel->setPaused(false);
+}
+
+void Game::toggleMusic(){
+	if (musicEnabled){
+		musicEnabled = !musicEnabled;
+		introChannel->stop();
+		musicChannel->stop();
+	}
+	else{
+		musicEnabled = !musicEnabled;
+		GameState gs = gsm->getCurrentGameState();
+		if (gs == GS_MAIN_MENU || gs == GS_HELP_SCREEN || gs == GS_ABOUT_SCREEN){
+			introChannel = playSongIntro(MAIN_MENU_SONG_INTRO, introChannel);
+			musicChannel = queueSong(MAIN_MENU_SONG, musicChannel);
+		}
+		if (currentLevelFileName == W_LEVEL_1_NAME){
+			introChannel = playSongIntro(LEVEL_1_SONG_INTRO, introChannel);
+			musicChannel = queueSong(LEVEL_1_SONG, musicChannel);
+		}
+		else if (currentLevelFileName == W_LEVEL_2_NAME){
+			introChannel = playSongIntro(LEVEL_2_SONG_INTRO, introChannel);
+			musicChannel = queueSong(LEVEL_2_SONG, musicChannel);
+		}
+		else{
+			introChannel = playSongIntro(LEVEL_3_SONG_INTRO, introChannel);
+			musicChannel = queueSong(LEVEL_3_SONG, musicChannel);
 		}
 	}
+	
 }
 
 //Plays a song's intro in the music channel. This sets loop to off so we can just loop the main
@@ -811,6 +867,7 @@ FMOD::Channel* Game::playSongIntro(const char* song, FMOD::Channel* songChannel)
 		fmodSystem->playSound(newSong, 0, false, &newChannel); //plays sound in newChannel
 		return newChannel; //returns newChannel
 	}
+	return songChannel;
 }
 
 //Queues a song for play to produce a (hopefully) gapless transition
@@ -831,6 +888,7 @@ FMOD::Channel* Game::queueSong(const char* song, FMOD::Channel* songChannel){
 
 		return newChannel; //returns newChannel
 	}
+	return songChannel;
 }
 
 //Plays a song in the specified channel that doesn't have an intro.
@@ -848,6 +906,7 @@ FMOD::Channel* Game::playSongNoIntro(const char* song, FMOD::Channel* songChanne
 		fmodSystem->playSound(newSong, 0, false, &newChannel); //plays sound in newChannel
 		return newChannel; //returns newChannel
 	}
+	return songChannel;
 }
 
 //Plays a sound in first available channel

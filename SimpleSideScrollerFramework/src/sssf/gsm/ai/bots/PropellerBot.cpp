@@ -28,7 +28,7 @@ void PropellerBot::shoot(Game *game){
 	projectileProps.gravityScale = 0.0f;
 	projectileProps.bullet = true;
 
-	// dimension/64/2 = float values here
+	// dimension/64/2 = float values here, NOT MAGIC NUMBERS I SWEAR
 	shape.SetAsBox(0.15625f, 0.171875f);
 	fixtureDef.shape = &shape;
 

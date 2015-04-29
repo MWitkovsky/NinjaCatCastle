@@ -44,6 +44,13 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 	b2Body *pp = player->getBody();
 	Viewport *viewport = game->getGUI()->getViewport();
 	
+	//For turning music on/off
+	if (input->isKeyDown(CTRL_KEY)){
+		if (input->isKeyDownForFirstTime(M_KEY)){
+			game->toggleMusic();
+		}
+	}
+
 	// IF THE GAME IS IN PROGRESS
 	if (gsm->isGameInProgress())
 	{
@@ -60,7 +67,8 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 				{
 					if (!player->isAirborne()){
 						if (state != L"ATTACK_LEFT" && state != L"ATTACK_RIGHT"
-							&& state != L"ATTACK_LEFT_2" && state != L"ATTACK_RIGHT_2"){
+							&& state != L"ATTACK_LEFT_2" && state != L"ATTACK_RIGHT_2"
+							&& state != L"THROW_LEFT" && state != L"THROW_RIGHT"){
 							player->setCurrentState(L"WALK_LEFT");
 							player->setFacingRight(false);
 						}
@@ -85,7 +93,8 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 				{
 					if (!player->isAirborne()){
 						if (state != L"ATTACK_LEFT" && state != L"ATTACK_RIGHT"
-							&& state != L"ATTACK_LEFT_2" && state != L"ATTACK_RIGHT_2"){
+							&& state != L"ATTACK_LEFT_2" && state != L"ATTACK_RIGHT_2"
+							&& state != L"THROW_LEFT" && state != L"THROW_RIGHT"){
 							player->setCurrentState(L"WALK_RIGHT");
 							player->setFacingRight(true);
 						}
@@ -139,7 +148,7 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 			{
 				if (state == L"WALK_LEFT" || state == L"IDLE_LEFT"
 					|| state == L"WALK_RIGHT" || state == L"IDLE_RIGHT"
-					|| player->isAttacking()){
+					|| player->isAttacking() || player->isThrowing()){
 					if (!player->isAirborne()){
 						vY = JUMP_SPEED;
 						player->setWasJump(true);
@@ -220,6 +229,29 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 						player->getHurtBox()->SetActive(true);
 					}
 					player->setAttacking(true);
+				}
+			}
+
+			//THROW
+			if (input->isKeyDownForFirstTime(J_KEY)){
+				if (!input->isKeyDown(W_KEY)){
+					if (player->isFacingRight()){
+						handleShurikenThrow(game, right);
+					}
+					else{
+						handleShurikenThrow(game, left);
+					}
+				}
+				else{
+					if (input->isKeyDown(A_KEY)){
+						handleShurikenThrow(game, upleft);
+					}
+					else if (input->isKeyDown(D_KEY)){
+						handleShurikenThrow(game, upright);
+					}
+					else{
+						handleShurikenThrow(game, up);
+					}
 				}
 			}
 
@@ -393,4 +425,64 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 	// THIS SLOWS DOWN OUR GAME LOOP, BUT WILL NOT GO BELOW 5 FRAMES PER SECOND
 	else if (input->isKeyDown(VK_END) && (fps > MIN_FPS))
 		timer->setTargetFPS(fps - FPS_INC);*/
+}
+
+void NinjaCatCastleKeyEventHandler::handleShurikenThrow(Game *game, int throwCode){
+	AnimatedSprite* player = game->getGSM()->getSpriteManager()->getPlayer();
+	if (player->getShuriken()){
+		AnimatedSprite *projectile = new AnimatedSprite();
+		projectile->setSpriteType(game->getGSM()->getSpriteManager()->getSpriteType(2));
+		projectile->setAlpha(255);
+		projectile->setIsProjectile(true);
+		projectile->setCurrentState(L"THROW");
+		projectile->setIsPlayer(true);
+
+		b2BodyDef projectileProps;
+		b2FixtureDef fixtureDef;
+		b2PolygonShape shape;
+
+		projectileProps.position.Set(player->getBody()->GetPosition().x, player->getBody()->GetPosition().y);
+		projectileProps.type = b2_dynamicBody;
+		projectileProps.fixedRotation = true;
+		projectileProps.gravityScale = 0.0f;
+		projectileProps.bullet = true;
+
+		// dimension/64/2 = float values here, NOT MAGIC NUMBERS I SWEAR
+		shape.SetAsBox(0.15625f, 0.171875f);
+		fixtureDef.shape = &shape;
+
+		projectile->setBody(game->getGSM()->getPhysics()->getWorld()->CreateBody(&projectileProps));
+		projectile->getBody()->CreateFixture(&fixtureDef);
+		projectile->getBody()->SetUserData(projectile);
+		projectile->getBody()->SetSleepingAllowed(false);
+
+		if (throwCode == left){
+			projectile->getBody()->SetLinearVelocity(b2Vec2(-projectileVelocity.x, -0.0001f));
+			player->setCurrentState(L"THROW_LEFT");
+		}
+		else if (throwCode == upleft){
+			projectile->getBody()->SetLinearVelocity(b2Vec2(-projectileVelocity.x, projectileVelocity.y));
+			player->setCurrentState(L"THROW_LEFT");
+		}
+		else if (throwCode == up){
+			projectile->getBody()->SetLinearVelocity(b2Vec2(-0.0001f, projectileVelocity.y));
+			if (player->isFacingRight()){
+				player->setCurrentState(L"THROW_RIGHT");
+			}
+			else{
+				player->setCurrentState(L"THROW_LEFT");
+			}
+		}
+		else if (throwCode == upright){
+			projectile->getBody()->SetLinearVelocity(b2Vec2(projectileVelocity.x, projectileVelocity.y));
+			player->setCurrentState(L"THROW_RIGHT");
+		}
+		else{
+			projectile->getBody()->SetLinearVelocity(b2Vec2(projectileVelocity.x, -0.0001f));
+			player->setCurrentState(L"THROW_RIGHT");
+		}
+		
+		game->getGSM()->getSpriteManager()->addProjectile(projectile);
+		player->decrementShurikenCount();
+	}
 }

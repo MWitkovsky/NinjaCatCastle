@@ -417,6 +417,8 @@ void SpriteManager::updateAnimations(Game *game){
 
 	//Checking if level is completed
 	if (player.getBody()->GetPosition().x * 64 > game->getGSM()->getWorld()->getWorldWidth()){
+		musicChannel = game->playSongIntro(LEVEL_COMPLETE_JINGLE, musicChannel);
+		player.getBody()->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
 		if (game->getCurrentLevelFileName() == W_LEVEL_1_NAME){
 			game->quitGame();
 			game->setCurrentLevelFileName(W_LEVEL_2_NAME);
@@ -565,6 +567,24 @@ void SpriteManager::updateAnimations(Game *game){
 		}
 		else{
 			//propeller cat state logic goes here
+			if (propellerBot->didHitPlayer()){
+				if (!propellerBot->hasHitGuard()){
+					b2FixtureDef fixtureDef;
+					b2PolygonShape shape;
+					shape.SetAsBox(0.5f, 0.5f);
+					fixtureDef.shape = &shape;
+					propellerBot->getBody()->CreateFixture(&fixtureDef);
+					propellerBot->setHitPlayer(false);
+				}
+				else{
+					if (propellerBot->getBody()->GetFixtureList()){
+						propellerBot->getBody()->DestroyFixture(propellerBot->getBody()->GetFixtureList());
+					}
+					propellerBot->setHitGuard(false);
+				}
+			}
+
+			//gravity scale equals 1.0f only if it is in the process of dying!
 			if (propellerBot->getBody()->GetGravityScale() == 1.0f){
 				if (propellerBot->getBody()->GetLinearVelocity().y == 0){
 					if (propellerBot->hasAirborneGuard()){
@@ -600,10 +620,12 @@ void SpriteManager::updateAnimations(Game *game){
 				propellerBot->setFacingRight(false);
 			}
 		}
+
 		if (genericBot->shouldPlayHitSound()){
 			game->playSound(SOUND_HIT);
 			genericBot->setPlayHitSound(false);
 		}
+
 		if (pounceBot){
 			wstring state = pounceBot->getCurrentState();
 			if (!pounceBot->isDead()){
@@ -626,6 +648,7 @@ void SpriteManager::updateAnimations(Game *game){
 							else if (state == L"HIT_RIGHT"){
 								pounceBot->setCurrentState(L"DIE_RIGHT");
 							}
+							game->playSound(SOUND_HIT);
 						}
 					}
 

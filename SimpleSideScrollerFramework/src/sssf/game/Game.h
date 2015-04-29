@@ -60,6 +60,7 @@ extern char*	LEVEL_2_SONG_INTRO;
 extern char*	LEVEL_2_SONG;
 extern char*	LEVEL_3_SONG_INTRO;
 extern char*	LEVEL_3_SONG;
+extern char*	LEVEL_COMPLETE_JINGLE;
 
 extern char*	SOUND_ARROWSHOT;
 extern char*	SOUND_BOMB_EXPLOSION1;
@@ -125,6 +126,7 @@ extern wstring	W_EXIT_IMAGE_MO_PATH;
 extern wstring	W_QUIT_IMAGE_PATH;
 extern wstring	W_QUIT_IMAGE_MO_PATH;
 extern wstring	W_LIVES_HEAD_PATH;
+extern wstring	W_SHURIKEN_ICON_PATH;
 extern wstring	W_TREAT_ICON_PATH;
 
 // FOR OUR SPRITE
@@ -148,6 +150,10 @@ extern int			LIVES_LABEL_X;
 extern int			LIVES_LABEL_Y;
 extern int			LIVES_COUNTER_X;
 extern int			LIVES_COUNTER_Y;
+extern int			SHURIKEN_LABEL_X;
+extern int			SHURIKEN_LABEL_Y;
+extern int			SHURIKEN_COUNTER_X;
+extern int			SHURIKEN_COUNTER_Y;
 extern int			TREATS_LABEL_X;
 extern int			TREATS_LABEL_Y;
 extern int			TREATS_COUNTER_X;
@@ -159,6 +165,8 @@ extern int			START_BUTTON_Y;
 extern int			METER_TO_PIXEL_SCALE;
 extern int			LIVES_HEAD_X;
 extern int			LIVES_HEAD_Y;
+extern int			SHURIKEN_ICON_X;
+extern int			SHURIKEN_ICON_Y;
 extern int			TREAT_ICON_X;
 extern int			TREAT_ICON_Y;
 
@@ -180,6 +188,7 @@ const unsigned int K_KEY = (unsigned int)'K';
 const unsigned int J_KEY = (unsigned int)'J';
 const unsigned int H_KEY = (unsigned int)'H';
 const unsigned int I_KEY = (unsigned int)'I';
+const unsigned int M_KEY = (unsigned int)'M';
 const unsigned int ONE_KEY = (unsigned int)'1';
 const unsigned int TWO_KEY = (unsigned int)'2';
 const unsigned int THREE_KEY = (unsigned int)'3';
@@ -213,6 +222,8 @@ private:
 	GameInput			*input;
 	GameOS				*os;
 	GameTimer			*timer;
+
+	boolean	musicEnabled = true;
 
 	// THIS WILL KEEP TRACK OF THE NAME OF THE LEVEL FILE
 	// THAT IS CURRENTLY BEING USED
@@ -259,6 +270,7 @@ public:
 	void	shutdown();
 	void	startGame();
 	void	processMusicLogic();
+	void	toggleMusic();
 	FMOD::Channel*	playSongIntro(const char* song, FMOD::Channel* songChannel);
 	FMOD::Channel*	queueSong(const char* song, FMOD::Channel* songChannel);
 	FMOD::Channel*	playSongNoIntro(const char* song, FMOD::Channel* songChannel);

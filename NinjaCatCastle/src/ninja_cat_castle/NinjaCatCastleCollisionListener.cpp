@@ -58,7 +58,10 @@ bool NinjaCatCastleCollisionListener::ShouldCollide(b2Fixture* fixtureA, b2Fixtu
 
 	if (sprite1 && sprite2){
 		if (sprite1->isPlayer() || sprite2->isPlayer()){
-			if (sprite1->wasHit() || sprite2->wasHit() || sprite1->isDead() || sprite2->isDead()){
+			if (sprite1->isPlayer() && sprite2->isPlayer()){
+				return false;
+			}
+			else if (sprite1->wasHit() || sprite2->wasHit() || sprite1->isDead() || sprite2->isDead()){
 				return false;
 			}
 			else if ((sprite1->isProjectile() && fixtureB->IsSensor())
@@ -88,33 +91,49 @@ void NinjaCatCastleCollisionListener::respondToCollision(AnimatedSprite *player,
 {
 	b2Fixture *playerBox = player->getBody()->GetFixtureList();
 	if (contact->GetFixtureA() == playerBox || contact->GetFixtureB() == playerBox){
-		wstring enemyState = enemy->getCurrentState();
-		if (enemyState != L"DIE_LEFT"  && enemyState != L"DIE_RIGHT"
-			&& enemyState != L"HIT_LEFT" && enemyState != L"HIT_RIGHT"
-			&& !player->getInvincibilityFrames()){
-			//Marks player to send in the hit arc backwards
-			player->setIsProjectile(true);
+		if (!player->isProjectile() && !player->wasHit() && !player->isAttacking()){
+			wstring enemyState = enemy->getCurrentState();
+			if (enemyState != L"DIE_LEFT"  && enemyState != L"DIE_RIGHT"
+				&& enemyState != L"HIT_LEFT" && enemyState != L"HIT_RIGHT"
+				&& !player->getInvincibilityFrames()){
+				//Marks player to send in the hit arc backwards
+				player->setIsProjectile(true);
 
-			if (!enemy->isProjectile()){
-				Bot* bot = static_cast<Bot*>(enemy);
-				bot->setHitPlayer(true);
+				if (!enemy->isProjectile()){
+					Bot* bot = static_cast<Bot*>(enemy);
+					bot->setHitPlayer(true);
+				}
+				else{
+					enemy->markForDeletion();
+				}
+
+				if (player->getHurtBox()){
+					player->setAttackFinished(true);
+					player->setAttacking(false);
+				}
+				if (player->isFacingRight()){
+					player->setCurrentState(L"HIT_LEFT");
+				}
+				else{
+					player->setCurrentState(L"HIT_RIGHT");
+				}
+				player->decrementHP();
+				player->setHit(true);
+			}
+		}
+		else{
+			player->markForDeletion();
+			if (enemy->getBody()->GetPosition().x < player->getBody()->GetPosition().x){
+				enemy->setCurrentState(L"HIT_RIGHT");
+				enemy->getBody()->SetLinearVelocity(b2Vec2(-3.0f, 8.0f));
 			}
 			else{
-				enemy->markForDeletion();
+				enemy->setCurrentState(L"HIT_LEFT");
+				enemy->getBody()->SetLinearVelocity(b2Vec2(3.0f, 8.0f));
 			}
-
-			if (player->getHurtBox()){
-				player->setAttackFinished(true);
-				player->setAttacking(false);
-			}
-			if (player->isFacingRight()){
-				player->setCurrentState(L"HIT_LEFT");
-			}
-			else{
-				player->setCurrentState(L"HIT_RIGHT");
-			}
-			player->decrementHP();
-			player->setHit(true);
+			enemy->setHit(true);
+			enemy->setPlayHitSound(true);
+			enemy->getBody()->SetGravityScale(1.0f);
 		}
 	}
 	else{

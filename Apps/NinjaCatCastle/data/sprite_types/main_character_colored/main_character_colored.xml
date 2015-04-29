@@ -129,8 +129,58 @@
   <image_file id="124" file_name="JUMP_LAND_RIGHT/coloredmaincharacter_JUMP_START_RIGHT0003.png"/>
   <image_file id="125" file_name="JUMP_LAND_RIGHT/coloredmaincharacter_JUMP_START_RIGHT0002.png"/>
   <image_file id="126" file_name="JUMP_LAND_RIGHT/coloredmaincharacter_JUMP_START_RIGHT0001.png"/>
+  <image_file id="127" file_name="THROW_DIAG_RIGHT/coloredmaincharacter_THROW_DIAG_RIGHT0001.png"/>
+  <image_file id="128" file_name="THROW_DIAG_RIGHT/coloredmaincharacter_THROW_DIAG_RIGHT0002.png"/>
+  <image_file id="129" file_name="THROW_DIAG_RIGHT/coloredmaincharacter_THROW_DIAG_RIGHT0003.png"/>
+  <image_file id="130" file_name="THROW_DIAG_RIGHT/coloredmaincharacter_THROW_DIAG_RIGHT0004.png"/>
+  <image_file id="131" file_name="THROW_DIAG_RIGHT/coloredmaincharacter_THROW_DIAG_RIGHT0005.png"/>
+  <image_file id="132" file_name="THROW_DIAG_RIGHT/coloredmaincharacter_THROW_DIAG_RIGHT0006.png"/>
+  <image_file id="133" file_name="THROW_DIAG_RIGHT/coloredmaincharacter_THROW_DIAG_RIGHT0007.png"/>
+  <image_file id="134" file_name="THROW_DIAG_RIGHT/coloredmaincharacter_THROW_DIAG_RIGHT0008.png"/>
+  <image_file id="135" file_name="THROW_DIAG_RIGHT/coloredmaincharacter_THROW_DIAG_RIGHT0009.png"/>
+  <image_file id="136" file_name="THROW_DIAG_RIGHT/coloredmaincharacter_THROW_DIAG_RIGHT0010.png"/>
+  <image_file id="137" file_name="THROW_DIAG_LEFT/coloredmaincharacter_THROW_DIAG_LEFT0001.png"/>
+  <image_file id="138" file_name="THROW_DIAG_LEFT/coloredmaincharacter_THROW_DIAG_LEFT0002.png"/>
+  <image_file id="139" file_name="THROW_DIAG_LEFT/coloredmaincharacter_THROW_DIAG_LEFT0003.png"/>
+  <image_file id="140" file_name="THROW_DIAG_LEFT/coloredmaincharacter_THROW_DIAG_LEFT0004.png"/>
+  <image_file id="141" file_name="THROW_DIAG_LEFT/coloredmaincharacter_THROW_DIAG_LEFT0005.png"/>
+  <image_file id="142" file_name="THROW_DIAG_LEFT/coloredmaincharacter_THROW_DIAG_LEFT0006.png"/>
+  <image_file id="143" file_name="THROW_DIAG_LEFT/coloredmaincharacter_THROW_DIAG_LEFT0007.png"/>
+  <image_file id="144" file_name="THROW_DIAG_LEFT/coloredmaincharacter_THROW_DIAG_LEFT0008.png"/>
+  <image_file id="145" file_name="THROW_DIAG_LEFT/coloredmaincharacter_THROW_DIAG_LEFT0009.png"/>
+  <image_file id="146" file_name="THROW_DIAG_LEFT/coloredmaincharacter_THROW_DIAG_LEFT0010.png"/>
  </images_list>
  <animations_list>
+ <animation_state>
+ <state>THROW_LEFT</state>
+   <animation_sequence>
+    <pose image_id="137" duration="2"/>
+    <pose image_id="138" duration="2"/>
+    <pose image_id="139" duration="2"/>
+    <pose image_id="140" duration="2"/>
+    <pose image_id="141" duration="2"/>
+	<pose image_id="142" duration="2"/>
+    <pose image_id="143" duration="2"/>
+    <pose image_id="144" duration="2"/>
+    <pose image_id="145" duration="2"/>
+    <pose image_id="146" duration="2"/>
+   </animation_sequence>
+  </animation_state>
+ <animation_state>
+ <state>THROW_RIGHT</state>
+   <animation_sequence>
+    <pose image_id="127" duration="2"/>
+    <pose image_id="128" duration="2"/>
+    <pose image_id="129" duration="2"/>
+    <pose image_id="130" duration="2"/>
+    <pose image_id="131" duration="2"/>
+	<pose image_id="132" duration="2"/>
+    <pose image_id="133" duration="2"/>
+    <pose image_id="134" duration="2"/>
+    <pose image_id="135" duration="2"/>
+    <pose image_id="136" duration="2"/>
+   </animation_sequence>
+  </animation_state>
  <animation_state>
  <state>HIT_RIGHT</state>
    <animation_sequence>

@@ -20,6 +20,8 @@ private:
 	// THIS IS THE TEXT THIS OBJECT WILL UPDATE EACH FRAME
 	wstring livesLabel = L"LIVES";
 	wstring livesCounter;
+	wstring shurikenLabel = L"SHURIKEN";
+	wstring shurikenCounter;
 	wstring treatsLabel = L"TREATS";
 	wstring treatsCounter;
 
@@ -31,6 +33,7 @@ public:
 	// DEFINED IN NinjaCatCastleTextGenerator.cpp
 	void appendMouseCoords(Game *game);
 	void appendLivesCounter(Game *game);
+	void appendShurikenCounter(Game *game);
 	void appendTreatsCounter(Game *game);
 	void initText(Game *game);
 	void updateText(Game *game);
