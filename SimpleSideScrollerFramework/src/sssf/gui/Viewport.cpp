@@ -152,8 +152,8 @@ void Viewport::moveViewport(int incX,
 	// OF THE GAME WORLD. CLAMP INSTEAD.
 	// This has something to do with that gray bar I removed but since we'll never want
 	// the viewport off center this dumb solution is good enough for us, lol
-	else if (viewportY >= worldHeight - viewportHeight - 64)
-		viewportY = worldHeight - viewportHeight - 64;
+	else if (viewportY >= worldHeight - viewportHeight)
+		viewportY = worldHeight - viewportHeight;
 }
 
 
