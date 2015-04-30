@@ -446,6 +446,7 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 
 void NinjaCatCastleKeyEventHandler::handleShurikenThrow(Game *game, int throwCode){
 	AnimatedSprite* player = game->getGSM()->getSpriteManager()->getPlayer();
+	player->setAttacking(false);
 	if (player->getShuriken()){
 		AnimatedSprite *projectile = new AnimatedSprite();
 		projectile->setSpriteType(game->getGSM()->getSpriteManager()->getSpriteType(2));
@@ -480,11 +481,11 @@ void NinjaCatCastleKeyEventHandler::handleShurikenThrow(Game *game, int throwCod
 			projectileProps.linearVelocity = b2Vec2(-0.0001f, projectileVelocity.y);
 			if (player->isFacingRight()){
 				player->setCurrentState(L"THROW_RIGHT");
-				projectileProps.position.Set(player->getBody()->GetPosition().x + 0.5f, player->getBody()->GetPosition().y);
+				projectileProps.position.Set(player->getBody()->GetPosition().x + 0.3f, player->getBody()->GetPosition().y);
 			}
 			else{
 				player->setCurrentState(L"THROW_LEFT");
-				projectileProps.position.Set(player->getBody()->GetPosition().x - 0.5f, player->getBody()->GetPosition().y);
+				projectileProps.position.Set(player->getBody()->GetPosition().x - 0.3f, player->getBody()->GetPosition().y);
 			}
 		}
 		else if (throwCode == upright){

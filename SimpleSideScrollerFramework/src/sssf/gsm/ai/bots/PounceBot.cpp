@@ -14,7 +14,9 @@ void PounceBot::Jump(boolean jumpRight)
 	b2PolygonShape boxShape;
 	b2FixtureDef fixtureDef;
 	b2FixtureDef boxFixtureDef;
-	body->DestroyFixture(body->GetFixtureList());
+	if (body->GetFixtureList()){
+		body->DestroyFixture(body->GetFixtureList());
+	}
 
 	if (jumpRight){
 		boxShape.SetAsBox(0.7f, 0.4f, b2Vec2(0.0f, 0.0f), 0.5f);
@@ -47,7 +49,9 @@ void PounceBot::think(Game *game)
 				if (currentState == L"JUMPING_LEFT"){
 					setCurrentState(L"IDLE_LEFT");
 
-					body->DestroyFixture(body->GetFixtureList());
+					if (body->GetFixtureList()){
+						body->DestroyFixture(body->GetFixtureList());
+					}
 					b2FixtureDef fixtureDef;
 					b2PolygonShape shape;
 					shape.SetAsBox(0.7f, 0.4f);
@@ -58,7 +62,9 @@ void PounceBot::think(Game *game)
 				else if (currentState == L"JUMPING_RIGHT"){
 					setCurrentState(L"IDLE_RIGHT");
 
-					body->DestroyFixture(body->GetFixtureList());
+					if (body->GetFixtureList()){
+						body->DestroyFixture(body->GetFixtureList());
+					}
 					b2FixtureDef fixtureDef;
 					b2PolygonShape shape;
 					shape.SetAsBox(0.7f, 0.4f);

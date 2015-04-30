@@ -163,12 +163,17 @@ void SpriteManager::addSpriteItemsToRenderList(	Game *game)
 
 		list<AnimatedSprite*>::iterator projectileIterator;
 		projectileIterator = projectiles.begin();
+		boolean activeProjectileExists = false;
 		while (projectileIterator != projectiles.end()){
 			AnimatedSprite *projectile = *projectileIterator;
 			if (projectile->getBody()){
 				addSpriteToRenderList(game, projectile, renderList, viewport);
+				activeProjectileExists = true;
 			}
 			projectileIterator++;
+		}
+		if (!activeProjectileExists && projectiles.size() > 0){
+			projectiles.clear();
 		}
 
 		for (int i = 0; i < 3; i++){
@@ -321,6 +326,7 @@ void SpriteManager::clearSprites()
 {
 	spriteTypes.clear();
 	bots.clear();
+	projectiles.clear();
 }
 
 /*
@@ -741,7 +747,9 @@ void SpriteManager::updateAnimations(Game *game){
 					}
 				}
 				else if (pounceBot->isAirborne() && pounceBot->getBody()->GetLinearVelocity().x == 0.0f){
-					pounceBot->getBody()->DestroyFixture(pounceBot->getBody()->GetFixtureList());
+					if (pounceBot->getBody()->GetFixtureList()){
+						pounceBot->getBody()->DestroyFixture(pounceBot->getBody()->GetFixtureList());
+					}
 					b2FixtureDef fixtureDef;
 					b2PolygonShape shape;
 					shape.SetAsBox(0.7f, 0.4f);
