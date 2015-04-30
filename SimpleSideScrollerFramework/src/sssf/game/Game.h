@@ -198,6 +198,7 @@ const unsigned int LEFT_KEY = VK_LEFT;
 const unsigned int RIGHT_KEY = VK_RIGHT;
 const unsigned int SPACE_KEY = VK_SPACE;
 const unsigned int CTRL_KEY = VK_CONTROL;
+const unsigned int ESC_KEY = VK_ESCAPE;
 
 class Game
 {

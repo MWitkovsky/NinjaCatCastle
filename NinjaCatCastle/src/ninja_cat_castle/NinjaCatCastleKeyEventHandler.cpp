@@ -68,7 +68,7 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 					if (!player->isAirborne()){
 						if (state != L"ATTACK_LEFT" && state != L"ATTACK_RIGHT"
 							&& state != L"ATTACK_LEFT_2" && state != L"ATTACK_RIGHT_2"
-							&& state != L"THROW_LEFT" && state != L"THROW_RIGHT"){
+							&& state != L"THROW_LEFT"){
 							player->setCurrentState(L"WALK_LEFT");
 							player->setFacingRight(false);
 						}
@@ -94,7 +94,7 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 					if (!player->isAirborne()){
 						if (state != L"ATTACK_LEFT" && state != L"ATTACK_RIGHT"
 							&& state != L"ATTACK_LEFT_2" && state != L"ATTACK_RIGHT_2"
-							&& state != L"THROW_LEFT" && state != L"THROW_RIGHT"){
+							&& state != L"THROW_RIGHT"){
 							player->setCurrentState(L"WALK_RIGHT");
 							player->setFacingRight(true);
 						}
@@ -271,13 +271,15 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 			}*/
 
 			//for testing collecting treats and 1-ups
-			if (input->isKeyDownForFirstTime(H_KEY)){
-				for (int i = 0; i < 10; i++){
-					gsm->getSpriteManager()->getPlayer()->collectTreat();
-				}
-			}
-
 		}
+
+		//Go back to main menu with escape
+		if (input->isKeyDownForFirstTime(ESC_KEY)){
+			introChannel = game->playSongIntro(MAIN_MENU_SONG_INTRO, introChannel);
+			musicChannel = game->queueSong(MAIN_MENU_SONG, musicChannel);
+			game->quitGame();
+		}
+
 		//Finally, level select cheats
 		if (input->isKeyDown(CTRL_KEY)){
 			if (input->isKeyDownForFirstTime(ONE_KEY)){
@@ -302,6 +304,14 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 				else{
 					game->getGSM()->getSpriteManager()->getPlayer()->setInvincibilityFrames(999999);
 				}
+			}
+			else if (input->isKeyDownForFirstTime(H_KEY)){
+				for (int i = 0; i < 10; i++){
+					gsm->getSpriteManager()->getPlayer()->collectTreat();
+				}
+			}
+			else if (input->isKeyDownForFirstTime(S_KEY)){
+				player->setShurikenCount(999);
 			}
 		}
 
@@ -409,6 +419,11 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 			viewport->moveViewport((int)floor(viewportVx + 0.5f), (int)floor(viewportVy + 0.5f), game->getGSM()->getWorld()->getWorldWidth(), game->getGSM()->getWorld()->getWorldHeight());
 		}
 	}
+	else{
+		if (input->isKeyDownForFirstTime(ESC_KEY)){
+			game->shutdown();
+		}
+	}
 
 	// LET'S MESS WITH THE TARGET FRAME RATE IF THE USER PRESSES THE HOME OR END KEYS
 	WindowsTimer *timer = (WindowsTimer*)game->getTimer();
@@ -451,37 +466,39 @@ void NinjaCatCastleKeyEventHandler::handleShurikenThrow(Game *game, int throwCod
 		shape.SetAsBox(0.2f, 0.2f);
 		fixtureDef.shape = &shape;
 
+		if (throwCode == left){
+			projectileProps.linearVelocity = b2Vec2(-projectileVelocity.x, -0.0001f);
+			player->setCurrentState(L"THROW_LEFT");
+		}
+		else if (throwCode == upleft){
+			projectileProps.linearVelocity = b2Vec2(-projectileVelocity.x / 1.25f, projectileVelocity.y / 1.25f);
+			player->setCurrentState(L"THROW_LEFT");
+		}
+		else if (throwCode == up){
+			projectileProps.linearVelocity = b2Vec2(-0.0001f, projectileVelocity.y);
+			if (player->isFacingRight()){
+				player->setCurrentState(L"THROW_RIGHT");
+				projectileProps.position.Set(player->getBody()->GetPosition().x + 0.5f, player->getBody()->GetPosition().y);
+			}
+			else{
+				player->setCurrentState(L"THROW_LEFT");
+				projectileProps.position.Set(player->getBody()->GetPosition().x - 0.5f, player->getBody()->GetPosition().y);
+			}
+		}
+		else if (throwCode == upright){
+			projectileProps.linearVelocity = b2Vec2(projectileVelocity.x / 1.25f, projectileVelocity.y / 1.25f);
+			player->setCurrentState(L"THROW_RIGHT");
+		}
+		else{
+			projectileProps.linearVelocity = b2Vec2(projectileVelocity.x, -0.0001f);
+			player->setCurrentState(L"THROW_RIGHT");
+		}
+
 		projectile->setBody(game->getGSM()->getPhysics()->getWorld()->CreateBody(&projectileProps));
 		projectile->getBody()->CreateFixture(&fixtureDef);
 		projectile->getBody()->SetUserData(projectile);
 		projectile->getBody()->SetSleepingAllowed(false);
 
-		if (throwCode == left){
-			projectile->getBody()->SetLinearVelocity(b2Vec2(-projectileVelocity.x, -0.0001f));
-			player->setCurrentState(L"THROW_LEFT");
-		}
-		else if (throwCode == upleft){
-			projectile->getBody()->SetLinearVelocity(b2Vec2(-projectileVelocity.x, projectileVelocity.y));
-			player->setCurrentState(L"THROW_LEFT");
-		}
-		else if (throwCode == up){
-			projectile->getBody()->SetLinearVelocity(b2Vec2(-0.0001f, projectileVelocity.y));
-			if (player->isFacingRight()){
-				player->setCurrentState(L"THROW_RIGHT");
-			}
-			else{
-				player->setCurrentState(L"THROW_LEFT");
-			}
-		}
-		else if (throwCode == upright){
-			projectile->getBody()->SetLinearVelocity(b2Vec2(projectileVelocity.x, projectileVelocity.y));
-			player->setCurrentState(L"THROW_RIGHT");
-		}
-		else{
-			projectile->getBody()->SetLinearVelocity(b2Vec2(projectileVelocity.x, -0.0001f));
-			player->setCurrentState(L"THROW_RIGHT");
-		}
-		
 		game->getGSM()->getSpriteManager()->addProjectile(projectile);
 		player->decrementShurikenCount();
 	}

@@ -5,6 +5,7 @@
 #include "ninja_cat_castle\NinjaCatCastle.h"
 #include "sssf\gsm\ai\bots\PounceBot.h"
 #include "sssf\gsm\ai\bots\PropellerBot.h"
+#include "sssf\gsm\ai\bots\Pickup.h"
 
 void NinjaCatCastleCollisionListener::BeginContact(b2Contact* contact) {
 
@@ -72,7 +73,19 @@ bool NinjaCatCastleCollisionListener::ShouldCollide(b2Fixture* fixtureA, b2Fixtu
 				return false;
 			}
 			else if (fixtureA->IsSensor() || fixtureB->IsSensor()){
-				return true;
+				wstring enemyState = sprite1->getCurrentState();
+				if (enemyState != L"DIE_LEFT"  && enemyState != L"DIE_RIGHT"
+					&& enemyState != L"HIT_LEFT" && enemyState != L"HIT_RIGHT"){
+					return true;
+				}
+				else{
+					enemyState = sprite2->getCurrentState();
+					if (enemyState != L"DIE_LEFT"  && enemyState != L"DIE_RIGHT"
+						&& enemyState != L"HIT_LEFT" && enemyState != L"HIT_RIGHT"){
+						return true;
+					}
+				}
+				return false;
 			}
 			else if (sprite1->getInvincibilityFrames() || sprite2->getInvincibilityFrames()){
 				return false;
@@ -94,7 +107,25 @@ void NinjaCatCastleCollisionListener::respondToCollision(AnimatedSprite *player,
 {
 	b2Fixture *playerBox = player->getBody()->GetFixtureList();
 	if (contact->GetFixtureA() == playerBox || contact->GetFixtureB() == playerBox){
-		if (!player->isProjectile() && !player->wasHit() && !player->isAttacking()){
+		Pickup* pickup = dynamic_cast<Pickup*>(enemy);
+		if (pickup && !player->isProjectile()){
+			if (pickup->getAlpha() != 0){
+				pickup->setAlpha(0);
+				if (pickup->isHealth()){
+					if (player->getHP() < 3){
+						player->setHP(player->getHP() + 1);
+					}
+					else{
+						pickup->setAlpha(255);
+					}
+				}
+				else{
+					player->collectTreat();
+				}
+			}
+			return;
+		}
+		if (!player->isProjectile() && !player->wasHit()){
 			wstring enemyState = enemy->getCurrentState();
 			if (enemyState != L"DIE_LEFT"  && enemyState != L"DIE_RIGHT"
 				&& enemyState != L"HIT_LEFT" && enemyState != L"HIT_RIGHT"
@@ -125,41 +156,47 @@ void NinjaCatCastleCollisionListener::respondToCollision(AnimatedSprite *player,
 			}
 		}
 		else{
-			player->markForDeletion();
-			if (enemy->getBody()->GetPosition().x < player->getBody()->GetPosition().x){
+			wstring enemyState = enemy->getCurrentState();
+			if (enemyState != L"DIE_LEFT"  && enemyState != L"DIE_RIGHT"
+				&& enemyState != L"HIT_LEFT" && enemyState != L"HIT_RIGHT"){
+				player->markForDeletion();
+				if (enemy->getBody()->GetPosition().x < player->getBody()->GetPosition().x){
+					enemy->setCurrentState(L"HIT_RIGHT");
+					enemy->getBody()->SetLinearVelocity(b2Vec2(-3.0f, 8.0f));
+				}
+				else{
+					enemy->setCurrentState(L"HIT_LEFT");
+					enemy->getBody()->SetLinearVelocity(b2Vec2(3.0f, 8.0f));
+				}
+				enemy->setHit(true);
+				enemy->setPlayHitSound(true);
+				enemy->getBody()->SetGravityScale(1.0f);
+			}
+		}
+	}
+	else{
+		if (!dynamic_cast<Pickup*>(enemy)){
+			if (enemy->getBody()->GetPosition().x < player->getHurtBox()->GetPosition().x){
 				enemy->setCurrentState(L"HIT_RIGHT");
-				enemy->getBody()->SetLinearVelocity(b2Vec2(-3.0f, 8.0f));
+				if (player->getBody()->GetLinearVelocity().x < 0.0f){
+					enemy->getBody()->SetLinearVelocity(b2Vec2(-8.0f, 8.0f));
+				}
+				else{
+					enemy->getBody()->SetLinearVelocity(b2Vec2(-3.0f, 8.0f));
+				}
 			}
 			else{
 				enemy->setCurrentState(L"HIT_LEFT");
-				enemy->getBody()->SetLinearVelocity(b2Vec2(3.0f, 8.0f));
+				if (player->getBody()->GetLinearVelocity().x > 0.0f){
+					enemy->getBody()->SetLinearVelocity(b2Vec2(8.0f, 8.0f));
+				}
+				else{
+					enemy->getBody()->SetLinearVelocity(b2Vec2(3.0f, 8.0f));
+				}
 			}
 			enemy->setHit(true);
 			enemy->setPlayHitSound(true);
 			enemy->getBody()->SetGravityScale(1.0f);
 		}
-	}
-	else{
-		if (enemy->getBody()->GetPosition().x < player->getHurtBox()->GetPosition().x){
-			enemy->setCurrentState(L"HIT_RIGHT");
-			if (player->getBody()->GetLinearVelocity().x < 0.0f){
-				enemy->getBody()->SetLinearVelocity(b2Vec2(-8.0f, 8.0f));
-			}
-			else{
-				enemy->getBody()->SetLinearVelocity(b2Vec2(-3.0f, 8.0f));
-			}
-		}
-		else{
-			enemy->setCurrentState(L"HIT_LEFT");
-			if (player->getBody()->GetLinearVelocity().x > 0.0f){
-				enemy->getBody()->SetLinearVelocity(b2Vec2(8.0f, 8.0f));
-			}
-			else{
-				enemy->getBody()->SetLinearVelocity(b2Vec2(3.0f, 8.0f));
-			}
-		}
-		enemy->setHit(true);
-		enemy->setPlayHitSound(true);
-		enemy->getBody()->SetGravityScale(1.0f);
 	}
 }

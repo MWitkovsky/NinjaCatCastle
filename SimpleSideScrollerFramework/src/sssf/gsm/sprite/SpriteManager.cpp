@@ -73,6 +73,24 @@ void SpriteManager::addSpriteToRenderList(Game *game, AnimatedSprite *sprite,
 				spriteType->getTextureWidth(),
 				spriteType->getTextureHeight());
 		}
+		else if (sprite->getSpriteType()->getSpriteTypeID() == 7){ //Health pickups
+			renderList->addRenderItem(sprite->getCurrentImageID(),
+				(int)x - viewport->getViewportX()+48,
+				(int)y - viewport->getViewportY()+16,
+				0,
+				sprite->getAlpha(),
+				spriteType->getTextureWidth(),
+				spriteType->getTextureHeight());
+		}
+		else if (sprite->getSpriteType()->getSpriteTypeID() == 8){ //Treat pickups
+			renderList->addRenderItem(sprite->getCurrentImageID(),
+				(int)x - viewport->getViewportX() + 44,
+				(int)y - viewport->getViewportY() + 54,
+				0,
+				sprite->getAlpha(),
+				spriteType->getTextureWidth(),
+				spriteType->getTextureHeight());
+		}
 		else{
 			renderList->addRenderItem(sprite->getCurrentImageID(),
 				(int)x - viewport->getViewportX(),
@@ -137,7 +155,9 @@ void SpriteManager::addSpriteItemsToRenderList(	Game *game)
 		while (botIterator != bots.end())
 		{			
 			Bot *bot = *botIterator;
-			addSpriteToRenderList(game, bot, renderList, viewport);
+			if (bot->getBody()){
+				addSpriteToRenderList(game, bot, renderList, viewport);
+			}
 			botIterator++;
 		}
 
@@ -151,7 +171,16 @@ void SpriteManager::addSpriteItemsToRenderList(	Game *game)
 			projectileIterator++;
 		}
 
-		
+		for (int i = 0; i < 3; i++){
+			AnimatedSpriteType *spriteType = hpui[i]->getSpriteType();
+			renderList->addRenderItem(hpui[i]->getCurrentImageID(),
+				15 + (75*i),
+				SHURIKEN_LABEL_Y,
+				0,
+				hpui[i]->getAlpha(),
+				spriteType->getTextureWidth(),
+				spriteType->getTextureHeight());
+		}
 	}
 }
 
@@ -694,6 +723,16 @@ void SpriteManager::updateAnimations(Game *game){
 			}
 		}
 		botIterator++;
+	}
+
+	//update heart UI
+	for (int i = 0; i < 3; i++){
+		if (player.getHP() > i){
+			hpui[i]->setCurrentState(L"FULL");
+		}
+		else{
+			hpui[i]->setCurrentState(L"EMPTY");
+		}
 	}
 
 	player.updateSprite(game);

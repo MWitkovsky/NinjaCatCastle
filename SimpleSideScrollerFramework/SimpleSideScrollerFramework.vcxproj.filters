@@ -177,6 +177,9 @@
     <ClCompile Include="src\sssf\gsm\ai\bots\ArmorBot.cpp">
       <Filter>src\sssf\gsm\ai\bots</Filter>
     </ClCompile>
+    <ClCompile Include="src\sssf\gsm\ai\bots\Pickup.cpp">
+      <Filter>src\sssf\gsm\ai\bots</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\sssf_VS\stdafx.h">
@@ -333,6 +336,9 @@
       <Filter>src\sssf\gsm\ai\bots</Filter>
     </ClInclude>
     <ClInclude Include="src\sssf\gsm\ai\bots\BombBot.h">
+      <Filter>src\sssf\gsm\ai\bots</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sssf\gsm\ai\bots\Pickup.h">
       <Filter>src\sssf\gsm\ai\bots</Filter>
     </ClInclude>
   </ItemGroup>

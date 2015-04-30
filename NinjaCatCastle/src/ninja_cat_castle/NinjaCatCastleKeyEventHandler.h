@@ -26,7 +26,7 @@ private:
 	int up = 2;
 	int upright = 3;
 	int right = 4;
-	b2Vec2	projectileVelocity = b2Vec2(10.0f, 10.0f);
+	b2Vec2	projectileVelocity = b2Vec2(15.0f, 15.0f);
 
 public:
 	NinjaCatCastleKeyEventHandler()		{}

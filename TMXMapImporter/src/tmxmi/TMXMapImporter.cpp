@@ -8,6 +8,7 @@
 #include "sssf\gsm\state\GameStateManager.h"
 #include "sssf\gsm\ai\bots\PounceBot.h"
 #include "sssf\gsm\ai\bots\PropellerBot.h"
+#include "sssf\gsm\ai\bots\Pickup.h"
 #include "xmlfi\XMLFileImporter.h"
 #include "Box2D\Box2D.h"
 
@@ -639,6 +640,60 @@ bool TMXMapImporter::buildWorldFromInfo(Game *game)
 						propellerBot->setAlpha(255);
 						propellerBot->setCurrentState(L"IDLE_LEFT");
 						game->getGSM()->getSpriteManager()->addBot(propellerBot);
+					}
+					else if (tiledLayerToAdd->getTile(row, col)->properties[spawn] == treatID){
+						Pickup *treat = new Pickup(false);
+
+						b2BodyDef propellerBotProps;
+						b2FixtureDef fixtureDef;
+						b2PolygonShape shape;
+
+						propellerBotProps.position.Set(col - 0.5f, tiledLayerToAdd->getRows() - row + 0.5f);
+						propellerBotProps.type = b2_dynamicBody;
+						propellerBotProps.fixedRotation = true;
+						propellerBotProps.gravityScale = 0.0f;
+						shape.SetAsBox(0.25f, 0.25f);
+						fixtureDef.shape = &shape;
+						fixtureDef.isSensor = true;
+
+						treat->setBody(game->getGSM()->getPhysics()->getWorld()->CreateBody(&propellerBotProps));
+						treat->getBody()->CreateFixture(&fixtureDef);
+						treat->getBody()->SetUserData(treat);
+						treat->getBody()->SetSleepingAllowed(false);
+						treat->getBody()->SetLinearVelocity(b2Vec2(-0.5f, 0.0f));
+						treat->setOriginalPosition(propellerBotProps.position);
+						treat->setFacingRight(false);
+						treat->setAirborne(true);
+						treat->setAlpha(255);
+						treat->setCurrentState(L"IDLE");
+						game->getGSM()->getSpriteManager()->addBot(treat);
+					}
+					else if (tiledLayerToAdd->getTile(row, col)->properties[spawn] == healthPickupID){
+						Pickup *health = new Pickup(true);
+
+						b2BodyDef propellerBotProps;
+						b2FixtureDef fixtureDef;
+						b2PolygonShape shape;
+
+						propellerBotProps.position.Set(col - 0.5f, tiledLayerToAdd->getRows() - row + 0.5f);
+						propellerBotProps.type = b2_dynamicBody;
+						propellerBotProps.fixedRotation = true;
+						propellerBotProps.gravityScale = 0.0f;
+						shape.SetAsBox(0.25f, 0.25f);
+						fixtureDef.shape = &shape;
+						fixtureDef.isSensor = true;
+
+						health->setBody(game->getGSM()->getPhysics()->getWorld()->CreateBody(&propellerBotProps));
+						health->getBody()->CreateFixture(&fixtureDef);
+						health->getBody()->SetUserData(health);
+						health->getBody()->SetSleepingAllowed(false);
+						health->getBody()->SetLinearVelocity(b2Vec2(-0.5f, 0.0f));
+						health->setOriginalPosition(propellerBotProps.position);
+						health->setFacingRight(false);
+						health->setAirborne(true);
+						health->setAlpha(255);
+						health->setCurrentState(L"IDLE");
+						game->getGSM()->getSpriteManager()->addBot(health);
 					}
 					col++;
 				}
