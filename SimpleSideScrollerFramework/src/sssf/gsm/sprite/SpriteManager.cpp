@@ -389,6 +389,25 @@ void SpriteManager::update(Game *game)
 	//Player stuff mostly
 	updateAnimations(game);
 
+	//Some sound handling that couldn't be done where I wanted it to
+	if (player.getTreats() >= 100){
+		player.setLives(player.getLives() + 1);
+		player.setTreats(player.getTreats() - 100);
+		//Play sound here. Either a special sound effect like Mario or even a whole jingle like Sonic.
+		introChannel = game->playSongIntro(ONE_UP_JINGLE, introChannel);
+		musicChannel->setPaused(true);
+	}
+
+	if (player.shouldPlayTreatSound()){
+		game->playSound(SOUND_PICKUP_TREAT);
+		player.setShouldPlayTreatSound(false);
+	}
+
+	if (player.shouldPlayHealthSound()){
+		game->playSound(SOUND_PICKUP_HEALTH);
+		player.setShouldPlayHealthSound(false);
+	}
+
 	// NOW UPDATE THE REST OF THE SPRITES
 	list<Bot*>::iterator botIterator;
 	botIterator = bots.begin();

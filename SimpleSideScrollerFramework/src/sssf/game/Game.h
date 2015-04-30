@@ -61,6 +61,7 @@ extern char*	LEVEL_2_SONG;
 extern char*	LEVEL_3_SONG_INTRO;
 extern char*	LEVEL_3_SONG;
 extern char*	LEVEL_COMPLETE_JINGLE;
+extern char*	ONE_UP_JINGLE;
 
 extern char*	SOUND_ARROWSHOT;
 extern char*	SOUND_BOMB_EXPLOSION1;
@@ -74,6 +75,9 @@ extern char*	SOUND_MC_JUMP;
 extern char*	SOUND_SLASH1;
 extern char*	SOUND_SLASH2;
 extern char*	SOUND_BIGSLASH;
+extern char*	SOUND_PICKUP_TREAT;
+extern char*	SOUND_PICKUP_HEALTH;
+extern char*	SOUND_MEOW;
 
 // HERE IS THE NinjaCatCastle GAME SETUP/INIT FILE. EVERYTHING WOULD START FROM HERE
 extern wstring	W_LEVEL_1_DIR;

@@ -305,9 +305,4 @@ void AnimatedSprite::updateSprite(Game *game)
 
 void AnimatedSprite::collectTreat(){
 	treats++;
-	if (treats == 100){
-		lives++;
-		treats = 0;
-		//Play sound here. Either a special sound effect like Mario or even a whole jingle like Sonic.
-	}
 }

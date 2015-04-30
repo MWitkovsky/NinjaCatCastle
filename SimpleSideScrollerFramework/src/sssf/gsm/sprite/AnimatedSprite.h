@@ -53,6 +53,8 @@ protected:
 	boolean attacking = false;
 	boolean toBeDeleted = false;
 	boolean playHitSound = false;
+	boolean playTreatSound = false;
+	boolean playHealthSound = false;
 
 	// Player Specific values
 	int HP = 3;
@@ -89,6 +91,8 @@ public:
 	boolean				isProjectile()		{ return projectile; }
 	boolean				isMarkedForDeletion()	{ return toBeDeleted; }
 	boolean				shouldPlayHitSound()	{ return playHitSound; }
+	boolean				shouldPlayTreatSound()	{ return playTreatSound; }
+	boolean				shouldPlayHealthSound()	{ return playHealthSound; }
 	wstring				getCurrentState()	{ return currentState; }
 	wstring				getOriginalState()  { return originalState; }
 	AnimatedSpriteType*	getSpriteType()		{ return spriteType; }
@@ -195,6 +199,15 @@ public:
 	}
 	void setShurikenCount(int shuriken){
 		this->shuriken = shuriken;
+	}
+	void setTreats(int treats){
+		this->treats = treats;
+	}
+	void setShouldPlayTreatSound(boolean playTreatSound){
+		this->playTreatSound = playTreatSound;
+	}
+	void setShouldPlayHealthSound(boolean playHealthSound){
+		this->playHealthSound = playHealthSound;
 	}
 	//For testing!
 	void setInvincibilityFrames(int invincibilityFrames){

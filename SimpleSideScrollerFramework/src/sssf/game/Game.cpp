@@ -64,6 +64,7 @@ char* LEVEL_2_SONG;
 char* LEVEL_3_SONG_INTRO;
 char* LEVEL_3_SONG;
 char* LEVEL_COMPLETE_JINGLE;
+char* ONE_UP_JINGLE;
 
 char*	SOUND_ARROWSHOT;
 char*	SOUND_BOMB_EXPLOSION1;
@@ -77,6 +78,9 @@ char*	SOUND_MC_JUMP;
 char*	SOUND_SLASH1;
 char*	SOUND_SLASH2;
 char*	SOUND_BIGSLASH;
+char*	SOUND_PICKUP_TREAT;
+char*	SOUND_PICKUP_HEALTH;
+char*	SOUND_MEOW;
 
 wstring W_LEVEL_1_DIR;
 wstring W_LEVEL_1_NAME;
@@ -275,6 +279,10 @@ void Game::readLUA(const char* fileName){
 	string level_complete_jingle = LEVEL_COMPLETE_JINGLE_obj.GetString();
 	LEVEL_COMPLETE_JINGLE = strcpy((char*)malloc(level_complete_jingle.length() + 1), level_complete_jingle.c_str());
 
+	LuaObject ONE_UP_JINGLE_obj = luaPState->GetGlobal("ONE_UP_JINGLE");
+	string one_up_jingle = ONE_UP_JINGLE_obj.GetString();
+	ONE_UP_JINGLE = strcpy((char*)malloc(one_up_jingle.length() + 1), one_up_jingle.c_str());
+
 	LuaObject SOUND_ARROWSHOT_obj = luaPState->GetGlobal("SOUND_ARROWSHOT");
 	string sound_arrowshot = SOUND_ARROWSHOT_obj.GetString();
 	SOUND_ARROWSHOT = strcpy((char*)malloc(sound_arrowshot.length() + 1), sound_arrowshot.c_str());
@@ -322,6 +330,18 @@ void Game::readLUA(const char* fileName){
 	LuaObject SOUND_BIGSLASH_obj = luaPState->GetGlobal("SOUND_BIGSLASH");
 	string sound_bigslash = SOUND_BIGSLASH_obj.GetString();
 	SOUND_BIGSLASH = strcpy((char*)malloc(sound_bigslash.length() + 1), sound_bigslash.c_str());
+
+	LuaObject SOUND_PICKUP_TREAT_obj = luaPState->GetGlobal("SOUND_PICKUP_TREAT");
+	string sound_pickup_treat = SOUND_PICKUP_TREAT_obj.GetString();
+	SOUND_PICKUP_TREAT = strcpy((char*)malloc(sound_pickup_treat.length() + 1), sound_pickup_treat.c_str());
+
+	LuaObject SOUND_PICKUP_HEALTH_obj = luaPState->GetGlobal("SOUND_PICKUP_HEALTH");
+	string sound_pickup_health = SOUND_PICKUP_HEALTH_obj.GetString();
+	SOUND_PICKUP_HEALTH = strcpy((char*)malloc(sound_pickup_health.length() + 1), sound_pickup_health.c_str());
+
+	LuaObject SOUND_MEOW_obj = luaPState->GetGlobal("SOUND_MEOW");
+	string sound_meow = SOUND_MEOW_obj.GetString();
+	SOUND_MEOW = strcpy((char*)malloc(sound_meow.length() + 1), sound_meow.c_str());
 
 	LuaObject W_LEVEL_1_DIR_obj = luaPState->GetGlobal("W_LEVEL_1_DIR");
 	string w_level1_dir = W_LEVEL_1_DIR_obj.GetString();

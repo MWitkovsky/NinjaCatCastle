@@ -114,6 +114,7 @@ void NinjaCatCastleCollisionListener::respondToCollision(AnimatedSprite *player,
 				if (pickup->isHealth()){
 					if (player->getHP() < 3){
 						player->setHP(player->getHP() + 1);
+						player->setShouldPlayHealthSound(true);
 					}
 					else{
 						pickup->setAlpha(255);
@@ -121,6 +122,7 @@ void NinjaCatCastleCollisionListener::respondToCollision(AnimatedSprite *player,
 				}
 				else{
 					player->collectTreat();
+					player->setShouldPlayTreatSound(true);
 				}
 			}
 			return;
