@@ -557,6 +557,7 @@ bool TMXMapImporter::buildWorldFromInfo(Game *game)
 						player->getBody()->CreateFixture(&fixtureDef);
 
 						player->setIsPlayer(true);
+						player->setShurikenCount(20);
 						player->setHP(3);
 						player->setControllable(true);
 

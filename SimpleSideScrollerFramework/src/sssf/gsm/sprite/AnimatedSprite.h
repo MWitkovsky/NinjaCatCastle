@@ -56,6 +56,8 @@ protected:
 	boolean playTreatSound = false;
 	boolean playHealthSound = false;
 
+	b2Vec2 trajectory = b2Vec2(0.0f, 0.0f);
+
 	// Player Specific values
 	int HP = 3;
 	int visibleFrames = HP;
@@ -93,9 +95,10 @@ public:
 	boolean				shouldPlayHitSound()	{ return playHitSound; }
 	boolean				shouldPlayTreatSound()	{ return playTreatSound; }
 	boolean				shouldPlayHealthSound()	{ return playHealthSound; }
+	AnimatedSpriteType*	getSpriteType()		{ return spriteType; }
 	wstring				getCurrentState()	{ return currentState; }
 	wstring				getOriginalState()  { return originalState; }
-	AnimatedSpriteType*	getSpriteType()		{ return spriteType; }
+	b2Vec2				getTrajectory()		{ return trajectory; }
 
 	//"Airborne Guard" is for making sure animations don't break as currently they're handled by
 	//checking if velocity is zero. In any given arc, the velocity is zero twice, once at the peak
@@ -208,6 +211,9 @@ public:
 	}
 	void setShouldPlayHealthSound(boolean playHealthSound){
 		this->playHealthSound = playHealthSound;
+	}
+	void setTrajectory(b2Vec2 trajectory){
+		this->trajectory = trajectory;
 	}
 	//For testing!
 	void setInvincibilityFrames(int invincibilityFrames){

@@ -23,7 +23,7 @@
 #include "Box2D\Box2D.h"
 
 AABB viewportDimensions;
-
+int waitTimer = 120;
 /*
 	addSpriteToRenderList - This method checks to see if the sprite
 	parameter is inside the viewport. If it is, a RenderItem is generated
@@ -465,21 +465,34 @@ void SpriteManager::updateAnimations(Game *game){
 
 	//Checking if level is completed
 	if (player.getBody()->GetPosition().x * 64 > game->getGSM()->getWorld()->getWorldWidth()){
-		musicChannel = game->playSongIntro(LEVEL_COMPLETE_JINGLE, musicChannel);
-		player.getBody()->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
-		if (game->getCurrentLevelFileName() == W_LEVEL_1_NAME){
-			game->quitGame();
-			game->setCurrentLevelFileName(W_LEVEL_2_NAME);
-			game->startGame();
+		if (waitTimer == 120){
+			musicChannel = game->playSongIntro(LEVEL_COMPLETE_JINGLE, musicChannel);
+			player.getBody()->SetGravityScale(0.0f);
+			player.getBody()->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
+			waitTimer--;
+			player.setControllable(false);
 		}
-		else if (game->getCurrentLevelFileName() == W_LEVEL_2_NAME){
-			game->quitGame();
-			game->setCurrentLevelFileName(W_LEVEL_3_NAME);
-			game->startGame();
+		else if (waitTimer < 120 && waitTimer > 0){
+			waitTimer--;
 		}
 		else{
-			player.setLives(3);
-			game->quitGame();
+			waitTimer = 120;
+			player.getBody()->SetGravityScale(1.0f);
+			player.setControllable(true);
+			if (game->getCurrentLevelFileName() == W_LEVEL_1_NAME){
+				game->quitGame();
+				game->setCurrentLevelFileName(W_LEVEL_2_NAME);
+				game->startGame();
+			}
+			else if (game->getCurrentLevelFileName() == W_LEVEL_2_NAME){
+				game->quitGame();
+				game->setCurrentLevelFileName(W_LEVEL_3_NAME);
+				game->startGame();
+			}
+			else{
+				player.setLives(3);
+				game->quitGame();
+			}
 		}
 	}
 
@@ -627,6 +640,7 @@ void SpriteManager::updateAnimations(Game *game){
 				else{
 					if (propellerBot->getBody()->GetFixtureList()){
 						propellerBot->getBody()->DestroyFixture(propellerBot->getBody()->GetFixtureList());
+						propellerBot->getBody()->SetLinearVelocity(propellerBot->getTrajectory());
 					}
 					propellerBot->setHitGuard(false);
 				}
@@ -712,6 +726,7 @@ void SpriteManager::updateAnimations(Game *game){
 						else{
 							if (pounceBot->getBody()->GetFixtureList()){
 								pounceBot->getBody()->DestroyFixture(pounceBot->getBody()->GetFixtureList());
+								pounceBot->getBody()->SetLinearVelocity(pounceBot->getTrajectory());
 							}
 							pounceBot->setHitGuard(false);
 						}

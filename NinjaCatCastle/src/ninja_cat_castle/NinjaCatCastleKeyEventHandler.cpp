@@ -277,6 +277,8 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 		if (input->isKeyDownForFirstTime(ESC_KEY)){
 			introChannel = game->playSongIntro(MAIN_MENU_SONG_INTRO, introChannel);
 			musicChannel = game->queueSong(MAIN_MENU_SONG, musicChannel);
+			player->setLives(3);
+			player->setTreats(0);
 			game->quitGame();
 		}
 
