@@ -553,7 +553,7 @@ bool TMXMapImporter::buildWorldFromInfo(Game *game)
 						shape.Set(vertices, 8);
 
 						//I like rectangles anyway
-						//shape.SetAsBox(0.7, 1);
+						shape.SetAsBox(0.5f, 0.8f);
 						fixtureDef.shape = &shape;
 						player->getBody()->CreateFixture(&fixtureDef);
 

@@ -441,7 +441,7 @@ void SpriteManager::update(Game *game)
 					projectile->setBody(NULL);
 				}
 				if (projectile->isMarkedForDeletion()){
-					projectile->markForDeletion();
+					projectile->markForDeletion(false);
 				}
 			}
 		}
@@ -454,12 +454,37 @@ void SpriteManager::updateAnimations(Game *game){
 	// UPDATE THE PLAYER SPRITE
 	float velocityY = player.getBody()->GetLinearVelocity().y;
 	wstring state = player.getCurrentState();
+	if (player.getBody()->GetLinearVelocity().y < 0.00000000000001f && player.getBody()->GetLinearVelocity().y > 0.0f){
+		player.getBody()->SetLinearVelocity(b2Vec2(player.getBody()->GetLinearVelocity().x, 0.0f));
+	}
 	if (velocityY == 0){
 		if (player.hasAirborneGuard()){
 			player.setAirborneGuard(false);
 		}
 		else{
 			player.setAirborne(false);
+			if (player.getBody()->GetFixtureList()){
+				player.getBody()->DestroyFixture(player.getBody()->GetFixtureList());
+			}
+			b2FixtureDef fixtureDef;
+			b2PolygonShape shape;
+			float32 width = 0.5f;
+			float32 height = 0.8f;
+			float32 edgeWidth = 0.1f;
+			float32 edgeHeight = 0.2f;
+			b2Vec2 vertices[8];
+			vertices[0].Set(-width + edgeWidth, -height);		// bottom
+			vertices[1].Set(width - edgeWidth, -height);		// bottom-right edge start
+			vertices[2].Set(width, -height + edgeHeight);		// bottom-right edge end
+			vertices[3].Set(width, height - edgeHeight);		// top-right edge start
+			vertices[4].Set(width - edgeWidth, height);			// top-right edge end
+			vertices[5].Set(-width + edgeWidth, height);		// top-left edge start
+			vertices[6].Set(-width, height - edgeHeight);		// top-left edge end
+			vertices[7].Set(-width, -height + edgeHeight);		// bottom-left edge
+			shape.Set(vertices, 8);
+			fixtureDef.shape = &shape;
+			player.getBody()->CreateFixture(&fixtureDef);
+
 			player.getBody()->GetFixtureList()->SetFriction(1.0f);
 			if (player.wasHit()){
 				player.setHit(false);
@@ -508,6 +533,27 @@ void SpriteManager::updateAnimations(Game *game){
 	if (!player.isAttacking()){
 		if (player.isProjectile()){
 			player.setIsProjectile(false);
+			if (player.getBody()->GetFixtureList()){
+				player.getBody()->DestroyFixture(player.getBody()->GetFixtureList());
+			}
+			b2FixtureDef fixtureDef;
+			b2PolygonShape shape;
+			float32 width = 0.5f;
+			float32 height = 0.8f;
+			float32 edgeWidth = 0.1f;
+			float32 edgeHeight = 0.2f;
+			b2Vec2 vertices[8];
+			vertices[0].Set(-width + edgeWidth, -height);		// bottom
+			vertices[1].Set(width - edgeWidth, -height);		// bottom-right edge start
+			vertices[2].Set(width, -height + edgeHeight);		// bottom-right edge end
+			vertices[3].Set(width, height - edgeHeight);		// top-right edge start
+			vertices[4].Set(width - edgeWidth, height);			// top-right edge end
+			vertices[5].Set(-width + edgeWidth, height);		// top-left edge start
+			vertices[6].Set(-width, height - edgeHeight);		// top-left edge end
+			vertices[7].Set(-width, -height + edgeHeight);		// bottom-left edge
+			shape.Set(vertices, 8);
+			fixtureDef.shape = &shape;
+			player.getBody()->CreateFixture(&fixtureDef);
 			if (player.isFacingRight()){
 				player.setCurrentState(L"HIT_LEFT");
 				player.getBody()->SetLinearVelocity(b2Vec2(-3.0f, 8.0f));

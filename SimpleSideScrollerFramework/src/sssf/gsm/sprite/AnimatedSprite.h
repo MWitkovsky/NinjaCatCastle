@@ -191,8 +191,8 @@ public:
 	void setIsProjectile(boolean projectile){
 		this->projectile = projectile;
 	}
-	void markForDeletion(){
-		toBeDeleted = !toBeDeleted;
+	void markForDeletion(boolean toBeDeleted){
+		this->toBeDeleted = toBeDeleted;
 	}
 	void setPlayHitSound(boolean playHitSound){
 		this->playHitSound = playHitSound;

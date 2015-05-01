@@ -148,7 +148,7 @@ void NinjaCatCastleCollisionListener::respondToCollision(AnimatedSprite *player,
 					bot->setHitPlayer(true);
 				}
 				else{
-					enemy->markForDeletion();
+					enemy->markForDeletion(true);
 				}
 
 				if (player->getHurtBox()){
@@ -166,22 +166,28 @@ void NinjaCatCastleCollisionListener::respondToCollision(AnimatedSprite *player,
 			}
 		}
 		else{
-			wstring enemyState = enemy->getCurrentState();
-			if (enemyState != L"DIE_LEFT"  && enemyState != L"DIE_RIGHT"
-				&& enemyState != L"HIT_LEFT" && enemyState != L"HIT_RIGHT"){
-				player->markForDeletion();
-				if (enemy->getBody()->GetPosition().x < player->getBody()->GetPosition().x){
-					enemy->setCurrentState(L"HIT_RIGHT");
-					enemy->getBody()->SetLinearVelocity(b2Vec2(-3.0f, 8.0f));
+			if (player->isAttacking() || player->getCurrentState() == L"THROW"){
+				if (player->getCurrentState() == L"THROW"){
+					player->markForDeletion(true);
 				}
-				else{
-					enemy->setCurrentState(L"HIT_LEFT");
-					enemy->getBody()->SetLinearVelocity(b2Vec2(3.0f, 8.0f));
+				wstring enemyState = enemy->getCurrentState();
+				if (enemyState != L"DIE_LEFT"  && enemyState != L"DIE_RIGHT"
+					&& enemyState != L"HIT_LEFT" && enemyState != L"HIT_RIGHT"){
+					enemy->markForDeletion(true);
+					if (enemy->getBody()->GetPosition().x < player->getBody()->GetPosition().x){
+						enemy->setCurrentState(L"HIT_RIGHT");
+						enemy->getBody()->SetLinearVelocity(b2Vec2(-3.0f, 8.0f));
+					}
+					else{
+						enemy->setCurrentState(L"HIT_LEFT");
+						enemy->getBody()->SetLinearVelocity(b2Vec2(3.0f, 8.0f));
+					}
+					enemy->setHit(true);
+					enemy->setPlayHitSound(true);
+					enemy->getBody()->SetGravityScale(1.0f);
 				}
-				enemy->setHit(true);
-				enemy->setPlayHitSound(true);
-				enemy->getBody()->SetGravityScale(1.0f);
 			}
+			
 		}
 	}
 	else{
