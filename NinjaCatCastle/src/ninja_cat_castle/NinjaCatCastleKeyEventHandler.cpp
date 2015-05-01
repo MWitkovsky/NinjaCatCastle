@@ -74,6 +74,13 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 						}
 						vX = -PLAYER_SPEED;
 					}
+					else{
+						if (player->getBody()->GetLinearVelocity().x <= 0.0f){
+							if (player->getBody()->GetLinearVelocity().x > -PLAYER_SPEED / 4.0f){
+								vX = -PLAYER_SPEED / 4.0f;
+							}
+						}
+					}
 
 					//Just changes the way the sprite is facing, doesn't change anything about the jump.
 					if (state == L"JUMPING_DESCEND_RIGHT"){
@@ -99,6 +106,13 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 							player->setFacingRight(true);
 						}
 						vX = PLAYER_SPEED;
+					}
+					else{
+						if (player->getBody()->GetLinearVelocity().x >= 0.0f){
+							if (player->getBody()->GetLinearVelocity().x < PLAYER_SPEED / 4.0f){
+								vX = PLAYER_SPEED / 4.0f;
+							}
+						}
 					}
 
 					//Just changes the way the sprite is facing, doesn't change anything about the jump.
@@ -153,6 +167,7 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 						vY = JUMP_SPEED;
 						player->setWasJump(true);
 						player->setAirborne(true);
+						player->getBody()->GetFixtureList()->SetFriction(0.0f);
 						game->playSound(SOUND_MC_JUMP);
 					}
 				}
@@ -355,43 +370,47 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 		//Recenters viewport back on player if no camera keys are being pressed
 		else{
 			float diff;
+			float32 playerVelocityRatio = player->getBody()->GetLinearVelocity().x / PLAYER_SPEED;
+			if (playerVelocityRatio < 0.0f){
+				playerVelocityRatio *= -1.0f;
+			}
 			float height = (float)gsm->getWorld()->getWorldHeight();
 			//IF PLAYER IS FACING RIGHT, VIEWPORT SHOULD BE MORE RIGHT
 			//ELSE, MORE LEFT
-			if (player->isFacingRight()){
-				if (pp->GetPosition().x*METER_TO_PIXEL_SCALE > viewportX - 250){
-					diff = (pp->GetPosition().x*METER_TO_PIXEL_SCALE - viewportX + 250) / 7;
-					if (diff > MAX_VIEWPORT_AXIS_VELOCITY){
-						viewportVx += MAX_VIEWPORT_AXIS_VELOCITY;
+			if (player->getBody()->GetLinearVelocity().x > 0.0f){
+				if (pp->GetPosition().x*METER_TO_PIXEL_SCALE > viewportX - 250 * playerVelocityRatio){
+					diff = (pp->GetPosition().x*METER_TO_PIXEL_SCALE - viewportX + 250 * playerVelocityRatio) / 7;
+					if (diff > MAX_VIEWPORT_AXIS_VELOCITY * playerVelocityRatio){
+						viewportVx += MAX_VIEWPORT_AXIS_VELOCITY * playerVelocityRatio;
 					}
 					else{
 						viewportVx += diff;
 					}
 				}
-				else if (pp->GetPosition().x*METER_TO_PIXEL_SCALE < viewportX - 250){
-					diff = (viewportX - pp->GetPosition().x*METER_TO_PIXEL_SCALE - 250) / 7;
-					if (diff > MAX_VIEWPORT_AXIS_VELOCITY){
-						viewportVx -= MAX_VIEWPORT_AXIS_VELOCITY;
+				else if (pp->GetPosition().x*METER_TO_PIXEL_SCALE < viewportX - 250 * playerVelocityRatio){
+					diff = (viewportX - pp->GetPosition().x*METER_TO_PIXEL_SCALE - 250 * playerVelocityRatio) / 7;
+					if (diff > MAX_VIEWPORT_AXIS_VELOCITY * playerVelocityRatio){
+						viewportVx -= MAX_VIEWPORT_AXIS_VELOCITY * playerVelocityRatio;
 					}
 					else{
 						viewportVx -= diff;
 					}
 				}
 			}
-			else{
-				if (pp->GetPosition().x*METER_TO_PIXEL_SCALE > viewportX + 150){
-					diff = (pp->GetPosition().x*METER_TO_PIXEL_SCALE - viewportX - 150) / 7;
-					if (diff > MAX_VIEWPORT_AXIS_VELOCITY){
-						viewportVx += MAX_VIEWPORT_AXIS_VELOCITY;
+			else if(player->getBody()->GetLinearVelocity().x < 0.0f){
+				if (pp->GetPosition().x*METER_TO_PIXEL_SCALE > viewportX + 150 * playerVelocityRatio){
+					diff = (pp->GetPosition().x*METER_TO_PIXEL_SCALE - viewportX - 150 * playerVelocityRatio) / 7;
+					if (diff > MAX_VIEWPORT_AXIS_VELOCITY * playerVelocityRatio){
+						viewportVx += MAX_VIEWPORT_AXIS_VELOCITY * playerVelocityRatio;
 					}
 					else{
 						viewportVx += diff;
 					}
 				}
-				else if (pp->GetPosition().x*METER_TO_PIXEL_SCALE < viewportX + 150){
-					diff = (viewportX - pp->GetPosition().x*METER_TO_PIXEL_SCALE + 150) / 7;
-					if (diff > MAX_VIEWPORT_AXIS_VELOCITY){
-						viewportVx -= MAX_VIEWPORT_AXIS_VELOCITY;
+				else if (pp->GetPosition().x*METER_TO_PIXEL_SCALE < viewportX + 150 * playerVelocityRatio){
+					diff = (viewportX - pp->GetPosition().x*METER_TO_PIXEL_SCALE + 150 * playerVelocityRatio) / 7;
+					if (diff > MAX_VIEWPORT_AXIS_VELOCITY * playerVelocityRatio){
+						viewportVx -= MAX_VIEWPORT_AXIS_VELOCITY * playerVelocityRatio;
 					}
 					else{
 						viewportVx -= diff;

@@ -14,8 +14,23 @@ public:
 		b2Body* dynamicBody = m_world->CreateBody(&myBodyDef);
 
 		b2PolygonShape boxShape;
-		boxShape.SetAsBox(0.7f, 0.4f, b2Vec2(0.0f, 0.0f), 0.5f);
+		float32 width = 0.60f;
+		float32 height = 0.8f;
+		float32 edgeWidth = 0.5f;
+		float32 edgeHeight = 0.8f;
+		b2Vec2 vertices[8];
+		vertices[0].Set(-width + edgeWidth, -height);		// bottom
+		vertices[1].Set(width - edgeWidth, -height);		// bottom-right edge start
+		vertices[2].Set(width, -height + edgeHeight);		// bottom-right edge end
+		vertices[3].Set(width, height - edgeHeight);		// top-right edge start
+		vertices[4].Set(width - edgeWidth, height);			// top-right edge end
+		vertices[5].Set(-width + edgeWidth, height);		// top-left edge start
+		vertices[6].Set(-width, height - edgeHeight);		// top-left edge end
+		vertices[7].Set(-width, -height + edgeHeight);		// bottom-left edge
+		boxShape.Set(vertices, 8);
 
+		//I like rectangles anyway
+		//shape.SetAsBox(0.7, 1);
 		b2FixtureDef boxFixtureDef;
 		boxFixtureDef.shape = &boxShape;
 		boxFixtureDef.density = 1;

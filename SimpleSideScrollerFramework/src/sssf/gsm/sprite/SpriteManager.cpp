@@ -460,6 +460,7 @@ void SpriteManager::updateAnimations(Game *game){
 		}
 		else{
 			player.setAirborne(false);
+			player.getBody()->GetFixtureList()->SetFriction(1.0f);
 			if (player.wasHit()){
 				player.setHit(false);
 			}
@@ -467,6 +468,7 @@ void SpriteManager::updateAnimations(Game *game){
 	}
 	else{
 		player.setAirborne(true);
+		player.getBody()->GetFixtureList()->SetFriction(0.0f);
 	}
 
 	//Checking if level is completed
