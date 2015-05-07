@@ -9,4 +9,5 @@
   <sprite_type>bombcat</sprite_type>
   <sprite_type>hppickup</sprite_type>
   <sprite_type>treat</sprite_type>
+  <sprite_type>bomb</sprite_type>
 </sprite_type_list>

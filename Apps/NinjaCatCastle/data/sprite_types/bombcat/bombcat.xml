@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<sprite_type>
+ <width>128</width>
+ <height>128</height>
+ <images_list>
+  <image_file id="1" file_name="bombcat_IDLE_LEFT/bombcat_IDLE_LEFT0001.png"/>
+  <image_file id="2" file_name="bombcat_IDLE_LEFT/bombcat_IDLE_LEFT0002.png"/>
+  <image_file id="3" file_name="bombcat_IDLE_LEFT/bombcat_IDLE_LEFT0003.png"/>
+  <image_file id="4" file_name="bombcat_IDLE_LEFT/bombcat_IDLE_LEFT0004.png"/>
+  <image_file id="5" file_name="bombcat_IDLE_LEFT/bombcat_IDLE_LEFT0005.png"/>
+  <image_file id="6" file_name="bombcat_IDLE_LEFT/bombcat_IDLE_LEFT0006.png"/>
+  <image_file id="7" file_name="bombcat_IDLE_LEFT/bombcat_IDLE_LEFT0007.png"/>
+  <image_file id="8" file_name="bombcat_IDLE_LEFT/bombcat_IDLE_LEFT0008.png"/>
+  <image_file id="9" file_name="bombcat_IDLE_LEFT/bombcat_IDLE_LEFT0009.png"/>
+  <image_file id="10" file_name="bombcat_IDLE_LEFT/bombcat_IDLE_LEFT0010.png"/>
+  <image_file id="11" file_name="bombcat_IDLE_LEFT/bombcat_IDLE_LEFT0011.png"/>
+  <image_file id="12" file_name="bombcat_IDLE_LEFT/bombcat_IDLE_LEFT0012.png"/>
+  <image_file id="13" file_name="bombcat_IDLE_LEFT/bombcat_IDLE_LEFT0013.png"/>
+  <image_file id="14" file_name="bombcat_IDLE_LEFT/bombcat_IDLE_LEFT0014.png"/>
+  <image_file id="15" file_name="bombcat_IDLE_LEFT/bombcat_IDLE_LEFT0015.png"/>
+  <image_file id="16" file_name="bombcat_IDLE_RIGHT/bombcat_IDLE_RIGHT0001.png"/>
+  <image_file id="17" file_name="bombcat_IDLE_RIGHT/bombcat_IDLE_RIGHT0002.png"/>
+  <image_file id="18" file_name="bombcat_IDLE_RIGHT/bombcat_IDLE_RIGHT0003.png"/>
+  <image_file id="19" file_name="bombcat_IDLE_RIGHT/bombcat_IDLE_RIGHT0004.png"/>
+  <image_file id="20" file_name="bombcat_IDLE_RIGHT/bombcat_IDLE_RIGHT0005.png"/>
+  <image_file id="21" file_name="bombcat_IDLE_RIGHT/bombcat_IDLE_RIGHT0006.png"/>
+  <image_file id="22" file_name="bombcat_IDLE_RIGHT/bombcat_IDLE_RIGHT0007.png"/>
+  <image_file id="23" file_name="bombcat_IDLE_RIGHT/bombcat_IDLE_RIGHT0008.png"/>
+  <image_file id="24" file_name="bombcat_IDLE_RIGHT/bombcat_IDLE_RIGHT0009.png"/>
+  <image_file id="25" file_name="bombcat_IDLE_RIGHT/bombcat_IDLE_RIGHT0010.png"/>
+  <image_file id="26" file_name="bombcat_IDLE_RIGHT/bombcat_IDLE_RIGHT0011.png"/>
+  <image_file id="27" file_name="bombcat_IDLE_RIGHT/bombcat_IDLE_RIGHT0012.png"/>
+  <image_file id="28" file_name="bombcat_IDLE_RIGHT/bombcat_IDLE_RIGHT0013.png"/>
+  <image_file id="29" file_name="bombcat_IDLE_RIGHT/bombcat_IDLE_RIGHT0014.png"/>
+  <image_file id="30" file_name="bombcat_IDLE_RIGHT/bombcat_IDLE_RIGHT0015.png"/>
+  <image_file id="31" file_name="bombcat_THROW_LEFT/bombcat_THROW_LEFT0001.png"/>
+  <image_file id="32" file_name="bombcat_THROW_LEFT/bombcat_THROW_LEFT0002.png"/>
+  <image_file id="33" file_name="bombcat_THROW_LEFT/bombcat_THROW_LEFT0003.png"/>
+  <image_file id="34" file_name="bombcat_THROW_LEFT/bombcat_THROW_LEFT0004.png"/>
+  <image_file id="35" file_name="bombcat_THROW_LEFT/bombcat_THROW_LEFT0005.png"/>
+  <image_file id="36" file_name="bombcat_THROW_LEFT/bombcat_THROW_LEFT0006.png"/>
+  <image_file id="37" file_name="bombcat_THROW_LEFT/bombcat_THROW_LEFT0007.png"/>
+  <image_file id="38" file_name="bombcat_THROW_LEFT/bombcat_THROW_LEFT0008.png"/>
+  <image_file id="39" file_name="bombcat_THROW_LEFT/bombcat_THROW_LEFT0009.png"/>
+  <image_file id="40" file_name="bombcat_THROW_LEFT/bombcat_THROW_LEFT0010.png"/>
+  <image_file id="41" file_name="bombcat_THROW_LEFT/bombcat_THROW_LEFT0011.png"/>
+  <image_file id="42" file_name="bombcat_THROW_LEFT/bombcat_THROW_LEFT0012.png"/>
+  <image_file id="43" file_name="bombcat_THROW_LEFT/bombcat_THROW_LEFT0013.png"/>
+  <image_file id="44" file_name="bombcat_THROW_RIGHT/bombcat_THROW_RIGHT0001.png"/>
+  <image_file id="45" file_name="bombcat_THROW_RIGHT/bombcat_THROW_RIGHT0002.png"/>
+  <image_file id="46" file_name="bombcat_THROW_RIGHT/bombcat_THROW_RIGHT0003.png"/>
+  <image_file id="47" file_name="bombcat_THROW_RIGHT/bombcat_THROW_RIGHT0004.png"/>
+  <image_file id="48" file_name="bombcat_THROW_RIGHT/bombcat_THROW_RIGHT0005.png"/>
+  <image_file id="49" file_name="bombcat_THROW_RIGHT/bombcat_THROW_RIGHT0006.png"/>
+  <image_file id="50" file_name="bombcat_THROW_RIGHT/bombcat_THROW_RIGHT0007.png"/>
+  <image_file id="51" file_name="bombcat_THROW_RIGHT/bombcat_THROW_RIGHT0008.png"/>
+  <image_file id="52" file_name="bombcat_THROW_RIGHT/bombcat_THROW_RIGHT0009.png"/>
+  <image_file id="53" file_name="bombcat_THROW_RIGHT/bombcat_THROW_RIGHT0010.png"/>
+  <image_file id="54" file_name="bombcat_THROW_RIGHT/bombcat_THROW_RIGHT0011.png"/>
+  <image_file id="55" file_name="bombcat_THROW_RIGHT/bombcat_THROW_RIGHT0012.png"/>
+  <image_file id="56" file_name="bombcat_THROW_RIGHT/bombcat_THROW_RIGHT0013.png"/>
+  <image_file id="57" file_name="bombcat_DIE_LEFT/bombcat_DIE_LEFT0001.png"/>
+  <image_file id="58" file_name="bombcat_DIE_LEFT/bombcat_DIE_LEFT0002.png"/>
+  <image_file id="59" file_name="bombcat_DIE_LEFT/bombcat_DIE_LEFT0003.png"/>
+  <image_file id="60" file_name="bombcat_DIE_LEFT/bombcat_DIE_LEFT0004.png"/>
+  <image_file id="61" file_name="bombcat_DIE_RIGHT/bombcat_DIE_RIGHT0001.png"/>
+  <image_file id="62" file_name="bombcat_DIE_RIGHT/bombcat_DIE_RIGHT0002.png"/>
+  <image_file id="63" file_name="bombcat_DIE_RIGHT/bombcat_DIE_RIGHT0003.png"/>
+  <image_file id="64" file_name="bombcat_DIE_RIGHT/bombcat_DIE_RIGHT0004.png"/>
+ </images_list>
+ <animations_list>
+ <animation_state>
+ <state>IDLE_LEFT</state>
+   <animation_sequence>
+    <pose image_id="1" duration="8"/>
+    <pose image_id="2" duration="8"/>
+	<pose image_id="3" duration="8"/>
+    <pose image_id="4" duration="8"/>
+	<pose image_id="5" duration="8"/>
+    <pose image_id="6" duration="8"/>
+	<pose image_id="7" duration="8"/>
+    <pose image_id="8" duration="8"/>
+	<pose image_id="9" duration="8"/>
+    <pose image_id="10" duration="8"/>
+	<pose image_id="11" duration="8"/>
+    <pose image_id="12" duration="8"/>
+	<pose image_id="13" duration="8"/>
+    <pose image_id="14" duration="8"/>
+	<pose image_id="15" duration="8"/>
+   </animation_sequence>
+ </animation_state>
+ <animation_state>
+ <state>IDLE_RIGHT</state>
+   <animation_sequence>
+	<pose image_id="16" duration="8"/>
+    <pose image_id="17" duration="8"/>
+	<pose image_id="18" duration="8"/>
+    <pose image_id="19" duration="8"/>
+	<pose image_id="20" duration="8"/>
+    <pose image_id="21" duration="8"/>
+	<pose image_id="22" duration="8"/>
+    <pose image_id="23" duration="8"/>
+	<pose image_id="24" duration="8"/>
+    <pose image_id="25" duration="8"/>
+	<pose image_id="26" duration="8"/>
+    <pose image_id="27" duration="8"/>
+	<pose image_id="28" duration="8"/>
+    <pose image_id="29" duration="8"/>
+	<pose image_id="30" duration="8"/>
+   </animation_sequence>
+ </animation_state>
+   <animation_state>
+ <state>THROW_BOMB_LEFT</state>
+   <animation_sequence>
+    <pose image_id="31" duration="8"/>
+    <pose image_id="32" duration="8"/>
+    <pose image_id="33" duration="8"/>
+    <pose image_id="34" duration="8"/>
+    <pose image_id="35" duration="8"/>
+   </animation_sequence>
+ </animation_state>
+   <animation_state>
+ <state>THROW_BOMB_RIGHT</state>
+   <animation_sequence>
+    <pose image_id="44" duration="8"/>
+    <pose image_id="45" duration="8"/>
+    <pose image_id="46" duration="8"/>
+    <pose image_id="47" duration="8"/>
+    <pose image_id="48" duration="8"/>
+   </animation_sequence>
+ </animation_state>
+ <animation_state>
+ <state>RELOAD_LEFT</state>
+   <animation_sequence>
+    <pose image_id="36" duration="8"/>
+    <pose image_id="37" duration="8"/>
+    <pose image_id="38" duration="8"/>
+    <pose image_id="39" duration="8"/>
+    <pose image_id="40" duration="8"/>
+	<pose image_id="41" duration="8"/>
+    <pose image_id="42" duration="8"/>
+    <pose image_id="43" duration="8"/>
+   </animation_sequence>
+ </animation_state>
+ <animation_state>
+ <state>RELOAD_RIGHT</state>
+   <animation_sequence>
+    <pose image_id="49" duration="8"/>
+    <pose image_id="50" duration="8"/>
+    <pose image_id="51" duration="8"/>
+    <pose image_id="52" duration="8"/>
+    <pose image_id="53" duration="8"/>
+	<pose image_id="54" duration="8"/>
+    <pose image_id="55" duration="8"/>
+    <pose image_id="56" duration="8"/>
+   </animation_sequence>
+ </animation_state>
+   <animation_state>
+ <state>DIE_LEFT</state>
+   <animation_sequence>
+    <pose image_id="57" duration="8"/>
+	<pose image_id="58" duration="8"/>
+	<pose image_id="59" duration="8"/>
+	<pose image_id="60" duration="1"/>
+   </animation_sequence>
+ </animation_state>
+    <animation_state>
+ <state>DIE_RIGHT</state>
+   <animation_sequence>
+    <pose image_id="61" duration="8"/>
+	<pose image_id="62" duration="8"/>
+	<pose image_id="63" duration="8"/>
+	<pose image_id="64" duration="1"/>
+   </animation_sequence>
+ </animation_state>
+ </animations_list>  
+</sprite_type>

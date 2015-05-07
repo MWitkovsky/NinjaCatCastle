@@ -42,6 +42,11 @@
     <property name="spawn" value="propellerCat"/>
    </properties>
   </tile>
+  <tile id="53">
+   <properties>
+    <property name="spawn" value="bombCat"/>
+   </properties>
+  </tile>
   <tile id="55">
    <properties>
     <property name="spawn" value="treat"/>
@@ -3063,6 +3068,7 @@
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
+   <tile gid="54"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
@@ -3078,8 +3084,7 @@
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
-   <tile gid="1"/>
-   <tile gid="1"/>
+   <tile gid="54"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>

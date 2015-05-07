@@ -11,6 +11,9 @@ class BombBot : public Bot
 {
 private:
 	unsigned int cyclesRemainingBeforeThinking = 10;
+	b2Vec2	bombVelocity = b2Vec2(7.0f, 6.0f);
+	b2Vec2	throwOffset = b2Vec2(0.5f, 0.5f);
+	b2Vec2	seekRange = b2Vec2(8.0f, 6.0f);
 
 	// THIS PRIVATE CONSTRUCTOR IS ONLY USED FOR CLONING
 	BombBot(unsigned int initMin,
@@ -20,11 +23,11 @@ private:
 public:
 	BombBot();
 	~BombBot();
+	void	throwBomb(Game *game);
 	void	think(Game *game);
 
 	// INLINED METHODS
 	void	resetThinkCycles(){
 		cyclesRemainingBeforeThinking = 200;
 	}
-	unsigned int getCyclesRemainingBeforeThinking()	{ return cyclesRemainingBeforeThinking; }
 };

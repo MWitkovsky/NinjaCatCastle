@@ -5,6 +5,7 @@
 #include "ninja_cat_castle\NinjaCatCastle.h"
 #include "sssf\gsm\ai\bots\PounceBot.h"
 #include "sssf\gsm\ai\bots\PropellerBot.h"
+#include "sssf\gsm\ai\bots\BombBot.h"
 #include "sssf\gsm\ai\bots\Pickup.h"
 
 void NinjaCatCastleCollisionListener::BeginContact(b2Contact* contact) {
@@ -171,20 +172,36 @@ void NinjaCatCastleCollisionListener::respondToCollision(AnimatedSprite *player,
 					player->markForDeletion(true);
 				}
 				wstring enemyState = enemy->getCurrentState();
-				if (enemyState != L"DIE_LEFT"  && enemyState != L"DIE_RIGHT"
-					&& enemyState != L"HIT_LEFT" && enemyState != L"HIT_RIGHT"){
-					enemy->markForDeletion(true);
-					if (enemy->getBody()->GetPosition().x < player->getBody()->GetPosition().x){
-						enemy->setCurrentState(L"HIT_RIGHT");
-						enemy->getBody()->SetLinearVelocity(b2Vec2(-3.0f, 8.0f));
+				if (dynamic_cast<BombBot*>(enemy)){
+					if (enemyState != L"DIE_LEFT"  && enemyState != L"DIE_RIGHT"){
+						enemy->markForDeletion(true);
+						if (enemy->getBody()->GetPosition().x < player->getBody()->GetPosition().x){
+							enemy->setCurrentState(L"DIE_RIGHT");
+						}
+						else{
+							enemy->setCurrentState(L"DIE_LEFT");
+						}
+						enemy->setHit(true);
+						enemy->setPlayHitSound(true);
+						enemy->getBody()->SetGravityScale(1.0f);
 					}
-					else{
-						enemy->setCurrentState(L"HIT_LEFT");
-						enemy->getBody()->SetLinearVelocity(b2Vec2(3.0f, 8.0f));
+				}
+				else{
+					if (enemyState != L"DIE_LEFT"  && enemyState != L"DIE_RIGHT"
+						&& enemyState != L"HIT_LEFT" && enemyState != L"HIT_RIGHT"){
+						enemy->markForDeletion(true);
+						if (enemy->getBody()->GetPosition().x < player->getBody()->GetPosition().x){
+							enemy->setCurrentState(L"HIT_RIGHT");
+							enemy->getBody()->SetLinearVelocity(b2Vec2(-3.0f, 8.0f));
+						}
+						else{
+							enemy->setCurrentState(L"HIT_LEFT");
+							enemy->getBody()->SetLinearVelocity(b2Vec2(3.0f, 8.0f));
+						}
+						enemy->setHit(true);
+						enemy->setPlayHitSound(true);
+						enemy->getBody()->SetGravityScale(1.0f);
 					}
-					enemy->setHit(true);
-					enemy->setPlayHitSound(true);
-					enemy->getBody()->SetGravityScale(1.0f);
 				}
 			}
 			
@@ -192,27 +209,44 @@ void NinjaCatCastleCollisionListener::respondToCollision(AnimatedSprite *player,
 	}
 	else{
 		if (!dynamic_cast<Pickup*>(enemy)){
-			if (enemy->getBody()->GetPosition().x < player->getHurtBox()->GetPosition().x){
-				enemy->setCurrentState(L"HIT_RIGHT");
-				if (player->getBody()->GetLinearVelocity().x < 0.0f){
-					enemy->getBody()->SetLinearVelocity(b2Vec2(-8.0f, 8.0f));
-				}
-				else{
-					enemy->getBody()->SetLinearVelocity(b2Vec2(-3.0f, 8.0f));
+			if (dynamic_cast<BombBot*>(enemy)){
+				wstring enemyState = enemy->getCurrentState();
+				if (enemyState != L"DIE_LEFT"  && enemyState != L"DIE_RIGHT"){
+					enemy->markForDeletion(true);
+					if (enemy->getBody()->GetPosition().x < player->getBody()->GetPosition().x){
+						enemy->setCurrentState(L"DIE_RIGHT");
+					}
+					else{
+						enemy->setCurrentState(L"DIE_LEFT");
+					}
+					enemy->setHit(true);
+					enemy->setPlayHitSound(true);
+					enemy->getBody()->SetGravityScale(1.0f);
 				}
 			}
 			else{
-				enemy->setCurrentState(L"HIT_LEFT");
-				if (player->getBody()->GetLinearVelocity().x > 0.0f){
-					enemy->getBody()->SetLinearVelocity(b2Vec2(8.0f, 8.0f));
+				if (enemy->getBody()->GetPosition().x < player->getHurtBox()->GetPosition().x){
+					enemy->setCurrentState(L"HIT_RIGHT");
+					if (player->getBody()->GetLinearVelocity().x < 0.0f){
+						enemy->getBody()->SetLinearVelocity(b2Vec2(-8.0f, 8.0f));
+					}
+					else{
+						enemy->getBody()->SetLinearVelocity(b2Vec2(-3.0f, 8.0f));
+					}
 				}
 				else{
-					enemy->getBody()->SetLinearVelocity(b2Vec2(3.0f, 8.0f));
+					enemy->setCurrentState(L"HIT_LEFT");
+					if (player->getBody()->GetLinearVelocity().x > 0.0f){
+						enemy->getBody()->SetLinearVelocity(b2Vec2(8.0f, 8.0f));
+					}
+					else{
+						enemy->getBody()->SetLinearVelocity(b2Vec2(3.0f, 8.0f));
+					}
 				}
+				enemy->setHit(true);
+				enemy->setPlayHitSound(true);
+				enemy->getBody()->SetGravityScale(1.0f);
 			}
-			enemy->setHit(true);
-			enemy->setPlayHitSound(true);
-			enemy->getBody()->SetGravityScale(1.0f);
 		}
 	}
 }

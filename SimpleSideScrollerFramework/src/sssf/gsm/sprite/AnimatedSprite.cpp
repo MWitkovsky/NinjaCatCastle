@@ -10,9 +10,11 @@
 
 #include "sssf_VS\stdafx.h"
 #include "sssf\gsm\physics\PhysicalProperties.h"
+#include "sssf\gsm\state\GameStateManager.h"
 #include "sssf\gsm\sprite\AnimatedSprite.h"
 #include "sssf\gsm\sprite\AnimatedSpriteType.h"
 #include "sssf\gsm\ai\bots\PropellerBot.h"
+#include "sssf\gsm\ai\bots\BombBot.h"
 
 /*
 	AnimatedSprite - Default constructor, just sets everything to 0.
@@ -227,6 +229,39 @@ void AnimatedSprite::changeFrame(Game *game)
 			else if (currentState == L"SHOOT_LEFT" || currentState == L"SHOOT_RIGHT"){
 				static_cast<PropellerBot*>(this)->shoot(game);
 			}
+			else if (currentState == L"THROW_BOMB_LEFT" || currentState == L"THROW_BOMB_RIGHT"){
+				static_cast<BombBot*>(this)->throwBomb(game);
+			}
+			else if (currentState == L"RELOAD_LEFT" || currentState == L"RELOAD_RIGHT"){
+				if (currentState == L"RELOAD_LEFT"){
+					setCurrentState(L"IDLE_LEFT");
+				}
+				else{
+					setCurrentState(L"IDLE_RIGHT");
+				}
+			}
+			else if (currentState == L"COUNTDOWN"){
+				setCurrentState(L"EXPLODE");
+				if (body->GetFixtureList()){
+					body->DestroyFixture(body->GetFixtureList());
+				}
+				b2FixtureDef fixtureDef;
+				b2PolygonShape shape;
+				shape.SetAsBox(0.4f, 0.4f);
+				fixtureDef.shape = &shape;
+				body->CreateFixture(&fixtureDef);
+
+				game->playSound(SOUND_BOMB_EXPLOSION1);
+				game->playSound(SOUND_BOMB_EXPLOSION2);
+			}
+			else if (currentState == L"EXPLODE"){
+				setAlpha(0);
+				setCurrentState(L"EXPLODE2");
+				if (body){
+					game->getGSM()->getPhysics()->getWorld()->DestroyBody(body);
+					body = NULL;
+				}
+			}
 			else{
 				frameIndex = 0;
 			}
@@ -236,7 +271,7 @@ void AnimatedSprite::changeFrame(Game *game)
 				frameIndex = 0;
 			}
 			else{
-				frameIndex = frameIndex -= 2;
+				frameIndex -= 2;
 			}
 		}
 		else if (isPlayer() && isDead()){
@@ -252,7 +287,7 @@ void AnimatedSprite::changeFrame(Game *game)
 			}
 		}
 		else{
-			frameIndex = frameIndex -= 2;
+			frameIndex -= 2;
 		}
 	}
 }

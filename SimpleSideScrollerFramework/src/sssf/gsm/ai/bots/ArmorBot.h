@@ -26,5 +26,4 @@ public:
 	void	resetThinkCycles(){
 		cyclesRemainingBeforeThinking = 200;
 	}
-	unsigned int getCyclesRemainingBeforeThinking()	{ return cyclesRemainingBeforeThinking; }
 };

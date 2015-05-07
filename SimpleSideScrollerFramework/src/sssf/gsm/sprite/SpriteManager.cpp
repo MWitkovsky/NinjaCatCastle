@@ -13,6 +13,7 @@
 #include "sssf\gsm\ai\Bot.h"
 #include "sssf\gsm\ai\bots\PounceBot.h"
 #include "sssf\gsm\ai\bots\PropellerBot.h"
+#include "sssf\gsm\ai\bots\BombBot.h"
 #include "sssf\gsm\physics\PhysicalProperties.h"
 #include "sssf\graphics\GameGraphics.h"
 #include "sssf\gsm\sprite\AnimatedSprite.h"
@@ -168,7 +169,9 @@ void SpriteManager::addSpriteItemsToRenderList(	Game *game)
 			AnimatedSprite *projectile = *projectileIterator;
 			if (projectile->getBody()){
 				addSpriteToRenderList(game, projectile, renderList, viewport);
-				activeProjectileExists = true;
+				if (projectile->getCurrentState() != L"EXPLODE2"){
+					activeProjectileExists = true;
+				}
 			}
 			projectileIterator++;
 		}
@@ -431,19 +434,23 @@ void SpriteManager::update(Game *game)
 		AnimatedSprite *projectile = *projectileIterator;
 		if (projectile->isProjectile()){
 			projectile->updateSprite(game);
-
-			if (projectile->getBody()->GetLinearVelocity().x == 0.0f
-				|| projectile->getBody()->GetLinearVelocity().y == 0.0f
-				|| projectile->isMarkedForDeletion()){
-				if (projectile->getBody()){
-					game->getGSM()->getPhysics()->getWorld()->DestroyBody(projectile->getBody());
-					projectile->setIsProjectile(false);
-					projectile->setBody(NULL);
-				}
-				if (projectile->isMarkedForDeletion()){
-					projectile->markForDeletion(false);
+		
+			if (projectile->getCurrentState() != L"EXPLODE" && projectile->getCurrentState() != L"COUNTDOWN"
+				&& projectile->getCurrentState() != L"EXPLODE2"){
+				if (projectile->getBody()->GetLinearVelocity().x == 0.0f
+					|| projectile->getBody()->GetLinearVelocity().y == 0.0f
+					|| projectile->isMarkedForDeletion()){
+					if (projectile->getBody()){
+						game->getGSM()->getPhysics()->getWorld()->DestroyBody(projectile->getBody());
+						projectile->setIsProjectile(false);
+						projectile->setBody(NULL);
+					}
+					if (projectile->isMarkedForDeletion()){
+						projectile->markForDeletion(false);
+					}
 				}
 			}
+			
 		}
 			
 		projectileIterator++;
@@ -665,6 +672,7 @@ void SpriteManager::updateAnimations(Game *game){
 		Bot* genericBot = *botIterator;
 		PounceBot* pounceBot = dynamic_cast<PounceBot*>(*botIterator);
 		PropellerBot* propellerBot = dynamic_cast<PropellerBot*>(*botIterator);
+		BombBot* bombBot = dynamic_cast<BombBot*>(*botIterator);
 		//the propeller cat, since he is always airborne, needs his own state handling
 		if (!propellerBot){
 			if (genericBot->getBody()->GetLinearVelocity().y == 0){
@@ -809,6 +817,25 @@ void SpriteManager::updateAnimations(Game *game){
 					else if (state == L"JUMPING_RIGHT"){
 						pounceBot->setCurrentState(L"IDLE_RIGHT");
 					}
+				}
+			}
+		}
+		else if (bombBot){
+			if (bombBot->isMarkedForDeletion()){
+				if (bombBot->getBody()->GetFixtureList()){
+					bombBot->getBody()->DestroyFixture(bombBot->getBody()->GetFixtureList());
+				}
+				bombBot->markForDeletion(false);
+			}
+			else{
+				if (!bombBot->getBody()->GetFixtureList()){
+					b2FixtureDef fixtureDef;
+					b2PolygonShape shape;
+
+					shape.SetAsBox(0.5f, 0.5f);
+					fixtureDef.shape = &shape;
+
+					bombBot->getBody()->CreateFixture(&fixtureDef);
 				}
 			}
 		}

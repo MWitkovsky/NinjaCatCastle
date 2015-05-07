@@ -42,6 +42,7 @@ static const string		playerID				= "player";
 static const string		pounceBotID				= "pounceCat";
 static const string		propellerBotID			= "propellerCat";
 static const string		bombBotID				= "bombCat";
+static const string		armorBotID				= "armorCat";
 static const string		healthPickupID			= "health";
 static const string		treatID					= "treat";
 

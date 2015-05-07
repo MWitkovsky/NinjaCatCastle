@@ -42,5 +42,4 @@ public:
 	void resetChangeDirectionWait(){
 		changeDirectionWait = 120;
 	}
-	unsigned int getCyclesRemainingBeforeThinking()	{ return cyclesRemainingBeforeThinking; }
 };

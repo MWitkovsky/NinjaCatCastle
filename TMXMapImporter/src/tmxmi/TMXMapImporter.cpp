@@ -8,6 +8,8 @@
 #include "sssf\gsm\state\GameStateManager.h"
 #include "sssf\gsm\ai\bots\PounceBot.h"
 #include "sssf\gsm\ai\bots\PropellerBot.h"
+#include "sssf\gsm\ai\bots\BombBot.h"
+#include "sssf\gsm\ai\bots\ArmorBot.h"
 #include "sssf\gsm\ai\bots\Pickup.h"
 #include "xmlfi\XMLFileImporter.h"
 #include "Box2D\Box2D.h"
@@ -642,6 +644,51 @@ bool TMXMapImporter::buildWorldFromInfo(Game *game)
 						propellerBot->setAlpha(255);
 						propellerBot->setCurrentState(L"IDLE_LEFT");
 						game->getGSM()->getSpriteManager()->addBot(propellerBot);
+					}
+					else if (tiledLayerToAdd->getTile(row, col)->properties[spawn] == bombBotID){
+						BombBot *bombBot = new BombBot();
+
+						b2BodyDef bombBotProps;
+						b2FixtureDef fixtureDef;
+						b2PolygonShape shape;
+
+						bombBotProps.position.Set(col - 0.5f, tiledLayerToAdd->getRows() - row + 0.5f);
+						bombBotProps.type = b2_dynamicBody;
+						bombBotProps.fixedRotation = true;
+						shape.SetAsBox(0.5f, 0.7f);
+						fixtureDef.shape = &shape;
+						fixtureDef.density = 20.0f;
+
+						bombBot->setBody(game->getGSM()->getPhysics()->getWorld()->CreateBody(&bombBotProps));
+						bombBot->getBody()->CreateFixture(&fixtureDef);
+						bombBot->getBody()->SetUserData(bombBot);
+						bombBot->getBody()->SetSleepingAllowed(false);
+						bombBot->setFacingRight(false);
+						bombBot->setAlpha(255);
+						bombBot->setCurrentState(L"IDLE_LEFT");
+						game->getGSM()->getSpriteManager()->addBot(bombBot);
+					}
+					else if (tiledLayerToAdd->getTile(row, col)->properties[spawn] == armorBotID){
+						ArmorBot *armorBot = new ArmorBot();
+
+						b2BodyDef armorBotProps;
+						b2FixtureDef fixtureDef;
+						b2PolygonShape shape;
+
+						armorBotProps.position.Set(col - 0.5f, tiledLayerToAdd->getRows() - row + 0.5f);
+						armorBotProps.type = b2_dynamicBody;
+						armorBotProps.fixedRotation = true;
+						shape.SetAsBox(0.5f, 0.5f);
+						fixtureDef.shape = &shape;
+
+						armorBot->setBody(game->getGSM()->getPhysics()->getWorld()->CreateBody(&armorBotProps));
+						armorBot->getBody()->CreateFixture(&fixtureDef);
+						armorBot->getBody()->SetUserData(armorBot);
+						armorBot->getBody()->SetSleepingAllowed(false);
+						armorBot->setFacingRight(false);
+						armorBot->setAlpha(255);
+						armorBot->setCurrentState(L"IDLE_LEFT");
+						game->getGSM()->getSpriteManager()->addBot(armorBot);
 					}
 					else if (tiledLayerToAdd->getTile(row, col)->properties[spawn] == treatID){
 						Pickup *treat = new Pickup(false);

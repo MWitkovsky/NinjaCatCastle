@@ -12,6 +12,11 @@
     <property name="collidable" value="verticalOnly"/>
    </properties>
   </tile>
+  <tile id="40">
+   <properties>
+    <property name="spawn" value="bombCat"/>
+   </properties>
+  </tile>
   <tile id="50">
    <properties>
     <property name="spawn" value="player"/>
@@ -356,12 +361,12 @@
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
+   <tile gid="41"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
-   <tile gid="1"/>
-   <tile gid="1"/>
+   <tile gid="41"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
@@ -535,14 +540,14 @@
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
    <tile gid="1"/>
    <tile gid="1"/>
-   <tile gid="1"/>
-   <tile gid="1"/>
-   <tile gid="1"/>
-   <tile gid="53"/>
-   <tile gid="1"/>
-   <tile gid="1"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
+   <tile gid="32"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
@@ -1980,7 +1985,7 @@
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
-   <tile gid="52"/>
+   <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
