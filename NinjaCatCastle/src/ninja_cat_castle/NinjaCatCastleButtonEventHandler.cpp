@@ -31,7 +31,7 @@ void NinjaCatCastleButtonEventHandler::handleButtonEvents(Game *game,
 		GameStateManager *gsm = game->getGSM();
 		if (gsm->getCurrentGameState() == GS_SPLASH_SCREEN){
 			introChannel = game->playSongIntro(MAIN_MENU_SONG_INTRO, introChannel);
-			musicChannel = game->queueSong(MAIN_MENU_SONG, musicChannel);
+			musicChannel = game->queueSong(MAIN_MENU_SONG, musicChannel, 190);
 		}
 		gsm->goToMainMenu();
 	}
@@ -56,7 +56,7 @@ void NinjaCatCastleButtonEventHandler::handleButtonEvents(Game *game,
 	else if (command.compare(W_QUIT_COMMAND) == 0)
 	{
 		introChannel = game->playSongIntro(MAIN_MENU_SONG_INTRO, introChannel);
-		musicChannel = game->queueSong(MAIN_MENU_SONG, musicChannel);
+		musicChannel = game->queueSong(MAIN_MENU_SONG, musicChannel, 190);
 		game->quitGame();
 	}
 }

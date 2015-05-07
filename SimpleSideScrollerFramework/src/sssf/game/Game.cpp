@@ -138,6 +138,7 @@ wstring	SPRITE_TYPES_LIST;
 FMOD::System*		fmodSystem; //handle to FMOD engine
 FMOD::Channel*		musicChannel;
 FMOD::Channel*		introChannel; //needed for seamless looping
+int musicDelay;
 
 //ALL GLOBAL SCOPE VARIABLES ARE LOADED HERE FROM THE LUA FILE IN THE DATA DIRECTORY
 void Game::readLUA(const char* fileName){
@@ -832,10 +833,16 @@ void Game::processMusicLogic(){
 	if (musicEnabled){
 		GameState gs = gsm->getCurrentGameState();
 		if (gs == GS_MAIN_MENU || gs == GS_HELP_SCREEN || gs == GS_ABOUT_SCREEN || gs == GS_GAME_IN_PROGRESS){
-			bool isMusicPlaying = false;
+			/*bool isMusicPlaying = false;
 			introChannel->isPlaying(&isMusicPlaying);
 			if (!isMusicPlaying){
 				musicChannel->setPaused(false);
+			}*/
+			if (musicDelay){
+				if (musicDelay == 1){
+					musicChannel->setPaused(false);
+				}
+				musicDelay--;
 			}
 		}
 	}
@@ -852,19 +859,19 @@ void Game::toggleMusic(){
 		GameState gs = gsm->getCurrentGameState();
 		if (gs == GS_MAIN_MENU || gs == GS_HELP_SCREEN || gs == GS_ABOUT_SCREEN){
 			introChannel = playSongIntro(MAIN_MENU_SONG_INTRO, introChannel);
-			musicChannel = queueSong(MAIN_MENU_SONG, musicChannel);
+			musicChannel = queueSong(MAIN_MENU_SONG, musicChannel, 90);
 		}
 		if (currentLevelFileName == W_LEVEL_1_NAME){
 			introChannel = playSongIntro(LEVEL_1_SONG_INTRO, introChannel);
-			musicChannel = queueSong(LEVEL_1_SONG, musicChannel);
+			musicChannel = queueSong(LEVEL_1_SONG, musicChannel, 90);
 		}
 		else if (currentLevelFileName == W_LEVEL_2_NAME){
 			introChannel = playSongIntro(LEVEL_2_SONG_INTRO, introChannel);
-			musicChannel = queueSong(LEVEL_2_SONG, musicChannel);
+			musicChannel = queueSong(LEVEL_2_SONG, musicChannel, 90);
 		}
 		else{
 			introChannel = playSongIntro(LEVEL_3_SONG_INTRO, introChannel);
-			musicChannel = queueSong(LEVEL_3_SONG, musicChannel);
+			musicChannel = queueSong(LEVEL_3_SONG, musicChannel, 90);
 		}
 	}
 	
@@ -893,7 +900,7 @@ FMOD::Channel* Game::playSongIntro(const char* song, FMOD::Channel* songChannel)
 //Queues a song for play to produce a (hopefully) gapless transition
 //This also simplifies the music logic so it automatically plays the queued song
 //as soon as the intro is done playing
-FMOD::Channel* Game::queueSong(const char* song, FMOD::Channel* songChannel){
+FMOD::Channel* Game::queueSong(const char* song, FMOD::Channel* songChannel, int delay){
 	if (musicEnabled){
 		songChannel->stop(); //stops song currently playing in the music channel
 
@@ -905,6 +912,27 @@ FMOD::Channel* Game::queueSong(const char* song, FMOD::Channel* songChannel){
 
 		fmodSystem->playSound(newSong, 0, false, &newChannel); //plays sound in newChannel
 		newChannel->setPaused(true);
+
+		musicDelay = delay;
+
+		return newChannel; //returns newChannel
+	}
+	return songChannel;
+}
+
+FMOD::Channel* Game::playOverlappingJingle(const char* song, FMOD::Channel* songChannel, int delay){
+	if (musicEnabled){
+		songChannel->stop(); //stops song currently playing in the music channel
+
+		FMOD::Sound* newSong = 0;
+		FMOD::Channel* newChannel = 0;
+
+		fmodSystem->createStream(song, FMOD_DEFAULT, 0, &newSong);
+		newSong->setMode(FMOD_LOOP_OFF); //doesn't loop
+
+		fmodSystem->playSound(newSong, 0, false, &newChannel); //plays sound in newChannel
+
+		musicDelay = delay;
 
 		return newChannel; //returns newChannel
 	}

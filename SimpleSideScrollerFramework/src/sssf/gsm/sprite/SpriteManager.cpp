@@ -403,7 +403,7 @@ void SpriteManager::update(Game *game)
 		player.setLives(player.getLives() + 1);
 		player.setTreats(player.getTreats() - 100);
 		//Play sound here. Either a special sound effect like Mario or even a whole jingle like Sonic.
-		introChannel = game->playSongIntro(ONE_UP_JINGLE, introChannel);
+		introChannel = game->playOverlappingJingle(ONE_UP_JINGLE, introChannel, 240);
 		musicChannel->setPaused(true);
 	}
 
@@ -591,10 +591,52 @@ void SpriteManager::updateAnimations(Game *game){
 		}
 		else if (velocityY < 0.0f && (state == L"WALK_LEFT" || state == L"IDLE_LEFT"
 			|| state == L"ATTACK_LEFT" || state == L"ATTACK_LEFT_2")){
+			if (player.getBody()->GetFixtureList()){
+				player.getBody()->DestroyFixture(player.getBody()->GetFixtureList());
+			}
+			b2FixtureDef fixtureDef;
+			b2PolygonShape shape;
+			float32 width = 0.5f;
+			float32 height = 0.8f;
+			float32 edgeWidth = 0.1f;
+			float32 edgeHeight = 0.2f;
+			b2Vec2 vertices[8];
+			vertices[0].Set(-width + edgeWidth, -height);		// bottom
+			vertices[1].Set(width - edgeWidth, -height);		// bottom-right edge start
+			vertices[2].Set(width, -height + edgeHeight);		// bottom-right edge end
+			vertices[3].Set(width, height - edgeHeight);		// top-right edge start
+			vertices[4].Set(width - edgeWidth, height);			// top-right edge end
+			vertices[5].Set(-width + edgeWidth, height);		// top-left edge start
+			vertices[6].Set(-width, height - edgeHeight);		// top-left edge end
+			vertices[7].Set(-width, -height + edgeHeight);		// bottom-left edge
+			shape.Set(vertices, 8);
+			fixtureDef.shape = &shape;
+			player.getBody()->CreateFixture(&fixtureDef);
 			player.setCurrentState(L"JUMPING_DESCEND_LEFT");
 		}
 		else if (velocityY < 0.0f && (state == L"WALK_RIGHT" || state == L"IDLE_RIGHT"
 			|| state == L"ATTACK_RIGHT" || state == L"ATTACK_RIGHT_2")){
+			if (player.getBody()->GetFixtureList()){
+				player.getBody()->DestroyFixture(player.getBody()->GetFixtureList());
+			}
+			b2FixtureDef fixtureDef;
+			b2PolygonShape shape;
+			float32 width = 0.5f;
+			float32 height = 0.8f;
+			float32 edgeWidth = 0.1f;
+			float32 edgeHeight = 0.2f;
+			b2Vec2 vertices[8];
+			vertices[0].Set(-width + edgeWidth, -height);		// bottom
+			vertices[1].Set(width - edgeWidth, -height);		// bottom-right edge start
+			vertices[2].Set(width, -height + edgeHeight);		// bottom-right edge end
+			vertices[3].Set(width, height - edgeHeight);		// top-right edge start
+			vertices[4].Set(width - edgeWidth, height);			// top-right edge end
+			vertices[5].Set(-width + edgeWidth, height);		// top-left edge start
+			vertices[6].Set(-width, height - edgeHeight);		// top-left edge end
+			vertices[7].Set(-width, -height + edgeHeight);		// bottom-left edge
+			shape.Set(vertices, 8);
+			fixtureDef.shape = &shape;
+			player.getBody()->CreateFixture(&fixtureDef);
 			player.setCurrentState(L"JUMPING_DESCEND_RIGHT");
 		}
 		else if (velocityY == 0.0f){

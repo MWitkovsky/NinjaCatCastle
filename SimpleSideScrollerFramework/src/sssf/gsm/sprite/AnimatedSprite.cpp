@@ -283,7 +283,7 @@ void AnimatedSprite::changeFrame(Game *game)
 			else{
 				game->quitGame();
 				introChannel = game->playSongIntro(MAIN_MENU_SONG_INTRO, introChannel);
-				musicChannel = game->queueSong(MAIN_MENU_SONG, musicChannel);
+				musicChannel = game->queueSong(MAIN_MENU_SONG, musicChannel, 90);
 			}
 		}
 		else{

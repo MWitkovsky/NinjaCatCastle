@@ -236,19 +236,19 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 	//the appropriate intro/song
 	if (name == W_LEVEL_1_NAME){
 		introChannel = game->playSongIntro(LEVEL_1_SONG_INTRO, introChannel);
-		musicChannel = game->queueSong(LEVEL_1_SONG, musicChannel);
+		musicChannel = game->queueSong(LEVEL_1_SONG, musicChannel, 413);
 		game->getGUI()->getViewport()->setViewportY(1500);
 		game->getGUI()->getViewport()->setViewportX(0);
 	}
 	else if (name == W_LEVEL_2_NAME){
 		introChannel = game->playSongIntro(LEVEL_2_SONG_INTRO, introChannel);
-		musicChannel = game->queueSong(LEVEL_2_SONG, musicChannel);
+		musicChannel = game->queueSong(LEVEL_2_SONG, musicChannel, 412);
 		game->getGUI()->getViewport()->setViewportY(900);
 		game->getGUI()->getViewport()->setViewportX(0);
 	}
 	else{
 		introChannel = game->playSongIntro(LEVEL_3_SONG_INTRO, introChannel);
-		musicChannel = game->queueSong(LEVEL_3_SONG, musicChannel);
+		musicChannel = game->queueSong(LEVEL_3_SONG, musicChannel, 625);
 		game->getGUI()->getViewport()->setViewportY(7000);
 		game->getGUI()->getViewport()->setViewportX(0);
 	}

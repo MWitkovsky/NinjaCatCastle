@@ -277,7 +277,8 @@ public:
 	void	processMusicLogic();
 	void	toggleMusic();
 	FMOD::Channel*	playSongIntro(const char* song, FMOD::Channel* songChannel);
-	FMOD::Channel*	queueSong(const char* song, FMOD::Channel* songChannel);
+	FMOD::Channel*	queueSong(const char* song, FMOD::Channel* songChannel, int delay);
+	FMOD::Channel*	playOverlappingJingle(const char* song, FMOD::Channel* songChannel, int delay);
 	FMOD::Channel*	playSongNoIntro(const char* song, FMOD::Channel* songChannel);
 	void	playSound(const char* sound);
 	void	readLUA(const char* fileName);

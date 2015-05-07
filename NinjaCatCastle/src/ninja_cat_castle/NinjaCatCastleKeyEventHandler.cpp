@@ -321,7 +321,7 @@ void NinjaCatCastleKeyEventHandler::handleKeyEvents(Game *game)
 		//Go back to main menu with escape
 		if (input->isKeyDownForFirstTime(ESC_KEY)){
 			introChannel = game->playSongIntro(MAIN_MENU_SONG_INTRO, introChannel);
-			musicChannel = game->queueSong(MAIN_MENU_SONG, musicChannel);
+			musicChannel = game->queueSong(MAIN_MENU_SONG, musicChannel, 190);
 			player->setLives(3);
 			player->setTreats(0);
 			game->quitGame();
