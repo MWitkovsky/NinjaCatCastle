@@ -859,19 +859,19 @@ void Game::toggleMusic(){
 		GameState gs = gsm->getCurrentGameState();
 		if (gs == GS_MAIN_MENU || gs == GS_HELP_SCREEN || gs == GS_ABOUT_SCREEN){
 			introChannel = playSongIntro(MAIN_MENU_SONG_INTRO, introChannel);
-			musicChannel = queueSong(MAIN_MENU_SONG, musicChannel, 90);
+			musicChannel = queueSong(MAIN_MENU_SONG, musicChannel, 190);
 		}
 		if (currentLevelFileName == W_LEVEL_1_NAME){
 			introChannel = playSongIntro(LEVEL_1_SONG_INTRO, introChannel);
-			musicChannel = queueSong(LEVEL_1_SONG, musicChannel, 90);
+			musicChannel = queueSong(LEVEL_1_SONG, musicChannel, 413);
 		}
 		else if (currentLevelFileName == W_LEVEL_2_NAME){
 			introChannel = playSongIntro(LEVEL_2_SONG_INTRO, introChannel);
-			musicChannel = queueSong(LEVEL_2_SONG, musicChannel, 90);
+			musicChannel = queueSong(LEVEL_2_SONG, musicChannel, 413);
 		}
 		else{
 			introChannel = playSongIntro(LEVEL_3_SONG_INTRO, introChannel);
-			musicChannel = queueSong(LEVEL_3_SONG, musicChannel, 90);
+			musicChannel = queueSong(LEVEL_3_SONG, musicChannel, 625);
 		}
 	}
 	
