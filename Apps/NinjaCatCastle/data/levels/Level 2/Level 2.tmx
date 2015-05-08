@@ -32,6 +32,11 @@
     <property name="spawn" value="propellerCat"/>
    </properties>
   </tile>
+  <tile id="53">
+   <properties>
+    <property name="spawn" value="bombCat"/>
+   </properties>
+  </tile>
  </tileset>
  <imagelayer name="Image Layer 1" y="64">
   <image source="moving_bk2.png"/>
@@ -361,12 +366,12 @@
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
-   <tile gid="41"/>
+   <tile gid="54"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
-   <tile gid="41"/>
+   <tile gid="54"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
