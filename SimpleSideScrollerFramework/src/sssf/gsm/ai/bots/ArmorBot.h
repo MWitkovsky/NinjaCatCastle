@@ -51,8 +51,7 @@ public:
 	}
 
 	boolean isVulnerable(){
-		return (currentState == L"WINDUP_LEFT" || currentState == L"WINDUP_RIGHT"
-			|| currentState == L"ATTACK_RECOVER_LEFT" || currentState == L"ATTACK_RECOVER_RIGHT");
+		return (currentState == L"ATTACK_RECOVER_LEFT" || currentState == L"ATTACK_RECOVER_RIGHT");
 	}
 
 	b2Fixture* getAttackBox(){

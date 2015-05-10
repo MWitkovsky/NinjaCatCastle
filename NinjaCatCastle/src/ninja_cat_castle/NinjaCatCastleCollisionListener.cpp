@@ -250,11 +250,11 @@ void NinjaCatCastleCollisionListener::respondToCollision(AnimatedSprite *player,
 								armorBot->resetThinkCyclesBlock();
 								if (enemy->getBody()->GetPosition().x < player->getBody()->GetPosition().x){
 									enemy->setCurrentState(L"BLOCK_RIGHT");
-									enemy->getBody()->SetLinearVelocity(b2Vec2(-3.0f, 0.0f));
+									enemy->getBody()->SetLinearVelocity(b2Vec2(-5.0f, 0.0f));
 								}
 								else{
 									enemy->setCurrentState(L"BLOCK_LEFT");
-									enemy->getBody()->SetLinearVelocity(b2Vec2(3.0f, 0.0f));
+									enemy->getBody()->SetLinearVelocity(b2Vec2(5.0f, 0.0f));
 								}
 							}
 						}
@@ -318,11 +318,11 @@ void NinjaCatCastleCollisionListener::respondToCollision(AnimatedSprite *player,
 							armorBot->resetThinkCyclesBlock();
 							if (enemy->getBody()->GetPosition().x < player->getBody()->GetPosition().x){
 								enemy->setCurrentState(L"BLOCK_RIGHT");
-								enemy->getBody()->SetLinearVelocity(b2Vec2(-3.0f, 0.0f));
+								enemy->getBody()->SetLinearVelocity(b2Vec2(-5.0f, 0.0f));
 							}
 							else{
 								enemy->setCurrentState(L"BLOCK_LEFT");
-								enemy->getBody()->SetLinearVelocity(b2Vec2(3.0f, 0.0f));
+								enemy->getBody()->SetLinearVelocity(b2Vec2(5.0f, 0.0f));
 							}
 						}
 					}

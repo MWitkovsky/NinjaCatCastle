@@ -145,6 +145,12 @@ void TMXMapImporter::loadImageLayerInfo(const TiXmlNode *node)
 				else if (strcmp(att.c_str(), Y_ELEMENT.c_str()) == 0){
 					imageLayerInfo.y = extractIntAtt(grandchildNode->ToElement(), VALUE_ATT);
 				}
+				else if (strcmp(att.c_str(), X_ELEMENT2.c_str()) == 0){
+					imageLayerInfo.x = extractIntAtt(grandchildNode->ToElement(), VALUE_ATT);
+				}
+				else if (strcmp(att.c_str(), Y_ELEMENT2.c_str()) == 0){
+					imageLayerInfo.y = extractIntAtt(grandchildNode->ToElement(), VALUE_ATT);
+				}
 				else { // This is a custom property
 					imageLayerInfo.properties[att] = grandchildElement->Attribute(VALUE_ATT.c_str());
 				}

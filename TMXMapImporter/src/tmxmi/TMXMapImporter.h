@@ -32,6 +32,9 @@ static const string		PROPERTIES_ELEMENT		= "properties";
 static const string		PROPERTY_ELEMENT		= "property";
 static const string		X_ELEMENT				= "xOffset";
 static const string		Y_ELEMENT				= "yOffset";
+//IM DONE IVE MIXED THESE UP LITERALLY EVERY TIME SO NOW IT READS BOTH
+static const string		X_ELEMENT2				= "offsetX";
+static const string		Y_ELEMENT2				= "offsetY";
 static const string		COLLIDABLE_ATT			= "collidable";
 static const string		PLAYER_ATT				= "player";
 static const string		VALUE_ATT				= "value";
