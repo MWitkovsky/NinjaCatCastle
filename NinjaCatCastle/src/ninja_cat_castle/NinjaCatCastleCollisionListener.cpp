@@ -6,6 +6,7 @@
 #include "sssf\gsm\ai\bots\PounceBot.h"
 #include "sssf\gsm\ai\bots\PropellerBot.h"
 #include "sssf\gsm\ai\bots\BombBot.h"
+#include "sssf\gsm\ai\bots\ArmorBot.h"
 #include "sssf\gsm\ai\bots\Pickup.h"
 
 void NinjaCatCastleCollisionListener::BeginContact(b2Contact* contact) {
@@ -141,29 +142,86 @@ void NinjaCatCastleCollisionListener::respondToCollision(AnimatedSprite *player,
 			if (enemyState != L"DIE_LEFT"  && enemyState != L"DIE_RIGHT"
 				&& enemyState != L"HIT_LEFT" && enemyState != L"HIT_RIGHT"
 				&& !player->getInvincibilityFrames()){
-				//Marks player to send in the hit arc backwards
-				player->setIsProjectile(true);
+				ArmorBot* armorBot = dynamic_cast<ArmorBot*>(enemy);
+				if (armorBot){
+					if (contact->GetFixtureA() == armorBot->getAttackBox() || contact->GetFixtureB() == armorBot->getAttackBox()){
+						if (enemyState == L"ATTACK_LEFT_A" || enemyState == L"ATTACK_RIGHT_A"){
+							//Marks player to send in the hit arc backwards
+							player->setIsProjectile(true);
 
-				if (!enemy->isProjectile()){
-					Bot* bot = static_cast<Bot*>(enemy);
-					bot->setHitPlayer(true);
+							if (!enemy->isProjectile()){
+								Bot* bot = static_cast<Bot*>(enemy);
+								bot->setHitPlayer(true);
+							}
+							else{
+								enemy->markForDeletion(true);
+							}
+
+							if (player->getHurtBox()){
+								player->setAttackFinished(true);
+								player->setAttacking(false);
+							}
+							if (player->isFacingRight()){
+								player->setCurrentState(L"HIT_LEFT");
+							}
+							else{
+								player->setCurrentState(L"HIT_RIGHT");
+							}
+							player->decrementHP();
+							player->setHit(true);
+						}
+					}
+					else{
+						//Marks player to send in the hit arc backwards
+						player->setIsProjectile(true);
+
+						if (!enemy->isProjectile()){
+							Bot* bot = static_cast<Bot*>(enemy);
+							bot->setHitPlayer(true);
+						}
+						else{
+							enemy->markForDeletion(true);
+						}
+
+						if (player->getHurtBox()){
+							player->setAttackFinished(true);
+							player->setAttacking(false);
+						}
+						if (player->isFacingRight()){
+							player->setCurrentState(L"HIT_LEFT");
+						}
+						else{
+							player->setCurrentState(L"HIT_RIGHT");
+						}
+						player->decrementHP();
+						player->setHit(true);
+					}
 				}
 				else{
-					enemy->markForDeletion(true);
-				}
+					//Marks player to send in the hit arc backwards
+					player->setIsProjectile(true);
 
-				if (player->getHurtBox()){
-					player->setAttackFinished(true);
-					player->setAttacking(false);
-				}
-				if (player->isFacingRight()){
-					player->setCurrentState(L"HIT_LEFT");
-				}
-				else{
-					player->setCurrentState(L"HIT_RIGHT");
-				}
-				player->decrementHP();
-				player->setHit(true);
+					if (!enemy->isProjectile()){
+						Bot* bot = static_cast<Bot*>(enemy);
+						bot->setHitPlayer(true);
+					}
+					else{
+						enemy->markForDeletion(true);
+					}
+
+					if (player->getHurtBox()){
+						player->setAttackFinished(true);
+						player->setAttacking(false);
+					}
+					if (player->isFacingRight()){
+						player->setCurrentState(L"HIT_LEFT");
+					}
+					else{
+						player->setCurrentState(L"HIT_RIGHT");
+					}
+					player->decrementHP();
+					player->setHit(true);
+				}	
 			}
 		}
 		else{
@@ -172,7 +230,37 @@ void NinjaCatCastleCollisionListener::respondToCollision(AnimatedSprite *player,
 					player->markForDeletion(true);
 				}
 				wstring enemyState = enemy->getCurrentState();
-				if (dynamic_cast<BombBot*>(enemy)){
+				ArmorBot* armorBot = dynamic_cast<ArmorBot*>(enemy);
+				if (armorBot){
+					if (enemyState != L"DIE_LEFT"  && enemyState != L"DIE_RIGHT"){
+						if (contact->GetFixtureA() != armorBot->getAttackBox() && contact->GetFixtureB() != armorBot->getAttackBox()){
+							if (armorBot->isVulnerable()){
+								enemy->markForDeletion(true);
+								if (enemy->getBody()->GetPosition().x < player->getBody()->GetPosition().x){
+									enemy->setCurrentState(L"DIE_RIGHT");
+								}
+								else{
+									enemy->setCurrentState(L"DIE_LEFT");
+								}
+								enemy->setHit(true);
+								enemy->setPlayHitSound(true);
+								enemy->getBody()->SetGravityScale(1.0f);
+							}
+							else{
+								armorBot->resetThinkCyclesBlock();
+								if (enemy->getBody()->GetPosition().x < player->getBody()->GetPosition().x){
+									enemy->setCurrentState(L"BLOCK_RIGHT");
+									enemy->getBody()->SetLinearVelocity(b2Vec2(-3.0f, 0.0f));
+								}
+								else{
+									enemy->setCurrentState(L"BLOCK_LEFT");
+									enemy->getBody()->SetLinearVelocity(b2Vec2(3.0f, 0.0f));
+								}
+							}
+						}
+					}
+				}
+				else if (dynamic_cast<BombBot*>(enemy)){
 					if (enemyState != L"DIE_LEFT"  && enemyState != L"DIE_RIGHT"){
 						enemy->markForDeletion(true);
 						if (enemy->getBody()->GetPosition().x < player->getBody()->GetPosition().x){
@@ -209,8 +297,38 @@ void NinjaCatCastleCollisionListener::respondToCollision(AnimatedSprite *player,
 	}
 	else{
 		if (!dynamic_cast<Pickup*>(enemy)){
-			if (dynamic_cast<BombBot*>(enemy)){
-				wstring enemyState = enemy->getCurrentState();
+			ArmorBot* armorBot = dynamic_cast<ArmorBot*>(enemy);
+			wstring enemyState = enemy->getCurrentState();
+			if (armorBot){
+				if (enemyState != L"DIE_LEFT"  && enemyState != L"DIE_RIGHT"){
+					if (contact->GetFixtureA() != armorBot->getAttackBox() && contact->GetFixtureB() != armorBot->getAttackBox()){
+						if (armorBot->isVulnerable()){
+							enemy->markForDeletion(true);
+							if (enemy->getBody()->GetPosition().x < player->getBody()->GetPosition().x){
+								enemy->setCurrentState(L"DIE_RIGHT");
+							}
+							else{
+								enemy->setCurrentState(L"DIE_LEFT");
+							}
+							enemy->setHit(true);
+							enemy->setPlayHitSound(true);
+							enemy->getBody()->SetGravityScale(1.0f);
+						}
+						else{
+							armorBot->resetThinkCyclesBlock();
+							if (enemy->getBody()->GetPosition().x < player->getBody()->GetPosition().x){
+								enemy->setCurrentState(L"BLOCK_RIGHT");
+								enemy->getBody()->SetLinearVelocity(b2Vec2(-3.0f, 0.0f));
+							}
+							else{
+								enemy->setCurrentState(L"BLOCK_LEFT");
+								enemy->getBody()->SetLinearVelocity(b2Vec2(3.0f, 0.0f));
+							}
+						}
+					}
+				}
+			}
+			else if (dynamic_cast<BombBot*>(enemy)){
 				if (enemyState != L"DIE_LEFT"  && enemyState != L"DIE_RIGHT"){
 					enemy->markForDeletion(true);
 					if (enemy->getBody()->GetPosition().x < player->getBody()->GetPosition().x){

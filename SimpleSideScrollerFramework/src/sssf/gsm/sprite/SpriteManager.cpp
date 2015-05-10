@@ -14,6 +14,7 @@
 #include "sssf\gsm\ai\bots\PounceBot.h"
 #include "sssf\gsm\ai\bots\PropellerBot.h"
 #include "sssf\gsm\ai\bots\BombBot.h"
+#include "sssf\gsm\ai\bots\ArmorBot.h"
 #include "sssf\gsm\physics\PhysicalProperties.h"
 #include "sssf\graphics\GameGraphics.h"
 #include "sssf\gsm\sprite\AnimatedSprite.h"
@@ -53,13 +54,21 @@ void SpriteManager::addSpriteToRenderList(Game *game, AnimatedSprite *sprite,
 									spriteType->getTextureHeight()))
 	{
 		// SINCE IT'S VIEWABLE, ADD IT TO THE RENDER LIST
-		PounceBot* pounceBot = dynamic_cast<PounceBot*>(sprite);
 		RenderItem itemToAdd;
 		itemToAdd.id = sprite->getFrameIndex();
-		if (pounceBot){
+		if (dynamic_cast<PounceBot*>(sprite)){
 			renderList->addRenderItem(sprite->getCurrentImageID(),
 				(int)x - viewport->getViewportX(),
 				(int)y - viewport->getViewportY() - 32,
+				0,
+				sprite->getAlpha(),
+				spriteType->getTextureWidth(),
+				spriteType->getTextureHeight());
+		}
+		else if (dynamic_cast<ArmorBot*>(sprite)){
+			renderList->addRenderItem(sprite->getCurrentImageID(),
+				(int)x - viewport->getViewportX() - 64,
+				(int)y - viewport->getViewportY() - 96,
 				0,
 				sprite->getAlpha(),
 				spriteType->getTextureWidth(),
@@ -611,6 +620,7 @@ void SpriteManager::updateAnimations(Game *game){
 			vertices[7].Set(-width, -height + edgeHeight);		// bottom-left edge
 			shape.Set(vertices, 8);
 			fixtureDef.shape = &shape;
+			fixtureDef.friction = 0.0f;
 			player.getBody()->CreateFixture(&fixtureDef);
 			player.setCurrentState(L"JUMPING_DESCEND_LEFT");
 		}
@@ -636,6 +646,7 @@ void SpriteManager::updateAnimations(Game *game){
 			vertices[7].Set(-width, -height + edgeHeight);		// bottom-left edge
 			shape.Set(vertices, 8);
 			fixtureDef.shape = &shape;
+			fixtureDef.friction = 0.0f;
 			player.getBody()->CreateFixture(&fixtureDef);
 			player.setCurrentState(L"JUMPING_DESCEND_RIGHT");
 		}
@@ -715,6 +726,7 @@ void SpriteManager::updateAnimations(Game *game){
 		PounceBot* pounceBot = dynamic_cast<PounceBot*>(*botIterator);
 		PropellerBot* propellerBot = dynamic_cast<PropellerBot*>(*botIterator);
 		BombBot* bombBot = dynamic_cast<BombBot*>(*botIterator);
+		ArmorBot* armorBot = dynamic_cast<ArmorBot*>(*botIterator);
 		//the propeller cat, since he is always airborne, needs his own state handling
 		if (!propellerBot){
 			if (genericBot->getBody()->GetLinearVelocity().y == 0){
@@ -878,6 +890,25 @@ void SpriteManager::updateAnimations(Game *game){
 					fixtureDef.shape = &shape;
 
 					bombBot->getBody()->CreateFixture(&fixtureDef);
+				}
+			}
+		}
+		else if (armorBot){
+			if (armorBot->isMarkedForDeletion()){
+				if (armorBot->getBody()->GetFixtureList()){
+					armorBot->getBody()->DestroyFixture(armorBot->getBody()->GetFixtureList());
+				}
+				armorBot->markForDeletion(false);
+			}
+			else{
+				if (!armorBot->getBody()->GetFixtureList()){
+					b2FixtureDef fixtureDef;
+					b2PolygonShape shape;
+
+					shape.SetAsBox(0.5f, 1.5f);
+					fixtureDef.shape = &shape;
+
+					armorBot->getBody()->CreateFixture(&fixtureDef);
 				}
 			}
 		}

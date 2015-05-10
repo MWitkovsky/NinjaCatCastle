@@ -13,6 +13,7 @@
 #include "sssf\gsm\ai\bots\PounceBot.h"
 #include "sssf\gsm\ai\bots\PropellerBot.h"
 #include "sssf\gsm\ai\bots\BombBot.h"
+#include "sssf\gsm\ai\bots\ArmorBot.h"
 #include "sssf\gsm\ai\bots\Pickup.h"
 #include "sssf\gsm\state\GameState.h"
 #include "sssf\gsm\world\TiledLayer.h"
@@ -194,6 +195,7 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 		PounceBot* pounceBot = dynamic_cast<PounceBot*>(bot);
 		PropellerBot* propellerBot = dynamic_cast<PropellerBot*>(bot);
 		BombBot* bombBot = dynamic_cast<BombBot*>(bot);
+		ArmorBot* armorBot = dynamic_cast<ArmorBot*>(bot);
 		Pickup* pickup = dynamic_cast<Pickup*>(bot);
 		if (pickup){
 			if (pickup->isHealth()){
@@ -211,6 +213,9 @@ void NinjaCatCastleDataLoader::loadWorld(Game *game, wstring dir, wstring name)
 		}
 		else if (bombBot){
 			bombBot->setSpriteType(spriteManager->getSpriteType(6));
+		}
+		else if (armorBot){
+			armorBot->setSpriteType(spriteManager->getSpriteType(10));
 		}
 
 		botIterator++;

@@ -517,6 +517,7 @@ void NinjaCatCastleKeyEventHandler::handleShurikenThrow(Game *game, int throwCod
 		// dimension/64/2 = float values here, NOT MAGIC NUMBERS I SWEAR
 		shape.SetAsBox(0.2f, 0.2f);
 		fixtureDef.shape = &shape;
+		fixtureDef.density = 0.001f;
 
 		if (throwCode == left){
 			projectileProps.linearVelocity = b2Vec2(-projectileVelocity.x, -0.0001f);

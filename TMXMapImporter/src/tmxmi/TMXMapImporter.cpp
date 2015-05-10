@@ -678,8 +678,9 @@ bool TMXMapImporter::buildWorldFromInfo(Game *game)
 						armorBotProps.position.Set(col - 0.5f, tiledLayerToAdd->getRows() - row + 0.5f);
 						armorBotProps.type = b2_dynamicBody;
 						armorBotProps.fixedRotation = true;
-						shape.SetAsBox(0.5f, 0.5f);
+						shape.SetAsBox(0.5f, 1.3f);
 						fixtureDef.shape = &shape;
+						fixtureDef.friction = 3.0f;
 
 						armorBot->setBody(game->getGSM()->getPhysics()->getWorld()->CreateBody(&armorBotProps));
 						armorBot->getBody()->CreateFixture(&fixtureDef);
@@ -688,6 +689,12 @@ bool TMXMapImporter::buildWorldFromInfo(Game *game)
 						armorBot->setFacingRight(false);
 						armorBot->setAlpha(255);
 						armorBot->setCurrentState(L"IDLE_LEFT");
+
+						shape.SetAsBox(2.0f, 0.3f);
+						fixtureDef.shape = &shape;
+						fixtureDef.isSensor = true;
+						armorBot->setAttackBox(armorBot->getBody()->CreateFixture(&fixtureDef));
+
 						game->getGSM()->getSpriteManager()->addBot(armorBot);
 					}
 					else if (tiledLayerToAdd->getTile(row, col)->properties[spawn] == treatID){

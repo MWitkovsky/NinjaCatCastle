@@ -75,6 +75,7 @@ void AnimatedSprite::changeFrame(Game *game)
 				vertices[7].Set(-width, -height + edgeHeight);		// bottom-left edge
 				shape.Set(vertices, 8);
 				fixtureDef.shape = &shape;
+				fixtureDef.friction = 0.0f;
 				body->CreateFixture(&fixtureDef);
 
 				setCurrentState(L"JUMPING_DESCEND_RIGHT");
@@ -101,6 +102,7 @@ void AnimatedSprite::changeFrame(Game *game)
 				vertices[7].Set(-width, -height + edgeHeight);		// bottom-left edge
 				shape.Set(vertices, 8);
 				fixtureDef.shape = &shape;
+				fixtureDef.friction = 0.0f;
 				body->CreateFixture(&fixtureDef);
 
 				setCurrentState(L"JUMPING_DESCEND_LEFT");
@@ -306,6 +308,31 @@ void AnimatedSprite::changeFrame(Game *game)
 					game->getGSM()->getPhysics()->getWorld()->DestroyBody(body);
 					body = NULL;
 				}
+			}
+			else if (currentState == L"WINDUP_LEFT"){
+				setCurrentState(L"ATTACK_LEFT_A");
+
+			}
+			else if (currentState == L"WINDUP_RIGHT"){
+				setCurrentState(L"ATTACK_RIGHT_A");
+			}
+			else if (currentState == L"ATTACK_LEFT_A"){
+				setCurrentState(L"ATTACK_RECOVER_LEFT");
+			}
+			else if (currentState == L"ATTACK_RIGHT_A"){
+				setCurrentState(L"ATTACK_RECOVER_RIGHT");
+			}
+			else if (currentState == L"ATTACK_RECOVER_LEFT"){
+				setCurrentState(L"IDLE_LEFT");
+			}
+			else if (currentState == L"ATTACK_RECOVER_RIGHT"){
+				setCurrentState(L"IDLE_RIGHT");
+			}
+			else if (currentState == L"BLOCK_LEFT"){
+				setCurrentState(L"IDLE_LEFT");
+			}
+			else if (currentState == L"BLOCK_RIGHT"){
+				setCurrentState(L"IDLE_RIGHT");
 			}
 			else{
 				frameIndex = 0;
