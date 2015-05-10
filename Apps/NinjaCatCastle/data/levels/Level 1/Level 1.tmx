@@ -94,7 +94,7 @@
    <property name="yOffset" value="1000"/>
   </properties>
  </imagelayer>
- <imagelayer name="Copy of house2" x="12131" y="500">
+ <imagelayer name="house3" x="12131" y="500">
   <image source="house1.png"/>
   <properties>
    <property name="collidable" value="false"/>
@@ -104,7 +104,7 @@
    <property name="yOffset" value="500"/>
   </properties>
  </imagelayer>
- <imagelayer name="Copy of house2" x="12131" y="1000">
+ <imagelayer name="house4" x="12131" y="1000">
   <image source="house1.png"/>
   <properties>
    <property name="collidable" value="false"/>
@@ -114,7 +114,7 @@
    <property name="yOffset" value="1000"/>
   </properties>
  </imagelayer>
- <imagelayer name="Copy of house2" x="11300" y="755">
+ <imagelayer name="house5" x="11300" y="755">
   <image source="house1.png"/>
   <properties>
    <property name="collidable" value="false"/>
@@ -124,7 +124,7 @@
    <property name="yOffset" value="755"/>
   </properties>
  </imagelayer>
- <imagelayer name="Copy of Copy of house2" x="12131" y="755">
+ <imagelayer name="house6" x="12131" y="755">
   <image source="house1.png"/>
   <properties>
    <property name="collidable" value="false"/>

@@ -37,10 +37,13 @@ void PropellerBot::shoot(Game *game){
 	projectile->getBody()->SetUserData(projectile);
 	projectile->getBody()->SetSleepingAllowed(false);
 
+	b2Vec2 playerPos = game->getGSM()->getSpriteManager()->getPlayer()->getBody()->GetPosition();
+	float32 diffX = body->GetPosition().x - playerPos.x;
+
 	if (currentState == L"SHOOT_RIGHT"){
 		projectile->getBody()->SetLinearVelocity(b2Vec2(projectileVelocity.x, -projectileVelocity.y));
 		projectile->setCurrentState(L"RIGHT");
-		if (body->GetLinearVelocity().x > 0.0f){
+		if (diffX < 0.0f){
 			setCurrentState(L"IDLE_RIGHT");
 		}
 		else{
@@ -50,7 +53,7 @@ void PropellerBot::shoot(Game *game){
 	else{
 		projectile->getBody()->SetLinearVelocity(b2Vec2(-projectileVelocity.x, -projectileVelocity.y));
 		projectile->setCurrentState(L"LEFT");
-		if (body->GetLinearVelocity().x > 0.0f){
+		if (diffX < 0.0f){
 			setCurrentState(L"IDLE_RIGHT");
 		}
 		else{
@@ -135,30 +138,39 @@ void PropellerBot::think(Game *game)
 		calculateBob();
 
 		//attack logic
+		GameStateManager *gsm = game->getGSM();
+		b2Vec2 playerPos = gsm->getSpriteManager()->getPlayer()->getBody()->GetPosition();
+		float32 diffX = body->GetPosition().x - playerPos.x;
+		float32 diffY = body->GetPosition().y - playerPos.y;
+
 		if (cyclesRemainingBeforeThinking)
 		{
 			if (currentState != L"SHOOT_RIGHT" &&  currentState != L"SHOOT_LEFT"){
-				if (body->GetLinearVelocity().x > 0.0f){
-					setCurrentState(L"IDLE_RIGHT");
+				if (diffX > 0.0f){
+					setCurrentState(L"IDLE_LEFT");
 				}
 				else{
-					setCurrentState(L"IDLE_LEFT");
+					setCurrentState(L"IDLE_RIGHT");
 				}
 			}
 			cyclesRemainingBeforeThinking--;
 		}
 		else{
-			GameStateManager *gsm = game->getGSM();
-			b2Vec2 playerPos = gsm->getSpriteManager()->getPlayer()->getBody()->GetPosition();
-			float32 diffX = body->GetPosition().x - playerPos.x;
-			float32 diffY = body->GetPosition().y - playerPos.y;
 			if (diffX > -3.0f && diffX < 3.0f){
 				if (diffY > 0.0f && diffY < maxSeekRange){
-					if (diffX < 0.0f){
+					if (game->getGSM()->getSpriteManager()->getPlayer()->getBody()->GetLinearVelocity().x < 0.0f){
 						setCurrentState(L"SHOOT_LEFT");
 					}
-					else{
+					else if (game->getGSM()->getSpriteManager()->getPlayer()->getBody()->GetLinearVelocity().x > 0.0f){
 						setCurrentState(L"SHOOT_RIGHT");
+					}
+					else{
+						if (diffX > 0.0f){
+							setCurrentState(L"SHOOT_LEFT");
+						}
+						else{
+							setCurrentState(L"SHOOT_RIGHT");
+						}
 					}
 					resetThinkCycles();
 				}

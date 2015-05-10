@@ -541,8 +541,8 @@ bool TMXMapImporter::buildWorldFromInfo(Game *game)
 						//Also gives a nice little push forward if you fall of a ledge.
 						float32 width = 0.60f;
 						float32 height = 0.8f;
-						float32 edgeWidth = 0.5f;
-						float32 edgeHeight = 0.5f;
+						float32 edgeWidth = 0.0f;
+						float32 edgeHeight = 0.0f;
 						b2Vec2 vertices[8];
 						vertices[0].Set(-width + edgeWidth, -height);		// bottom
 						vertices[1].Set(width - edgeWidth, -height);		// bottom-right edge start
