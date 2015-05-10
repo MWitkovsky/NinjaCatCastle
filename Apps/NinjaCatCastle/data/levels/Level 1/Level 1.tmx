@@ -66,12 +66,52 @@
    <property name="imagewidth" value="1920"/>
   </properties>
  </imagelayer>
- <imagelayer name="Image Layer 3">
+ <imagelayer name="dummy1">
   <image source="dummy.png"/>
   <properties>
    <property name="imageheight" value="1"/>
    <property name="imagewidth" value="1"/>
-   <property name="offsetX" value="-9001"/>
+   <property name="xOffset" value="-9001"/>
+  </properties>
+ </imagelayer>
+ <imagelayer name="dummy2">
+  <image source="dummy2.png"/>
+  <properties>
+   <property name="imageheight" value="1"/>
+   <property name="imagewidth" value="1"/>
+   <property name="xOffset" value="-9001"/>
+  </properties>
+ </imagelayer>
+ <imagelayer name="dummy3">
+  <image source="dummy3.png"/>
+  <properties>
+   <property name="imageheight" value="1"/>
+   <property name="imagewidth" value="1"/>
+   <property name="xOffset" value="-9001"/>
+  </properties>
+ </imagelayer>
+ <imagelayer name="dummy4">
+  <image source="dummy4.png"/>
+  <properties>
+   <property name="imageheight" value="1"/>
+   <property name="imagewidth" value="1"/>
+   <property name="xOffset" value="-9001"/>
+  </properties>
+ </imagelayer>
+ <imagelayer name="dummy5">
+  <image source="dummy5.png"/>
+  <properties>
+   <property name="imageheight" value="1"/>
+   <property name="imagewidth" value="1"/>
+   <property name="xOffset" value="-9001"/>
+  </properties>
+ </imagelayer>
+ <imagelayer name="dummy6">
+  <image source="dummy6.png"/>
+  <properties>
+   <property name="imageheight" value="1"/>
+   <property name="imagewidth" value="1"/>
+   <property name="xOffset" value="-9001"/>
   </properties>
  </imagelayer>
  <imagelayer name="house1" x="10500" y="1000">
