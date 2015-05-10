@@ -245,6 +245,7 @@ void NinjaCatCastleCollisionListener::respondToCollision(AnimatedSprite *player,
 								enemy->setHit(true);
 								enemy->setPlayHitSound(true);
 								enemy->getBody()->SetGravityScale(1.0f);
+								armorBot->setPlayDeathSound(true);
 							}
 							else{
 								armorBot->resetThinkCyclesBlock();
@@ -256,6 +257,7 @@ void NinjaCatCastleCollisionListener::respondToCollision(AnimatedSprite *player,
 									enemy->setCurrentState(L"BLOCK_LEFT");
 									enemy->getBody()->SetLinearVelocity(b2Vec2(5.0f, 0.0f));
 								}
+								armorBot->setPlayBlockSound(true);
 							}
 						}
 					}
@@ -313,6 +315,7 @@ void NinjaCatCastleCollisionListener::respondToCollision(AnimatedSprite *player,
 							enemy->setHit(true);
 							enemy->setPlayHitSound(true);
 							enemy->getBody()->SetGravityScale(1.0f);
+							armorBot->setPlayDeathSound(true);
 						}
 						else{
 							armorBot->resetThinkCyclesBlock();
@@ -324,6 +327,7 @@ void NinjaCatCastleCollisionListener::respondToCollision(AnimatedSprite *player,
 								enemy->setCurrentState(L"BLOCK_LEFT");
 								enemy->getBody()->SetLinearVelocity(b2Vec2(5.0f, 0.0f));
 							}
+							armorBot->setPlayBlockSound(true);
 						}
 					}
 				}

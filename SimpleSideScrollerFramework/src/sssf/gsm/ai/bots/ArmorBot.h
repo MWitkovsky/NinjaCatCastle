@@ -15,6 +15,8 @@ private:
 	b2Vec2 attackRange = b2Vec2(2.0f, 2.0f);
 	b2Vec2 approachRange = b2Vec2(12.0f, 2.0f);
 	b2Fixture* attackBox;
+	boolean playBlockSound = false;
+	boolean playDeathSound = false;
 
 	// THIS PRIVATE CONSTRUCTOR IS ONLY USED FOR CLONING
 	ArmorBot(unsigned int initMin,
@@ -40,6 +42,14 @@ public:
 		this->attackBox = attackBox;
 	}
 
+	void setPlayBlockSound(boolean playBlockSound){
+		this->playBlockSound = playBlockSound;
+	}
+	
+	void setPlayDeathSound(boolean playDeathSound){
+		this->playDeathSound = playDeathSound;
+	}
+
 	boolean isBotAttacking(){
 		return (currentState == L"ATTACK_LEFT_A" || currentState == L"ATTACK_RIGHT_A"
 			|| currentState == L"WINDUP_LEFT" || currentState == L"WINDUP_RIGHT"
@@ -56,5 +66,13 @@ public:
 
 	b2Fixture* getAttackBox(){
 		return attackBox;
+	}
+
+	boolean shouldPlayBlockSound(){
+		return playBlockSound;
+	}
+
+	boolean shouldPlayDeathSound(){
+		return playDeathSound;
 	}
 };

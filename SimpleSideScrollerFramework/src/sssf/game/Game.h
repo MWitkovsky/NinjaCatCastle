@@ -64,6 +64,8 @@ extern char*	LEVEL_COMPLETE_JINGLE;
 extern char*	ONE_UP_JINGLE;
 
 extern char*	SOUND_ARROWSHOT;
+extern char*	SOUND_ARMORCAT_BLOCK;
+extern char*	SOUND_ARMORCAT_DIE;
 extern char*	SOUND_BOMB_EXPLOSION1;
 extern char*	SOUND_BOMB_EXPLOSION2;
 extern char*	SOUND_CAT_POUNCE;

@@ -311,10 +311,11 @@ void AnimatedSprite::changeFrame(Game *game)
 			}
 			else if (currentState == L"WINDUP_LEFT"){
 				setCurrentState(L"ATTACK_LEFT_A");
-
+				game->playSound(SOUND_BIGSLASH);
 			}
 			else if (currentState == L"WINDUP_RIGHT"){
 				setCurrentState(L"ATTACK_RIGHT_A");
+				game->playSound(SOUND_BIGSLASH);
 			}
 			else if (currentState == L"ATTACK_LEFT_A"){
 				setCurrentState(L"ATTACK_RECOVER_LEFT");
@@ -355,7 +356,7 @@ void AnimatedSprite::changeFrame(Game *game)
 			else{
 				game->quitGame();
 				introChannel = game->playSongIntro(MAIN_MENU_SONG_INTRO, introChannel);
-				musicChannel = game->queueSong(MAIN_MENU_SONG, musicChannel, 90);
+				musicChannel = game->queueSong(MAIN_MENU_SONG, musicChannel, 190);
 			}
 		}
 		else{

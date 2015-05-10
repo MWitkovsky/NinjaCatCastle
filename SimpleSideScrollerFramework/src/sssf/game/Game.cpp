@@ -67,6 +67,8 @@ char* LEVEL_COMPLETE_JINGLE;
 char* ONE_UP_JINGLE;
 
 char*	SOUND_ARROWSHOT;
+char*	SOUND_ARMORCAT_BLOCK;
+char*	SOUND_ARMORCAT_DIE;
 char*	SOUND_BOMB_EXPLOSION1;
 char*	SOUND_BOMB_EXPLOSION2;
 char*	SOUND_CAT_POUNCE;
@@ -283,6 +285,14 @@ void Game::readLUA(const char* fileName){
 	LuaObject ONE_UP_JINGLE_obj = luaPState->GetGlobal("ONE_UP_JINGLE");
 	string one_up_jingle = ONE_UP_JINGLE_obj.GetString();
 	ONE_UP_JINGLE = strcpy((char*)malloc(one_up_jingle.length() + 1), one_up_jingle.c_str());
+
+	LuaObject SOUND_ARMORCAT_BLOCK_obj = luaPState->GetGlobal("SOUND_ARMORCAT_BLOCK");
+	string sound_armorcat_block = SOUND_ARMORCAT_BLOCK_obj.GetString();
+	SOUND_ARMORCAT_BLOCK = strcpy((char*)malloc(sound_armorcat_block.length() + 1), sound_armorcat_block.c_str());
+
+	LuaObject SOUND_ARMORCAT_DIE_obj = luaPState->GetGlobal("SOUND_ARMORCAT_DIE");
+	string sound_armorcat_die = SOUND_ARMORCAT_DIE_obj.GetString();
+	SOUND_ARMORCAT_DIE = strcpy((char*)malloc(sound_armorcat_die.length() + 1), sound_armorcat_die.c_str());
 
 	LuaObject SOUND_ARROWSHOT_obj = luaPState->GetGlobal("SOUND_ARROWSHOT");
 	string sound_arrowshot = SOUND_ARROWSHOT_obj.GetString();

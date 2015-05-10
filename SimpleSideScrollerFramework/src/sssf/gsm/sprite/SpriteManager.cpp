@@ -911,6 +911,16 @@ void SpriteManager::updateAnimations(Game *game){
 					armorBot->getBody()->CreateFixture(&fixtureDef);
 				}
 			}
+
+			if (armorBot->shouldPlayBlockSound()){
+				game->playSound(SOUND_ARMORCAT_BLOCK);
+				armorBot->setPlayBlockSound(false);
+			}
+
+			if (armorBot->shouldPlayDeathSound()){
+				game->playSound(SOUND_ARMORCAT_DIE);
+				armorBot->setPlayDeathSound(false);
+			}
 		}
 		botIterator++;
 	}
