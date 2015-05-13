@@ -82,6 +82,16 @@
    <property name="offsetY" value="3520"/>
   </properties>
  </imagelayer>
+ <imagelayer name="9-1" x="64" y="64">
+  <image source="Background2.png"/>
+  <properties>
+   <property name="collidable" value="false"/>
+   <property name="imageheight" value="4672"/>
+   <property name="imagewidth" value="3968"/>
+   <property name="offsetX" value="64"/>
+   <property name="offsetY" value="64"/>
+  </properties>
+ </imagelayer>
  <imagelayer name="2-2" x="1984" y="3520">
   <image source="Background2.png"/>
   <properties>
@@ -90,6 +100,16 @@
    <property name="imagewidth" value="3968"/>
    <property name="offsetX" value="1984"/>
    <property name="offsetY" value="3520"/>
+  </properties>
+ </imagelayer>
+ <imagelayer name="9-2" x="1984" y="64">
+  <image source="Background2.png"/>
+  <properties>
+   <property name="collidable" value="false"/>
+   <property name="imageheight" value="4672"/>
+   <property name="imagewidth" value="3968"/>
+   <property name="offsetX" value="1984"/>
+   <property name="offsetY" value="64"/>
   </properties>
  </imagelayer>
  <imagelayer name="3-1" x="64" y="2944">
@@ -190,26 +210,6 @@
    <property name="imagewidth" value="3968"/>
    <property name="offsetX" value="1984"/>
    <property name="offsetY" value="640"/>
-  </properties>
- </imagelayer>
- <imagelayer name="8-1" x="1984" y="64">
-  <image source="Background0.png"/>
-  <properties>
-   <property name="collidable" value="false"/>
-   <property name="imageheight" value="4672"/>
-   <property name="imagewidth" value="3968"/>
-   <property name="offsetX" value="64"/>
-   <property name="offsetY" value="64"/>
-  </properties>
- </imagelayer>
- <imagelayer name="8-2" x="64" y="64">
-  <image source="Background0.png"/>
-  <properties>
-   <property name="collidable" value="false"/>
-   <property name="imageheight" value="4672"/>
-   <property name="imagewidth" value="3968"/>
-   <property name="offsetX" value="64"/>
-   <property name="offsetY" value="64"/>
   </properties>
  </imagelayer>
  <layer name="ForegroundPlatformLayer" width="62" height="73">
@@ -1803,7 +1803,7 @@
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
-   <tile gid="1"/>
+   <tile gid="57"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
@@ -1950,7 +1950,7 @@
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
-   <tile gid="55"/>
+   <tile gid="57"/>
    <tile gid="27"/>
    <tile gid="27"/>
    <tile gid="39"/>
@@ -2933,7 +2933,7 @@
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
-   <tile gid="1"/>
+   <tile gid="57"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="56"/>
@@ -3504,7 +3504,7 @@
    <tile gid="27"/>
    <tile gid="39"/>
    <tile gid="39"/>
-   <tile gid="1"/>
+   <tile gid="57"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>

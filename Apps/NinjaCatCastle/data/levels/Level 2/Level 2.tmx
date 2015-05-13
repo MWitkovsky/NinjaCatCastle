@@ -93,16 +93,6 @@
    <property name="yOffset" value="0"/>
   </properties>
  </imagelayer>
- <imagelayer name="dummy4" x="-9001" y="64">
-  <image source="dummy4.png"/>
-  <properties>
-   <property name="collidable" value="false"/>
-   <property name="imageheight" value="1080"/>
-   <property name="imagewidth" value="1980"/>
-   <property name="xOffset" value="-9001"/>
-   <property name="yOffset" value="0"/>
-  </properties>
- </imagelayer>
  <imagelayer name="house1" x="160" y="630">
   <image source="house2.png"/>
   <properties>
