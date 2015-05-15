@@ -56,6 +56,11 @@
     <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(ProjectDir)src\;$(SolutionDir)tinyxml\src\;$(SolutionDir)XMLFileImporter\src\;$(SolutionDir)SimpleSideScrollerFramework\src\;$(SolutionDir)Box2D\;$(SolutionDir)Sound\;$(SolutionDir)LuaPlusFramework\;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(SolutionDir)Common\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(ProjectDir)src\;$(SolutionDir)tinyxml\src\;$(SolutionDir)XMLFileImporter\src\;$(SolutionDir)SimpleSideScrollerFramework\src\;$(SolutionDir)Box2D\;$(SolutionDir)Sound\;$(SolutionDir)LuaPlusFramework\;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(SolutionDir)Common\;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)Common\Release</OutDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>

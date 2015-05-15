@@ -56,6 +56,11 @@
     <IncludePath>$(ProjectDir)src\;$(SolutionDir)tinyxml\src\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Common\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)Common\Release</OutDir>
+    <IncludePath>$(ProjectDir)src\;$(SolutionDir)tinyxml\src\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Common\;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>

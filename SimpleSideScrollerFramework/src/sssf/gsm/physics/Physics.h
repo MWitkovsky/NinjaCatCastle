@@ -48,7 +48,6 @@ public:
 	bool activatedForSingleUpdate;
 
 	//BOX2D DECLARATIONS
-	//ザ・ワールド！！！！！
 	b2World *world;
 	//Could in-line the vector in the world creation but that ain't cool, man
 	b2Vec2 b2Gravity;

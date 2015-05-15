@@ -843,17 +843,17 @@ void Game::processMusicLogic(){
 	if (musicEnabled){
 		GameState gs = gsm->getCurrentGameState();
 		if (gs == GS_MAIN_MENU || gs == GS_HELP_SCREEN || gs == GS_ABOUT_SCREEN || gs == GS_GAME_IN_PROGRESS){
-			/*bool isMusicPlaying = false;
+			bool isMusicPlaying = false;
 			introChannel->isPlaying(&isMusicPlaying);
 			if (!isMusicPlaying){
 				musicChannel->setPaused(false);
-			}*/
-			if (musicDelay){
+			}
+			/*if (musicDelay){
 				if (musicDelay == 1){
 					musicChannel->setPaused(false);
 				}
 				musicDelay--;
-			}
+			}*/
 		}
 	}
 }
