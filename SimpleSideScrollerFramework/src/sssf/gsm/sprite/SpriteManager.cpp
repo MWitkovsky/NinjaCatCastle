@@ -807,7 +807,25 @@ void SpriteManager::updateAnimations(Game *game){
 		if (pounceBot){
 			wstring state = pounceBot->getCurrentState();
 			if (!pounceBot->isDead()){
-				if (state == L"HIT_LEFT" || state == L"HIT_RIGHT" || pounceBot->didHitPlayer()){
+				if (pounceBot->didHitPlayer()){
+					if (!pounceBot->hasHitGuard()){
+						b2FixtureDef fixtureDef;
+						b2PolygonShape shape;
+						shape.SetAsBox(0.7f, 0.4f);
+						fixtureDef.shape = &shape;
+						pounceBot->getBody()->CreateFixture(&fixtureDef);
+						pounceBot->setHitPlayer(false);
+					}
+					else{
+						if (pounceBot->getBody()->GetFixtureList()){
+							pounceBot->getBody()->DestroyFixture(pounceBot->getBody()->GetFixtureList());
+							pounceBot->getBody()->SetLinearVelocity(pounceBot->getTrajectory());
+						}
+						pounceBot->setHitGuard(false);
+					}
+				}
+
+				if (state == L"HIT_LEFT" || state == L"HIT_RIGHT"){
 					if (pounceBot->getBody()->GetLinearVelocity().y == 0){
 						if (!pounceBot->wasHit()){
 							pounceBot->getBody()->SetSleepingAllowed(true);
@@ -827,24 +845,6 @@ void SpriteManager::updateAnimations(Game *game){
 								pounceBot->setCurrentState(L"DIE_RIGHT");
 							}
 							game->playSound(SOUND_HIT);
-						}
-					}
-
-					if (pounceBot->didHitPlayer()){
-						if (!pounceBot->hasHitGuard()){
-							b2FixtureDef fixtureDef;
-							b2PolygonShape shape;
-							shape.SetAsBox(0.7f, 0.4f);
-							fixtureDef.shape = &shape;
-							pounceBot->getBody()->CreateFixture(&fixtureDef);
-							pounceBot->setHitPlayer(false);
-						}
-						else{
-							if (pounceBot->getBody()->GetFixtureList()){
-								pounceBot->getBody()->DestroyFixture(pounceBot->getBody()->GetFixtureList());
-								pounceBot->getBody()->SetLinearVelocity(pounceBot->getTrajectory());
-							}
-							pounceBot->setHitGuard(false);
 						}
 					}
 				}
